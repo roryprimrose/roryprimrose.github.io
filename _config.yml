@@ -71,3 +71,4 @@ exclude:
     - Gemfile.lock
     - LICENSE
     - README.md
+    - Blog.sln
