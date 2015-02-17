@@ -1,8 +1,6 @@
 ﻿---
 layout: post
 title: Moved to Jekyll
-categories : 
-tags: 
 date: 2015-02-17 12:01:34
 ---
 
