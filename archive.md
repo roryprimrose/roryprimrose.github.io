@@ -1,4 +1,4 @@
-﻿<section id="archive">
+<section id="archive">
     <h3>This year's posts</h3>
     {%for post in site.posts %}
     {% unless post.next %}
