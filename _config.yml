@@ -49,6 +49,13 @@ baseurl: ""
 # !! You don't need to change any of the configuration flags below !!
 #
 
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "post"
+
 markdown: redcarpet
 highlighter: pygments
 permalink: /:year/:month/:day/:title/

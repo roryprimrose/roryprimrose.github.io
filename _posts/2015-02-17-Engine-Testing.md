@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Engine Testing
 categories : [lessons, beginner]
 tags: [Personal, .Net]
