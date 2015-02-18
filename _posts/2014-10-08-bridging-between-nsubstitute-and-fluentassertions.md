@@ -9,11 +9,10 @@ The two go-to packages I use for unit testing are [NSubstitute][0] and [FluentAs
 
 NSubstitute is really good at setting up stub behaviour using predicate or value argument matching and asserting received calls with the same argument matching. FluentAssertions is really good at asserting whether values satisfy specified criteria. The difference between these packages is that NSubstitute works with predicate expressions whereas FluentAssertions evaluates assertions and throws an exception if the assertions fail.
 
-The gap in functionality here is where I want to use NSubstitute to evaluate received calls but the power of FluentAssertions evaluation in the argument matching. This doesn't work because NSubstitute uses Arg.Is<t>
-    (Expression<predicate<T>>) whereas FluentAssertions will throw an exception. We need the ability to bridge these two packages so that we can have the power of FluentAssertions executing within an NSubstitute argument matcher and allowing the test code to remain readable.
+The gap in functionality here is where I want to use NSubstitute to evaluate received calls but the power of FluentAssertions evaluation in the argument matching. This doesn't work because NSubstitute uses Arg.Is&lt;t&gt;
+    (Expression&lt;predicate&lt;T&gt;&gt;) whereas FluentAssertions will throw an exception. We need the ability to bridge these two packages so that we can have the power of FluentAssertions executing within an NSubstitute argument matcher and allowing the test code to remain readable.
 
 Getting this to work uses two key pieces, IArgumentMatcher from NSubstitute and AssertionScope from FluentAssertions.
-
 
 {% highlight csharp linenos %}
 public static class Verify
@@ -62,7 +61,7 @@ public static class Verify
 
 {% endhighlight %}
 
-The Verify.That method is similar in syntax to the Arg.Is<T> method in NSubstitute. It takes Action<T> so that it can evaluate the T value using the AssertionMatcher<T> class. The AssertionMatcher class runs the action within an AssertionScope so that it can capture any FluentAssertions failures. At this point, AssertionMatcher essentially converts the outcome into a predicate rather than allowing FluentAssertions to throw an exception.
+The Verify.That method is similar in syntax to the Arg.Is&lt;T&gt; method in NSubstitute. It takes Action&lt;T&gt; so that it can evaluate the T value using the AssertionMatcher&lt;T&gt; class. The AssertionMatcher class runs the action within an AssertionScope so that it can capture any FluentAssertions failures. At this point, AssertionMatcher essentially converts the outcome into a predicate rather than allowing FluentAssertions to throw an exception.
 
 A key outcome of this class is to report failures. This is simply done by tracing out the FluentAssertion failures to the test result trace output. This is nice because it will then be combined with the NSubstitute failure reporting so that we know why the failure occurred and we know where.
 
