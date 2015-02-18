@@ -11,7 +11,9 @@ Neovolve.BuildTaskExecutor (or BTE) is the application that will execute specifi
 
 **Extensibility**
 
-The main interface for BTE extensibility is the ITask interface. It provides the ability for BTE to identify the command line names associated with the task, validate command line arguments, obtain help information about the task and to execute the task.{% highlight csharp linenos %}
+The main interface for BTE extensibility is the ITask interface. It provides the ability for BTE to identify the command line names associated with the task, validate command line arguments, obtain help information about the task and to execute the task.
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor.Extensibility
 {
     using System;
@@ -41,7 +43,9 @@ namespace Neovolve.BuildTaskExecutor.Extensibility
 }
 {% endhighlight %}
 
-The IEventWriter interface supports writing event messages. BTE provides an implementation of this interface that writes messages to the console. Custom implementations can be provided to output event messages to other locations.{% highlight csharp linenos %}
+The IEventWriter interface supports writing event messages. BTE provides an implementation of this interface that writes messages to the console. Custom implementations can be provided to output event messages to other locations.
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor.Extensibility
 {
     using System;
@@ -54,7 +58,9 @@ namespace Neovolve.BuildTaskExecutor.Extensibility
 }
 {% endhighlight %}
 
-The IVersionManager interface provides the ability to read and write version information from a file path. BTE provides three implementations of this class. They manage version information for C# AssemblyInfo.cs style files, Wix projects and binary files. These three implementations can be added to custom tasks by using name specified imports such as _[Import(VersionManagerExport.Wix)] IVersionManager versionAction_.{% highlight csharp linenos %}
+The IVersionManager interface provides the ability to read and write version information from a file path. BTE provides three implementations of this class. They manage version information for C# AssemblyInfo.cs style files, Wix projects and binary files. These three implementations can be added to custom tasks by using name specified imports such as _[Import(VersionManagerExport.Wix)] IVersionManager versionAction_.
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor.Extensibility
 {
     using System;
@@ -74,7 +80,9 @@ BTE provides several service classes that execute tasks and provide additional s
 
 The TaskExecutor and the TaskResolver classes are the core of the application. They identify which task to execute based on the first command line argument and then execute the resolved task with the remaining command line arguments.
 
-These classes are listed below with their method bodies removed for brevity.{% highlight csharp linenos %}
+These classes are listed below with their method bodies removed for brevity.
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor.Services
 {
     using System;
@@ -112,7 +120,9 @@ namespace Neovolve.BuildTaskExecutor.Services
         }
     }
 }
-{% endhighlight %}{% highlight csharp linenos %}
+{% endhighlight %}
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor.Services
 {
     using System;
@@ -153,7 +163,9 @@ namespace Neovolve.BuildTaskExecutor.Services
 }
 {% endhighlight %}
 
-The EventWriter class is another service available in BTE. It wraps all the available IEventWriter implementations for an easy way to write event messages. It also manages the logic around the event writing level that can be configured on the command line.{% highlight csharp linenos %}
+The EventWriter class is another service available in BTE. It wraps all the available IEventWriter implementations for an easy way to write event messages. It also manages the logic around the event writing level that can be configured on the command line.
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor.Services
 {
     using System;
@@ -206,7 +218,9 @@ namespace Neovolve.BuildTaskExecutor.Services
 
 **Task Execution**
 
-Finally there is the Program class that is the entry point for BTE. It resolves the TaskExector from an internal ServiceManager and starts processing the command line arguments that are also resolved via MEF.{% highlight csharp linenos %}
+Finally there is the Program class that is the entry point for BTE. It resolves the TaskExector from an internal ServiceManager and starts processing the command line arguments that are also resolved via MEF.
+
+{% highlight csharp linenos %}
 namespace Neovolve.BuildTaskExecutor
 {
     using System;

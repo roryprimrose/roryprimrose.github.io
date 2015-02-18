@@ -17,7 +17,9 @@ Next thing to do is add support for importing BTE types via MEF. This can either
 
 The MultiTask class will take the EventWriter service from BTE as a constructor import. It will also task the TaskExecutor service as a property import. The TaskExecutor cannot be imported in the constructor because it has a reference to TaskResolver which in turn as a reference too all loaded tasks. Having a task import TaskExecutor or TaskResolver in its constructor would cause a circular reference and MEF would throw a composition exception.
 
-MultiTask defines the structure for the command line arguments so that the user can define multiple tasks and their arguments.{% highlight csharp linenos %}
+MultiTask defines the structure for the command line arguments so that the user can define multiple tasks and their arguments.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.Generic;
 using System.Linq;
