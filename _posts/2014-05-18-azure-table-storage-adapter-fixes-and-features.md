@@ -17,7 +17,9 @@ This class has evolved well although two issues have been identified.
 
 The race condition that Andy found is one of the production issues I have seen on occasion that I was not able to pin down (big shout out and thanks to Andy).
 
-This latest version of the EntityAdapter class fixes the two above issues.{% highlight csharp linenos %}
+This latest version of the EntityAdapter class fixes the two above issues.
+
+{% highlight csharp linenos %}
 namespace MySystem.Server.DataAccess.Azure
 {
     using System;
