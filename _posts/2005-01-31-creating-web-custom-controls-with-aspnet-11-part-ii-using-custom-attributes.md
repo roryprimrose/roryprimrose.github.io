@@ -17,38 +17,11 @@ As we don't want to override MyBase.RenderBeginTag, a better place to put this c
 
 So far, the control has properties defined like this:
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets or sets the Key value to identify the purpose of the button.
-
- ''' </summary&gt;
-
- ''' <value&gt;The Key for the control.</value&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
+{% highlight vb.net linenos %}
  < _
-
  Description("The Key value to identify the purpose of the button."), _
-
  Category("Client") _
-
- &gt; _
-
+ > _
  Public  Property Key() As  String
 
  Get
@@ -69,38 +42,10 @@ So far, the control has properties defined like this:
 
  End  Property
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets or sets the client JavaScript function to call when the button is clicked.
-
- ''' </summary&gt;
-
- ''' <value&gt;The name of the client JavaScript function.</value&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  < _
-
  Description("The client function to call when the control is clicked."), _
-
  Category("Client") _
-
- &gt; _
-
+ > _
  Public  Property ClientClickHandler() As  String
 
  Get
@@ -115,9 +60,9 @@ So far, the control has properties defined like this:
 
  ' Ensure that no brackets or parameters are defined
 
- If Value <&gt; vbNullString _
+ If Value <> vbNullString _
 
- AndAlso Value.IndexOf("(") &gt; -1 Then Value = Value.Substring(0, Value.IndexOf("("))
+ AndAlso Value.IndexOf("(") > -1 Then Value = Value.Substring(0, Value.IndexOf("("))
 
  ' Store the new value
 
@@ -127,38 +72,10 @@ So far, the control has properties defined like this:
 
  End  Property
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets or sets the Url for the image to render when the button is down.
-
- ''' </summary&gt;
-
- ''' <value&gt;The Url for the image.</value&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  < _
-
  Description("The Url to the image to use when the mouse is down on the control or the control is selected."), _
-
  Category("Appearance") _
-
- &gt; _
-
+ > _
  Public  Property ImageDownUrl() As  String
 
  Get
@@ -179,38 +96,10 @@ So far, the control has properties defined like this:
 
  End  Property
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets or sets the Url for the image to render when the mouse is over the button.
-
- ''' </summary&gt;
-
- ''' <value&gt;The Url for the image.</value&gt;
-
- ''' <remarks&gt;
-
- ''' This image will only be used when the button is in its up state.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  < _
-
  Description("The Url to the image to use when the mouse is hover the control."), _
-
  Category("Appearance") _
-
- &gt; _
-
+ > _
  Public  Property ImageHoverUrl() As  String
 
  Get
@@ -231,40 +120,11 @@ So far, the control has properties defined like this:
 
  End  Property
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets or sets whether the button is selected.
-
- ''' </summary&gt;
-
- ''' <value&gt;True if the button is selected, otherwise False.</value&gt;
-
- ''' <remarks&gt;
-
- ''' If the button is selected, the ImageDownUrl value will be used instead of the normal ImageUrl value.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  < _
-
  Description("Determines whether the button is selected or not."), _
-
  Category("Appearance"), _
-
  DefaultValue( False ) _
-
- &gt; _
-
+ > _
  Public  Property Selected() As  Boolean
 
  Get
@@ -301,40 +161,11 @@ So far, the control has properties defined like this:
 
  End  Property
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets or sets whether the button is a toggle button.
-
- ''' </summary&gt;
-
- ''' <value&gt;True if the button is a toggle button, otherwise False.</value&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  < _
-
  Description("Determines whether the button is a toggle button or not."), _
-
  Category("Appearance"), _
-
  DefaultValue( False ) _
-
- &gt; _
-
+ > _
  Public  Property IsToggle() As  Boolean
 
  Get
@@ -370,64 +201,39 @@ So far, the control has properties defined like this:
  End  Set
 
  End  Property
+{% endhighlight %}
 
  Take note of how the properties handle ViewState data. For string properties, I am doing a direct convert of the ViewState value. If the ViewState doesn't have a value, Nothing will be returned. vbNullString is defined as Nothing and is a string, therefore it will be a safe conversion. The only way this would fall down is if code outside this property or assembly modified that particular ViewState item to some other object type. Only the implementer of the control would do this and basically, if they break it, they pay for it. For properties that have any other data types, I check if the object in the ViewState is of the same type and return the value if it is, otherwise I return a default value.
 
 Ok, now lets render these property values to the control HTML tag as custom attributes. This is all that needs to be done:
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Sets up the client scripts, attributes and styles of the control.
-
- ''' </summary&gt;
-
- ''' <param name="e"&gt;An <see cref="T:System.EventArgs"&gt;EventArgs</see&gt; object that contains the event arguments.</param&gt;
-
- ''' <remarks&gt;
-
- ''' Overridden instead of using the PreRender event because the ImageButton control doesn't raise the event.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 28/Jan/2004 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
+{% highlight vb.net linenos %}
  Protected  Overrides  Sub OnPreRender( ByVal e As System.EventArgs)
 
  With Attributes
 
  ' Ensure that the id attribute is rendered
-
  If ID = vbNullString Then .Add("id", ClientID)
 
  ' Add the attributes if they are specified
+ If Key <> vbNullString Then .Add("Key", Key)
 
- If Key <&gt; vbNullString Then .Add("Key", Key)
+ If ImageDownUrl <> vbNullString Then .Add("ImageDownUrl", ImageDownUrl)
 
- If ImageDownUrl <&gt; vbNullString Then .Add("ImageDownUrl", ImageDownUrl)
+ If ImageHoverUrl <> vbNullString Then .Add("ImageHoverUrl", ImageHoverUrl)
 
- If ImageHoverUrl <&gt; vbNullString Then .Add("ImageHoverUrl", ImageHoverUrl)
-
- If ClientClickHandler <&gt; vbNullString Then .Add("ClientClickHandler", ClientClickHandler)
+ If ClientClickHandler <> vbNullString Then .Add("ClientClickHandler", ClientClickHandler)
 
  .Add("Selected", Selected.ToString.ToLower)
-
  .Add("IsToggle", IsToggle.ToString.ToLower)
 
  End  With  ' End With Attributes
 
  ' Allow the base class code to run
-
  Call  MyBase .OnPreRender(e)
 
  End  Sub
+{% endhighlight %}
 
 The first thing to notice about this code is that I am ensuring that an id attribute is rendered. In the xml of the aspx file, no attribute has to be defined for the control. Also a control can be created at run-time and added as a child of another control and not have its id property set. Regardless of whether an id property value has been defined, the Control object (which all ASP.Net controls are derived from) exposes a ClientID value, which has the value of the control as ASP.Net sees it when rendered to the client. The ClientID property value is typically prefixed with all the parent controls id values, delimited by the _ character. The code here checks if there is no id value and if so, adds a custom attribute that happens to be called id and assigns it the value of ClientID. Simply calling Attributes.Add("id", ClientID) will cause a duplicate id attribute to be rendered where the id property did already have a value and we definitely don't want that. I ensure that the rendered tag always as an id value specified so that client script can identify the controls element by its id value.
 
@@ -437,75 +243,50 @@ As a side note on custom attributes, if you want to add specific inline styles t
 
 I set up a test example with some dummy property values for the code so far and the rendered output is this:
 
-<input type="image" name="ImageButton3" id="ImageButton3" Key="Test" ImageDownUrl="images/down.gif" ImageHoverUrl="images/hover.gif" ClientClickHandler="Image_OnClick" Selected="false" IsToggle="false" src="images/up.gif" alt="" border="0" style="Z-INDEX: 103; LEFT: 395px; POSITION: absolute; TOP: 122px" /&gt;
+{% highlight aspx-vb linenos %}
+<input type="image" name="ImageButton3" id="ImageButton3" Key="Test" ImageDownUrl="images/down.gif" ImageHoverUrl="images/hover.gif" ClientClickHandler="Image_OnClick" Selected="false" IsToggle="false" src="images/up.gif" alt="" border="0" style="Z-INDEX: 103; LEFT: 395px; POSITION: absolute; TOP: 122px" />
+{% endhighlight %}
 
  We have now been able to take server information that has been defined at either design-time or run-time and render it down to the client. Client code can now take advantage of that information. I have written a JavaScript wrapper function that makes it easy to read custom attributes from an HTML element. HTML elements have two methods called getAttribute and setAttribute and these can be used directly, but I prefer to use a helper function that includes some business rules. For example, I want it to handle the case where no valid element has been specified, or the attribute doesn't exist. I also want to use default values if no value is found in the custom attribute.
 
 My wrapper function looks like this:
 
- function AttributeValue(Item, Name, Default)
-
+{% highlight csharp linenos %}
+function AttributeValue(Item, Name, Default)
 {
+    // Set Default to "" if not provided
+    if (AttributeValue.arguments.length < 3) 
+    {
+        Default = "";
+    }
+    else
+    {
+        Default = Default.toString();
+    }
 
- // Set Default to "" if not provided
-
- if (AttributeValue.arguments.length < 3) 
-
- {
-
- Default = "";
-
- }
-
- else
-
- {
-
- Default = Default.toString();
-
- }
-
- if ((Item == null ) || (Name == null ))
-
- {
-
- return Default;
-
- }
-
- else  if (Item.getAttribute == null )
-
- {
-
- return Default;
-
- }
-
- else
-
- {
-
- var sValue = Item.getAttribute(Name, false );
-
- if ((sValue != null) && (sValue != ""))
-
- {
-
- return sValue.toString();
-
- }
-
- else
-
- {
-
- return Default;
-
- }
-
- }
-
+    if ((Item == null ) || (Name == null ))
+    {
+        return Default;
+    }
+    else  if (Item.getAttribute == null )
+    {
+        return Default;
+    }
+    else
+    {
+        var sValue = Item.getAttribute(Name, false );
+        
+        if ((sValue != null) && (sValue != ""))
+        {
+            return sValue.toString();
+        }
+        else
+        {
+            return Default;
+        }
+    }
 }
+{% endhighlight %}
 
 In the next article, I will touch on Metadata attributes which can be very useful.
 

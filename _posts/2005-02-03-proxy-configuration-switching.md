@@ -17,73 +17,60 @@ There are two problems with this idea. Firstly, when the IP address is determine
 Here is the code:
 
 {% highlight vb.net linenos %}
-    #Region " Imports "
+#Region " Imports "
      
-    Imports System.Net
-    Imports Microsoft.Win32
+Imports System.Net
+Imports Microsoft.Win32
      
-    #End Region
+#End Region
      
-    Module modGlobal
+Module modGlobal
      
-        ''' -----------------------------------------------------------------------------
-        ''' 
-        ''' Program entry.
-        ''' 
-        ''' Array of command line parameters.
-        ''' 
-        ''' The first command line parameter is the name of the computer of which the 
-        ''' IP address is going to attempt to be determined.
-        ''' 
-        ''' 
-        '''    [rprimrose]    3/Feb/2005    Created
-        ''' 
-        ''' -----------------------------------------------------------------------------
-        Public Sub Main(ByVal CmdArgs() As String)
+    Public Sub Main(ByVal CmdArgs() As String)
      
-            Dim objEntry As System.Net.IPHostEntry
-            Dim objKey As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Internet Settings", True)
-            Dim bUseProxy As Boolean
+        Dim objEntry As System.Net.IPHostEntry
+        Dim objKey As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Internet Settings", True)
+        Dim bUseProxy As Boolean
      
-            Try
+        Try
      
-                ' Check if there is at least 1 command line parameter
-                If CmdArgs.Length &gt; 0 Then
+            ' Check if there is at least 1 command line parameter
+            If CmdArgs.Length &gt; 0 Then
      
-                    ' Attempt to resolve the name to an IP address
-                    objEntry = System.Net.Dns.Resolve(CmdArgs(0))
+                ' Attempt to resolve the name to an IP address
+                objEntry = System.Net.Dns.Resolve(CmdArgs(0))
      
-                    ' We haven't failed, the resolve was successful
-                    bUseProxy = True
+                ' We haven't failed, the resolve was successful
+                bUseProxy = True
      
-                End If  ' End checking if there is at least one command line parameter
+            End If  ' End checking if there is at least one command line parameter
      
-            Catch
+        Catch
      
-                ' Couldn't resolve the computer name to an IP address
-                bUseProxy = False
+            ' Couldn't resolve the computer name to an IP address
+            bUseProxy = False
      
-            Finally
+        Finally
      
-                ' Destroy the object
-                objEntry = Nothing
+            ' Destroy the object
+            objEntry = Nothing
      
-            End Try
+        End Try
      
-            ' Check if we want to use a proxy
-            If bUseProxy Then
+        ' Check if we want to use a proxy
+        If bUseProxy Then
      
-                objKey.SetValue("ProxyEnable", 1)
+            objKey.SetValue("ProxyEnable", 1)
      
-            Else    ' We don't want to use a proxy
+        Else    ' We don't want to use a proxy
      
-                objKey.SetValue("ProxyEnable", 0)
+            objKey.SetValue("ProxyEnable", 0)
      
-            End If  ' End checking if we want to use a proxy
+        End If  ' End checking if we want to use a proxy
      
-        End Sub
+    End Sub
      
-    End Module
+End Module
 {% endhighlight %}
 
 [0]: http://www.synop.com/Products/SauceReader/

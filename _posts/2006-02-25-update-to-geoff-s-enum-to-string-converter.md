@@ -10,7 +10,38 @@ To avoid reinventing the wheel, I took his code and ran. What I found though, is
 
 The function now looks like this: 
 
-{% highlight vbnet linenos %}'given the passed in enum, convert to a string, 'but inject spaces in font of all capital letters. 'a regex might work best here, but for now, let's do it the long way Private Function EnumToString(ByVal poSource As Object) As String 'convert the value to a string Dim sVal As String = System.Enum.GetName(moEnumType, poSource) Dim sNew As New System.Text.StringBuilder ' Replace _ with spaces sVal = sVal.Replace("_"c, " "c) 'loop through each char, looking for spaces. For i As Int32 = 0 To sVal.Length - 1 If i <&gt; 0 _ AndAlso System.Char.IsUpper(sVal.Chars(i)) _ AndAlso System.Char.IsUpper(sVal.Chars(i - 1)) = False Then sNew.Append(" "c) End If sNew.Append(sVal.Chars(i)) Next Return sNew.ToString End Function{% endhighlight %}
+ {% highlight vbnet linenos %}
+'given the passed in enum, convert to a string,
+'but inject spaces in font of all capital letters.
+'a regex might work best here, but for now, let's do it the long way
+Private Function EnumToString(ByVal poSource As Object) As String
+
+    'convert the value to a string
+    Dim sVal As String = System.Enum.GetName(moEnumType, poSource)
+    Dim sNew As New System.Text.StringBuilder
+
+    ' Replace _ with spaces
+    sVal = sVal.Replace("_"c, " "c)
+
+    'loop through each char, looking for spaces.
+    For i As Int32 = 0 To sVal.Length - 1
+
+        If i &lt;&gt; 0 _
+            AndAlso System.Char.IsUpper(sVal.Chars(i)) _
+            AndAlso System.Char.IsUpper(sVal.Chars(i - 1)) = False Then
+
+            sNew.Append(" "c)
+
+        End If
+
+        sNew.Append(sVal.Chars(i))
+
+    Next
+
+    Return sNew.ToString
+
+End Function
+{% endhighlight %}
 
 I ran the following test cases: 
 
