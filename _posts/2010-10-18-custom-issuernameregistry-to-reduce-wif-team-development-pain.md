@@ -9,7 +9,9 @@ I have been implementing WIF into my [hosted synchronization project][0] over re
 
 The WIF SDK makes it easy to get up and running with an STS. The wizard application creates an STS project and development certificates that are then integrated into your Visual Studio solution. The certificates are created on the local machine and are specific to that machine. One is the signing certificate with the default name of STSTestCert and the other is the encrypting certificate with the default name of DefaultApplicationCertificate.
 
-The WIF configuration usually refers to these certificates using the subject distinguished name of the certificate. This will work where multiple development machines use certificates with the same subject where those certificates where created on each machine. Unfortunately the configuration for the Relying Party application identifies the trusted issuer certificate using a thumbprint. This thumbprint will be different across each machine.{% highlight xml linenos %}
+The WIF configuration usually refers to these certificates using the subject distinguished name of the certificate. This will work where multiple development machines use certificates with the same subject where those certificates where created on each machine. Unfortunately the configuration for the Relying Party application identifies the trusted issuer certificate using a thumbprint. This thumbprint will be different across each machine.
+
+{% highlight xml linenos %}
 <service name=&quot;Neovolve.Jabiru.Server.Service.ExchangeSession&quot;>
     <audienceUris>
         <add value=&quot;https://localhost/Jabiru/DataExchange.svc&quot; />
@@ -28,7 +30,9 @@ The above configuration is for one of the services in my project. The configurat
 
 One solution to this issue is to copy the certificates around each development machine. I’m not a fan of this solution as trying to use local certificates on other machines is problematic. My preference is to have each development machine generate their own certificates using the same subject names. If required this functionality could be easily wrapped up in a batch file that is part of the solution. This method of working with local certificates is the same as a development team getting IIS on each workstation to create self-signed certificates with the same name (localhost for example).
 
-There is an alternative solution however as WIF provides an extensibility point that allows for a different implementation. The type attribute of the issuerNameRegistry node in the above configuration above identifies the type that provides the IssuerNameRegistry class for the service. There is only one implementation provided with WIF which is ConfigurationBasedIssuerNameRegistry. This class is hard-coded to only deal with certificate thumbprints. Creating a type that can handle more certificate matching options using [X509FindType][1] will be the answer to this restriction.{% highlight csharp linenos %}
+There is an alternative solution however as WIF provides an extensibility point that allows for a different implementation. The type attribute of the issuerNameRegistry node in the above configuration above identifies the type that provides the IssuerNameRegistry class for the service. There is only one implementation provided with WIF which is ConfigurationBasedIssuerNameRegistry. This class is hard-coded to only deal with certificate thumbprints. Creating a type that can handle more certificate matching options using [X509FindType][1] will be the answer to this restriction.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Jabiru.Server.Security
 {
     using System;
@@ -45,7 +49,9 @@ namespace Neovolve.Jabiru.Server.Security
 }
 {% endhighlight %}
 
-The IssuerCertificateMapping struct will define the relationship between an issuer name and the certificate matching criteria. The ConfiguredCertificateIssuerNameRegistry class will read the issuer configuration and provide the logic for matching against the security token certificate when the GetIssuerName is invoked.{% highlight csharp linenos %}
+The IssuerCertificateMapping struct will define the relationship between an issuer name and the certificate matching criteria. The ConfiguredCertificateIssuerNameRegistry class will read the issuer configuration and provide the logic for matching against the security token certificate when the GetIssuerName is invoked.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Jabiru.Server.Security
 {
     using System;
@@ -312,7 +318,9 @@ namespace Neovolve.Jabiru.Server.Security
 
 The ConfiguredCertificateIssuerNameRegistry parses the RP configuration to search for add, remove and clear elements. The add and remove elements then need to define the findType (X509FindType), findValue and name attributes. The set of trusted issues becomes the reference point for mapping security token certificates to issuer names. 
 
-This class allows for a more flexible mapping between issuer names and certificates. The example configuration above can then be modified to use the subject name instead of thumbprint.{% highlight xml linenos %}
+This class allows for a more flexible mapping between issuer names and certificates. The example configuration above can then be modified to use the subject name instead of thumbprint.
+
+{% highlight xml linenos %}
 <service name=&quot;Neovolve.Jabiru.Server.Service.ExchangeSession&quot;>
     <audienceUris>
         <add value=&quot;https://localhost/Jabiru/DataExchange.svc&quot; />

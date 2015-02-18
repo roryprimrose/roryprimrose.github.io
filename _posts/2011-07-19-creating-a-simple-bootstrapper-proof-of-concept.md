@@ -39,7 +39,9 @@ I added some code to the bootstrapper Main method to extract the resource out to
 
 **Automatically elevate the packaged MSI**
 
-This is actually really easy to achieve in a Visual Studio project. You can add an application manifest to the project and set the requestedExecutionLevel to requireAdministrator.{% highlight xml linenos %}
+This is actually really easy to achieve in a Visual Studio project. You can add an application manifest to the project and set the requestedExecutionLevel to requireAdministrator.
+
+{% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>

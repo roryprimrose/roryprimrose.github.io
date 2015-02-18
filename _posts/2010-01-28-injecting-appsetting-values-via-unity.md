@@ -7,7 +7,9 @@ date: 2010-01-28 13:14:50 +10:00
 
 I've been working with Unity a bit in an enterprise level system and I have been trying to separate objects of different concerns as much as possible. One requirement hit me today where I have a dependency that is resolved from a Unity container. I created a cache dependency layer to go around it, but needed to provide a configuration value to the cache wrapper.
 
-To demonstrate this scenario, consider the following example:{% highlight csharp linenos %}
+To demonstrate this scenario, consider the following example:
+
+{% highlight csharp linenos %}
 using System;
     
 namespace Neovolve.UnityTesting
@@ -57,7 +59,9 @@ Unfortunately Unity does not provide a way to resolve a configuration value and 
 
 I spent a bit of time cruising around the EntLib source with Reflector to see what could be done about this. Unity natively understands injection configuration for dependencies, literal values and array types. Unity happens to make a call down to InjectionParameterValueHelper.DeserializeUnrecognizedElement() which has a switch over the element name (being value, dependency or array). If the type is not understood then it makes a call out to DeserializePolymorphicElement().
 
-The DeserializePolymorphicElement method is the key. It uses an elementType attribute that gets resolved as InjectionParameterValueElement. This is the point at which Unity can be extended to provide a custom injection implementation. I created an AppSettingsParameterInjectionElement class that is mostly a copy of InstanceValueElement which is the unity definition for injection configuration of literal values. The class looks like the following:{% highlight csharp linenos %}
+The DeserializePolymorphicElement method is the key. It uses an elementType attribute that gets resolved as InjectionParameterValueElement. This is the point at which Unity can be extended to provide a custom injection implementation. I created an AppSettingsParameterInjectionElement class that is mostly a copy of InstanceValueElement which is the unity definition for injection configuration of literal values. The class looks like the following:
+
+{% highlight csharp linenos %}
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -178,7 +182,9 @@ namespace Neovolve.UnityTesting
 }
 {% endhighlight %}
 
-The configuration for this looks like the following:{% highlight xml linenos %}
+The configuration for this looks like the following:
+
+{% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     
@@ -228,7 +234,9 @@ The configuration for this looks like the following:{% highlight xml linenos %
 </configuration>
 {% endhighlight %}
 
-The test application to tie all this together is the following:{% highlight csharp linenos %}
+The test application to tie all this together is the following:
+
+{% highlight csharp linenos %}
 using System;
 using System.Configuration;
 using Microsoft.Practices.Unity;

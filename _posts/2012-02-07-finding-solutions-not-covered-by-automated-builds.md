@@ -6,7 +6,9 @@ date: 2012-02-07 17:01:07 +10:00
 
 I am slowing building a set of automated tasks in my current role as a TFS administrator to verify the state of TFS. My latest task looks for solutions that are not covered by automated builds.
 
-It’s a fairly straight forward task that enumerates solution files and matches them to build definitions across all projects and collections in a TFS instance.{% highlight csharp linenos %}
+It’s a fairly straight forward task that enumerates solution files and matches them to build definitions across all projects and collections in a TFS instance.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

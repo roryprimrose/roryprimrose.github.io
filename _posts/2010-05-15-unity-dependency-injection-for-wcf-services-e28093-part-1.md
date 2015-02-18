@@ -11,7 +11,9 @@ The poor mans injection option is to create a unity container within the constru
 
 The second option is to create a custom service host factory. This option allows a service type to be created with constructor dependencies rather than a default constructor. It uses the mark-up in svc files to identify the custom factory to be used rather than the default one. The 4.0 framework also supports this configuration via web.config as svc files are no longer required.
 
-The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].{% highlight csharp linenos %}
+The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].
+
+{% highlight csharp linenos %}
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -56,7 +58,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The configuration for the factory via svc mark-up is the following.{% highlight xml linenos %}
+The configuration for the factory via svc mark-up is the following.
+
+{% highlight xml linenos %}
 <%@ ServiceHost 
     Language="C#" 
     Debug="true" 
@@ -64,7 +68,9 @@ The configuration for the factory via svc mark-up is the following.{% highligh
     Factory="Neovolve.Toolkit.Unity.UnityServiceHostFactory" %>
 {% endhighlight %}
 
-The configuration via web.config (.net 4.0 only) is like this. This configuration also includes an example Unity container configuration.{% highlight xml linenos %}
+The configuration via web.config (.net 4.0 only) is like this. This configuration also includes an example Unity container configuration.
+
+{% highlight xml linenos %}
 <configuration>
     <configSections>
         <section name="unity"
@@ -95,7 +101,9 @@ The configuration via web.config (.net 4.0 only) is like this. This configuratio
 </configuration>
 {% endhighlight %}
 
-The UnityServiceHost class is used to configure the host for a behaviour that is used to create the service instances.{% highlight csharp linenos %}
+The UnityServiceHost class is used to configure the host for a behaviour that is used to create the service instances.
+
+{% highlight csharp linenos %}
 using System;
 using System.ServiceModel;
 using Microsoft.Practices.Unity;
@@ -134,7 +142,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The UnityServiceBehavior is used assign a new instance provider to each endpoint in the service host.{% highlight csharp linenos %}
+The UnityServiceBehavior is used assign a new instance provider to each endpoint in the service host.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
@@ -204,7 +214,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The UnityInstanceProvider is used to resolve an instance from a Unity container using the service type defined for an endpoint. This is where the real work happens to create a service instance with injected dependencies. This implementation also calls the Unity container to destroy the service instance according to its configuration.{% highlight csharp linenos %}
+The UnityInstanceProvider is used to resolve an instance from a Unity container using the service type defined for an endpoint. This is where the real work happens to create a service instance with injected dependencies. This implementation also calls the Unity container to destroy the service instance according to its configuration.
+
+{% highlight csharp linenos %}
 using System;
 using System.Configuration;
 using System.Globalization;

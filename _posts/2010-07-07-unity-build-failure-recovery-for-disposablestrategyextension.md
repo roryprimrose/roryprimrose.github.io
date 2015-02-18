@@ -23,7 +23,9 @@ Consider the following build tree for example.
 
 The PreBuildUp method in BuildTreeTracker gets invoked before each tree node is created and PostBuildUp gets invoked after each node (and it’s children) are completely built. The BuildTreeTracker class tracks the start and end of each item being built via these two methods. What happens if the creation of ChildA fails without any recovery action? Assuming the build process handles the build failure exception and continues the build, the BuildTreeTracker identifies the current node as ChildA when it goes to create ChildB (PreBuildUp) however it should actually point to Root. This is because the tracker re-points the current node in the build tree back to the parent of the current node on PostBuildUp. Unfortunately PostBuildUp does not get invoked when a build context fails.
 
-Enter the IRequiresRecovery interface. This interface allows for some recovery operation to be invoked when a build context has failed to create an instance.{% highlight csharp linenos %}
+Enter the IRequiresRecovery interface. This interface allows for some recovery operation to be invoked when a build context has failed to create an instance.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -90,7 +92,9 @@ namespace Neovolve.Toolkit.Unity
 
 The BuildTreeRecovery class allows for a custom action to be invoked. It then cleans up any partial build trees that were successfully created under the failed node and then removes it from its parent. If you assume in the previous example that DependencyA and DependencyB were successfully created before ChildA failed, then BuildTreeRecovery will ensure that ChildA, DependencyA and DependencyB are all disposed and that the failed node (ChildA) is then removed from the build tree.
 
-The final piece missing here is that the BuildTreeTracker class will still have a reference to ChildA being the current node instead of Root when PreBuildUp is invoked for ChildB. This is where the custom action of the recovery class comes in. The BuildTreeTracker.PreBuildUp method has been updated to create the BuildTreeRecovery class and use it in a recovery stack. The action passed to its constructor is a lambda expression that repairs the assignment of the current node in the build tree to be the parent of the failed node.{% highlight csharp linenos %}
+The final piece missing here is that the BuildTreeTracker class will still have a reference to ChildA being the current node instead of Root when PreBuildUp is invoked for ChildB. This is where the custom action of the recovery class comes in. The BuildTreeTracker.PreBuildUp method has been updated to create the BuildTreeRecovery class and use it in a recovery stack. The action passed to its constructor is a lambda expression that repairs the assignment of the current node in the build tree to be the parent of the failed node.
+
+{% highlight csharp linenos %}
 public override void PreBuildUp(IBuilderContext context)
 {
     base.PreBuildUp(context);

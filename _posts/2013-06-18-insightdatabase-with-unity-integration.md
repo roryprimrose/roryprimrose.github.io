@@ -9,7 +9,9 @@ One of my favourite development packages to use over the last year has been a mi
 
 I haven’t been able to play with this feature until the last week. One of the roadblocks was that I use Unity as my IoC for dependency injection which does not natively support injecting these types of instances. What I need is to be able to configure a Unity container to return an auto-implemented interface in a constructor. I have created Unity extensions before for injecting [ConnectionStringSettings][2], [AppSettings][3] and [RealProxy implementations][4] so creating one for Insight.Database should be simple. The RealProxy Unity extension was very similar to what I need as the logic is just about the same.
 
-I want to support Unity configuration so we need to start with a ParameterValueElement class.{% highlight csharp linenos %}
+I want to support Unity configuration so we need to start with a ParameterValueElement class.
+
+{% highlight csharp linenos %}
 namespace MyApplication.Server.Unity
 {
     using System;
@@ -84,7 +86,9 @@ namespace MyApplication.Server.Unity
 
 This class leverages a variant of the aforementioned ConnectionStringSettings Unity extension which reads database connection information from Azure configuration. You can easily change this part of the class to read the connection string from wherever is appropriate in your system.
 
-Next we need an InjectionParameterValue class that will actual create the instance when the type is resolved in/by Unity.{% highlight csharp linenos %}
+Next we need an InjectionParameterValue class that will actual create the instance when the type is resolved in/by Unity.
+
+{% highlight csharp linenos %}
 namespace MyApplication.Server.Unity
 {
     using System;
@@ -159,7 +163,9 @@ namespace MyApplication.Server.Unity
 
 This class will either create a connection or a reliable connection using the extension methods available in Insight.Database. It then gets a reflected reference to the As<T> extension method that converts that connection into an auto-implemented interface. This is the instance that gets returned.
 
-Unity needs to know about the custom extension so that it can support it in configuration. The element class needs to be registered with Unity via a SectionExtension.{% highlight csharp linenos %}
+Unity needs to know about the custom extension so that it can support it in configuration. The element class needs to be registered with Unity via a SectionExtension.
+
+{% highlight csharp linenos %}
 namespace MyApplication.Server.Unity
 {
     using Microsoft.Practices.Unity.Configuration;
@@ -180,7 +186,9 @@ namespace MyApplication.Server.Unity
 }
 {% endhighlight %}
 
-Lastly the configuration in Unity needs a pointer to the SectionExtension.{% highlight xml linenos %}
+Lastly the configuration in Unity needs a pointer to the SectionExtension.
+
+{% highlight xml linenos %}
 <?xml version="1.0"?>
 <unity>
     
@@ -191,7 +199,9 @@ Lastly the configuration in Unity needs a pointer to the SectionExtension.{% h
 </unity>
 {% endhighlight %}
 
-The only thing left to do is use the Unity configuration to inject an auto-implemented interface instance.{% highlight xml linenos %}
+The only thing left to do is use the Unity configuration to inject an auto-implemented interface instance.
+
+{% highlight xml linenos %}
 <register type="MyApplication.Server.BusinessContracts.IAccountManager, MyApplication.Server.BusinessContracts"
             mapTo="MyApplication.Server.Business.AccountManager, MyApplication.Server.Business">
     <constructor>

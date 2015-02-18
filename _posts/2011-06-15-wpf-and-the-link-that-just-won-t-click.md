@@ -9,7 +9,9 @@ I’ve been playing with WPF over the last month. It has been great to finally w
 
 I can only guess what the design reason is behind this. The only thing the control seems to do is fire off a RequestNavigate event. Every implementation of this control in a form then needs to manually handle this event to fire off the navigation uri. This is obviously going to be duplicated effort as each usage of the hyperlink control will execute the same logic to achieve this outcome.
 
-I have put together the following custom control for my project to suit my purposes.{% highlight csharp linenos %}
+I have put together the following custom control for my project to suit my purposes.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Switch.Controls
 {
     using System;

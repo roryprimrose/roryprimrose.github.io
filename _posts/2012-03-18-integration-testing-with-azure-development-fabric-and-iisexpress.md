@@ -7,7 +7,9 @@ date: 2012-03-18 22:39:46 +10:00
 
 This post puts together the code posted in the previous two posts ([here][0] and [here][1]).
 
-The following code is what I am using the spin up the Azure storage emulator, Azure compute emulator and IISExpress so that I can run my system through its integration tests.{% highlight csharp linenos %}
+The following code is what I am using the spin up the Azure storage emulator, Azure compute emulator and IISExpress so that I can run my system through its integration tests.
+
+{% highlight csharp linenos %}
 namespace MySystem.Server.Web.IntegrationTests
 {
     using System;

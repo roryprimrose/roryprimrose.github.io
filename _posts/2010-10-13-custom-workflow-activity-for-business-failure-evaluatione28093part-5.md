@@ -11,7 +11,9 @@ At the very least, this activity needs to be able to contain multiple BusinessFa
 
 There is no reason to restrict the child activities to the BusinessFailureEvaluator activity type so it will allow any child activity type. The screenshot above demonstrates this by adding an ExecuteBookmark activity in the middle of the business evaluators within the scope. ![image][3]
 
-The activity has the same behaviour as BusinessFailureEvaluator for managing the generic type on the activity. It defaults to using Int32 and exposes an ArgumentType property to change the type after the activity is on the designer.{% highlight csharp linenos %}
+The activity has the same behaviour as BusinessFailureEvaluator for managing the generic type on the activity. It defaults to using Int32 and exposes an ArgumentType property to change the type after the activity is on the designer.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
 { 
     using System;

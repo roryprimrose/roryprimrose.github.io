@@ -9,7 +9,9 @@ I’ve been working on a side project that works with HTML responses from websit
 
 So my debugging efforts seem to have uncovered an issue in HttpUtility.HtmlAttributeEncode (or more specifically the HttpEncoder class).
 
-The problem can be simply expressed by the following code.{% highlight csharp linenos %}
+The problem can be simply expressed by the following code.
+
+{% highlight csharp linenos %}
 using System;
 using System.Web;
 namespace ConsoleApplication1
@@ -27,7 +29,9 @@ namespace ConsoleApplication1
 
 The call to HttpUtility.HtmlAttributeEncode produces the result <p/> instead of <p/>. This is a problem in terms of putting encoded XML in a HTML attribute. It is up to the HTML parser to determine how to fix up the corrupted HTML.
 
-For example, encode "<p/>" and put it into a hidden field and you then get HTML like the following:{% highlight xml linenos %}
+For example, encode "<p/>" and put it into a hidden field and you then get HTML like the following:
+
+{% highlight xml linenos %}
 <form>
     <input type="hidden" name="DataSet" value="<p/>" />
     <input type="submit" name="Submit" />
@@ -36,7 +40,9 @@ For example, encode "<p/>" and put it into a hidden field and you then get HTML 
 
 The interpretation of this HTML could either implicitly consider the > in the attribute as > or add in an implicit " before the literal > to close out the attribute. The first outcome would be correct HTML and the second would continue to produce incorrect HTML. The big problem here is an assumption that all interpreters of HTML are going to make the same decision.
 
-The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the > character.{% highlight csharp linenos %}
+The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the > character.
+
+{% highlight csharp linenos %}
 public class TagHttpEncoder : HttpEncoder
 {
     /// <inheritdoc />
@@ -55,7 +61,9 @@ public class TagHttpEncoder : HttpEncoder
 }
 {% endhighlight %}
 
-This encoder can then be hooked up to ASP.Net in Global.asax.{% highlight csharp linenos %}
+This encoder can then be hooked up to ASP.Net in Global.asax.
+
+{% highlight csharp linenos %}
 protected void Application_Start(object sender, EventArgs e)
 {
     HttpEncoder.Current = new TagHttpEncoder();

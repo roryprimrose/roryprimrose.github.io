@@ -9,7 +9,9 @@ I’ve been wanting to get dependency injection happening for ASP.Net pages like
 
 My version uses a single IHttpModule without any other dependencies. The only impact on the application is to configure the module in web.config. 
 
-My UnityHttpModule looks like the following. {% highlight csharp linenos %}
+My UnityHttpModule looks like the following. 
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics.Contracts;
 using System.Web;
@@ -139,7 +141,9 @@ The instancing behaviour of IHttpModule must be considered for this implementati
 
 Once created, this module builds up pages with injection values and then tears them down again when the pages are finished with their request processing.
 
-The following is an example ASP.Net page that uses property injection.{% highlight csharp linenos %}
+The following is an example ASP.Net page that uses property injection.
+
+{% highlight csharp linenos %}
 using System;
 using System.Configuration;
 using System.Security.Cryptography;
@@ -176,7 +180,9 @@ namespace Neovolve.Toolkit.Unity.WebIntegrationTests
 }
 {% endhighlight %}
 
-The property injection for this page is configured via the web.config. The following example also includes the configuration for the module for both classic and integrated IIS pipeline modes.{% highlight xml linenos %}
+The property injection for this page is configured via the web.config. The following example also includes the configuration for the module for both classic and integrated IIS pipeline modes.
+
+{% highlight xml linenos %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>

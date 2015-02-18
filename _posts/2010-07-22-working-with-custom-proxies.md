@@ -7,7 +7,9 @@ date: 2010-07-22 12:56:00 +10:00
 
 My recent post about [creating proxies with RealProxy][0] provided an example for creating a custom proxy implementation. Using proxies can provide a lot of power and flexibility to an application. Most of this code is common plumbing code that can be refactored out into some reusable classes.
 
-The ProxyHandler class below is the first of these reusable classes. It helps with creating RealProxy types by providing the common logic of method identification, exception processing and method response management. It also provides the support for a derived proxy implementation to leverage some initialization logic provided by the calling application. It uses a MethodResolver class from my [Toolkit project][1] to identify the method to invoke on the proxy.{% highlight csharp linenos %}
+The ProxyHandler class below is the first of these reusable classes. It helps with creating RealProxy types by providing the common logic of method identification, exception processing and method response management. It also provides the support for a derived proxy implementation to leverage some initialization logic provided by the calling application. It uses a MethodResolver class from my [Toolkit project][1] to identify the method to invoke on the proxy.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -88,7 +90,9 @@ namespace Neovolve.Toolkit.Communication
 }
 {% endhighlight %}
 
-The ProxyManager class below encapsulates the creation and lifetime management of a ProxyHandler instance. It creates a proxy instance from the ProxyHandler when the Proxy property is referenced and disposes the proxy when the ProxyManager is disposed. It has some logic for attempted to resolve a ProxyHandler<T> or then falling back on a default proxy or a proxy to a WCF channel if no ProxyHandler is provided in its constructor.{% highlight csharp linenos %}
+The ProxyManager class below encapsulates the creation and lifetime management of a ProxyHandler instance. It creates a proxy instance from the ProxyHandler when the Proxy property is referenced and disposes the proxy when the ProxyManager is disposed. It has some logic for attempted to resolve a ProxyHandler<T> or then falling back on a default proxy or a proxy to a WCF channel if no ProxyHandler is provided in its constructor.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -201,7 +205,9 @@ namespace Neovolve.Toolkit.Communication
 }
 {% endhighlight %}
 
-These classes work together to make it really easy to work with custom proxies. The most common usage I have for these classes is to proxy a call out to a WCF service. The following is an example of how this looks in a client console application. The benefit here for working with WCF is that all the management of WCF channels is abstracted away from the application code.{% highlight csharp linenos %}
+These classes work together to make it really easy to work with custom proxies. The most common usage I have for these classes is to proxy a call out to a WCF service. The following is an example of how this looks in a client console application. The benefit here for working with WCF is that all the management of WCF channels is abstracted away from the application code.
+
+{% highlight csharp linenos %}
 using System;
 using System.ServiceModel;
 using Neovolve.Toolkit.Communication;

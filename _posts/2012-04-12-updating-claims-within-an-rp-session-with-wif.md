@@ -7,7 +7,9 @@ date: 2012-04-12 22:17:14 +10:00
 
 I have a scenario where a web application is using WIF to manage federated security. The system will get a SAML token from an STS for the authenticated user. The token is only going to contain the NameIdentifier claim (a typical Windows Live token for example). This means that the application itself needs to manage the account information related to an authenticated user.
 
-The application will store the first name, last name and email address of the user. These values will be populated into the IClaimsPrincipal for an existing account using a custom ClaimsAuthenticationManager implementation.{% highlight csharp linenos %}
+The application will store the first name, last name and email address of the user. These values will be populated into the IClaimsPrincipal for an existing account using a custom ClaimsAuthenticationManager implementation.
+
+{% highlight csharp linenos %}
 public override IClaimsPrincipal Authenticate(String resourceName, IClaimsPrincipal incomingPrincipal)
 {
     IClaimsPrincipal principal = base.Authenticate(resourceName, incomingPrincipal);
@@ -79,7 +81,9 @@ I don’t like option #1 because the application is essentially logging the user
 
 This leaves me with having to update the FedAuth cookie mid-session from within the RP. The main reason that this is not ideal is because it is creating a coupling between the RP and the security implementation. It really is the lesser of two evils however and I think that a better UX wins over a purist architecture.
 
-The next issue is that there is no clean API to use to write a new FedAuth cookie to the HttpResponse using the available FederatedAuthentication information. I came up with this extension method with the help of Reflector.{% highlight csharp linenos %}
+The next issue is that there is no clean API to use to write a new FedAuth cookie to the HttpResponse using the available FederatedAuthentication information. I came up with this extension method with the help of Reflector.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics.Contracts;
 using Microsoft.IdentityModel.Claims;

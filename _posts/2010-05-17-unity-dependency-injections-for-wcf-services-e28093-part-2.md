@@ -9,7 +9,9 @@ In [Part 1][0], I described the code used to leverage ServiceHostFactory to crea
 
 Using a configuration based service behavior is the answer to situations where these constraints are a problem. The UnityServiceElement class is used to define the configuration support for the UnityServiceBehavior. As outlined in the last post, the UnityServiceBehavior class is used to assign a custom instance provider to each endpoint in the service. The instance provider is used to resolve a service instance from a Unity container.
 
-The UnityServiceElement class looks like the following. The UnityServiceElement calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][1].{% highlight csharp linenos %}
+The UnityServiceElement class looks like the following. The UnityServiceElement calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][1].
+
+{% highlight csharp linenos %}
 using System; 
 using System.Configuration;
 using System.Diagnostics.Contracts;
@@ -107,7 +109,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The configuration to hook this behavior up to a service looks like this.{% highlight xml linenos %}
+The configuration to hook this behavior up to a service looks like this.
+
+{% highlight xml linenos %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>

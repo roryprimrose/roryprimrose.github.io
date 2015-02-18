@@ -11,7 +11,9 @@ Using a custom extension to manage business failures abstracts workflow activiti
 
 The Activity class in WF 3.0 and 3.5 provided a public Activity Parent property that could be used to traverse up the activity tree hierarchy. Unfortunately this property has been marked as internal in WF 4.0. Reflection could be used to [get around this restriction][1] but it is a hack at best. This prevents an automated method of walking up the workflow activity hierarchy. Similarly, inspecting child activity hierarchies is unreliable as there is no standard method for exposing or identifying child activities even if they are publicly available on an activity type. This prevents automated discovery of child activities. In addition to these issues, the automatic detection of activity hierarchies for linking activities may produce unintended results as activities are linked when they were not expected to be. 
 
-The alternative to these automated methods is to implement an explicit opt-in design where a parent activity informs the extension about a link to a child activity. This makes the parent activity responsible for informing the extension about a link to a child activity. The extension then uses this knowledge in the processing of the business failure.{% highlight csharp linenos %}
+The alternative to these automated methods is to implement an explicit opt-in design where a parent activity informs the extension about a link to a child activity. This makes the parent activity responsible for informing the extension about a link to a child activity. The extension then uses this knowledge in the processing of the business failure.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Extensions
 { 
     using System;

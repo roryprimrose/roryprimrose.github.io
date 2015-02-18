@@ -4,7 +4,9 @@ categories : .Net, Software Design
 date: 2011-10-25 13:13:26 +10:00
 ---
 
-I have a pet peeve with how Action and TryAction style members are often implemented. Too often I see the following style of implementation.{% highlight csharp linenos %}
+I have a pet peeve with how Action and TryAction style members are often implemented. Too often I see the following style of implementation.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +45,9 @@ public class SomeClass
 
 This is undesirable because there is an exception being throw in the standard Action method which the TryAction method only uses to determine the return value. It is an expensive way to identify that the TryAction method has failed to successfully do its work. The most likely reason code being written this way is because the Action method was written first with the TryAction retrofitted later.
 
-With a trivial amount of work, this can be written as follows.{% highlight csharp linenos %}
+With a trivial amount of work, this can be written as follows.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.Generic;
 using System.Linq;

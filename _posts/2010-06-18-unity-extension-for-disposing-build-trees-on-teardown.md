@@ -17,7 +17,9 @@ The [IUnityContainer][4] interface in Unity provides a [TearDown][5] method whic
 
 This can be addressed by creating a builder strategy that is hooked up via a Unity extension. This extension will allow for IDisposable instances to be disposed by the container when TearDown is invoked. 
 
-My initial version of this implementation was very simple.{% highlight csharp linenos %}
+My initial version of this implementation was very simple.
+
+{% highlight csharp linenos %}
 using System;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
@@ -87,7 +89,9 @@ The benefit of tracking and storing a build tree means that if dependencies are 
 
 **The Code**
 
-Build trees are made up build tree nodes which may have 0-many children and a reference back to their parent.{% highlight csharp linenos %}
+Build trees are made up build tree nodes which may have 0-many children and a reference back to their parent.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
@@ -152,7 +156,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The DisposableStrategyExtension is responsible for attaching the build tree tracker strategy and for disposing all the build trees when the owning container is disposed.{% highlight csharp linenos %}
+The DisposableStrategyExtension is responsible for attaching the build tree tracker strategy and for disposing all the build trees when the owning container is disposed.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Practices.ObjectBuilder2;
@@ -210,7 +216,9 @@ The BuildTreeTracker is responsible for creating a build tree in a Resolve or Bu
 
 The tracker will find a build tree for an instance provided to TearDown and run a top down recursive dispose operation against the build tree. It will ignore nodes in the tree that were not created by the container or have been garbage collected and skip over nodes that exist in a lifetime manager. Once a build tree has been disposed, the tracker will also look for build trees that have root instances that have been garbage collected and dispose those build trees as well. Any build tree that the tracker has disposed are then removed to minimize memory usage.
 
-The tracker uses a ThreadStatic to track the current node being built in a build tree as the container may be creating multiple build trees over several threads at the same time. Similarly the tracker needs to protect the list of build trees with suitable locking. The locking in this case uses my [LockReader][9] and [LockWriter][10] classes.{% highlight csharp linenos %}
+The tracker uses a ThreadStatic to track the current node being built in a build tree as the container may be creating multiple build trees over several threads at the same time. Similarly the tracker needs to protect the list of build trees with suitable locking. The locking in this case uses my [LockReader][9] and [LockWriter][10] classes.
+
+{% highlight csharp linenos %}
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -380,7 +388,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The BuildTreeTracker calls out to a helper class that is used to dispose build trees.{% highlight csharp linenos %}
+The BuildTreeTracker calls out to a helper class that is used to dispose build trees.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -474,7 +484,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-Lastly there is the code to hook up the extension.{% highlight csharp linenos %}
+Lastly there is the code to hook up the extension.
+
+{% highlight csharp linenos %}
 public void ExampleExtensionUsage()
 {
     IDisposableType actual;
@@ -494,7 +506,9 @@ public void ExampleExtensionUsage()
 }
 {% endhighlight %}
 
-This can also be done via configuration.{% highlight xml linenos %}
+This can also be done via configuration.
+
+{% highlight xml linenos %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>

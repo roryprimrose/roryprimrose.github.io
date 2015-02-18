@@ -11,13 +11,17 @@ Using a project template was going to be the best way to achieve portability and
 
 The biggest limitation with the proof of concept project was that the resource file xml needs to reference the MSI package with a static location. This is going to be a problem when the MSI package source is the output of a WiX project in the same solution. The WiX project by default will either output the MSI to bin\Debug or bin\Release depending on the current build configuration. This is going to cause problems with the resource file needing a single location for the MSI package.
 
-The answer to this was to change the proj file in the template to provide some custom MSBuild logic to move the MSI package from the WiX target directory to a known location for the resource file. The resource xml file in the project template was updated to point to the obj directory as the static source.{% highlight xml linenos %}
+The answer to this was to change the proj file in the template to provide some custom MSBuild logic to move the MSI package from the WiX target directory to a known location for the resource file. The resource xml file in the project template was updated to point to the obj directory as the static source.
+
+{% highlight xml linenos %}
 <data name="Package" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\obj\Package;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 </data>
 {% endhighlight %}
 
-The project file in the template then had its BeforeBuild target changed to ensure that the package is copied to the resource xml static file location before the bootstrapper project is compiled.{% highlight xml linenos %}
+The project file in the template then had its BeforeBuild target changed to ensure that the package is copied to the resource xml static file location before the bootstrapper project is compiled.
+
+{% highlight xml linenos %}
 <Target Name="BeforeBuild">
     <PropertyGroup>
     <PackagePath>$packagePath$</PackagePath>

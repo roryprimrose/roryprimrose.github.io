@@ -11,13 +11,17 @@ I don’t want to change either the css file from the Nuget package or the locat
 
 I looked at custom routing options but these just seemed to cause more problems than they solved. It then dawned on me that I could use an IBundleBuilder implementation now that I know [how they work][1].
 
-This is what I have for my current Font Awesome StyleBundle configuration.{% highlight csharp linenos %}
+This is what I have for my current Font Awesome StyleBundle configuration.
+
+{% highlight csharp linenos %}
 bundles.Add(
     new StyleBundle("~/css/fontawesome")
         .Include("~/Content/font-awesome.css"));
 {% endhighlight %}
 
-The contents of the css file need to be adjusted when the bundle is created so that they include the Content directory, but also make the resource reference relative to the application root. Enter the ReplaceContentsBundleBuilder.{% highlight csharp linenos %}
+The contents of the css file need to be adjusted when the bundle is created so that they include the Content directory, but also make the resource reference relative to the application root. Enter the ReplaceContentsBundleBuilder.
+
+{% highlight csharp linenos %}
 namespace MyNamespace
 {
     using System.Collections.Generic;
@@ -59,7 +63,9 @@ namespace MyNamespace
 }
 {% endhighlight %}
 
-This class makes it super easy to modify the bundle of the fly to give me the translation that I require without having to tweek anything coming from Nuget. The bundle config is now:{% highlight csharp linenos %}
+This class makes it super easy to modify the bundle of the fly to give me the translation that I require without having to tweek anything coming from Nuget. The bundle config is now:
+
+{% highlight csharp linenos %}
 bundles.Add(
     new StyleBundle("~/css/fontawesome")
     {

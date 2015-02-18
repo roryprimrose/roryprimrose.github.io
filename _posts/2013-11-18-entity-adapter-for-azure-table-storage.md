@@ -8,7 +8,9 @@ When working with Azure Table Storage you will ultimately have to deal with ITab
 
 The problem here is that ITableEntity is still leaking outside of the Azure DAL even though it is represented as the expected type. While I don’t like my classes leaking knowledge inappropriately to higher layers I also don’t like plumbing logic that converts between two model classes that are logically the same (although tools like AutoMapper do take some of this pain away).
 
-Using an entity adapter is a really clean way to get your cake and eat it. The original code of this concept was posted by the Windows Azure Storage Team (you can read it [here][0]). I’ve taken that code and tweaked it slightly to make it a little more reusable.{% highlight csharp linenos %}
+Using an entity adapter is a really clean way to get your cake and eat it. The original code of this concept was posted by the Windows Azure Storage Team (you can read it [here][0]). I’ve taken that code and tweaked it slightly to make it a little more reusable.
+
+{% highlight csharp linenos %}
 namespace MyProject.DataAccess.Azure
 {
     using System;

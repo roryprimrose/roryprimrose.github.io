@@ -6,7 +6,9 @@ date: 2010-07-05 23:15:00 +10:00
 
 I have previously posted about supporting AppSetting value resolution for Unity injection (Unity 1.x [here][0] and Unity 2.0 [here][1]). Today I had a requirement to inject connection string values from application configuration. Like the AppSetting implementation, this creates a nice redirection of injection values as developers and administrators are more familiar with the connection string section in application configuration compared to finding the right value in large amounts of Unity configuration.
 
-This implementation leverages the AppSettingParameterValueExtension class from the prior examples and renames it to SectionExtensionInitiator. This class now configures a Unity section for multiple element extensions rather than a single specific implementation.{% highlight csharp linenos %}
+This implementation leverages the AppSettingParameterValueExtension class from the prior examples and renames it to SectionExtensionInitiator. This class now configures a Unity section for multiple element extensions rather than a single specific implementation.
+
+{% highlight csharp linenos %}
 using Microsoft.Practices.Unity.Configuration;
     
 namespace Neovolve.Toolkit.Unity
@@ -27,7 +29,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The ConnectionStringParameterValueElement is responsible for creating an injection value for a parameter. It can be used to create a parameter for either the String or ConnectionStringSettings types.{% highlight csharp linenos %}
+The ConnectionStringParameterValueElement is responsible for creating an injection value for a parameter. It can be used to create a parameter for either the String or ConnectionStringSettings types.
+
+{% highlight csharp linenos %}
 using System;
 using System.Configuration;
 using System.Globalization;
@@ -110,7 +114,9 @@ namespace Neovolve.Toolkit.Unity
 
 Usually a string parameter would be used as the injection type. This will then decouple the dependency from the System.Configuration assembly. The only time that the ConnectionStringSettings class should be used as the injection parameter type is when the provider information on the connection string configuration is required for some application logic.
 
-The Unity configuration needs to be set up with the SectionExtensionInitiator class to support connection string injection. A connectionString element can then be used to define a connection string injection value.{% highlight xml linenos %}
+The Unity configuration needs to be set up with the SectionExtensionInitiator class to support connection string injection. A connectionString element can then be used to define a connection string injection value.
+
+{% highlight xml linenos %}
 <?xml version="1.0"
         encoding="utf-8" ?>
 <configuration>

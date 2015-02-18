@@ -7,7 +7,9 @@ date: 2012-01-12 22:43:19 +10:00
 
 I’ve been working on some classes that write data to Azure table storage. These classes of course need to be tested. Unfortunately the development fabric only spins up when you F5 an Azure project. This is a little problematic when the execution is from a unit test framework.
 
-Some quick searching brought up [this post][0] which provides 99% of the answer. The only hiccup with this solution is that it is targeting the 1.0 version of the Azure SDK. I have updated this code to work with the 1.6 version of the SDK.{% highlight csharp linenos %}
+Some quick searching brought up [this post][0] which provides 99% of the answer. The only hiccup with this solution is that it is targeting the 1.0 version of the Azure SDK. I have updated this code to work with the 1.6 version of the SDK.
+
+{% highlight csharp linenos %}
 namespace MyProduct.Server.DataAccess.Azure.IntegrationTests
 {
     using System;

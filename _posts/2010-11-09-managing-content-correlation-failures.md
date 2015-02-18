@@ -32,7 +32,9 @@ My scenario from yesterday’s post was using a TransactionId as the value that 
 
 The solution to this issue is to extend the behaviour of an IErrorHandler implementation. The change in question will be to determine that the thrown exception is a content correlation exception. It will then convert the exception to a specific business fault based on the current service operation.
 
-The ProvideFault method in the IErrorHandler implementation in the service has been updated to manage this detection and conversion process.{% highlight csharp linenos %}
+The ProvideFault method in the IErrorHandler implementation in the service has been updated to manage this detection and conversion process.
+
+{% highlight csharp linenos %}
 public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
 {
     Exception errorToProcess = AttemptBusinessFailureExceptionConversion(error);
@@ -80,7 +82,9 @@ public void ProvideFault(Exception error, MessageVersion version, ref Message fa
 }
 {% endhighlight %}
 
-The existing code already managed a BusinessFailureException<T> and converted it to a BusinessFault that is a known fault contract for the service. The method now makes a call out to AttemptBusinessFailureExceptionConversion as an initial step.{% highlight csharp linenos %}
+The existing code already managed a BusinessFailureException<T> and converted it to a BusinessFault that is a known fault contract for the service. The method now makes a call out to AttemptBusinessFailureExceptionConversion as an initial step.
+
+{% highlight csharp linenos %}
 private static Exception AttemptBusinessFailureExceptionConversion(Exception errorToProcess)
 {
     FaultException thrownFaultException = errorToProcess as FaultException;

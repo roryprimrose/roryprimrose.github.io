@@ -7,7 +7,9 @@ date: 2012-03-18 22:24:49 +10:00
 
 I [posted previously][0] about manually spinning up Azure storage emulator in the development fabric so that it can be used with integration tests. Ever since then I have been using a vastly updated version of the code I previously published. 
 
-This updated one might be helpful for others to leverage as well. This version allows for starting and stopping both the storage emulator and the compute emulator. It makes its best attempt at automatically finding the Azure project service directory and the service configuration for the current build configuration. If this does not work for your scenario, then you can also manually provide this information.{% highlight csharp linenos %}
+This updated one might be helpful for others to leverage as well. This version allows for starting and stopping both the storage emulator and the compute emulator. It makes its best attempt at automatically finding the Azure project service directory and the service configuration for the current build configuration. If this does not work for your scenario, then you can also manually provide this information.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Azure
 {
     using System;
@@ -303,7 +305,9 @@ namespace Neovolve.Toolkit.Azure
 }
 {% endhighlight %}
 
-This makes use of an extension method on the TestContext class.{% highlight csharp linenos %}
+This makes use of an extension method on the TestContext class.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Azure
 {
     using System;

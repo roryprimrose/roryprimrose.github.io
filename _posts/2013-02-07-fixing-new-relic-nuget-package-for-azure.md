@@ -11,7 +11,9 @@ I tried to install the [New Relic][0] Nuget package for an Azure solution. Unfor
 
 One of the good things about Nuget is that the install scripts are easily available to the solution.
 
-The install script was trying to add the following xml fragment to the start of the web role definition in ServiceDefinition.csdef file.{% highlight xml linenos %}
+The install script was trying to add the following xml fragment to the start of the web role definition in ServiceDefinition.csdef file.
+
+{% highlight xml linenos %}
 <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
     <Environment>

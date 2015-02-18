@@ -7,7 +7,9 @@ date: 2010-10-12 13:28:10 +10:00
 
 The [previous post][0] provided the high level design requirements for a custom WF activity that evaluates business failures. This post will provide the base classes that will support the custom WF activity.
 
-The first issue to work on is how to express a business failure. The design requirements indicated that a business failure needs to identify a code and a description. The design also defined that the code value must be generic in order to avoid placing an implementation constraint on the consuming application.  {% highlight csharp linenos %}
+The first issue to work on is how to express a business failure. The design requirements indicated that a business failure needs to identify a code and a description. The design also defined that the code value must be generic in order to avoid placing an implementation constraint on the consuming application.  
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -50,7 +52,9 @@ namespace Neovolve.Toolkit.Workflow
 
 The BusinessFailure<T> class supports these design goals. There is a constraint defined for the code type T that enforces the type to be a struct. Primarily this is to ensure that the code value is serializable and enforces failure codes to be simple types. One thing to note about this class is that it is marked as Serializable. This is critically important in order to support scenarios where a business failure has been created but not yet processed before the executing workflow is persisted.
 
-The next part of the design to address is how a business failure gets processed. The design describes that this will be done using a custom exception. The exception allows calling applications have access to all the failures related to an exception and enforces applications to leverage structured error handling practises to process business failures.{% highlight csharp linenos %}
+The next part of the design to address is how a business failure gets processed. The design describes that this will be done using a custom exception. The exception allows calling applications have access to all the failures related to an exception and enforces applications to leverage structured error handling practises to process business failures.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow
 {
     using System;

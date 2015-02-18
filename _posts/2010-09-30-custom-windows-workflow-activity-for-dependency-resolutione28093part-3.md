@@ -10,7 +10,9 @@ The original implementation of this activity supported resolving a single depend
 
 The ScheduleAction method provides the ability for a child activity to be scheduled for execution with one or more delegate arguments. This is the way that ForEach<T> and ParallelForEach<T> activities work. In these cases the argument defines the item being provided in the iterator of the loop behind the activity. This is seen below being defined as the variable “item”.![image][1]
 
-The custom activity defined here has a concept of the number of arguments that it supports at runtime. This is defined at design time using a GenericArgumentCount enum definition. In part this enum is used to support the design-time experience. The activity also uses this value to ensure that only the intended number of generic arguments are provided to the child activity.{% highlight csharp linenos %}
+The custom activity defined here has a concept of the number of arguments that it supports at runtime. This is defined at design time using a GenericArgumentCount enum definition. In part this enum is used to support the design-time experience. The activity also uses this value to ensure that only the intended number of generic arguments are provided to the child activity.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow
 { 
     public enum GenericArgumentCount
@@ -35,7 +37,9 @@ namespace Neovolve.Toolkit.Workflow
 }
 {% endhighlight %}
 
-The custom activity for providing dependency resolution is a generic InstanceResolver class. It defines the 16 generic arguments for the type definitions of the 16 possible dependencies to resolve. It inherits from NativeActivity in order to get access to the NativeActivityContext for scheduling child activity execution and for hooking into activity lifecycle events.{% highlight csharp linenos %}
+The custom activity for providing dependency resolution is a generic InstanceResolver class. It defines the 16 generic arguments for the type definitions of the 16 possible dependencies to resolve. It inherits from NativeActivity in order to get access to the NativeActivityContext for scheduling child activity execution and for hooking into activity lifecycle events.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -356,7 +360,9 @@ This is a usability issue for the InstanceResolver class as the developer using 
 
 On a side note, there is a way around this for activity types that define one generic argument. Decorating the activity with the DefaultTypeArgumentAttribute allows you to specify the default type. ForEach<T> and ParallelForEach<T> use this to define the type of int. This is why the developer does not see the above prompt when dropping these activities onto the design surface. Unfortunately this attribute was only designed to support a single generic argument.
 
-The workaround for this usability issue is to use some indirection. Another activity that implements IActivityTemplateFactory can be used to produce this result. This is where the non-generic InstanceResolver class comes into play.{% highlight csharp linenos %}
+The workaround for this usability issue is to use some indirection. Another activity that implements IActivityTemplateFactory can be used to produce this result. This is where the non-generic InstanceResolver class comes into play.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;

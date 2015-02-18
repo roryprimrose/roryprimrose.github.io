@@ -13,7 +13,9 @@ All the time is getting consumed in a single call to Microsoft.Practices.Unity.S
 
 The GetValue method obtains a lock for the current thread and only releases it if a non-null value is held by the lifetime manager. This logic becomes a big issue if the lifetime manager holds a null value and two different threads call GetValue. I would like to know why this behaviour is there as it is intentional according to the documentation of the function.
 
-This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.{% highlight csharp linenos %}
+This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.
+
+{% highlight csharp linenos %}
 private static Object GetLifetimePolicyValue(ILifetimePolicy lifetimeManager)
 {
     if (lifetimeManager is IRequiresRecovery)
@@ -44,7 +46,9 @@ Testing the service again with the profiler then identified a problem with this 
 
 This workaround will consume threads that will be held on a lock and potentially never get released. This is going to be unacceptable as more and more threads attempt to look at values held in the lifetime manager policies, ultimately resulting in thread starvation.
 
-The next solution is to use a lifetime manager that gets around this issue by never allowing the lifetime manager to be assigned a null value.{% highlight csharp linenos %}
+The next solution is to use a lifetime manager that gets around this issue by never allowing the lifetime manager to be assigned a null value.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Jabiru.Server.Services
 {
     using System;
@@ -66,7 +70,9 @@ namespace Neovolve.Jabiru.Server.Services
 }
 {% endhighlight %}
 
-This idea fails to get around the locking issue when the lifetime manager is created but never has a value assigned. The next version of this SafeSingletonLifetimeManager solves this by managing its own locking logic around whether a non-null value has been assigned to the policy.{% highlight csharp linenos %}
+This idea fails to get around the locking issue when the lifetime manager is created but never has a value assigned. The next version of this SafeSingletonLifetimeManager solves this by managing its own locking logic around whether a non-null value has been assigned to the policy.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Jabiru.Server.Services
 {
     using System;

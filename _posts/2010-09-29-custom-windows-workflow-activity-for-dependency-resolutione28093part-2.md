@@ -9,7 +9,9 @@ My [previous post][0] described the design goals for creating a custom WF4 activ
 
 The main issue with dependency resolution/injection in WF is supporting persistence. An exception will be thrown when a workflow is persisted when it holds onto a dependency that is not serializable. The previous post indicated that the solution to this issue is to have the workflow persist the resolution description and explicitly prevent serialization of the resolved instance itself.
 
-The way this is done is via an InstanceHandler<T> class.{% highlight csharp linenos %}
+The way this is done is via an InstanceHandler<T> class.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -74,7 +76,9 @@ This class can be serialized at any point and only the definition of how to reso
     
 The first reason is merely a beneficial side effect. The second reason listed is a technical restriction that comes into play when a persisted workflow resumes and the Instance property of the handler is invoked. There is no reference to an activity context at this point and no prior code can execute in which the dependency can be resolved.
 
-This class makes a static call out to an InstanceManagerExtension to resolve the instance. The InstanceManagerExtension class is used to abstract the resolution, management and clean up logic for instances requested by the handler class.{% highlight csharp linenos %}
+This class makes a static call out to an InstanceManagerExtension to resolve the instance. The InstanceManagerExtension class is used to abstract the resolution, management and clean up logic for instances requested by the handler class.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Extensions
 {
     using System;

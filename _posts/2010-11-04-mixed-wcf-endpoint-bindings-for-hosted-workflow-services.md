@@ -7,7 +7,9 @@ date: 2010-11-04 15:37:00 +10:00
 
 I am working on a project where I have multiple hosted WF services. All the services were secured using federated security with WIF and a custom STS. This has all worked fine until I added a new service workflow that needed to be accessible by anonymous users. This is where things get a little tricky.
 
-The WCF configuration for the hosted services looked a little like this before the anonymous service was added.{% highlight xml linenos %}
+The WCF configuration for the hosted services looked a little like this before the anonymous service was added.
+
+{% highlight xml linenos %}
 <system.serviceModel>
     <protocolMapping>
         <add scheme=&quot;http&quot;
@@ -69,7 +71,9 @@ The first step is to define a configuration name against the xamlx file. This is
 
 This configuration name needs to match to a WCF service configuration name. This configuration can then define a different binding than the default for the HTTP stack. It can then also define the behaviour to use for that endpoint binding.
 
-The relevant change to the above configuration is to add the following.{% highlight xml linenos %}
+The relevant change to the above configuration is to add the following.
+
+{% highlight xml linenos %}
 <services>
     <service name=&quot;Neovolve.Jabiru.Server.Services.Registration&quot;>
         <endpoint binding=&quot;basicHttpBinding&quot;

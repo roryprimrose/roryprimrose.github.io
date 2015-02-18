@@ -11,7 +11,9 @@ There are two places that provide this icon support. The first is in the Visual 
 
 **Visual Studio toolbox**
 
-Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.{% highlight csharp linenos %}
+Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.
+
+{% highlight csharp linenos %}
 [ToolboxBitmap(typeof(ExecuteBookmark), "book_open.png")]
 public sealed class ExecuteBookmark : NativeActivity
 {% endhighlight %}
@@ -28,7 +30,9 @@ The workflow designer support for custom icons has a similar layout as the toolb
 
 The reason for the separate file is that the Build Action for the designer image must be set to Resource instead of Embedded Resource that the ToolboxBitmapAttribute requires. Using two files for this purpose should not be a big issue as the designers are typically located in a separate *.Design.dll assembly (see [here][6] for the details).![image][7]
 
-The XAML in the designer for the activity then references this image file.{% highlight xml linenos %}
+The XAML in the designer for the activity then references this image file.
+
+{% highlight xml linenos %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.ExecuteBookmarkDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

@@ -21,7 +21,9 @@ Some of the features of Headless are:
 
 **Examples**
 
-Headless can use a page model class that describes the model, location and behaviour of a page.{% highlight csharp linenos %}
+Headless can use a page model class that describes the model, location and behaviour of a page.
+
+{% highlight csharp linenos %}
 using (var browser = new Browser())
 {
     var homePage = browser.GoTo<HomePage>();
@@ -36,7 +38,9 @@ using (var browser = new Browser())
 }
 {% endhighlight %}
 
-It also supports the dynamic keyword if you don’t want to use a model. You can also jump between these two models if that suits.{% highlight csharp linenos %}
+It also supports the dynamic keyword if you don’t want to use a model. You can also jump between these two models if that suits.
+
+{% highlight csharp linenos %}
 using (var browser = new Browser())
 {
     var homePage = browser.GoTo(new Uri("http://mysite"));

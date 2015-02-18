@@ -1,13 +1,13 @@
 ---
 title: Example of coding for testability
 categories : .Net, Software Design
-tags : BlogEngine.Net, Dependency Injection, Unit Testing
+tags : Dependency Injection, Unit Testing
 date: 2008-08-28 12:40:41 +10:00
 ---
 
 I have done it again. In order to work on a particular project, I have been sidetracked into writing a utility to help me continue with what I am actually trying to do. In my defense, I did look around the net for an application that would do what I needed so I didn't have to write it, but no application seemed appropriate.
 
-In essence, I need an application to resolve all the links internal to a website and check their status. This will give me an initial view of the state of the site. I then want to take all of those links and replay the analysis of those resolved links using a different base address. The reason I am doing this is because I am looking at migrating my [CS] based blog to use [BE] instead. As part of that migration, I want to maintain as much of the [CS] url formats as possible so I don't lose my existing audience.
+In essence, I need an application to resolve all the links internal to a website and check their status. This will give me an initial view of the state of the site. I then want to take all of those links and replay the analysis of those resolved links using a different base address. The reason I am doing this is because I am looking at migrating my Community Server based blog to use [BE] instead. As part of that migration, I want to maintain as much of the Community Server url formats as possible so I don't lose my existing audience.
 
 Given that this application is going to chew a lot of bandwidth (my entire site) along with the need for accurate results, I want to make sure that this utility is doing the right thing. Unit testing is critical for this to be successful. I quickly found however that my initial cut is not very testable.
 

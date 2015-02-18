@@ -7,7 +7,9 @@ date: 2012-03-18 22:34:51 +10:00
 
 The system I am currently working uses the development fabric in the Azure SDK for working with Azure web roles and worker roles. I am also using a local WIF STS site to simulate Azure ACS. This allows me to integrate claims based security into the system without having to actually start using an Azure subscription.
 
-The local STS is running on IISExpress. Like the [previous post][0] about running the Azure emulator for integration testing, the STS also needs to be spun up to run the system. The following class provides the wrapper logic for spinning up IISExpress.{% highlight csharp linenos %}
+The local STS is running on IISExpress. Like the [previous post][0] about running the Azure emulator for integration testing, the STS also needs to be spun up to run the system. The following class provides the wrapper logic for spinning up IISExpress.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.TestSupport
 {
     using System;

@@ -11,7 +11,9 @@ This drop down list provides some common types and includes some of the types al
 
 Sometimes you don’t want the TypePresenter to provide every available type. The TypePresenter has a great feature that allows you to restrict the types it displays in this list and the associated “Browse for Types …” dialog. This is done by providing a Func<Type, Boolean> reference on the TypePresenter’s Filter property. 
 
-In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.{% highlight xml linenos %}
+In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.
+
+{% highlight xml linenos %}
 <sapv:TypePresenter HorizontalAlignment="Left"
     VerticalAlignment="Center"
     Margin="6"
@@ -25,7 +27,9 @@ In my scenario, I want to restrict the types available to those that derive from
     Context="{Binding Context}" />
 {% endhighlight %}
 
-The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func<Type, Boolean> signature. The filter method related to the xaml above is the following.{% highlight csharp linenos %}
+The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func<Type, Boolean> signature. The filter method related to the xaml above is the following.
+
+{% highlight csharp linenos %}
 public Boolean ExceptionTypeFilter(Type typeToValidate)
 {
     if (typeToValidate == null)
@@ -50,7 +54,9 @@ Unfortunately the property grid will still use the default TypePresenter impleme
 
 I haven’t figured out a way to change this behaviour and I suspect that it is not possible. 
 
-The final piece of the puzzle is to address what happens when the developer selects an inappropriate type using the property grid. This is where activity validation using CacheMetadata comes into play.{% highlight csharp linenos %}
+The final piece of the puzzle is to address what happens when the developer selects an inappropriate type using the property grid. This is where activity validation using CacheMetadata comes into play.
+
+{% highlight csharp linenos %}
 protected override void CacheMetadata(NativeActivityMetadata metadata)
 {
     metadata.AddDelegate(Body);

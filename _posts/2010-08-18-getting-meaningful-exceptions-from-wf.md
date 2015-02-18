@@ -47,13 +47,20 @@ ut, WorkflowInstanceExtensionManager extensions)
 edr\documents\visual studio 2010\Projects\WorkflowConsoleApplication2\WorkflowCo
 nsoleApplication2\Program.cs:line 12
 {% endhighlight %}
-Exceptions thrown from the workflow engine identify the exception type and message but do not contain an accurate stack trace. Exceptions are caught by the workflow engine and re-thrown when WorkflowInvoker.Invoke is used. This means that the stack trace identifies where the exception has been re-thrown rather than where the exception was originally raised. 
+
+Exceptions thrown from the workflow engine identify the exception type and message but do not contain an accurate stack trace. Exceptions are caught by the workflow engine and re-thrown when WorkflowInvoker.Invoke is used. This means that the stack trace identifies where the exception has been re-thrown rather than where the exception was originally raised. 
 
 Debugging WF activities with this constraint is very difficult. Trying to debug your workflows gets exponentially harder with increasing complexity of the workflow system and it's underlying components. This is compounded when the exception (such as a NullReferenceException) doesn't provide enough information by itself to pinpoint where the exception was thrown.
-The solution to this is in two parts. The first improvement is to provide more detail in the stack trace and the second is to identify the activity hierarchy involved. 
-**Enhancing the stack trace**Using the throw statement on an existing exception instance wipes out any existing stack trace information. This is why you should never catch ex then throw ex, you should always just use the throw statement by itself. This isn’t possible in the case of the workflow engine as it has caught the exception on a different thread and has no choice but to throw the exception instance back on the original calling thread. 
-The trick here is to get the exception to preserve the original stack trace when it is re-thrown. Exception has a method called InternalPreserveStackTrace that will do this for us. Reflection must be used here because the method is marked as internal.
-The first thing to change is that we need to use WorkflowApplication directly rather than WorkflowInvoker. WorkflowInvoker is great for simplicity but does not provide direct access to the thrown exception before it is re-thrown. Using WorkflowApplication provides the ability to hook the OnUnhandledException action where the exception is available. The reflected InternalPreserveStackTrace method can then be invoked on the exception instance before it is re-thrown.
+
+The solution to this is in two parts. The first improvement is to provide more detail in the stack trace and the second is to identify the activity hierarchy involved. 
+
+**Enhancing the stack trace**
+
+Using the throw statement on an existing exception instance wipes out any existing stack trace information. This is why you should never catch ex then throw ex, you should always just use the throw statement by itself. This isn’t possible in the case of the workflow engine as it has caught the exception on a different thread and has no choice but to throw the exception instance back on the original calling thread. 
+
+The trick here is to get the exception to preserve the original stack trace when it is re-thrown. Exception has a method called InternalPreserveStackTrace that will do this for us. Reflection must be used here because the method is marked as internal.
+
+The first thing to change is that we need to use WorkflowApplication directly rather than WorkflowInvoker. WorkflowInvoker is great for simplicity but does not provide direct access to the thrown exception before it is re-thrown. Using WorkflowApplication provides the ability to hook the OnUnhandledException action where the exception is available. The reflected InternalPreserveStackTrace method can then be invoked on the exception instance before it is re-thrown.
 
 {% highlight csharp linenos %}
 namespace WorkflowConsoleApplication1
@@ -113,7 +120,8 @@ namespace WorkflowConsoleApplication1
     }
 }
 {% endhighlight %}
-Changing the example program code to use this ActivityInvoker class rather than WorkflowInvoker now provides some more detailed stack trace information.
+
+Changing the example program code to use this ActivityInvoker class rather than WorkflowInvoker now provides some more detailed stack trace information.
 
 {% highlight text linenos %}
 System.InvalidOperationException: Something went wrong
@@ -133,10 +141,16 @@ s:line 82
 edr\documents\visual studio 2010\Projects\WorkflowConsoleApplication2\WorkflowCo
 nsoleApplication2\Program.cs:line 11
 {% endhighlight %}
-The stack trace with preservation now includes the stack frames between ActivityInvoker.Invoke and the class that originally threw the exception. This is particularly helpful when the exception was thrown in an underlying component. Unfortunately the architecture of WF does not often provide much of a stack trace in itself. Preserving the stack trace in this simple scenario has added helpful information but not enough to make it really easy to debug.
-**Identifying the activity hierarchy**Identifying the hierarchy of activities being executed will add further debugging assistance. The Activity class in the 3.x version of WF contained a public Parent property. You could recursively traverse up the chain of parent activities to create a hierarchy of activities to provide this information. This property is still there in version 4.0 but is now internal. Using reflection is again the only option for obtaining this information.
-    A tweak to the exception logic in the ActivityInvoker class will hook into the Activity.Parent property to calculate the activity hierarchy.
-    {% highlight csharp linenos %}
+
+The stack trace with preservation now includes the stack frames between ActivityInvoker.Invoke and the class that originally threw the exception. This is particularly helpful when the exception was thrown in an underlying component. Unfortunately the architecture of WF does not often provide much of a stack trace in itself. Preserving the stack trace in this simple scenario has added helpful information but not enough to make it really easy to debug.
+
+**Identifying the activity hierarchy**
+
+Identifying the hierarchy of activities being executed will add further debugging assistance. The Activity class in the 3.x version of WF contained a public Parent property. You could recursively traverse up the chain of parent activities to create a hierarchy of activities to provide this information. This property is still there in version 4.0 but is now internal. Using reflection is again the only option for obtaining this information.
+    
+A tweak to the exception logic in the ActivityInvoker class will hook into the Activity.Parent property to calculate the activity hierarchy.
+    
+{% highlight csharp linenos %}
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -214,8 +228,10 @@ namespace WorkflowConsoleApplication1
     }
 }
 {% endhighlight %}
-The change here calculates the activity hierarchy and appends it to the exception message. A custom ActivityFailureException is used to help identify that this an exception handled from the workflow engine. The original exception is still available via the InnerException property. 
-The output of the program now provides the extended stack trace and the activity hierarchy.
+
+The change here calculates the activity hierarchy and appends it to the exception message. A custom ActivityFailureException is used to help identify that this an exception handled from the workflow engine. The original exception is still available via the InnerException property. 
+
+The output of the program now provides the extended stack trace and the activity hierarchy.
 
 {% highlight text linenos %}
 WorkflowConsoleApplication1.ActivityFailureException: Something went wrong
@@ -244,6 +260,7 @@ s:line 80
 edr\documents\visual studio 2010\Projects\WorkflowConsoleApplication2\WorkflowCo
 nsoleApplication2\Program.cs:line 11
 {% endhighlight %}
-    The combination of these two pieces of information will now allow you to quickly identify where the exception is being thrown in or through your workflow assembly.
+    
+The combination of these two pieces of information will now allow you to quickly identify where the exception is being thrown in or through your workflow assembly.
 
 [0]: /blogfiles/image_25.png

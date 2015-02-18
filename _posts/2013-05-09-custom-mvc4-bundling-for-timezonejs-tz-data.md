@@ -4,8 +4,20 @@ categories : .Net
 tags : ASP.Net, Azure
 date: 2013-05-09 13:07:00 +10:00
 ---
-I am using the [timezoneJS][0] to provide time zone support for JavaScript running in an MVC4 website that is hosted in Azure. The JavaScript library is bundled with 38 zone files under a tz directory. My understanding is the library reads these zone files in order to correctly determine time zone offsets for combinations of geographical locations and dates.   The library downloads zone files from the web server as it requires. The big thing to note about the zone files are that they are really heavily commented using a # character as the comment marker. The 38 zone files in the package amount to 673kb of data with the file “northamerica” being the largest at 137kb. This drops down to 232kb and 36kb respectively if comments and blank lines are striped. That’s a lot of unnecessary bandwidth being consumed. MVC4 does not understand these files so none of the OOTB bundling strip the comments. The bundling support in MVC4 (via the [Microsoft.Web.Optimization][1] package) will however allow us to strip this down to the bare data with a custom IBundleBuilder (my third custom bundler – see [here][2] and [here][3] for the others).  **Current Implementation**  For background, this is my current implementation. The web project structure looks like this.  ![][4]The project was already bundling the zone files using the following logic.  
-{% highlight csharp linenos %}
+
+I am using the [timezoneJS][0] to provide time zone support for JavaScript running in an MVC4 website that is hosted in Azure. The JavaScript library is bundled with 38 zone files under a tz directory. My understanding is the library reads these zone files in order to correctly determine time zone offsets for combinations of geographical locations and dates.   
+
+The library downloads zone files from the web server as it requires. The big thing to note about the zone files are that they are really heavily commented using a # character as the comment marker. The 38 zone files in the package amount to 673kb of data with the file “northamerica” being the largest at 137kb. This drops down to 232kb and 36kb respectively if comments and blank lines are striped. That’s a lot of unnecessary bandwidth being consumed. MVC4 does not understand these files so none of the OOTB bundling strip the comments. The bundling support in MVC4 (via the [Microsoft.Web.Optimization][1] package) will however allow us to strip this down to the bare data with a custom IBundleBuilder (my third custom bundler – see [here][2] and [here][3] for the others).  
+
+**Current Implementation**  
+
+For background, this is my current implementation. The web project structure looks like this.  
+
+![][4]
+
+The project was already bundling the zone files using the following logic.  
+
+{% highlight csharp linenos %}
 private static void BundleTimeZoneData(BundleCollection bundles, HttpServerUtility server)
 {
     var directory = server.MapPath("~/Scripts/tz");
@@ -28,17 +40,20 @@ private static void BundleTimeZoneData(BundleCollection bundles, HttpServerUtili
     }
 }
 {% endhighlight %}
-The timezoneJS package is configured so that it correctly references the bundle paths.
+
+The timezoneJS package is configured so that it correctly references the bundle paths.
 
 {% highlight javascript linenos %}
 timezoneJS.timezone.zoneFileBasePath = "/script/tz";
 timezoneJS.timezone.defaultZoneFile = [];
 timezoneJS.timezone.init({ async: false });
 {% endhighlight %}
-**Custom Bundle Builder**
+
+**Custom Bundle Builder**
 
 Now comes the part were we strip out the unnecessary comments from the zone files. The TimeZoneBundleBuilder class simply strips out blank lines, lines that start with comments and the parts of lines that end in comments.
-{% highlight csharp linenos %}
+
+{% highlight csharp linenos %}
 public class TimeZoneBundleBuilder : IBundleBuilder
 {
     private readonly IBundleBuilder _builder;
@@ -99,8 +114,10 @@ public class TimeZoneBundleBuilder : IBundleBuilder
     }
 }
 {% endhighlight %}
-This is then hooked up in the bundle configuration for the tz files.
-    {% highlight csharp linenos %}
+
+This is then hooked up in the bundle configuration for the tz files.
+    
+{% highlight csharp linenos %}
 bundles.Add(
     new Bundle("~/script/tz/" + fileName)
     {
@@ -109,7 +126,10 @@ bundles.Add(
 {% endhighlight %}
 
 Fiddler confirms that the bundler is stripping the comments. The good news here is that gzip compression also comes into play. Now the gzip compressed “northamerica” file is down from 58kb to 9kb over the wire.
-![image][5]One of the key points to take away from this that you need to know what your application is serving. That includes the output you have written, but also the external packages you have included in your system.
+
+![image][5]
+
+One of the key points to take away from this that you need to know what your application is serving. That includes the output you have written, but also the external packages you have included in your system.
 
 [0]: https://github.com/mde/timezone-js
 [1]: http://nuget.org/packages/Microsoft.Web.Optimization/

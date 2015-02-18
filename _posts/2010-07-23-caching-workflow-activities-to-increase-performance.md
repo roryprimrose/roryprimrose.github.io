@@ -7,7 +7,9 @@ date: 2010-07-23 12:14:06 +10:00
 
 [David Paquette][0] posted last year about [the performance characteristics of WF4][1]. Runtime performance is a typical complaint with WF but it can be minimised as David has indicated. Adding some caching logic for workflow activity instances will avoid the expensive start-up process for invoking activities. Subsequent activity invocations will be much faster by getting the activity instance from the cache rather than creating a new one.
 
-I’ve put together an ActivityStore class that handles this caching requirement.{% highlight csharp linenos %}
+I’ve put together an ActivityStore class that handles this caching requirement.
+
+{% highlight csharp linenos %}
 using System;
 using System.Activities;
 using System.Collections.Generic;

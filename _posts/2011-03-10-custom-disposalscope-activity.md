@@ -22,7 +22,9 @@ The design goals of this activity are:
 * dispose the resource on a faulted child activity
 * as always, provide adequate designer support
 
-The code implementation of the custom DisposalScope<T> activity handles these goals.{% highlight csharp linenos %}
+The code implementation of the custom DisposalScope<T> activity handles these goals.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -161,7 +163,9 @@ namespace Neovolve.Toolkit.Workflow.Activities
 
 The DisposalScope<T> activity enforces a no persist zone. Attempts at persistence by a child activity will result in throwing an exception. The resource is released on either a successful or fault outcome. There is some validation in the activity that ensures that a Body activity has been defined. The activity also uses the IActivityTemplateFactory to create the activity with a Sequence activity for its Body property when it is created on the WF designer.
 
-The designer of the activity handles most of the design time experience.{% highlight xml linenos %}
+The designer of the activity handles most of the design time experience.
+
+{% highlight xml linenos %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.DisposalScopeDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -244,7 +248,9 @@ The designer of the activity handles most of the design time experience.{% hig
 </sap:ActivityDesigner>
 {% endhighlight %}
 
-The designer uses a TypePresenter to allow modification of the generic type of the activity. The configuration of the TypePresenter uses the [Filter property][2] to restrict the types available to those that implement IDisposable. The designer users an ExpressionTextBox to provide the disposable resource to the activity. The expression can either instantiate the resource directly or provide it by referencing a variable in the parent workflow. Finally, the designer provides a WorkflowItemPresenter that allows designer interaction with the Body activity that gets executed by the activity.{% highlight csharp linenos %}
+The designer uses a TypePresenter to allow modification of the generic type of the activity. The configuration of the TypePresenter uses the [Filter property][2] to restrict the types available to those that implement IDisposable. The designer users an ExpressionTextBox to provide the disposable resource to the activity. The expression can either instantiate the resource directly or provide it by referencing a variable in the parent workflow. Finally, the designer provides a WorkflowItemPresenter that allows designer interaction with the Body activity that gets executed by the activity.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;

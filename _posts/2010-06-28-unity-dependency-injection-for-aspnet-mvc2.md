@@ -14,7 +14,9 @@ Like the posts for Unity injection with [WCF][1] and [ASP.Net][0], there are sim
 
 ASP.Net MVC uses a controller factory to create controller instances. Only the controllers need to be created via Unity as the view is a UI control and the model should not have any logic. In a similar manner to the ASP.Net implementation, supporting MVC Unity injection leverages a HttpModule to configure the application for injection.
 
-The UnityControllerFactoryHttpModule creates a new UnityControllerFactory if the current factory has not already been configured for Unity injection. It resets the controller factory back to a default factory when the module is disposed.{% highlight csharp linenos %}
+The UnityControllerFactoryHttpModule creates a new UnityControllerFactory if the current factory has not already been configured for Unity injection. It resets the controller factory back to a default factory when the module is disposed.
+
+{% highlight csharp linenos %}
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
@@ -51,7 +53,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-The UnityControllerFactoryHttpModule uses a base class refactored from the original [ASP.Net][0] implementation. This base class is responsible for resolving and disposing the Unity container for the module. The class calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][3].{% highlight csharp linenos %}
+The UnityControllerFactoryHttpModule uses a base class refactored from the original [ASP.Net][0] implementation. This base class is responsible for resolving and disposing the Unity container for the module. The class calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][3].
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics.Contracts;
 using System.Web;
@@ -141,7 +145,9 @@ namespace Neovolve.Toolkit.Unity
 
 The UnityControllerFactory class is used to create and teardown controller instances. This is the class that is the bridge between ASP.Net MVC and a Unity container. The GetControllerInstance method is a copy of the method in the base class with the only change being that the instance is resolved from Unity rather than via Activator.CreateInstance(). 
 
-The factory uses the container to tear down the controller instance when the application notifies the factory that it is finished with it. The base class method is also invoked to cover the case when the container isn’t configured for tear down operations. This ensures that at least the controller instance itself can be disposed if it implements IDisposable. I suggest you configure the container to teardown build trees with my [custom extension][2] as this will ensure that all disposable instances are correctly destroyed.{% highlight csharp linenos %}
+The factory uses the container to tear down the controller instance when the application notifies the factory that it is finished with it. The base class method is also invoked to cover the case when the container isn’t configured for tear down operations. This ensures that at least the controller instance itself can be disposed if it implements IDisposable. I suggest you configure the container to teardown build trees with my [custom extension][2] as this will ensure that all disposable instances are correctly destroyed.
+
+{% highlight csharp linenos %}
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -215,7 +221,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-Configuring this module is similar to the ASP.Net implementation. The following example hooks up the UnityControllerFactoryHttpModule and the DisposableStrategyExtension and configures injection support for the HashAlgorithm type.{% highlight xml linenos %}
+Configuring this module is similar to the ASP.Net implementation. The following example hooks up the UnityControllerFactoryHttpModule and the DisposableStrategyExtension and configures injection support for the HashAlgorithm type.
+
+{% highlight xml linenos %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>
@@ -252,7 +260,9 @@ Configuring this module is similar to the ASP.Net implementation. The following 
 </configuration>
 {% endhighlight %}
 
-This configuration can now be used to create any controller that has a HashAlgorithm type in its constructor.{% highlight csharp linenos %}
+This configuration can now be used to create any controller that has a HashAlgorithm type in its constructor.
+
+{% highlight csharp linenos %}
 using System;
 using System.Security.Cryptography;
 using System.Text;

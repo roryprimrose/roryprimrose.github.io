@@ -12,7 +12,8 @@ I believe the issue here (unconfirmed) is that the file is not updated because i
 1. The license key is not written to newrelic.cmd   
 This is a bug in the newrelic.cmd file published with the package. The install script is expect the file to have the line **SET LICENSE_KEY=REPLACE_WITH_LICENSE_KEY** so that the installer can substitute the value. Unfortunately the cmd file in the package has an actual license key rather than the expected placeholder. This means someone else’s license key will be used rather than your own.
 1. Same as my previous experience, ServiceDefinition.csdef was not found. You need to manually update this file to contain the following XML (slightly different to the previous version).
-{% highlight xml linenos %}
+
+{% highlight xml linenos %}
 <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
     <Environment>

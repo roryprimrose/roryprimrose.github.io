@@ -7,7 +7,9 @@ date: 2013-05-02 12:53:08 +10:00
 
 I have an ASP.Net MVC4 website that is running passive federation to Azure ACS. This works great for standard http requests from a browser. I have now added some web api services to the same solution but hit issues with acceptance testing.
 
-I have secured my api action using the following.{% highlight csharp linenos %}
+I have secured my api action using the following.
+
+{% highlight csharp linenos %}
 [Authorize(Roles = Role.Administrator)]
 public class AdminReportController : ApiController
 {
@@ -16,7 +18,9 @@ public class AdminReportController : ApiController
 
 This achieves the objective but the acceptance test that verifies the security of the controller fails. It fails because it gets a 302 response on the unauthenticated call rather than the expected 401. If the http client running the REST request follows the 302, it will ultimately end up with a 200 response from the ACS authentication form. The overall outcome is achieved because the request denied the anonymous user, but the status code returned to the client and the body content does not reflect this.
 
-The only way to get around this seems to be to hijack the WSFederationAuthenticationModule to tell it not to run passive redirection if the request is for the web api.{% highlight csharp linenos %}
+The only way to get around this seems to be to hijack the WSFederationAuthenticationModule to tell it not to run passive redirection if the request is for the web api.
+
+{% highlight csharp linenos %}
 public class WebApiSafeFederationAuthenticationModule : WSFederationAuthenticationModule
 {
     protected override void OnAuthorizationFailed(AuthorizationFailedEventArgs e)

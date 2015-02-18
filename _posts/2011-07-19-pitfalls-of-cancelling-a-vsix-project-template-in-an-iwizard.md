@@ -15,7 +15,9 @@ Basically any exception thrown from IWizard.RunStarted will cause the wizard pro
 
 Once the exception has been thrown however, the project template still exists on disk. It is up to the VSIX developer to manually clean up the new project folder under the solution to make the disk look like it did before attempting to add the project. 
 
-My project uses the following logic to achieve this.{% highlight csharp linenos %}
+My project uses the following logic to achieve this.
+
+{% highlight csharp linenos %}
 public void RunStarted(
     Object automationObject, Dictionary<String, String> replacementsDictionary, WizardRunKind runKind, Object[] customParams)
 {

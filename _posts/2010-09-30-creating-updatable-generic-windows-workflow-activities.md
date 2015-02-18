@@ -14,7 +14,9 @@ This can be changed in the property grid of the activity using the TypeArgument 
 
 Changing this value will update the definition of the activity with the new type argument. For example, the type could be change to Boolean.![image][6]
 
-This post will use my ExecuteBookmark<T> activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.{% highlight csharp linenos %}
+This post will use my ExecuteBookmark<T> activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -69,7 +71,9 @@ namespace Neovolve.Toolkit.Workflow.Activities
 
 This activity defines the default type of String. Designer support for changing this type is required after dropping the activity on the designer because the DefaultArgumentTypeAttribute avoids the developer having to define the generic type up front. It has the additional benefit of allowing the developer to change the activity type once it is is already on the designer as the workflow is developed and refactored.
 
-The ArgumentType property does not exist on the ExecuteBookmark<T> class. It is an AttachedProperty<Type> instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.{% highlight csharp linenos %}
+The ArgumentType property does not exist on the ExecuteBookmark<T> class. It is an AttachedProperty<Type> instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -94,7 +98,9 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
 }
 {% endhighlight %}
 
-The designer calls down into a custom GenericArgumentTypeUpdater class to attach the updatable type functionality to the ModelItem. Unlike the internal Microsoft implementation, this class supports multiple generic type arguments.{% highlight csharp linenos %}
+The designer calls down into a custom GenericArgumentTypeUpdater class to attach the updatable type functionality to the ModelItem. Unlike the internal Microsoft implementation, this class supports multiple generic type arguments.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -243,7 +249,9 @@ The editing scope uses a MorphHelper to create the new type from the old type. T
 
 The next job is to detect if the activity has the default display name value. If this is the case, then the display name will be updated to the default display name of the new activity type. This is done because the display name of generic activities is normally calculated as TypeName<TypeName, TypeName, etc, etc>.
 
-Lastly, the class makes a call into a DesignerUpdater helper class that is used to ensure that the updated activity is selected.{% highlight csharp linenos %}
+Lastly, the class makes a call into a DesignerUpdater helper class that is used to ensure that the updated activity is selected.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -291,7 +299,9 @@ namespace Neovolve.Toolkit.Workflow.Design
 
 The final piece of the puzzle is support for changing the type within the designer surface itself. This is modelled from the InvokeMethod activity that allows for custom types to be defined in the designer.![image][7]
 
-The way to get this to work is to add the following into the XAML of the activity designer.{% highlight xml linenos %}
+The way to get this to work is to add the following into the XAML of the activity designer.
+
+{% highlight xml linenos %}
 <sap:ActivityDesigner.Resources>
     <conv:ModelToObjectValueConverter x:Key="modelItemConverter"
         x:Uid="sadm:ModelToObjectValueConverter_1" />

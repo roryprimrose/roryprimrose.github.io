@@ -13,7 +13,9 @@ I’ve been writing a custom Unity extension for disposing build trees when a co
 
 A common misconception is that the member that creates an instance is responsible for its lifetime management. The scenario that quickly breaks this idea is when a member returns an instance that requires lifetime management (such as IDisposable instance). In this case, the method that created the instance can’t destroy it because its usage is outside the scope of the member that created it. 
 
-Take System.IO.File.Open() method for example.{% highlight csharp linenos %}
+Take System.IO.File.Open() method for example.
+
+{% highlight csharp linenos %}
 public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
 {
     return new FileStream(path, mode, access, share);

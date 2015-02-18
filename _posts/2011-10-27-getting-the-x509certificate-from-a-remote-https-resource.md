@@ -13,7 +13,9 @@ I ran all sorts of searches on the net about how to get the certificate of the r
 
 The answer is that the certificate is provided by HttpWebRequest.ServicePoint.Certificate. The tricky bit is that the certificate is only available once a response has come back from the host. This makes sense, but it is misleading that the certificate based on the response is stored against the original request object. It is also a little confusing that the certificate is available on the request when the attempt to get the response threw an exception (a failed certificate trust for example).
 
-The following code shows how this works.{% highlight csharp linenos %}
+The following code shows how this works.
+
+{% highlight csharp linenos %}
 HttpWebRequest webRequest = HttpWebRequest.Create(address) as HttpWebRequest;
     
 try

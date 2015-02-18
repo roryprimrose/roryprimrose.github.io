@@ -6,7 +6,9 @@ date: 2012-01-29 22:15:09 +10:00
 
 Quite simply, a lot. The yield statement seems to be such a simple part of C# yet it can provide such amazing power (being delayed enumeration). Outside of that power however, it can provide beautiful simplicity.
 
-Take the following abstract class for example:{% highlight csharp linenos %}
+Take the following abstract class for example:
+
+{% highlight csharp linenos %}
 namespace MyApplication.Diagnostics
 {
     using System;
@@ -52,7 +54,9 @@ namespace MyApplication.Diagnostics
 }
 {% endhighlight %}
 
-The design of this abstract class allows for a diagnostic task to have multiple steps. My first implementation of this class however is one that only had a single hard-coded step. Enter the wonderful yield return statement.{% highlight csharp linenos %}
+The design of this abstract class allows for a diagnostic task to have multiple steps. My first implementation of this class however is one that only had a single hard-coded step. Enter the wonderful yield return statement.
+
+{% highlight csharp linenos %}
 public override IEnumerable<DiagnosticTaskStep> Steps
 {
     get

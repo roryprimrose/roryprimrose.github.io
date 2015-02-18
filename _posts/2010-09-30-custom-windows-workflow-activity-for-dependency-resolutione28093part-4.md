@@ -25,7 +25,9 @@ It is important to note that the activity assembly should never reference the de
 
 **IRegisterMetadata**
 
-An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.{% highlight csharp linenos %}
+An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -90,7 +92,9 @@ Consider what happens when you change ParallelForEach<String> to ParallelForEach
 
 Understandably MorphHelper will not know how to transform any possible data/type structure between ModelItem instances. Thankfully the helper class is extensible as it allows custom morph actions to be added via the AddPropertyValueMorphHelper method. Reflector shows that this is how WF4 configures MorphHelper for the morph actions that come out of the box. These are wired up in the WF4 IRegisterMetadata implementation defined in the System.Activities.Core.Presentation.DesignerMetadata class.
 
-The DesignerMetadata class contains the following default morph actions.{% highlight csharp linenos %}
+The DesignerMetadata class contains the following default morph actions.
+
+{% highlight csharp linenos %}
 MorphHelper.AddPropertyValueMorphHelper(typeof(InArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(OutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
@@ -101,7 +105,9 @@ There is support for morphing InArgument<>, OutArgument<>, InOutArgument<> and A
 
 The issue I had with creating the updatable type support for InstanceResolver was that the 16 handlers defined against ActivityAction<T1…T1> for the activity were not copied from the old ModelItem to the new ModelItem. The reason for this turned about to be that the morph action for ActivityAction<> only supports a single generic argument whereas the InstanceResolver activity has 16. This is another scenario where the Microsoft implementation is limited to a single generic argument like the limitations of the DefaultTypeArgumentAttribute (as indicated in [this post][0]).
 
-The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction<T1…T16>.{% highlight csharp linenos %}
+The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction<T1…T16>.
+
+{% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;

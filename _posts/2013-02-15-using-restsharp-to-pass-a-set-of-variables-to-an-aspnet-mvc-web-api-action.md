@@ -7,7 +7,9 @@ date: 2013-02-15 16:23:53 +10:00
 
 Looks like a lot of people hit this issue and come up with lots of “interesting” solutions to get this to work. The answer is surprisingly simple however.
 
-Assume that the controller action is like the following:{% highlight csharp linenos %}
+Assume that the controller action is like the following:
+
+{% highlight csharp linenos %}
 [HttpGet]
 public HttpResponseMessage MyAction(
     [ModelBinder]List<string> referenceNames, DateTime startDate, DateTime endDate)
@@ -15,7 +17,9 @@ public HttpResponseMessage MyAction(
 }
 {% endhighlight %}
 
-How do you get RestSharp to send the set of strings to the action so that they are deserialized correctly? The answer is like this.{% highlight csharp linenos %}
+How do you get RestSharp to send the set of strings to the action so that they are deserialized correctly? The answer is like this.
+
+{% highlight csharp linenos %}
 var client = new RestClient(Config.ServiceAddress);
 var request = new RestRequest(ActionLocation, Method.GET);
     

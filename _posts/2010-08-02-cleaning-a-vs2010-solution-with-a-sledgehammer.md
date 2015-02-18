@@ -6,7 +6,9 @@ date: 2010-08-02 12:11:00 +10:00
 
 My workplace has been having issues with VS2010 picking up old assemblies since we have been using VS2010 on a complex services solution. The issue usually pops up when executing test runs with the built in support for MSTest. This occasionally happened in VS2008 but is much more prevalent in 2010. The scenario seems to be that somewhere between the IDE and MSTest is picking up assemblies from prior TestResults directories if the assembly can't be found in bin\Debug or bin\Release directories. This means that the normal clean operation under the build menu is not sufficient to get rid of this problem.
 
-Enter the sledgehammer. I wrote a little utility that will recursively go through each bin, obj and TestResults folder under the solution path and delete everything it can (including read-only files). Any exceptions encountered will be output to the console. The code itself is really simple.{% highlight csharp linenos %}
+Enter the sledgehammer. I wrote a little utility that will recursively go through each bin, obj and TestResults folder under the solution path and delete everything it can (including read-only files). Any exceptions encountered will be output to the console. The code itself is really simple.
+
+{% highlight csharp linenos %}
 namespace Neovolve.SolutionCleaner
 {
     using System;

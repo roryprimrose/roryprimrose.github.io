@@ -4,11 +4,15 @@ tags : Azure
 date: 2013-02-14 22:39:08 +10:00
 ---
 
-I have a web role (RP) running in Windows Azure that uses ACS 2.0 as the identity provider (IP). The web role is configured with a certificate to work with the authentication negotiation and subsequent security session. The certificate supports both domain.com and www.domain.com. The issue is that the federation authentication configuration of the web role can only specify one realm and the realm attribute is a required value.{% highlight xml linenos %}
+I have a web role (RP) running in Windows Azure that uses ACS 2.0 as the identity provider (IP). The web role is configured with a certificate to work with the authentication negotiation and subsequent security session. The certificate supports both domain.com and www.domain.com. The issue is that the federation authentication configuration of the web role can only specify one realm and the realm attribute is a required value.
+
+{% highlight xml linenos %}
 <wsFederation passiveRedirectEnabled="true" issuer="http://[addressOfAcs]" realm="http://www.domain.com" requireHttps="true" />
 {% endhighlight %}
 
-This works great if the user is browsing on www.domain.com and then goes through the authentication process. A security token will be issued for www.domain.com to which the user is redirected back to. The RP will then validate that the token was issued to the configured audience uri. These thankfully allow multiple addresses to be specified.{% highlight xml linenos %}
+This works great if the user is browsing on www.domain.com and then goes through the authentication process. A security token will be issued for www.domain.com to which the user is redirected back to. The RP will then validate that the token was issued to the configured audience uri. These thankfully allow multiple addresses to be specified.
+
+{% highlight xml linenos %}
 <audienceUris>
     <add value="http://www.domain.com" />
     <add value="http://domain.com" />
@@ -25,7 +29,9 @@ The problem is when you want to use the www-less address or any other host heade
  
 The fix here is to put together some dynamic realm discovery logic. Creating a custom WSFederationAuthenticationModule class provides some good hooks into the authentication process. We want to override OnRedirectingToIdentityProvider and set the realm as per the location of the current request. 
 
-For example:{% highlight csharp linenos %}
+For example:
+
+{% highlight csharp linenos %}
 namespace MyApplication.Web.Security
 {
     using System;
@@ -99,7 +105,9 @@ Firstly, the DetermineDynamicRealm method could have been streamlined, but I als
 
 Secondly, the BuildRequestedAddress method uses request headers to figure out the port of the request from the browser. This is because the web role sits behind a load balancer that does some trickery with ports. We need to look at the headers of the request to determine the port as the browser sees it rather than how the request on the current HttpContext sees it.
 
-Next up, the web.config needs to be updated to use this module rather than the module that comes out of the box.{% highlight xml linenos %}
+Next up, the web.config needs to be updated to use this module rather than the module that comes out of the box.
+
+{% highlight xml linenos %}
 <add name="WSFederationAuthenticationModule" type="MyApplication.Web.Security.DynamicRealmFederationAuthenticationModule, MyApplication.Web" preCondition="managedHandler" />
 {% endhighlight %}
 

@@ -11,7 +11,9 @@ There are some issues with adopting Unity 2 in the short-term. Unity 2 isn’t a
 
 Given these constraints, I have a working solution after several hours of surfing Reflector.
 
-Firstly, the configuration for Unity 2 is much neater and removes redundant configuration. The feature I like the most is that type information is now interpreted where previously it needed to be specified.{% highlight xml linenos %}
+Firstly, the configuration for Unity 2 is much neater and removes redundant configuration. The feature I like the most is that type information is now interpreted where previously it needed to be specified.
+
+{% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
      
@@ -56,7 +58,9 @@ Firstly, the configuration for Unity 2 is much neater and removes redundant conf
 
 The big change for supporting custom parameter injection is that the InjectionParameterValueElement is now called ParameterValueElement and no longer supports the elementType attribute. While this cleans up the configuration of the injection itself, it means that more work needs to be done to tell Unity how to inject the parameter using a custom implementation. 
 
-A Unity SectionExtension is used to achieve this. The configuration for the extension is shown as the first line in the unity configuration above.{% highlight csharp linenos %}
+A Unity SectionExtension is used to achieve this. The configuration for the extension is shown as the first line in the unity configuration above.
+
+{% highlight csharp linenos %}
 using Microsoft.Practices.Unity.Configuration;
     
 namespace Neovolve.Toolkit.Unity
@@ -71,7 +75,9 @@ namespace Neovolve.Toolkit.Unity
 }
 {% endhighlight %}
 
-This extension simply tells the Unity configuration system how to understand a custom parameter injection handler. The context.AddElement method tells Unity which type to use when processing a particular configuration element name. The appSetting configuration element is now hooked up to use the AppSettingParameterValueElement which looks like the following:{% highlight csharp linenos %}
+This extension simply tells the Unity configuration system how to understand a custom parameter injection handler. The context.AddElement method tells Unity which type to use when processing a particular configuration element name. The appSetting configuration element is now hooked up to use the AppSettingParameterValueElement which looks like the following:
+
+{% highlight csharp linenos %}
 using System;
 using System.ComponentModel;
 using System.Configuration;

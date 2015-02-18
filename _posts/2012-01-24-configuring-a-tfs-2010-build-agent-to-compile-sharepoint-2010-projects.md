@@ -30,7 +30,8 @@ I have updated the PowerShell script to include the following changes:
 * Added defensive code for updating the registry to point to installed assemblies (previous script threw an error if the registry key already existed)
 
 Here is my version of the SharePoint harvest script.
-{% highlight powershell linenos %}
+
+{% highlight powershell linenos %}
 #==============================================================================
 # This script collects and installs the files required to build SharePoint
 # projects on a TFS build server. It supports both TFS 2010 and TFS 2008.

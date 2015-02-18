@@ -5,11 +5,15 @@ tags : ASP.Net
 date: 2013-04-03 09:26:01 +10:00
 ---
 
-Visual Studio has a great feature for web.config files where XML transformations can be done based on the current configuration. This is typically actioned when the web application is published. Unfortunately the MSBuild scripts only cater for web.config. This is a problem when you start to break up your configuration into multiple files and link them back using the configSource attribute.{% highlight xml linenos %}
+Visual Studio has a great feature for web.config files where XML transformations can be done based on the current configuration. This is typically actioned when the web application is published. Unfortunately the MSBuild scripts only cater for web.config. This is a problem when you start to break up your configuration into multiple files and link them back using the configSource attribute.
+
+{% highlight xml linenos %}
 <system.diagnostics configSource="system.diagnostics.config" />
 {% endhighlight %}
 
-One of the great things about MSBuild is that you can change it if you don’t like it. The solution to this issue is to open the proj file and add the following at the end of the file.{% highlight xml linenos %}
+One of the great things about MSBuild is that you can change it if you don’t like it. The solution to this issue is to open the proj file and add the following at the end of the file.
+
+{% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     
