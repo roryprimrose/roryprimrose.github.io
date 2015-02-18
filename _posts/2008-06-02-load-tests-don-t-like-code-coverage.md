@@ -5,7 +5,7 @@ date: 2008-06-02 16:13:00 +10:00
 ---
 
 <p>
-I have been pulling my hair out this afternoon trying to figure out why my code is performing so badly in a load test. After playing with the code and running a lot of tests, I didn&#39;t have any answers until I looked at my testrunconfig file. Code coverage was the first thing I looked at. 
+I have been pulling my hair out this afternoon trying to figure out why my code is performing so badly in a load test. After playing with the code and running a lot of tests, I didn't have any answers until I looked at my testrunconfig file. Code coverage was the first thing I looked at. 
 </p>
 <p>
 With code coverage turned on, the report looked like this. 

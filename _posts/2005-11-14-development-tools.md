@@ -7,10 +7,20 @@ These are the development tools that I use. I will skip the obvious applications
 
 Applications:
 
-* [Reflector][0] - Assembly browser and de-compiler for .NET components * [NDoc][1] - Creates help documentation from XML comments * [Dependency Walker][2] - Finds dependencies (great for non .Net app development) * [Process Explorer][3] - Process management utility * [Resource Hacker][4] - Great for modifying existing dll resources * [SQL Scripter][5] - Generates scripts of an existing SQL Server database * [NSIS][6] - Scriptable installer
+* [Reflector][0] - Assembly browser and de-compiler for .NET components 
+* [NDoc][1] - Creates help documentation from XML comments 
+* [Dependency Walker][2] - Finds dependencies (great for non .Net app development) 
+* [Process Explorer][3] - Process management utility 
+* [Resource Hacker][4] - Great for modifying existing dll resources 
+* [SQL Scripter][5] - Generates scripts of an existing SQL Server database 
+* [NSIS][6] - Scriptable installer
+
 Addins:
 
-* [Reflector addins][7] - a list of addins for Reflector * [GhostDoc][8] - XML comment generator * [CopySourceAsHtml][9] - Converts source code to HTML.
+* [Reflector addins][7] - a list of addins for Reflector 
+* [GhostDoc][8] - XML comment generator 
+* [CopySourceAsHtml][9] - Converts source code to HTML.
+
 Sites:
 
 * [PInvoke.Net][10] - Converting API calls to managed methods

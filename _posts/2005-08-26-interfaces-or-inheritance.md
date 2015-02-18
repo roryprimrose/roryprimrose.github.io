@@ -8,9 +8,9 @@ I have been thinking about this a bit recently. When is it the most appropriate 
 
 Not that I can go to his talk, but I liked a few of [Doug's comments][0] on the matter.
 
-_> Interfaces are better for those places where extensibility is the highest requirement. Inheritance is better for those places where reusability is the highest requirement._
+> _Interfaces are better for those places where extensibility is the highest requirement. Inheritance is better for those places where reusability is the highest requirement._
 
-_> You can screw up your software by doing too much of either one, or by neglecting either one._
+> _You can screw up your software by doing too much of either one, or by neglecting either one._
 
 A couple of weeks ago I was building a queueing system using generics. The main problem I had was that I wanted a little bit of functionality in the queued item, so I wrote a base class for it. That was all well and good, but then I quickly realised that most of my objects already have a base class. As you can't have multiple inheritance, there goes that idea. 
 

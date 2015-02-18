@@ -5,35 +5,24 @@ date: 2005-02-06 19:03:00 +10:00
 
  Metadata attributes are attributes that are assigned to classes, variables, structures, enums, procedures, functions and properties (and no doubt others that I haven't come across). They are usually used to inform the IDE how to handle the objects that the metadata attributes are assigned to. They can also be used by run-time code to handle additional information.
 
-Metadata attributes are defined on items with an < &gt; combination before the declaration of the Item. For example, defining Category and Description attributes to a Text property would look like this:
+Metadata attributes are defined on items with an &lt; &gt; combination before the declaration of the Item. For example, defining Category and Description attributes to a Text property would look like this:
 
+{% highlight vb.net linenos %}
  < _
-
  Category("Appearance"), _
-
  Description("The value rendered for the control.") _
-
- &gt; _
-
+ > _
  Property [Text]() As  String
-
  Get
-
  ' Return the stored value
-
  Return  CType (ViewState.Item("Text"), String )
-
  End  Get
-
  Set ( ByVal Value As  String )
-
  ' Store the new value
-
  ViewState.Item("Text") = Value
-
  End  Set
-
  End  Property
+{% endhighlight %}
 
 I am going to look at a few of the common metadata attributes used in creating web custom controls. Some are self explanatory, while others have some very funny behaviors.
 
@@ -46,13 +35,17 @@ This attribute doesn't actually affect anything returned from the property, but 
 
 I have noticed a few interesting things about the DefaultValue metadata attribute. String properties don't need to specify DefaultValue if the default value is an empty string. This seems to be the default value of DefaultValue (and no I am not trying to be funny). If a non-empty string is the value set for DefaultValue, an empty property value will be persisted in the page xml as a space. 
 
- Boolean properties also have interesting behavior. If an empty string is specified in the xml data for a Boolean property (such as <CC1:ImageButton Selected=""&gt;) then the value stored in ViewState is a Boolean with the value of True. If the property attribute isn't defined at all in the xml, then the ViewState value is Nothing, in which case my code will return the default value, usually being False. This is different to normal Boolean behavior. For example, if you run code like this:
+ Boolean properties also have interesting behavior. If an empty string is specified in the xml data for a Boolean property (such as &lt;CC1:ImageButton Selected=""&gt;) then the value stored in ViewState is a Boolean with the value of True. If the property attribute isn't defined at all in the xml, then the ViewState value is Nothing, in which case my code will return the default value, usually being False. This is different to normal Boolean behavior. For example, if you run code like this:
 
+{% highlight vb.net linenos %}
  Dim bTest As  Boolean = System.Boolean.Parse(vbNullString)
+{% endhighlight %}
 
 or this:
 
+{% highlight vb.net linenos %}
  Dim bTest As  Boolean = System.Boolean.Parse("")
+{% endhighlight %}
 
 then an exception will be raised. Our good friends at Microsoft are obviously doing a little extra behind the scenes to capture this issue. They must be identifying that the xml attribute is defined and converting an empty string to "True" when building the ViewStates internal value.
 
@@ -71,7 +64,9 @@ The Description attribute is also useful for people in the VB.Net world who use 
 
 My ToolboxData attribute values normally follow this format:
 
-ToolboxData("<{0}:ImageButton runat=server&gt;</{0}:ImageButton&gt;")
+{% highlight aspx-vb linenos %}
+ToolboxData("<{0}:ImageButton runat=server></{0}:ImageButton>")
+{% endhighlight %}
 
 The {0} part of the value is where the TagPrefix value from the page registration is used. To not include this would be very dangerous. For the other part of the tag name, I have never had a reason to use a different value other than the class name of my control. The TagPrefix value ensures that there are no naming collisions. For example, I am creating this ImageButton control, but there is already the intrinsic ASP.Net ImageButton control. The ASP.Net control is declared as ASP:ImageButton and with a TagPrefix value of cc1 my ImageButton control will be declared as cc1:ImageButton. By default I also need the runat= server declaration put in.
 
@@ -87,15 +82,17 @@ I will provide an example of Designer support in a later article.
 **ControlBuilder Attribute**  
  The ControlBuilder attribute is assigned to a class and is used to help the IDE understand how to interpret xml in an aspx file into control object types. For example, I may have a toolbar control that can hold one or more of my ImageButton controls. When the xml of the aspx file is read, the IDE doesn't establish a relationship of child control definitions and the actual class type of the child control. If my toolbar is defined as this:
 
- <CC1:Toolbar id="tbrTest" runat="server"&gt; 
+{% highlight aspx-vb linenos %}
+ <CC1:Toolbar id="tbrTest" runat="server"> 
 
- <CC1:ImageButton id="btnTest1" runat="server"&gt;
+ <CC1:ImageButton id="btnTest1" runat="server">
 
- <CC1:ImageButton id="btnTest2" runat="server"&gt;
+ <CC1:ImageButton id="btnTest2" runat="server">
 
- <CC1:ImageButton id="btnTest3" runat="server"&gt;
+ <CC1:ImageButton id="btnTest3" runat="server">
 
-</CC1:Toolbar&gt;
+</CC1:Toolbar>
+{% endhighlight %}
 
  then the toolbar control doesn't know that the child controls are of the type ImageButton. A ControlBuilder will inform the Toolbar control that a tag that contains the name ImageButton is the ImageButton class. Now that the ControlBuilder is informing the Toolbar control what the correct type of child controls are being created for it, it can take any appropriate action.
 
@@ -108,25 +105,33 @@ I will provide an example of ControlBuilder support in a later article.
 
 A value of Attribute will result in:
 
- <CC1:MyControl id="tbrTest" runat="server" text="my&value"&gt; 
+{% highlight aspx-vb linenos %}
+ <CC1:MyControl id="tbrTest" runat="server" text="my&value"> 
 
-</CC1:MyControl&gt;
+</CC1:MyControl>
+{% endhighlight %}
 
 A value of InnerProperty will result in:
 
- <CC1:MyControl id="tbrTest" runat="server"&gt; 
+{% highlight aspx-vb linenos %}
+ <CC1:MyControl id="tbrTest" runat="server"> 
 
- <Text&gt;my&value</Text&gt; 
+ <Text>my&value</Text> 
 
-</CC1:MyControl&gt;
+</CC1:MyControl>
+{% endhighlight %}
 
 A value of InnerDefaultProperty will result in:
 
- <CC1:MyControl id="tbrTest" runat="server"&gt;my&value</CC1:MyControl&gt; 
+{% highlight aspx-vb linenos %}
+ <CC1:MyControl id="tbrTest" runat="server">my&value</CC1:MyControl> 
+{% endhighlight %}
 
 A value of EncodedInnerDefaultProperty will result in:
 
- <CC1:MyControl id="tbrTest" runat= "server"&gt;my&amp;value</CC1:MyControl&gt; 
+{% highlight aspx-vb linenos %}
+ <CC1:MyControl id="tbrTest" runat= "server">my&amp;value</CC1:MyControl> 
+{% endhighlight %}
 
 In my control development, I have always put my property values as Attribute (which is the default) as I normally support child controls which would be the nested tag definitions.
 

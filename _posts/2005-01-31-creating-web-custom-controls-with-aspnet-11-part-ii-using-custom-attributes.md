@@ -19,186 +19,152 @@ So far, the control has properties defined like this:
 
 {% highlight vb.net linenos %}
  < _
- Description("The Key value to identify the purpose of the button."), _
- Category("Client") _
+     Description("The Key value to identify the purpose of the button."), _
+     Category("Client") _
  > _
  Public  Property Key() As  String
+     Get
 
- Get
+         ' Return the stored value
+         Return  CType (ViewState.Item("Key"), String )
 
- ' Return the stored value
+     End  Get
+     Set ( ByVal Value As  String )
 
- Return  CType (ViewState.Item("Key"), String )
+         ' Store the new value
+         ViewState.Item("Key") = Value
 
- End  Get
-
- Set ( ByVal Value As  String )
-
- ' Store the new value
-
- ViewState.Item("Key") = Value
-
- End  Set
-
+     End  Set
  End  Property
 
  < _
- Description("The client function to call when the control is clicked."), _
- Category("Client") _
+     Description("The client function to call when the control is clicked."), _
+     Category("Client") _
  > _
  Public  Property ClientClickHandler() As  String
+     Get
 
- Get
+         ' Return the stored value
+         Return  CType (ViewState.Item("ClientClickHandler"), String )
 
- ' Return the stored value
+     End  Get
+     Set ( ByVal Value As  String )
 
- Return  CType (ViewState.Item("ClientClickHandler"), String )
+         ' Ensure that no brackets or parameters are defined
+         If Value <> vbNullString _
+             AndAlso Value.IndexOf("(") > -1 Then Value = Value.Substring(0, Value.IndexOf("("))
 
- End  Get
+         ' Store the new value
+         ViewState.Item("ClientClickHandler") = Value
 
- Set ( ByVal Value As  String )
-
- ' Ensure that no brackets or parameters are defined
-
- If Value <> vbNullString _
-
- AndAlso Value.IndexOf("(") > -1 Then Value = Value.Substring(0, Value.IndexOf("("))
-
- ' Store the new value
-
- ViewState.Item("ClientClickHandler") = Value
-
- End  Set
-
+     End  Set
  End  Property
 
  < _
- Description("The Url to the image to use when the mouse is down on the control or the control is selected."), _
- Category("Appearance") _
+    Description("The Url to the image to use when the mouse is down on the control or the control is selected."), _
+    Category("Appearance") _
  > _
  Public  Property ImageDownUrl() As  String
+     Get
 
- Get
+     ' Return the stored value
+     Return  CType (ViewState.Item("ImageDownUrl"), String )
 
- ' Return the stored value
+     End  Get
+     Set ( ByVal Value As  String )
 
- Return  CType (ViewState.Item("ImageDownUrl"), String )
+     ' Store the new value
+     ViewState.Item("ImageDownUrl") = Value
 
- End  Get
-
- Set ( ByVal Value As  String )
-
- ' Store the new value
-
- ViewState.Item("ImageDownUrl") = Value
-
- End  Set
-
+     End  Set
  End  Property
 
  < _
- Description("The Url to the image to use when the mouse is hover the control."), _
- Category("Appearance") _
+    Description("The Url to the image to use when the mouse is hover the control."), _
+    Category("Appearance") _
  > _
  Public  Property ImageHoverUrl() As  String
+     Get
 
- Get
+         ' Return the stored value
+         Return  CType (ViewState.Item("ImageHoverUrl"), String )
 
- ' Return the stored value
+     End  Get
+     Set ( ByVal Value As  String )
 
- Return  CType (ViewState.Item("ImageHoverUrl"), String )
+         ' Store the new value
+         ViewState.Item("ImageHoverUrl") = Value
 
- End  Get
-
- Set ( ByVal Value As  String )
-
- ' Store the new value
-
- ViewState.Item("ImageHoverUrl") = Value
-
- End  Set
-
+     End  Set
  End  Property
 
  < _
- Description("Determines whether the button is selected or not."), _
- Category("Appearance"), _
- DefaultValue( False ) _
+    Description("Determines whether the button is selected or not."), _
+    Category("Appearance"), _
+    DefaultValue( False ) _
  > _
  Public  Property Selected() As  Boolean
+     Get
 
- Get
+         ' Get the stored value
+         Dim objValue As  Object = ViewState.Item("Selected")
 
- ' Get the stored value
+         ' Check if the type of object is a boolean
+         If  TypeOf objValue Is  Boolean  Then
 
- Dim objValue As  Object = ViewState.Item("Selected")
+             ' Return the stored value
+             Return  CType (objValue, Boolean )
 
- ' Check if the type of object is a boolean
+         Else  ' This is not a boolean
 
- If  TypeOf objValue Is  Boolean  Then
+             ' Return the default value
+             Return  False
 
- ' Return the stored value
+         End  If  ' End checking if the type of object is a boolean
 
- Return  CType (objValue, Boolean )
+     End  Get
 
- Else  ' This is not a boolean
+     Set ( ByVal Value As  Boolean )
 
- ' Return the default value
+         ' Store the new value
+         ViewState.Item("Selected") = Value
 
- Return  False
-
- End  If  ' End checking if the type of object is a boolean
-
- End  Get
-
- Set ( ByVal Value As  Boolean )
-
- ' Store the new value
-
- ViewState.Item("Selected") = Value
-
- End  Set
+     End  Set
 
  End  Property
 
  < _
- Description("Determines whether the button is a toggle button or not."), _
- Category("Appearance"), _
- DefaultValue( False ) _
+    Description("Determines whether the button is a toggle button or not."), _
+    Category("Appearance"), _
+    DefaultValue( False ) _
  > _
  Public  Property IsToggle() As  Boolean
+     Get
 
- Get
+         ' Get the stored value
+         Dim objValue As  Object = ViewState.Item("IsToggle")
 
- ' Get the stored value
+         ' Check if the type of object is a boolean
+         If  TypeOf objValue Is  Boolean  Then
 
- Dim objValue As  Object = ViewState.Item("IsToggle")
+             ' Return the stored value
+             Return  CType (objValue, Boolean )
 
- ' Check if the type of object is a boolean
+         Else  ' This is not a boolean
 
- If  TypeOf objValue Is  Boolean  Then
+             ' Return the default value
+             Return  False
 
- ' Return the stored value
+         End  If  ' End checking if the type of object is a boolean
 
- Return  CType (objValue, Boolean )
+     End  Get
 
- Else  ' This is not a boolean
+     Set ( ByVal Value As  Boolean )
 
- ' Return the default value
+         ' Store the new value
+         ViewState.Item("IsToggle") = Value
 
- Return  False
-
- End  If  ' End checking if the type of object is a boolean
-
- End  Get
-
- Set ( ByVal Value As  Boolean )
-
- ' Store the new value
-
- ViewState.Item("IsToggle") = Value
-
- End  Set
+     End  Set
 
  End  Property
 {% endhighlight %}
@@ -210,27 +176,27 @@ Ok, now lets render these property values to the control HTML tag as custom attr
 {% highlight vb.net linenos %}
  Protected  Overrides  Sub OnPreRender( ByVal e As System.EventArgs)
 
- With Attributes
+     With Attributes
 
- ' Ensure that the id attribute is rendered
- If ID = vbNullString Then .Add("id", ClientID)
+         ' Ensure that the id attribute is rendered
+         If ID = vbNullString Then .Add("id", ClientID)
 
- ' Add the attributes if they are specified
- If Key <> vbNullString Then .Add("Key", Key)
+         ' Add the attributes if they are specified
+         If Key <> vbNullString Then .Add("Key", Key)
 
- If ImageDownUrl <> vbNullString Then .Add("ImageDownUrl", ImageDownUrl)
+         If ImageDownUrl <> vbNullString Then .Add("ImageDownUrl", ImageDownUrl)
 
- If ImageHoverUrl <> vbNullString Then .Add("ImageHoverUrl", ImageHoverUrl)
+         If ImageHoverUrl <> vbNullString Then .Add("ImageHoverUrl", ImageHoverUrl)
 
- If ClientClickHandler <> vbNullString Then .Add("ClientClickHandler", ClientClickHandler)
+         If ClientClickHandler <> vbNullString Then .Add("ClientClickHandler", ClientClickHandler)
 
- .Add("Selected", Selected.ToString.ToLower)
- .Add("IsToggle", IsToggle.ToString.ToLower)
+         .Add("Selected", Selected.ToString.ToLower)
+         .Add("IsToggle", IsToggle.ToString.ToLower)
 
- End  With  ' End With Attributes
+     End  With  ' End With Attributes
 
- ' Allow the base class code to run
- Call  MyBase .OnPreRender(e)
+     ' Allow the base class code to run
+     Call  MyBase .OnPreRender(e)
 
  End  Sub
 {% endhighlight %}

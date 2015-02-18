@@ -6,7 +6,7 @@ date: 2008-11-24 13:09:00 +10:00
 ---
 
 <p>
-There is a lot of information around that discusses the differences between classes and structs. Unfortunately there isn&#39;t a lot of information available about when to use one over the other. 
+There is a lot of information around that discusses the differences between classes and structs. Unfortunately there isn't a lot of information available about when to use one over the other. 
 </p>
 <p>
 MSDN has <a href="http://msdn.microsoft.com/en-us/library/ms229017.aspx" target="_blank">a good resource</a> which provides guidance on how to choose between classes and structs. It starts by describing the differences between the two and then provides the following advice. 

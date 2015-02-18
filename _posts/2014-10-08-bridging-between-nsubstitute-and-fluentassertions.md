@@ -9,7 +9,7 @@ The two go-to packages I use for unit testing are [NSubstitute][0] and [FluentAs
 
 NSubstitute is really good at setting up stub behaviour using predicate or value argument matching and asserting received calls with the same argument matching. FluentAssertions is really good at asserting whether values satisfy specified criteria. The difference between these packages is that NSubstitute works with predicate expressions whereas FluentAssertions evaluates assertions and throws an exception if the assertions fail.
 
-The gap in functionality here is where I want to use NSubstitute to evaluate received calls but the power of FluentAssertions evaluation in the argument matching. This doesn't work because NSubstitute uses Arg.Is&lt;t&gt;
+The gap in functionality here is where I want to use NSubstitute to evaluate received calls but the power of FluentAssertions evaluation in the argument matching. This doesn't work because NSubstitute uses Arg.Is&lt;T&gt;
     (Expression&lt;predicate&lt;T&gt;&gt;) whereas FluentAssertions will throw an exception. We need the ability to bridge these two packages so that we can have the power of FluentAssertions executing within an NSubstitute argument matcher and allowing the test code to remain readable.
 
 Getting this to work uses two key pieces, IArgumentMatcher from NSubstitute and AssertionScope from FluentAssertions.

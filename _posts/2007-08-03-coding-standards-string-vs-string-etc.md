@@ -4,7 +4,7 @@ categories : .Net
 date: 2007-08-03 11:09:00 +10:00
 ---
 
- I recently [posted][0] about some coding standards I have been reviewing. There is another standard that has plagued me where my research doesn&#39;t really offer any solid guidance. 
+ I recently [posted][0] about some coding standards I have been reviewing. There is another standard that has plagued me where my research doesn't really offer any solid guidance. 
 
  It is the old argument of: 
 

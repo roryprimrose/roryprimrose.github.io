@@ -6,7 +6,7 @@ date: 2008-12-24 11:15:00 +10:00
 ---
 
 <p>
-I&#39;ve been performance testing a WCF service recently and working away at the bottlenecks in the system. After fixing a few performance issues in the components behind the service endpoint (service implementation and beyond), I was still getting really bad throughput calling the distributed service. The service in this case is hosted on a Windows Server 2003 VM. While it is not on physical hardware, I should be able to achieve better performance than the results I was getting.
+I've been performance testing a WCF service recently and working away at the bottlenecks in the system. After fixing a few performance issues in the components behind the service endpoint (service implementation and beyond), I was still getting really bad throughput calling the distributed service. The service in this case is hosted on a Windows Server 2003 VM. While it is not on physical hardware, I should be able to achieve better performance than the results I was getting.
 </p>
 <p>
 After 90 seconds into a load test, the resources on the server got saturated and performance dropped through the floor. After this happened for a minute or so, timeouts and security negotiation failures occurred and test executions essentially halted for the remainder of the load test. I noticed that once service requests were no longer being processed that the server was no longer stressed (CPU dropped back down to normal).
@@ -30,6 +30,6 @@ Switching over to basicHttpBinding dropped the average test time down to a consi
 The CPU on the server is no longer peaking out, but is still working hard because it is processing over 28,000 requests rather than just a few thousand.
 </p>
 <p>
-This post isn&#39;t intended to scare you off using wsHttpBinding. It has its place, but if you don&#39;t require its functionality, be aware of the performance implication. You may need to scale up your hardware if you do require wsHttpBinding on a service that will be hit heavily. My preference would be to use netTcpBinding in WAS, but unfortunately Windows Server 2008 is not available to me for this specific scenario.
+This post isn't intended to scare you off using wsHttpBinding. It has its place, but if you don't require its functionality, be aware of the performance implication. You may need to scale up your hardware if you do require wsHttpBinding on a service that will be hit heavily. My preference would be to use netTcpBinding in WAS, but unfortunately Windows Server 2008 is not available to me for this specific scenario.
 </p>
 

@@ -13,69 +13,10 @@ My version of the enum editor will auto-detect if the flags enum has been define
 
 Hope you find this helpful.
 
- ''' -----------------------------------------------------------------------------
-
- ''' Class : EnumEditor
-
- '''
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Generic Enum Editor.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' The default enum editor only display a normal drop-down list.
-
- ''' As such, to define multiple enum values, they must be typed into the property grid.
-
- ''' This editor will determine if an enum is a Flags enum and display either a
-
- ''' normal drop-down list or a checkbox drop-down list. This will make it easier to use the editor
-
- ''' to set multiple enum values, while still supporting not-bitwise enums.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 15/Mar/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
+{% highlight vb.net linenos %}
  Public  Class EnumEditor
-
 # Region " Declarations "
-
  Inherits System.Drawing.Design.UITypeEditor
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' The service object used to reference the editor.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 15/Mar/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
 
  Private m_objService As IWindowsFormsEditorService
 
@@ -83,318 +24,176 @@ Hope you find this helpful.
 
 # Region " Sub Procedures "
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' SelectedIndexChanged event handler.
-
- ''' </summary&gt;
-
- ''' <param name="sender"&gt;The object that raised the event.</param&gt;
-
- ''' <param name="e"&gt;The EventArgs object related to the event.</param&gt;
-
- ''' <remarks&gt;
-
- ''' This event fires when a new item is selected for a non-bitwise enum.
-
- ''' This is required in order to hide the drop-down list when a new item is selected.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 15/Mar/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  Private  Sub ItemSelected( ByVal sender As  Object , ByVal e As EventArgs)
-
- ' Check if the service object exists
-
- If  Not m_objService Is  Nothing  Then
-
- ' Close the drop down control
-
- m_objService.CloseDropDown()
-
- End  If  ' End checking if the service object exists
-
+     ' Check if the service object exists
+     If  Not m_objService Is  Nothing  Then
+         ' Close the drop down control
+         m_objService.CloseDropDown()
+     End  If  ' End checking if the service object exists
  End  Sub
 
 # End  Region
 
 # Region " Functions "
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets the editor style used by the EditValue method.
-
- ''' </summary&gt;
-
- ''' <param name="context"&gt;An ITypeDescriptorContext that can be used to gain additional context information.</param&gt;
-
- ''' <returns&gt;A UITypeEditorEditStyle enumeration value that indicates the style of editor used by the current UITypeEditor.</returns&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 14/Feb/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  Public  Overloads  Overrides  Function GetEditStyle( ByVal context As System.ComponentModel.ITypeDescriptorContext) As System.Drawing.Design.UITypeEditorEditStyle
-
- ' This is a drop-down editor
-
- Return UITypeEditorEditStyle.DropDown
-
+     ' This is a drop-down editor
+     Return UITypeEditorEditStyle.DropDown
  End  Function
 
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Edits the value of the specified object using the editor style indicated by GetEditStyle.
-
- ''' </summary&gt;
-
- ''' <param name="context"&gt;An ITypeDescriptorContext that can be used to gain additional context information. </param&gt;
-
- ''' <param name="provider"&gt;An IServiceProvider that this editor can use to obtain services.</param&gt;
-
- ''' <param name="value"&gt;The object to edit.</param&gt;
-
- ''' <returns&gt;The new value of the object.</returns&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 14/Feb/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
  Public  Overloads  Overrides  Function EditValue( _
+     ByVal context As ITypeDescriptorContext, _
+     ByVal provider As IServiceProvider, _
+     ByVal value As  Object ) As  Object
 
- ByVal context As ITypeDescriptorContext, _
+     ' Check if the required objects exist
+     If  Not context Is  Nothing _
+         AndAlso  Not context.Instance Is  Nothing _
+         AndAlso  Not provider Is  Nothing  Then
 
- ByVal provider As IServiceProvider, _
+         ' Get the editor used to display the list box
+         m_objService = CType (provider.GetService( GetType (IWindowsFormsEditorService)), IWindowsFormsEditorService)
 
- ByVal value As  Object ) As  Object
+         ' Check if the service exists
+         If  Not m_objService Is  Nothing  Then
 
- ' Check if the required objects exist
+             Dim objType As System.Type = context.PropertyDescriptor.PropertyType
+             Dim bFlagsDefined As  Boolean
+             Dim aAttributes() As  Object = objType.GetCustomAttributes( False )
+             Dim nIndex As Int32
+             Dim nValue As Int32 = CType (value, Int32)
+             Dim nItemValue As Int32
+             Dim aValues As Array = System.Enum.GetValues(objType)
+             Dim nNewValue As Int32
 
- If  Not context Is  Nothing _
+             ' Loop through each of the attributes
+             For nIndex = 0 To aAttributes.Length - 1
 
- AndAlso  Not context.Instance Is  Nothing _
+                 ' Check if this attribute is Flags
+                 If  CType (aAttributes(nIndex), System.Attribute).GetType.Equals( GetType (System.FlagsAttribute)) Then
 
- AndAlso  Not provider Is  Nothing  Then
+                     ' We have found the flags attribute
+                     bFlagsDefined = True
+                     ' Break
 
- ' Get the editor used to display the list box
+                     Exit  For
 
- m_objService = CType (provider.GetService( GetType (IWindowsFormsEditorService)), IWindowsFormsEditorService)
+                 End  If  ' End checking if this attribute is Flags
 
- ' Check if the service exists
+             Next  ' Loop through each of the attributes
 
- If  Not m_objService Is  Nothing  Then
+             ' Check if Flags is defined
+             If bFlagsDefined = True  Then
 
- Dim objType As System.Type = context.PropertyDescriptor.PropertyType
+                 Dim objList As  New System.Windows.Forms.CheckedListBox
+                 Dim bChecked As  Boolean
 
- Dim bFlagsDefined As  Boolean
+                 ' Set up the ComboBox
+                 objList.BorderStyle = System.Windows.Forms.BorderStyle.None
+                 objList.CheckOnClick = True
 
- Dim aAttributes() As  Object = objType.GetCustomAttributes( False )
+                 ' Loop through all the values
+                 For nIndex = 0 To aValues.Length - 1
 
- Dim nIndex As Int32
+                     ' Get the value of this item
+                     nItemValue = CType (aValues.GetValue(nIndex), Int32)
 
- Dim nValue As Int32 = CType (value, Int32)
+                     ' Enums that are bitwise can be defined with a 0 value
+                     ' For example: None = 0
+                     ' These are often used for default values
+                     ' We don't want to display these as a bitwise comparison is always true
+                     ' Check if the item has a valid bitwise value
+                     If nItemValue > 0 Then
 
- Dim nItemValue As Int32
+                         ' Determine if this item is selected
+                         bChecked = ((nValue And nItemValue) = nItemValue)
 
- Dim aValues As Array = System.Enum.GetValues(objType)
+                         ' Add the image to the list
+                         objList.Items.Add(System.Enum.Parse(objType, CType (aValues.GetValue(nIndex), String )), bChecked)
 
- Dim nNewValue As Int32
+                     End  If  ' End checking if the item has a valid bitwise value
 
- ' Loop through each of the attributes
+                 Next  ' Loop through all the values
 
- For nIndex = 0 To aAttributes.Length - 1
+                 ' Check if the listbox height is too large
+                 If objList.Height > (objList.Items.Count * objList.ItemHeight) Then
 
- ' Check if this attribute is Flags
+                     ' Adjust the height of the list
+                     objList.Height = objList.Items.Count * objList.ItemHeight
 
- If  CType (aAttributes(nIndex), System.Attribute).GetType.Equals( GetType (System.FlagsAttribute)) Then
+                 End  If  ' End checking if the listbox height is too large
 
- ' We have found the flags attribute
+                 ' Display the drop down list
+                 m_objService.DropDownControl(objList)
 
- bFlagsDefined = True
+                 ' Loop through each item in the listbox
+                 For nIndex = 0 To objList.CheckedItems.Count - 1
 
- ' Break
+                     ' Get the value of the selected item
+                     nItemValue = CType (System.Enum.Parse(objType, CType (objList.CheckedItems.Item(nIndex), String )), Int32)
 
- Exit  For
+                     ' Add this value to the final value
+                     nNewValue = nNewValue Or nItemValue
 
- End  If  ' End checking if this attribute is Flags
+                 Next  ' Loop through each item in the listbox
 
- Next  ' Loop through each of the attributes
+                ' Store the values selected
+                value = System.Enum.ToObject(objType, nNewValue)
 
- ' Check if Flags is defined
+            Else  ' Flags is not defined
 
- If bFlagsDefined = True  Then
+                Dim objList As  New System.Windows.Forms.ListBox
 
- Dim objList As  New System.Windows.Forms.CheckedListBox
+                ' Set up the ComboBox
+                objList.BorderStyle = System.Windows.Forms.BorderStyle.None
 
- Dim bChecked As  Boolean
+                ' Loop through all the values
+                For nIndex = 0 To aValues.Length - 1
 
- ' Set up the ComboBox
+                ' Add the image to the list
+                objList.Items.Add(System.Enum.Parse(objType, CType (aValues.GetValue(nIndex), String )))
 
- objList.BorderStyle = System.Windows.Forms.BorderStyle.None
+                Next  ' Loop through all the values
 
- objList.CheckOnClick = True
+                ' Preselect the current item
+                objlist.SelectedIndex = objlist.Items.IndexOf(value)
 
- ' Loop through all the values
+                ' Hook up the IndexChanged event to hide the drop down list
+                AddHandler objList.SelectedIndexChanged, AddressOf ItemSelected
 
- For nIndex = 0 To aValues.Length - 1
+                ' Check if the listbox height is too large
+                If objList.Height > (objList.Items.Count * objList.ItemHeight) Then
 
- ' Get the value of this item
+                    ' Adjust the height of the list
+                    objList.Height = objList.Items.Count * objList.ItemHeight
 
- nItemValue = CType (aValues.GetValue(nIndex), Int32)
+                End  If  ' End checking if the listbox height is too large
 
- ' Enums that are bitwise can be defined with a 0 value
+                ' Display the drop down list
+                m_objService.DropDownControl(objList)
 
- ' For example: None = 0
+                ' Check if we have a value to convert
+                If  Not objlist.SelectedItem Is  Nothing  Then
 
- ' These are often used for default values
+                    ' Store the value selected
+                    value = System.Enum.Parse(objType, CType (objlist.SelectedItem, String ))
 
- ' We don't want to display these as a bitwise comparison is always true
+                End  If  ' End checking if we have a value to convert
 
- ' Check if the item has a valid bitwise value
+            End  If  ' End checking if Flags is defined
 
- If nItemValue &gt; 0 Then
+        End  If  ' End checking if the service exists
 
- ' Determine if this item is selected
+    End  If  ' End checking if the required objects exist
 
- bChecked = ((nValue And nItemValue) = nItemValue)
-
- ' Add the image to the list
-
- objList.Items.Add(System.Enum.Parse(objType, CType (aValues.GetValue(nIndex), String )), bChecked)
-
- End  If  ' End checking if the item has a valid bitwise value
-
- Next  ' Loop through all the values
-
- ' Check if the listbox height is too large
-
- If objList.Height &gt; (objList.Items.Count * objList.ItemHeight) Then
-
- ' Adjust the height of the list
-
- objList.Height = objList.Items.Count * objList.ItemHeight
-
- End  If  ' End checking if the listbox height is too large
-
- ' Display the drop down list
-
- m_objService.DropDownControl(objList)
-
- ' Loop through each item in the listbox
-
- For nIndex = 0 To objList.CheckedItems.Count - 1
-
- ' Get the value of the selected item
-
- nItemValue = CType (System.Enum.Parse(objType, CType (objList.CheckedItems.Item(nIndex), String )), Int32)
-
- ' Add this value to the final value
-
- nNewValue = nNewValue Or nItemValue
-
- Next  ' Loop through each item in the listbox
-
- ' Store the values selected
-
- value = System.Enum.ToObject(objType, nNewValue)
-
- Else  ' Flags is not defined
-
- Dim objList As  New System.Windows.Forms.ListBox
-
- ' Set up the ComboBox
-
- objList.BorderStyle = System.Windows.Forms.BorderStyle.None
-
- ' Loop through all the values
-
- For nIndex = 0 To aValues.Length - 1
-
- ' Add the image to the list
-
- objList.Items.Add(System.Enum.Parse(objType, CType (aValues.GetValue(nIndex), String )))
-
- Next  ' Loop through all the values
-
- ' Preselect the current item
-
- objlist.SelectedIndex = objlist.Items.IndexOf(value)
-
- ' Hook up the IndexChanged event to hide the drop down list
-
- AddHandler objList.SelectedIndexChanged, AddressOf ItemSelected
-
- ' Check if the listbox height is too large
-
- If objList.Height &gt; (objList.Items.Count * objList.ItemHeight) Then
-
- ' Adjust the height of the list
-
- objList.Height = objList.Items.Count * objList.ItemHeight
-
- End  If  ' End checking if the listbox height is too large
-
- ' Display the drop down list
-
- m_objService.DropDownControl(objList)
-
- ' Check if we have a value to convert
-
- If  Not objlist.SelectedItem Is  Nothing  Then
-
- ' Store the value selected
-
- value = System.Enum.Parse(objType, CType (objlist.SelectedItem, String ))
-
- End  If  ' End checking if we have a value to convert
-
- End  If  ' End checking if Flags is defined
-
- End  If  ' End checking if the service exists
-
- End  If  ' End checking if the required objects exist
-
- ' Return the value
-
- Return value
+    ' Return the value
+    Return value
 
  End  Function
 
 # End  Region
 
  End  Class
+{% endhighlight %}
 
 

@@ -237,9 +237,9 @@ date: 2008-10-08 11:57:24 +10:00
 * Advice from [Scott Guthrie][3] and his team is that HttpRuntime.Cache may be used in non-ASP.Net scenarios.
 * Do you need the flexibility of both absolute and sliding expiration? 
   * If you do, prefer EntLib.
-  * If you don&#39;t, probably prefer HttpRuntime.Cache.
+  * If you don't, probably prefer HttpRuntime.Cache.
 * Is your code conducive to configuration requirements? 
-  * For example, framework type components you write that use caching probably shouldn&#39;t bundle a requirement on consumers of the assembly to put specific configuration in their application config files. In these cases, prefer HttpRuntime.Cache.
+  * For example, framework type components you write that use caching probably shouldn't bundle a requirement on consumers of the assembly to put specific configuration in their application config files. In these cases, prefer HttpRuntime.Cache.
 
 **Policy suggestions**
 

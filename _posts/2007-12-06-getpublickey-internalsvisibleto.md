@@ -5,13 +5,13 @@ tags : GetPublicKey, Great Tools, Unit Testing
 date: 2007-12-06 12:50:00 +10:00
 ---
 
- I [posted previously][0] about using the InternalsVisibleTo attribute for unit testing and how I had come across [David Kean&#39;s][1] very helpful [PublicKey][2] application. I have been using this application for the last month or so and it has been great, until yesterday. 
+ I [posted previously][0] about using the InternalsVisibleTo attribute for unit testing and how I had come across [David Kean's][1] very helpful [PublicKey][2] application. I have been using this application for the last month or so and it has been great, until yesterday. 
 
- I changed the snk file used by my solution. This caused an interesting Catch-22 situation. AssemblyA couldn&#39;t compile because it had an InternalsVisibleTo attribute pointing to AssemblyATest, which now has the wrong PublicKey value. AssemblyATest couldn&#39;t compile because it directly references AssemblyA in order to run the tests. 
+ I changed the snk file used by my solution. This caused an interesting Catch-22 situation. AssemblyA couldn't compile because it had an InternalsVisibleTo attribute pointing to AssemblyATest, which now has the wrong PublicKey value. AssemblyATest couldn't compile because it directly references AssemblyA in order to run the tests. 
 
- Unfortunately, David&#39;s PublicKey application works from binaries alone. Because I can&#39;t compile the assemblies, I can&#39;t regenerate the InternalsVisibleTo attribute with the correct PublicKey value. 
+ Unfortunately, David's PublicKey application works from binaries alone. Because I can't compile the assemblies, I can't regenerate the InternalsVisibleTo attribute with the correct PublicKey value. 
 
- Now there are several ways around this, but I couldn&#39;t resist coding my own utility to cover this scenario. Using David&#39;s application as inspiration, I have created GetPublicKey. It will identity the PublicKey value from dll, exe, snk and pub files in order to generate an InternalsVisibleTo attribute. 
+ Now there are several ways around this, but I couldn't resist coding my own utility to cover this scenario. Using David's application as inspiration, I have created GetPublicKey. It will identity the PublicKey value from dll, exe, snk and pub files in order to generate an InternalsVisibleTo attribute. 
 
  GetPublicKey looks at command line arguments so that you can send any of the supported file types to it using Explorer, VS External Tools or VS Open With. It leverages sn.exe to extract the public key information so you may need to install the SDK. 
 

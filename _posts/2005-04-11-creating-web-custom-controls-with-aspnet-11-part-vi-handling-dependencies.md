@@ -7,7 +7,7 @@ The main purpose of creating controls is so they can be reused in other projects
 
 When I am creating controls, I always have dependencies to support the them. At the very least, I have JavaScript that needs to be rendered for client-side behaviours of the control. I have written several controls that also rely on style-sheets and images to be used with the control. Deployment of these dependencies becomes more than a little nightmare.
 
-Take an image for example. What happens when a control needs to render an image to the browser? It needs to render some HTML like <IMG src= 'test.gif' /&gt;. The browser then makes a request to the web server for test.gif. Thats all very well and good, but to deploy this control, you not only need to copy the controls assembly to the deployment bin folder, but also need to deploy test.gif to the correct folder to be requested by the browser. Each dependency of the control needs to be copied across each of the ASP.Net projects that use the control. This very quickly becomes a maintenance problem.
+Take an image for example. What happens when a control needs to render an image to the browser? It needs to render some HTML like &lt;IMG src= 'test.gif' /&gt;. The browser then makes a request to the web server for test.gif. Thats all very well and good, but to deploy this control, you not only need to copy the controls assembly to the deployment bin folder, but also need to deploy test.gif to the correct folder to be requested by the browser. Each dependency of the control needs to be copied across each of the ASP.Net projects that use the control. This very quickly becomes a maintenance problem.
 
 What we want to do is package all of these dependencies into the controls assembly. To achieve this, move the required files from the ASP.Net project and put them in the controls project. For each of these files, go to the property grid and set their Build Action to Embedded Resource. This will add each file as a resource to the controls assembly when it is compiled. We have now solved the deployment problem for the dependencies of the controls. When the controls assembly is copied for use in another project, all the dependencies are deployed with it as they are all bundled in the one dll file. 
 
@@ -17,1270 +17,657 @@ Using IHttpHandler is perfect for covering our dependency deployment problems, b
 
 This is what is required in the web.config file:
 
- < configuration &gt;
-
- < system.web &gt;
-
- < httpHandlers &gt;
-
- < add  verb =&quot;*&quot;  path =&quot;MyDev.Web.Controls.aspx&quot;  type =&quot;MyDev.Web.Controls.ResHandler,MyDev.Web.Controls&quot; /&gt;
-
- </ httpHandlers &gt;
-
- </ system.web &gt;
-
- </ configuration &gt;
+{% highlight xml linenos %}
+<configuration >
+    <system.web >
+        <httpHandlers >
+            <add  verb ="*"  path ="MyDev.Web.Controls.aspx"  type ="MyDev.Web.Controls.ResHandler,MyDev.Web.Controls" />
+        </httpHandlers >
+    </system.web >
+</configuration >
+{% endhighlight %}
 
 We have now been able to hook up a web request to call the IHttpHandler interface in a specific class and assembly. Now when the request comes through, we need to identify which resource in the assembly is being requested.When I was originally researching this, I came across an article by [Eric Woodruff][0] that had a great idea for not only identifying the resource requested, but also supporting a caching flag. It will be through querystrings that the handler will be told what resource is being requested.
 
-In the previous article, I discussed the best ways of rendering scripts for a control. Most control developers render the script directly to the page either when the page starts rendering, or when the page finishes rendering or when the control renders. As discussed, these scripts can be pulled out of the assembly for easier development, but rendering the script directly in the page doesn't allow for any caching of the data. With this method, a control could render a script tag that looks like <SCRIPT type='text/javascript' src='MyDev.Web.Controls.aspx?Res=MyControlScript.js' /&gt;. This causes the browser to make a separate request for the script which can now be cached by the browser. The result is that the pages will load much faster.
+In the previous article, I discussed the best ways of rendering scripts for a control. Most control developers render the script directly to the page either when the page starts rendering, or when the page finishes rendering or when the control renders. As discussed, these scripts can be pulled out of the assembly for easier development, but rendering the script directly in the page doesn't allow for any caching of the data. With this method, a control could render a script tag that looks like <code>&lt;SCRIPT type='text/javascript' src='MyDev.Web.Controls.aspx?Res=MyControlScript.js' /&gt;</code>. This causes the browser to make a separate request for the script which can now be cached by the browser. The result is that the pages will load much faster.
 
 I created a class that implements IHttpHandler and added as many helpful features as I could think of. It will handle text and binary resources and make its best determination as to the content-type of the resource. It also supports some useful methods for registering resources with a page. As this class deals with reflection, assemblies and resources, I have cached objects and data that are often referenced and minimised the number of times the same method is called when processing the resources. Let me know if you find more improvements that can be made. 
 
 Here are the goods:
 
+{% highlight xml linenos %}
 # Region &quot; Imports &quot;
 
  Imports System
-
  Imports System.Web
 
 # End  Region
 
- ''' -----------------------------------------------------------------------------
-
- ''' Project : MyDev.Web.Controls
-
- ''' Class : Web.Controls.ResHandler
-
- '''
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' ResHandler object.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' Handles HTTP requests for resources in this assembly.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  Class ResHandler
+Public  Class ResHandler
 
 # Region &quot; Declarations &quot;
 
- Implements IHttpHandler
+Implements IHttpHandler
 
- ''' -----------------------------------------------------------------------------
+Public  Structure TResType
 
- ''' Project : MyDev.Web.Controls
+    Public PerceivedType As  String
 
- ''' Struct : Web.Controls.ResHandler.TResType
+    Public ContentType As  String
 
- '''
+End  Structure
 
- ''' -----------------------------------------------------------------------------
+Private m_objAssembly As Reflection.Assembly
 
- ''' <summary&gt;
-
- ''' Stores details about a resource type.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  Structure TResType
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' The perceived type is the broad type of the resource, such as text or image.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public PerceivedType As  String
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' The content type that is specified to the client.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public ContentType As  String
-
- End  Structure
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Assembly object used to cache the object reference.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Private m_objAssembly As Reflection.Assembly
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' The name of the current assemblies namespace.
-
- ''' </summary&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 27/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Private m_sAssemblyName As  String
-
-# End  Region
-
-# Region &quot; Constructors and Destructor &quot;
-
-# End  Region
-
-# Region &quot; Events &quot;
+Private m_sAssemblyName As  String
 
 # End  Region
 
 # Region &quot; Sub Procedures &quot;
 
- ''' -----------------------------------------------------------------------------
+Private  Sub LoadTypeFromRegistry( _
+    ByVal sFileExt As  String , _
+    ByRef objType As TResType)
 
- ''' <summary&gt;
+    Dim objKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(&quot;.&quot; & sFileExt, False )
 
- ''' Loads the file type information from the registry.
+    ' Check if the Content Type exists
+    If  Not objKey.GetValue("Content Type") Is  Nothing  Then
 
- ''' </summary&gt;
+        objType.ContentType = CType (objKey.GetValue("Content Type"), String )
 
- ''' <param name=&quot;sFileExt&quot;&gt;The file extension to check.</param&gt;
+    End  If  ' End checking if the Content Type exists
 
- ''' <param name=&quot;objType&quot;&gt;The type information for the file type.</param&gt;
+    ' Check if the PerceivedType exists
+    If  Not objKey.GetValue("PerceivedType") Is  Nothing  Then
 
- ''' <remarks&gt;
+        ' Store the PerceivedType value
+        objType.PerceivedType = CType (objKey.GetValue("PerceivedType"), String )
 
- ''' None.
+    End  If  ' Check if the PerceivedType exists
 
- ''' </remarks&gt;
+    ' Check if the perceived type doesn't exist, but can be determined from the content type
+    If objType.PerceivedType = vbNullString _
+        AndAlso objType.ContentType <> vbNullString _
+        AndAlso objType.ContentType.IndexOf("/") > -1 Then
 
- ''' <history&gt;
+        objType.PerceivedType = objType.ContentType.Substring(0, objType.ContentType.IndexOf("/"))
 
- ''' 25/Jan/2005 Created
+    End  If  ' End checking if the perceived type doesn't exist, but can be determined from the content type
 
- ''' </history&gt;
+End  Sub
 
- ''' -----------------------------------------------------------------------------
+Private  Sub LoadTypeFromName( _
+    ByVal sFileExt As  String , _
+    ByRef objType As TResType)
 
- Private  Sub LoadTypeFromRegistry( _
+    Select  Case sFileExt
 
- ByVal sFileExt As  String , _
+        Case "mid", "midi", "mp3", "wav", "wma"
 
- ByRef objType As TResType)
+            ' Toggle sfileext as appropriate for storage
+            If sFileExt = "mp3" Then sFileExt = "mpeg"
 
- Dim objKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(&quot;.&quot; & sFileExt, False )
+            If sFileExt = "wma" Then sFileExt = "x-ms-wma"
 
- ' Check if the Content Type exists
+            objType.PerceivedType = "audio"
 
- If  Not objKey.GetValue(&quot;Content Type&quot;) Is  Nothing  Then
+        Case "csv", "xls", "doc", "dot", "hta", "ppt", "zip", "tgz"
 
- objType.ContentType = CType (objKey.GetValue(&quot;Content Type&quot;), String )
+            ' Toggle sfileext as appropriate for storage
 
- End  If  ' End checking if the Content Type exists
+            If sFileExt = "csv" OrElse sFileExt = "xls" Then sFileExt = "vnd.ms-excel"
 
- ' Check if the PerceivedType exists
+            If sFileExt = "doc" OrElse sFileExt = "dot" Then sFileExt = "msword"
 
- If  Not objKey.GetValue(&quot;PerceivedType&quot;) Is  Nothing  Then
+            If sFileExt = "ppt" Then sFileExt = "vnd.ms-powerpoint"
 
- ' Store the PerceivedType value
+            If sFileExt = "zip" Then sFileExt = "x-zip-compressed"
 
- objType.PerceivedType = CType (objKey.GetValue(&quot;PerceivedType&quot;), String )
+            If sFileExt = "tgz" Then sFileExt = "x-compressed"
 
- End  If  ' Check if the PerceivedType exists
+            objType.PerceivedType = "application"
 
- ' Check if the perceived type doesn't exist, but can be determined from the content type
+        Case "bmp", "gif", "jpg", "jpeg", "png", "tiff", "tif", "ico"
 
- If objType.PerceivedType = vbNullString _
+            ' Toggle sfileext as appropriate for storage
+            If sFileExt = "ico" Then sFileExt = "x-icon"
 
- AndAlso objType.ContentType <&gt; vbNullString _
+            If sFileExt = "tif" Then sFileExt = "tiff"
 
- AndAlso objType.ContentType.IndexOf(&quot;/&quot;) &gt; -1 Then
+            objType.PerceivedType = "image"
 
- objType.PerceivedType = objType.ContentType.Substring(0, objType.ContentType.IndexOf(&quot;/&quot;))
+        Case "mht", "mhtml"
 
- End  If  ' End checking if the perceived type doesn't exist, but can be determined from the content type
+            ' Toggle sfileext as appropriate for storage
+            sFileExt = "rfc822"
 
- End  Sub
+            objType.PerceivedType = "message"
 
- ''' -----------------------------------------------------------------------------
+        Case "txt", "tab", "vb", "vbs", "js", "xml", "xsl", "htc", "htm", "html"
 
- ''' <summary&gt;
+            ' Toggle sfileext as appropriate for storage
+            If sFileExt = "vb" OrElse sFileExt = "vbs" Then sFileExt = "vbscript"
 
- ''' Loads the file type information by the file type.
+            If sFileExt = "js" Then sFileExt = "javascript"
 
- ''' </summary&gt;
+            If sFileExt = "txt" OrElse sFileExt = "tab" Then sFileExt = "plain"
 
- ''' <param name=&quot;sFileExt&quot;&gt;The file extension to check.</param&gt;
+            If sFileExt = "xsl" Then sFileExt = "xml"
 
- ''' <param name=&quot;objType&quot;&gt;The type information for the file type.</param&gt;
+            If sFileExt = "htc" Then sFileExt = "x-component"
 
- ''' <remarks&gt;
+            If sFileExt = "htm" Then sFileExt = "html"
 
- ''' None.
+            objType.PerceivedType = "text"
 
- ''' </remarks&gt;
+        Case "avi", "mov", "mpe", "mpeg"
 
- ''' <history&gt;
+            ' Toggle sfileext as appropriate for storage
+            If sFileExt = "mov" Then sFileExt = "quicktime"
 
- ''' 25/Jan/2005 Created
+            If sFileExt = "mpe" Then sFileExt = "mpeg"
 
- ''' </history&gt;
+            objType.PerceivedType = "video"
 
- ''' -----------------------------------------------------------------------------
+        Case  Else
 
- Private  Sub LoadTypeFromName( _
+            ' Default to binary data
+            objType.PerceivedType = "application"
 
- ByVal sFileExt As  String , _
+            sFileExt = "octet-stream"
 
- ByRef objType As TResType)
+    End  Select
 
- Select  Case sFileExt
+    ' Create the content type from the perceived type and the file extension
+    objType.ContentType = objType.PerceivedType & "/" & sFileExt
 
- Case &quot;mid&quot;, &quot;midi&quot;, &quot;mp3&quot;, &quot;wav&quot;, &quot;wma&quot;
+End  Sub
 
- ' Toggle sfileext as appropriate for storage
+Public  Sub RegisterWithPage( _
+    ByVal sResource As  String , _
+    ByRef objPage As UI.Page, _
+    Optional  ByVal bRegisterAsStartupScript As  Boolean = False )
 
- If sFileExt = &quot;mp3&quot; Then sFileExt = &quot;mpeg&quot;
+    ' Check if the resource is valid
+    If IsValid(sResource) = True  Then
 
- If sFileExt = &quot;wma&quot; Then sFileExt = &quot;x-ms-wma&quot;
+        ' Check if we should register the resource
+        If (((bRegisterAsStartupScript = False ) _
+            AndAlso (objPage.IsClientScriptBlockRegistered(sResource) = False )) _
+            OrElse ((bRegisterAsStartupScript = True ) _
+            AndAlso (objPage.IsStartupScriptRegistered(sResource) = False ))) Then
 
- objType.PerceivedType = &quot;audio&quot;
+            ' Check if we can get a page reference
+            Dim sReference As  String = PageReference(sResource)
 
- Case &quot;csv&quot;, &quot;xls&quot;, &quot;doc&quot;, &quot;dot&quot;, &quot;hta&quot;, &quot;ppt&quot;, &quot;zip&quot;, &quot;tgz&quot;
+            ' Check if there is a reference to use
+            If sReference <> vbNullString Then
 
- ' Toggle sfileext as appropriate for storage
+                ' Check if the reference is a startup script
+                If bRegisterAsStartupScript = True  Then
 
- If sFileExt = &quot;csv&quot; OrElse sFileExt = &quot;xls&quot; Then sFileExt = &quot;vnd.ms-excel&quot;
+                    ' Register the resource
+                    objPage.RegisterStartupScript(sResource, sReference)
 
- If sFileExt = &quot;doc&quot; OrElse sFileExt = &quot;dot&quot; Then sFileExt = &quot;msword&quot;
+                Else  ' This is not a startup script
 
- If sFileExt = &quot;ppt&quot; Then sFileExt = &quot;vnd.ms-powerpoint&quot;
+                    ' Register the resource
+                    objPage.RegisterClientScriptBlock(sResource, sReference)
 
- If sFileExt = &quot;zip&quot; Then sFileExt = &quot;x-zip-compressed&quot;
+                End  If  ' End checking if the reference is a startup script
 
- If sFileExt = &quot;tgz&quot; Then sFileExt = &quot;x-compressed&quot;
+            End  If  ' End checking if there is a reference to use
 
- objType.PerceivedType = &quot;application&quot;
+        End  If  ' End checking if we should register the resource
 
- Case &quot;bmp&quot;, &quot;gif&quot;, &quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;, &quot;tiff&quot;, &quot;tif&quot;, &quot;ico&quot;
+    End  If  ' End checking if the resource is valid
 
- ' Toggle sfileext as appropriate for storage
+End  Sub
 
- If sFileExt = &quot;ico&quot; Then sFileExt = &quot;x-icon&quot;
+Public  Sub ProcessRequest( _
+    ByVal context As HttpContext) _
+    Implements IHttpHandler.ProcessRequest
 
- If sFileExt = &quot;tif&quot; Then sFileExt = &quot;tiff&quot;
+    ' Clear any existing response data
 
- objType.PerceivedType = &quot;image&quot;
+    context.Response.Clear()
 
- Case &quot;mht&quot;, &quot;mhtml&quot;
+    Try
 
- ' Toggle sfileext as appropriate for storage
+        Dim sResource As  String = context.Request.QueryString("Res")
+        Dim bSuccess As  Boolean
 
- sFileExt = &quot;rfc822&quot;
+        ' Check if the resource request is valid
+        If IsValid(sResource) = True  Then
 
- objType.PerceivedType = &quot;message&quot;
+            Dim bNoCache As  Boolean = False
+            Dim tType As TResType = ResourceType(sResource)
 
- Case &quot;txt&quot;, &quot;tab&quot;, &quot;vb&quot;, &quot;vbs&quot;, &quot;js&quot;, &quot;xml&quot;, &quot;xsl&quot;, &quot;htc&quot;, &quot;htm&quot;, &quot;html&quot;
+            ' Check if NoCache has been specified
+            If context.Request.QueryString("NoCache") <> vbNullString Then
 
- ' Toggle sfileext as appropriate for storage
+            Try
 
- If sFileExt = &quot;vb&quot; OrElse sFileExt = &quot;vbs&quot; Then sFileExt = &quot;vbscript&quot;
+                ' Get the cache value
+                bNoCache = System.Boolean.Parse(context.Request.QueryString("NoCache"))
 
- If sFileExt = &quot;js&quot; Then sFileExt = &quot;javascript&quot;
+            Catch
 
- If sFileExt = &quot;txt&quot; OrElse sFileExt = &quot;tab&quot; Then sFileExt = &quot;plain&quot;
+                ' Do nothing
 
- If sFileExt = &quot;xsl&quot; Then sFileExt = &quot;xml&quot;
+            End  Try
 
- If sFileExt = &quot;htc&quot; Then sFileExt = &quot;x-component&quot;
+            End  If  ' End checking if NoCache has been specified
 
- If sFileExt = &quot;htm&quot; Then sFileExt = &quot;html&quot;
+            With context.Response
 
- objType.PerceivedType = &quot;text&quot;
+                ' Set up the response
+                .ContentType = tType.ContentType
+                .Cache.VaryByParams("Res") = True
+                .Cache.VaryByParams("NoCache") = True
+                .Cache.SetValidUntilExpires( False )
 
- Case &quot;avi&quot;, &quot;mov&quot;, &quot;mpe&quot;, &quot;mpeg&quot;
+                ' Check if caching is enabled
+                If bNoCache = False  Then
 
- ' Toggle sfileext as appropriate for storage
+                    .Cache.SetExpires(Now.AddDays(7))
+                    .Cache.SetCacheability(HttpCacheability.Public)
 
- If sFileExt = &quot;mov&quot; Then sFileExt = &quot;quicktime&quot;
+                Else  ' Caching is disabled
 
- If sFileExt = &quot;mpe&quot; Then sFileExt = &quot;mpeg&quot;
+                    .Cache.SetExpires(Now.AddDays(-7))
+                    .Cache.SetCacheability(HttpCacheability.NoCache)
 
- objType.PerceivedType = &quot;video&quot;
+                End  If  ' End checking if caching is enabled
 
- Case  Else
+                ' Check if the type of resource is text
+                If tType.PerceivedType = "text" Then
 
- ' Default to binary data
+                    Dim sResourceValue As  String
 
- objType.PerceivedType = &quot;application&quot;
+                    ' Check if the resource was successfully loaded
+                    If LoadTextResource(sResource, sResourceValue) = True  Then
 
- sFileExt = &quot;octet-stream&quot;
+                        ' Write the value to the browser
+                        .Write(sResourceValue)
 
- End  Select
+                        ' Set the success flag
+                        bSuccess = True
 
- ' Create the content type from the perceived type and the file extension
+                    End  If  ' End checking if the resource was successfully loaded
 
- objType.ContentType = objType.PerceivedType & &quot;/&quot; & sFileExt
+                Else  ' This resource is binary
 
- End  Sub
+                    Dim aBuffer As  Byte ()
 
- ''' -----------------------------------------------------------------------------
+                    ' Check if the resource was successfully loaded
+                    If LoadBinaryResource(sResource, aBuffer) = True  Then
 
- ''' <summary&gt;
+                        ' Write the value to the browser
+                        .OutputStream.Write(aBuffer, 0, aBuffer.Length)
 
- ''' Registers the resource with the page.
+                        ' Set the success flag
+                        bSuccess = True
 
- ''' </summary&gt;
+                    End  If  ' End checking if the resource was loaded successfully
 
- ''' <param name=&quot;sResource&quot;&gt;The name of the resource to register.</param&gt;
+                End  If  ' End checking if the type of resource is text
 
- ''' <param name=&quot;objPage&quot;&gt;The page to register the resource with.</param&gt;
+            End  With  ' End With context.Response
 
- ''' <param name=&quot;bRegisterAsStartupScript&quot;&gt;True if the resource is to be registered as a startup script, otherwise False.</param&gt;
+        End  If  ' End checking if the resource request is valid
 
- ''' <remarks&gt;
+        ' Check if the resource failed to load
+        If bSuccess = False  Then
 
- ''' None.
+            With context.Response
 
- ''' </remarks&gt;
+                .Cache.SetExpires(Now.AddDays(-7))
+                .Cache.SetCacheability(HttpCacheability.NoCache)
+                .Status = "The resource requested doesn't exist."
+                .StatusCode = 404
+                .StatusDescription = .Status
 
- ''' <history&gt;
+            End  With  ' End With context.Response
 
- ''' 27/Jan/2005 Created
+        End  If  ' End checking if the resource failed to load
 
- ''' </history&gt;
+    Catch ex As Exception
 
- ''' -----------------------------------------------------------------------------
+        With context.Response
 
- Public  Sub RegisterWithPage( _
+            .Cache.SetExpires(Now.AddDays(-7))
+            .Cache.SetCacheability(HttpCacheability.NoCache)
+            .Status = ex.Message
+            .StatusCode = 500
+            .StatusDescription = .Status
 
- ByVal sResource As  String , _
+        End  With  ' End With context.Response
 
- ByRef objPage As UI.Page, _
+    End  Try
 
- Optional  ByVal bRegisterAsStartupScript As  Boolean = False )
-
- ' Check if the resource is valid
-
- If IsValid(sResource) = True  Then
-
- ' Check if we should register the resource
-
- If (((bRegisterAsStartupScript = False ) _
-
- AndAlso (objPage.IsClientScriptBlockRegistered(sResource) = False )) _
-
- OrElse ((bRegisterAsStartupScript = True ) _
-
- AndAlso (objPage.IsStartupScriptRegistered(sResource) = False ))) Then
-
- ' Check if we can get a page reference
-
- Dim sReference As  String = PageReference(sResource)
-
- ' Check if there is a reference to use
-
- If sReference <&gt; vbNullString Then
-
- ' Check if the reference is a startup script
-
- If bRegisterAsStartupScript = True  Then
-
- ' Register the resource
-
- objPage.RegisterStartupScript(sResource, sReference)
-
- Else  ' This is not a startup script
-
- ' Register the resource
-
- objPage.RegisterClientScriptBlock(sResource, sReference)
-
- End  If  ' End checking if the reference is a startup script
-
- End  If  ' End checking if there is a reference to use
-
- End  If  ' End checking if we should register the resource
-
- End  If  ' End checking if the resource is valid
-
- End  Sub
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Enables processing of HTTP Web requests by a custom HttpHandler that implements the IHttpHandler interface.
-
- ''' </summary&gt;
-
- ''' <param name=&quot;context&quot;&gt;An HttpContext object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  Sub ProcessRequest( _
-
- ByVal context As HttpContext) _
-
- Implements IHttpHandler.ProcessRequest
-
- ' Clear any existing response data
-
- context.Response.Clear()
-
- Try
-
- Dim sResource As  String = context.Request.QueryString(&quot;Res&quot;)
-
- Dim bSuccess As  Boolean
-
- ' Check if the resource request is valid
-
- If IsValid(sResource) = True  Then
-
- Dim bNoCache As  Boolean = False
-
- Dim tType As TResType = ResourceType(sResource)
-
- ' Check if NoCache has been specified
-
- If context.Request.QueryString(&quot;NoCache&quot;) <&gt; vbNullString Then
-
- Try
-
- ' Get the cache value
-
- bNoCache = System.Boolean.Parse(context.Request.QueryString(&quot;NoCache&quot;))
-
- Catch
-
- ' Do nothing
-
- End  Try
-
- End  If  ' End checking if NoCache has been specified
-
- With context.Response
-
- ' Set up the response
-
- .ContentType = tType.ContentType
-
- .Cache.VaryByParams(&quot;Res&quot;) = True
-
- .Cache.VaryByParams(&quot;NoCache&quot;) = True
-
- .Cache.SetValidUntilExpires( False )
-
- ' Check if caching is enabled
-
- If bNoCache = False  Then
-
- .Cache.SetExpires(Now.AddDays(7))
-
- .Cache.SetCacheability(HttpCacheability.Public)
-
- Else  ' Caching is disabled
-
- .Cache.SetExpires(Now.AddDays(-7))
-
- .Cache.SetCacheability(HttpCacheability.NoCache)
-
- End  If  ' End checking if caching is enabled
-
- ' Check if the type of resource is text
-
- If tType.PerceivedType = &quot;text&quot; Then
-
- Dim sResourceValue As  String
-
- ' Check if the resource was successfully loaded
-
- If LoadTextResource(sResource, sResourceValue) = True  Then
-
- ' Write the value to the browser
-
- .Write(sResourceValue)
-
- ' Set the success flag
-
- bSuccess = True
-
- End  If  ' End checking if the resource was successfully loaded
-
- Else  ' This resource is binary
-
- Dim aBuffer As  Byte ()
-
- ' Check if the resource was successfully loaded
-
- If LoadBinaryResource(sResource, aBuffer) = True  Then
-
- ' Write the value to the browser
-
- .OutputStream.Write(aBuffer, 0, aBuffer.Length)
-
- ' Set the success flag
-
- bSuccess = True
-
- End  If  ' End checking if the resource was loaded successfully
-
- End  If  ' End checking if the type of resource is text
-
- End  With  ' End With context.Response
-
- End  If  ' End checking if the resource request is valid
-
- ' Check if the resource failed to load
-
- If bSuccess = False  Then
-
- With context.Response
-
- .Cache.SetExpires(Now.AddDays(-7))
-
- .Cache.SetCacheability(HttpCacheability.NoCache)
-
- .Status = &quot;The resource requested doesn't exist.&quot;
-
- .StatusCode = 404
-
- .StatusDescription = .Status
-
- End  With  ' End With context.Response
-
- End  If  ' End checking if the resource failed to load
-
- Catch ex As Exception
-
- With context.Response
-
- .Cache.SetExpires(Now.AddDays(-7))
-
- .Cache.SetCacheability(HttpCacheability.NoCache)
-
- .Status = ex.Message
-
- .StatusCode = 500
-
- .StatusDescription = .Status
-
- End  With  ' End With context.Response
-
- End  Try
-
- End  Sub
+End  Sub
 
 # End  Region
 
-# Region &quot; Functions &quot;
+# Region " Functions "
 
- ''' -----------------------------------------------------------------------------
+Public  Function IsValid( _
+    ByRef sResource As  String ) As  Boolean
 
- ''' <summary&gt;
+    ' Exit if no value is specified
+    If sResource = vbNullString Then  Return  False
 
- ''' Determines whether the resource name specified exists in the assembly.
+    Dim aResources() As  String = ThisAssembly.GetManifestResourceNames
+    Dim sCheckName As  String = sResource.ToLower
+    Dim nCount As Int32
 
- ''' </summary&gt;
+    ' Add the assembly namespace to the resource name if it isn't already
+    If sCheckName.StartsWith(AssemblyName.ToLower) = False  Then sCheckName = AssemblyName.ToLower & "." & sCheckName
 
- ''' <param name=&quot;sResource&quot;&gt;The name of the resource to find.</param&gt;
+    ' Loop through the resource names
+    For nCount = 0 To aResources.Length - 1
 
- ''' <returns&gt;True if the resource exists in the assembly, otherwise False.</returns&gt;
+        ' Check if the resource name matches
+        If sCheckName = aResources(nCount).ToLower Then
 
- ''' <remarks&gt;
+            ' Update the resource parameter
+            sResource = aResources(nCount)
 
- ''' If the resource name is found, the sResource value is updated to be the full name of the resource, including the assemlby name.
+            ' The resource was found
+            Return  True
 
- ''' </remarks&gt;
+        End  If  ' End checking if the resource name matches
 
- ''' <history&gt;
+    Next  ' Loop through the resource names
 
- ''' 25/Jan/2005 Created
+    ' The resource wasn't found
+    Return  False
 
- ''' </history&gt;
+End  Function
 
- ''' -----------------------------------------------------------------------------
+Public  Function URL( _
+    ByVal sResource As  String , _
+    Optional  ByVal bNoCache As  Boolean = False ) As  String
 
- Public  Function IsValid( _
+    Dim sURL As  String = AssemblyName & ".aspx?Res=" & HttpUtility.UrlEncode(sResource)
 
- ByRef sResource As  String ) As  Boolean
+    ' Check if NoCache is specified
+    If bNoCache = True  Then
 
- ' Exit if no value is specified
+        sURL &= "&NoCache=" & bNoCache
 
- If sResource = vbNullString Then  Return  False
+    End  If  ' End checking if NoCache is specified
 
- Dim aResources() As  String = ThisAssembly.GetManifestResourceNames
+    ' Return the URL built
+    Return sURL
 
- Dim sCheckName As  String = sResource.ToLower
+End  Function
 
- Dim nCount As Int32
+Public  Function PageReference( _
+    ByVal sResource As  String ) As  String
 
- ' Add the assembly namespace to the resource name if it isn't already
+    Dim tType As TResType = ResourceType(sResource)
 
- If sCheckName.StartsWith(AssemblyName.ToLower) = False  Then sCheckName = AssemblyName.ToLower & &quot;.&quot; & sCheckName
+    If tType.PerceivedType = "image" Then
 
- ' Loop through the resource names
+        Return "<IMG src='" & URL(sResource) & "'></IMG>"
 
- For nCount = 0 To aResources.Length - 1
+    ElseIf tType.ContentType = "text/css" Then
 
- ' Check if the resource name matches
+        Return "<LINK rel='Stylesheet' href='" & URL(sResource) & "'></LINK>"
 
- If sCheckName = aResources(nCount).ToLower Then
+    ElseIf tType.ContentType = "text/javascript" Then
 
- ' Update the resource parameter
+        Return "<SCRIPT language='javascript' type='text/javascript' src='" & URL(sResource) & "'></SCRIPT>"
 
- sResource = aResources(nCount)
+    ElseIf tType.ContentType = "text/vbscript" Then
 
- ' The resource was found
+        Return "<SCRIPT language='vbscript' type='text/vbscript' src='" & URL(sResource) & "'></SCRIPT>"
 
- Return  True
+    ElseIf tType.PerceivedType = "text" Then
 
- End  If  ' End checking if the resource name matches
+        Dim sValue As  String
 
- Next  ' Loop through the resource names
+        ' Check if the resource was loaded successfully
+        If LoadTextResource(sResource, sValue) = True  Then
 
- ' The resource wasn't found
+            ' Return the resource value
+            Return sValue
 
- Return  False
+        Else  ' The resource wasn't loaded successfully
 
- End  Function
+            Return vbNullString
 
- ''' -----------------------------------------------------------------------------
+        End  If  ' End checking if the resource was loaded successfully
 
- ''' <summary&gt;
+    Else  ' This type of resource is not handled
 
- ''' Returns a URL that is used to reference a resource in the assembly.
+        Return vbNullString
 
- ''' </summary&gt;
+    End  If
 
- ''' <param name=&quot;sResource&quot;&gt;The name of the resource.</param&gt;
+End  Function
 
- ''' <returns&gt;A URL that is used to reference a resource in the assembly.</returns&gt;
+Public  Function ResourceType( _
+    ByVal sResource As  String ) As TResType
 
- ''' <remarks&gt;
+    ' Check if there is a .
+    If sResource <> vbNullString _
+        AndAlso sResource.LastIndexOf(".") > -1 Then
 
- ''' NoCache is False by default in this handler.
+        ' Get the file extension
+        Dim sFileExt As  String = sResource.Substring(sResource.LastIndexOf(".") + 1).ToLower
+        Dim objType As TResType
 
- ''' </remarks&gt;
+        ' Determine the file type from the registry
+        Call LoadTypeFromRegistry(sFileExt, objType)
 
- ''' <history&gt;
+        ' Check if there is any type information missing
+        If objType.PerceivedType = vbNullString _
+            OrElse objType.ContentType = vbNullString Then
 
- ''' 25/Jan/2005 Created
+            Dim objTempType As TResType
 
- ''' </history&gt;
+            ' Get the type from the name
+            Call LoadTypeFromName(sFileExt, objTempType)
 
- ''' -----------------------------------------------------------------------------
+            ' Store the values as appropriate
+            If objType.ContentType = vbNullString AndAlso objTempType.ContentType <> vbNullString Then objType.ContentType = objTempType.ContentType
 
- Public  Function URL( _
+            If objType.PerceivedType = vbNullString AndAlso objTempType.PerceivedType <> vbNullString Then objType.PerceivedType = objTempType.PerceivedType
 
- ByVal sResource As  String , _
+        End  If  ' End checking if there is any type information missing
 
- Optional  ByVal bNoCache As  Boolean = False ) As  String
+        ' Return the type information determined
+        Return objType
 
- Dim sURL As  String = AssemblyName & &quot;.aspx?Res=&quot; & HttpUtility.UrlEncode(sResource)
+    Else  ' An invalid value has been specified
 
- ' Check if NoCache is specified
+        Return  Nothing
 
- If bNoCache = True  Then
+    End  If  ' End checking if there is a .
 
- sURL &= &quot;&NoCache=&quot; & bNoCache
+End  Function
 
- End  If  ' End checking if NoCache is specified
+Public  Function LoadTextResource( _
+    ByVal sResource As  String , _
+    ByRef sValue As  String ) As  Boolean
 
- ' Return the URL built
+    Dim bReturn As  Boolean
 
- Return sURL
+    ' Check if the resource name is valid
+    If IsValid(sResource) = True  Then
 
- End  Function
+        Dim tType As TResType = ResourceType(sResource)
 
- ''' -----------------------------------------------------------------------------
+        ' Check if the resource is a text resource
 
- ''' <summary&gt;
+        If tType.PerceivedType = "text" Then
 
- ''' Returns a string that can be put into a page to reference a specified resource.
+            Dim objStream As IO.Stream = ThisAssembly.GetManifestResourceStream(sResource)
 
- ''' </summary&gt;
+            Dim objReader As  New IO.StreamReader(objStream)
 
- ''' <param name=&quot;sResource&quot;&gt;The name of the resource to reference.</param&gt;
+            Try
 
- ''' <returns&gt;A string that can be put into a page to reference a specified resource.</returns&gt;
+                ' Read the resource stream
+                sValue = objReader.ReadToEnd
 
- ''' <remarks&gt;
+                ' We have loaded the resource successfully, set the return flag
+                bReturn = True
 
- ''' This function will only return a value for specific resources types.
+            Catch
 
- ''' The return value of this function will either be a SCRIPT or IMG tag, or the resource contents itself.
+                ' Do nothing
 
- ''' </remarks&gt;
+            Finally
 
- ''' <history&gt;
+                ' Check if the reader exists
+                If  Not objReader Is  Nothing  Then
 
- ''' 27/Jan/2005 Created
+                    ' Close the reader
+                    objReader.Close()
 
- ''' </history&gt;
+                End  If  ' End checking if the reader exists
 
- ''' -----------------------------------------------------------------------------
+                ' Check if the stream exists
 
- Public  Function PageReference( _
+                If  Not objStream Is  Nothing  Then
 
- ByVal sResource As  String ) As  String
+                    ' Close the stream
+                    objStream.Close()
 
- Dim tType As TResType = ResourceType(sResource)
+                End  If  ' End checking if the stream exists
 
- If tType.PerceivedType = &quot;image&quot; Then
+            End  Try
 
- Return &quot;<IMG src='&quot; & URL(sResource) & &quot;'&gt;</IMG&gt;&quot;
+        End  If  ' End checking if the resource is a text resource
 
- ElseIf tType.ContentType = &quot;text/css&quot; Then
+    End  If  ' End checking if the resource name is valid
 
- Return &quot;<LINK rel='Stylesheet' href='&quot; & URL(sResource) & &quot;'&gt;</LINK&gt;&quot;
+    ' Return the success flag
 
- ElseIf tType.ContentType = &quot;text/javascript&quot; Then
+    Return bReturn
 
- Return &quot;<SCRIPT language='javascript' type='text/javascript' src='&quot; & URL(sResource) & &quot;'&gt;</SCRIPT&gt;&quot;
+End  Function
 
- ElseIf tType.ContentType = &quot;text/vbscript&quot; Then
+Public  Function LoadBinaryResource( _
+    ByVal sResource As  String , _
+    ByRef aBuffer As  Byte ()) As  Boolean
 
- Return &quot;<SCRIPT language='vbscript' type='text/vbscript' src='&quot; & URL(sResource) & &quot;'&gt;</SCRIPT&gt;&quot;
+    Dim bReturn As  Boolean
 
- ElseIf tType.PerceivedType = &quot;text&quot; Then
+    ' Check if the resource name is valid
+    If IsValid(sResource) = True  Then
 
- Dim sValue As  String
+        Dim tType As TResType = ResourceType(sResource)
 
- ' Check if the resource was loaded successfully
+        ' Check if the resource is a text resource
+        If tType.PerceivedType <> "text" Then
 
- If LoadTextResource(sResource, sValue) = True  Then
+            Dim objStream As IO.Stream = ThisAssembly.GetManifestResourceStream(sResource)
 
- ' Return the resource value
+            Dim objReader As  New IO.BinaryReader(objStream)
 
- Return sValue
+            Try
 
- Else  ' The resource wasn't loaded successfully
+                ' Resize the buffer to fit the resource
+                ReDim aBuffer( CType (objStream.Length, Int32))
 
- Return vbNullString
+                ' Load the resource into the buffer
+                objReader.Read(aBuffer, 0, CType (objStream.Length, Int32))
 
- End  If  ' End checking if the resource was loaded successfully
+                ' We have loaded the resource successfully, set the return flag
+                bReturn = True
 
- Else  ' This type of resource is not handled
+            Catch
 
- Return vbNullString
+                ' Do nothing
 
- End  If
+            Finally
 
- End  Function
+                ' Check if the reader exists
+                If  Not objReader Is  Nothing  Then
 
- ''' -----------------------------------------------------------------------------
+                    ' Close the reader
+                    objReader.Close()
 
- ''' <summary&gt;
+                End  If  ' End checking if the reader exists
 
- ''' Returns the type of resource specified.
+                ' Check if the stream exists
+                If  Not objStream Is  Nothing  Then
 
- ''' </summary&gt;
+                    ' Close the stream
+                    objStream.Close()
 
- ''' <param name=&quot;sResource&quot;&gt;The name of the resource to check.</param&gt;
+                End  If  ' End checking if the stream exists
 
- ''' <returns&gt;The type details of the resource.</returns&gt;
+            End  Try
 
- ''' <remarks&gt;
+        End  If  ' End checking if the resource is a text resource
 
- ''' None.
+    End  If  ' End checking if the resource name is valid
 
- ''' </remarks&gt;
+    ' Return the success flag
 
- ''' <history&gt;
+    Return bReturn
 
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  Function ResourceType( _
-
- ByVal sResource As  String ) As TResType
-
- ' Check if there is a .
-
- If sResource <&gt; vbNullString _
-
- AndAlso sResource.LastIndexOf(&quot;.&quot;) &gt; -1 Then
-
- ' Get the file extension
-
- Dim sFileExt As  String = sResource.Substring(sResource.LastIndexOf(&quot;.&quot;) + 1).ToLower
-
- Dim objType As TResType
-
- ' Determine the file type from the registry
-
- Call LoadTypeFromRegistry(sFileExt, objType)
-
- ' Check if there is any type information missing
-
- If objType.PerceivedType = vbNullString _
-
- OrElse objType.ContentType = vbNullString Then
-
- Dim objTempType As TResType
-
- ' Get the type from the name
-
- Call LoadTypeFromName(sFileExt, objTempType)
-
- ' Store the values as appropriate
-
- If objType.ContentType = vbNullString AndAlso objTempType.ContentType <&gt; vbNullString Then objType.ContentType = objTempType.ContentType
-
- If objType.PerceivedType = vbNullString AndAlso objTempType.PerceivedType <&gt; vbNullString Then objType.PerceivedType = objTempType.PerceivedType
-
- End  If  ' End checking if there is any type information missing
-
- ' Return the type information determined
-
- Return objType
-
- Else  ' An invalid value has been specified
-
- Return  Nothing
-
- End  If  ' End checking if there is a .
-
- End  Function
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Loads a text resource from the assembly.
-
- ''' </summary&gt;
-
- ''' <param name=&quot;sResouce&quot;&gt;The name of the resource to load.</param&gt;
-
- ''' <param name=&quot;sValue&quot;&gt;The string the resource will be stored in.</param&gt;
-
- ''' <returns&gt;True if the resource was successfully loaded, otherwise False.</returns&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 27/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  Function LoadTextResource( _
-
- ByVal sResource As  String , _
-
- ByRef sValue As  String ) As  Boolean
-
- Dim bReturn As  Boolean
-
- ' Check if the resource name is valid
-
- If IsValid(sResource) = True  Then
-
- Dim tType As TResType = ResourceType(sResource)
-
- ' Check if the resource is a text resource
-
- If tType.PerceivedType = &quot;text&quot; Then
-
- Dim objStream As IO.Stream = ThisAssembly.GetManifestResourceStream(sResource)
-
- Dim objReader As  New IO.StreamReader(objStream)
-
- Try
-
- ' Read the resource stream
-
- sValue = objReader.ReadToEnd
-
- ' We have loaded the resource successfully, set the return flag
-
- bReturn = True
-
- Catch
-
- ' Do nothing
-
- Finally
-
- ' Check if the reader exists
-
- If  Not objReader Is  Nothing  Then
-
- ' Close the reader
-
- objReader.Close()
-
- End  If  ' End checking if the reader exists
-
- ' Check if the stream exists
-
- If  Not objStream Is  Nothing  Then
-
- ' Close the stream
-
- objStream.Close()
-
- End  If  ' End checking if the stream exists
-
- End  Try
-
- End  If  ' End checking if the resource is a text resource
-
- End  If  ' End checking if the resource name is valid
-
- ' Return the success flag
-
- Return bReturn
-
- End  Function
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Loads a binary resource from the assembly.
-
- ''' </summary&gt;
-
- ''' <param name=&quot;sResource&quot;&gt;The name of the resource to load.</param&gt;
-
- ''' <param name=&quot;aBuffer&quot;&gt;The buffer to store the resource contents in.</param&gt;
-
- ''' <returns&gt;True if the resource was successfully loaded, otherwise False.</returns&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 27/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  Function LoadBinaryResource( _
-
- ByVal sResource As  String , _
-
- ByRef aBuffer As  Byte ()) As  Boolean
-
- Dim bReturn As  Boolean
-
- ' Check if the resource name is valid
-
- If IsValid(sResource) = True  Then
-
- Dim tType As TResType = ResourceType(sResource)
-
- ' Check if the resource is a text resource
-
- If tType.PerceivedType <&gt; &quot;text&quot; Then
-
- Dim objStream As IO.Stream = ThisAssembly.GetManifestResourceStream(sResource)
-
- Dim objReader As  New IO.BinaryReader(objStream)
-
- Try
-
- ' Resize the buffer to fit the resource
-
- ReDim aBuffer( CType (objStream.Length, Int32))
-
- ' Load the resource into the buffer
-
- objReader.Read(aBuffer, 0, CType (objStream.Length, Int32))
-
- ' We have loaded the resource successfully, set the return flag
-
- bReturn = True
-
- Catch
-
- ' Do nothing
-
- Finally
-
- ' Check if the reader exists
-
- If  Not objReader Is  Nothing  Then
-
- ' Close the reader
-
- objReader.Close()
-
- End  If  ' End checking if the reader exists
-
- ' Check if the stream exists
-
- If  Not objStream Is  Nothing  Then
-
- ' Close the stream
-
- objStream.Close()
-
- End  If  ' End checking if the stream exists
-
- End  Try
-
- End  If  ' End checking if the resource is a text resource
-
- End  If  ' End checking if the resource name is valid
-
- ' Return the success flag
-
- Return bReturn
-
- End  Function
+End  Function
 
 # End  Region
 
-# Region &quot; Properties &quot;
+# Region " Properties "
 
- ''' -----------------------------------------------------------------------------
+Private  ReadOnly  Property ThisAssembly() As System.Reflection.Assembly
+    Get
 
- ''' <summary&gt;
+        ' Check if there is an assembly reference
+        If m_objAssembly Is  Nothing  Then
 
- ''' Returns a reference to the current cached assembly.
+            ' Get a reference to the assembly
+            m_objAssembly = System.Reflection.Assembly.GetExecutingAssembly
 
- ''' </summary&gt;
+        End  If  ' End checking if there is an assembly reference
 
- ''' <value&gt;A reference to the current cached assembly.</value&gt;
+        ' Return the object reference
+        Return m_objAssembly
 
- ''' <remarks&gt;
+    End  Get
 
- ''' None.
+End  Property
 
- ''' </remarks&gt;
+Private  ReadOnly  Property AssemblyName() As  String
+    Get
 
- ''' <history&gt;
+        ' Check if the value is stored
+        If m_sAssemblyName = vbNullString Then
 
- ''' 25/Jan/2005 Created
+            m_sAssemblyName = Me .GetType.Namespace
 
- ''' </history&gt;
+        End  If  ' End checking if the name is stored
 
- ''' -----------------------------------------------------------------------------
+        ' Return the stored value
+        Return m_sAssemblyName
 
- Private  ReadOnly  Property ThisAssembly() As System.Reflection.Assembly
+    End  Get
 
- Get
+End  Property
 
- ' Check if there is an assembly reference
+Public  ReadOnly  Property IsReusable() As  Boolean  Implements IHttpHandler.IsReusable
 
- If m_objAssembly Is  Nothing  Then
+    Get
 
- ' Get a reference to the assembly
+        Return  True
 
- m_objAssembly = System.Reflection.Assembly.GetExecutingAssembly
+    End  Get
 
- End  If  ' End checking if there is an assembly reference
-
- ' Return the object reference
-
- Return m_objAssembly
-
- End  Get
-
- End  Property
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets the namespace value of the current assembly.
-
- ''' </summary&gt;
-
- ''' <value&gt;The namespace value of the current assembly.</value&gt;
-
- ''' <remarks&gt;
-
- ''' None.
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 27/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Private  ReadOnly  Property AssemblyName() As  String
-
- Get
-
- ' Check if the value is stored
-
- If m_sAssemblyName = vbNullString Then
-
- m_sAssemblyName = Me .GetType.Namespace
-
- End  If  ' End checking if the name is stored
-
- ' Return the stored value
-
- Return m_sAssemblyName
-
- End  Get
-
- End  Property
-
- ''' -----------------------------------------------------------------------------
-
- ''' <summary&gt;
-
- ''' Gets a value indicating whether another request can use the IHttpHandler instance.
-
- ''' </summary&gt;
-
- ''' <value&gt;True if the IHttpHandler instance is reusable; otherwise, False.</value&gt;
-
- ''' <remarks&gt;
-
- ''' </remarks&gt;
-
- ''' <history&gt;
-
- ''' 25/Jan/2005 Created
-
- ''' </history&gt;
-
- ''' -----------------------------------------------------------------------------
-
- Public  ReadOnly  Property IsReusable() As  Boolean  Implements IHttpHandler.IsReusable
-
- Get
-
- Return  True
-
- End  Get
-
- End  Property
+End  Property
 
 # End  Region
 
-# Region &quot; Classes &quot;
-
-# End  Region
-
- End  Class
+End  Class
+{% endhighlight %}
 
 [0]: http://www.codeproject.com/aspnet/ressrvpage.asp
