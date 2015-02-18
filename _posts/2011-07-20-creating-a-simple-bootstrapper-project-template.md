@@ -7,35 +7,35 @@ date: 2011-07-20 14:35:34 +10:00
 
 The [previous post][0] looked at a proof of concept for building a simple bootstrapper solution to elevate the execution of an MSI package. This post will outline how this proof of concept was converted into a VSIX project template.
 
-Using a project template was going to be the best way to achieve portability and reusability of this bootstrapper concept. The initial attempts at producing a project template were to use the inbuilt File –&gt; Export template function in Visual Studio on the proof of concept project. This was very cumbersome and difficult to debug. I came across [a post][1] by Aaron Marten that explains how to use the Visual Studio SDK tools to make this a smooth development process. Now that we can actually produce a VSIX package, the main issue from the previous post needs to be addressed. 
+Using a project template was going to be the best way to achieve portability and reusability of this bootstrapper concept. The initial attempts at producing a project template were to use the inbuilt File –> Export template function in Visual Studio on the proof of concept project. This was very cumbersome and difficult to debug. I came across [a post][1] by Aaron Marten that explains how to use the Visual Studio SDK tools to make this a smooth development process. Now that we can actually produce a VSIX package, the main issue from the previous post needs to be addressed. 
 
 The biggest limitation with the proof of concept project was that the resource file xml needs to reference the MSI package with a static location. This is going to be a problem when the MSI package source is the output of a WiX project in the same solution. The WiX project by default will either output the MSI to bin\Debug or bin\Release depending on the current build configuration. This is going to cause problems with the resource file needing a single location for the MSI package.
 
-The answer to this was to change the proj file in the template to provide some custom MSBuild logic to move the MSI package from the WiX target directory to a known location for the resource file. The resource xml file in the project template was updated to point to the obj directory as the static source.
+The answer to this was to change the proj file in the template to provide some custom MSBuild logic to move the MSI package from the WiX target directory to a known location for the resource file. The resource xml file in the project template was updated to point to the obj directory as the static source.{% highlight xml linenos %}
+<data name="Package" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\obj\Package;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+</data>
+{% endhighlight %}
 
-    <data name=&quot;Package&quot; type=&quot;System.Resources.ResXFileRef, System.Windows.Forms&quot;&gt;
-      <value&gt;..\obj\Package;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value&gt;
-    </data&gt;{% endhighlight %}
-
-The project file in the template then had its BeforeBuild target changed to ensure that the package is copied to the resource xml static file location before the bootstrapper project is compiled.
-
-    <Target Name=&quot;BeforeBuild&quot;&gt;
-      <PropertyGroup&gt;
-        <PackagePath&gt;$packagePath$</PackagePath&gt;
-      </PropertyGroup&gt;
-      <ItemGroup&gt;
-        <PackageSourceFiles Include=&quot;$(PackagePath)&quot; /&gt;
-      </ItemGroup&gt;
-      <ConvertToAbsolutePath Paths=&quot;@(PackageSourceFiles)&quot;&gt;
-        <Output TaskParameter=&quot;AbsolutePaths&quot; ItemName=&quot;AbsoluteFiles&quot; /&gt;
-      </ConvertToAbsolutePath&gt;
-      <ItemGroup&gt;
-        <PackageDestinationFiles Include=&quot;$(ProjectDir)$(BaseIntermediateOutputPath)Package&quot; /&gt;
-      </ItemGroup&gt;
-      <Message Condition=&quot;Exists(@(AbsoluteFiles))&quot; Text=&quot;Found package at path '@(AbsoluteFiles)'&quot; /&gt;
-      <Error Condition=&quot;Exists(@(AbsoluteFiles)) == false&quot; Text=&quot;The package at path '@(AbsoluteFiles)' was not found&quot; /&gt;
-      <Copy SourceFiles=&quot;@(AbsoluteFiles)&quot; DestinationFiles=&quot;@(PackageDestinationFiles)&quot; OverwriteReadOnlyFiles=&quot;true&quot; Condition=&quot;Exists($(PackagePath))&quot; /&gt;
-    </Target&gt;{% endhighlight %}
+The project file in the template then had its BeforeBuild target changed to ensure that the package is copied to the resource xml static file location before the bootstrapper project is compiled.{% highlight xml linenos %}
+<Target Name="BeforeBuild">
+    <PropertyGroup>
+    <PackagePath>$packagePath$</PackagePath>
+    </PropertyGroup>
+    <ItemGroup>
+    <PackageSourceFiles Include="$(PackagePath)" />
+    </ItemGroup>
+    <ConvertToAbsolutePath Paths="@(PackageSourceFiles)">
+    <Output TaskParameter="AbsolutePaths" ItemName="AbsoluteFiles" />
+    </ConvertToAbsolutePath>
+    <ItemGroup>
+    <PackageDestinationFiles Include="$(ProjectDir)$(BaseIntermediateOutputPath)Package" />
+    </ItemGroup>
+    <Message Condition="Exists(@(AbsoluteFiles))" Text="Found package at path '@(AbsoluteFiles)'" />
+    <Error Condition="Exists(@(AbsoluteFiles)) == false" Text="The package at path '@(AbsoluteFiles)' was not found" />
+    <Copy SourceFiles="@(AbsoluteFiles)" DestinationFiles="@(PackageDestinationFiles)" OverwriteReadOnlyFiles="true" Condition="Exists($(PackagePath))" />
+</Target>
+{% endhighlight %}
 
 The $packagePath$ variable is populated by a wizard in the project template. The wizard will determine this path based on user input. The path may end up having $(OutputPath) substituted into it. This will then allow the bootstrapper project respond to changes of build configuration. In doing this, the project is able to take a dynamic output path of a WiX project and copy the file into the static location for the resource xml file to reference. The rest of the MSBuild script copies the MSI package if it is available or throws a build failure if it is not found. 
 

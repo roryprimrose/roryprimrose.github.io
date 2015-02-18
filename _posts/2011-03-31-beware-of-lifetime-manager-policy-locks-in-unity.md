@@ -13,30 +13,30 @@ All the time is getting consumed in a single call to Microsoft.Practices.Unity.S
 
 The GetValue method obtains a lock for the current thread and only releases it if a non-null value is held by the lifetime manager. This logic becomes a big issue if the lifetime manager holds a null value and two different threads call GetValue. I would like to know why this behaviour is there as it is intentional according to the documentation of the function.
 
-This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.
-
-    private static Object GetLifetimePolicyValue(ILifetimePolicy lifetimeManager)
+This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.{% highlight csharp linenos %}
+private static Object GetLifetimePolicyValue(ILifetimePolicy lifetimeManager)
+{
+    if (lifetimeManager is IRequiresRecovery)
     {
-        if (lifetimeManager is IRequiresRecovery)
+        // There may be a lock around this policy where a null value will result in an indefinite lock held by another thread
+        // We need to use another thread to access this item so that we can get around the lock using a timeout
+        Task<Object> readPolicyTask = new Task<Object>(lifetimeManager.GetValue);
+    
+        readPolicyTask.Start();
+    
+        Boolean taskCompleted = readPolicyTask.Wait(10);
+    
+        if (taskCompleted == false)
         {
-            // There may be a lock around this policy where a null value will result in an indefinite lock held by another thread
-            // We need to use another thread to access this item so that we can get around the lock using a timeout
-            Task<Object&gt; readPolicyTask = new Task<Object&gt;(lifetimeManager.GetValue);
-    
-            readPolicyTask.Start();
-    
-            Boolean taskCompleted = readPolicyTask.Wait(10);
-    
-            if (taskCompleted == false)
-            {
-                return null;
-            }
-    
-            return readPolicyTask.Result;
+            return null;
         }
     
-        return lifetimeManager.GetValue();
-    }{% endhighlight %}
+        return readPolicyTask.Result;
+    }
+    
+    return lifetimeManager.GetValue();
+}
+{% endhighlight %}
 
 This implementation is not ideal, but it is unfortunately the only way to handle this case as there is no way to determine whether another thread has a lock on the lifetime manager.
 
@@ -44,74 +44,74 @@ Testing the service again with the profiler then identified a problem with this 
 
 This workaround will consume threads that will be held on a lock and potentially never get released. This is going to be unacceptable as more and more threads attempt to look at values held in the lifetime manager policies, ultimately resulting in thread starvation.
 
-The next solution is to use a lifetime manager that gets around this issue by never allowing the lifetime manager to be assigned a null value.
-
-    namespace Neovolve.Jabiru.Server.Services
-    {
-        using System;
-        using System.Diagnostics.Contracts;
-        using Microsoft.Practices.Unity;
+The next solution is to use a lifetime manager that gets around this issue by never allowing the lifetime manager to be assigned a null value.{% highlight csharp linenos %}
+namespace Neovolve.Jabiru.Server.Services
+{
+    using System;
+    using System.Diagnostics.Contracts;
+    using Microsoft.Practices.Unity;
     
-        public class SafeSingletonLifetimeManager : ContainerControlledLifetimeManager
+    public class SafeSingletonLifetimeManager : ContainerControlledLifetimeManager
+    {
+        public override void SetValue(Object newValue)
         {
-            public override void SetValue(Object newValue)
+            if (newValue == null)
+            {
+                throw new ArgumentNullException("newValue");
+            }
+    
+            base.SetValue(newValue);
+        }
+    }
+}
+{% endhighlight %}
+
+This idea fails to get around the locking issue when the lifetime manager is created but never has a value assigned. The next version of this SafeSingletonLifetimeManager solves this by managing its own locking logic around whether a non-null value has been assigned to the policy.{% highlight csharp linenos %}
+namespace Neovolve.Jabiru.Server.Services
+{
+    using System;
+    using System.Threading;
+    using Microsoft.Practices.Unity;
+    using Neovolve.Toolkit.Threading;
+    
+    public class SafeSingletonLifetimeManager : ContainerControlledLifetimeManager
+    {
+        private readonly ReaderWriterLockSlim _syncLock = new ReaderWriterLockSlim();
+    
+        private Boolean _valueAssigned;
+    
+        public override Object GetValue()
+        {
+            using (new LockReader(_syncLock))
+            {
+                if (_valueAssigned == false)
+                {
+                    return null;
+                }
+    
+                return base.GetValue();
+            }
+        }
+    
+        public override void SetValue(Object newValue)
+        {
+            using (new LockWriter(_syncLock))
             {
                 if (newValue == null)
                 {
-                    throw new ArgumentNullException(&quot;newValue&quot;);
+                    _valueAssigned = false;
+                }
+                else
+                {
+                    _valueAssigned = true;
                 }
     
                 base.SetValue(newValue);
             }
         }
-    }{% endhighlight %}
-
-This idea fails to get around the locking issue when the lifetime manager is created but never has a value assigned. The next version of this SafeSingletonLifetimeManager solves this by managing its own locking logic around whether a non-null value has been assigned to the policy.
-
-    vnamespace Neovolve.Jabiru.Server.Services
-    {
-        using System;
-        using System.Threading;
-        using Microsoft.Practices.Unity;
-        using Neovolve.Toolkit.Threading;
-    
-        public class SafeSingletonLifetimeManager : ContainerControlledLifetimeManager
-        {
-            private readonly ReaderWriterLockSlim _syncLock = new ReaderWriterLockSlim();
-    
-            private Boolean _valueAssigned;
-    
-            public override Object GetValue()
-            {
-                using (new LockReader(_syncLock))
-                {
-                    if (_valueAssigned == false)
-                    {
-                        return null;
-                    }
-    
-                    return base.GetValue();
-                }
-            }
-    
-            public override void SetValue(Object newValue)
-            {
-                using (new LockWriter(_syncLock))
-                {
-                    if (newValue == null)
-                    {
-                        _valueAssigned = false;
-                    }
-                    else
-                    {
-                        _valueAssigned = true;
-                    }
-    
-                    base.SetValue(newValue);
-                }
-            }
-        }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
 Using this policy now avoids the locking problem described in this post. I would still like to know the reason for the locking logic as this SafeSingletonLifetimeManager is completely circumventing that logic.
 

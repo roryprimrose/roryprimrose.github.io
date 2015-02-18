@@ -13,54 +13,56 @@ I ran all sorts of searches on the net about how to get the certificate of the r
 
 The answer is that the certificate is provided by HttpWebRequest.ServicePoint.Certificate. The tricky bit is that the certificate is only available once a response has come back from the host. This makes sense, but it is misleading that the certificate based on the response is stored against the original request object. It is also a little confusing that the certificate is available on the request when the attempt to get the response threw an exception (a failed certificate trust for example).
 
-The following code shows how this works.
-
-    HttpWebRequest webRequest = HttpWebRequest.Create(address) as HttpWebRequest;
+The following code shows how this works.{% highlight csharp linenos %}
+HttpWebRequest webRequest = HttpWebRequest.Create(address) as HttpWebRequest;
     
-    try
+try
+{
+    if (webRequest == null)
     {
-        if (webRequest == null)
-        {
-            throw new InvalidOperationException(&quot;Invalid request type encoutnered&quot;);
-        }
-    
-        webRequest.Method = WebRequestMethods.Http.Head;
-    
-        // At this point webRequest.ServicePoint.Certificate == null
-        using (WebResponse webResponse = webRequest.GetResponse())
-        {
-            // At this point certificate validation has passed
-            // and webRequest.ServicePoint.Certificate != null
-            HttpWebResponse response = webResponse as HttpWebResponse;
-    
-            if (response != null)
-            {
-                responseMessage = response.StatusDescription;
-                outcome = DetermineOutcome(response);
-            }
-            else
-            {
-                throw new InvalidOperationException(&quot;Invalid response type encoutnered&quot;);
-            }
-        }
+        throw new InvalidOperationException(&quot;Invalid request type encoutnered&quot;);
     }
-    catch (WebException ex)
+    
+    webRequest.Method = WebRequestMethods.Http.Head;
+    
+    // At this point webRequest.ServicePoint.Certificate == null
+    using (WebResponse webResponse = webRequest.GetResponse())
     {
-        AuthenticationException authFailure = ex.InnerException as AuthenticationException;
+        // At this point certificate validation has passed
+        // and webRequest.ServicePoint.Certificate != null
+        HttpWebResponse response = webResponse as HttpWebResponse;
     
-        if (authFailure != null)
+        if (response != null)
         {
-            responseMessage = authFailure.Message;
-    
-            if (ex.Status == WebExceptionStatus.TrustFailure)
-            {
-                // At this point certificate validation has failed
-                // however webRequest.ServicePoint.Certificate != null
-                // TODO: Identify reason for trust failure using webRequest.ServicePoint.Certificate
-            }
-        } 
+            responseMessage = response.StatusDescription;
+            outcome = DetermineOutcome(response);
+        }
         else
         {
-            responseMessage = ex.Message;
+            throw new InvalidOperationException(&quot;Invalid response type encoutnered&quot;);
         }
-    }{% endhighlight %}
+    }
+}
+catch (WebException ex)
+{
+    AuthenticationException authFailure = ex.InnerException as AuthenticationException;
+    
+    if (authFailure != null)
+    {
+        responseMessage = authFailure.Message;
+    
+        if (ex.Status == WebExceptionStatus.TrustFailure)
+        {
+            // At this point certificate validation has failed
+            // however webRequest.ServicePoint.Certificate != null
+            // TODO: Identify reason for trust failure using webRequest.ServicePoint.Certificate
+        }
+    } 
+    else
+    {
+        responseMessage = ex.Message;
+    }
+}
+{% endhighlight %}
+
+

@@ -39,31 +39,31 @@ I added some code to the bootstrapper Main method to extract the resource out to
 
 **Automatically elevate the packaged MSI**
 
-This is actually really easy to achieve in a Visual Studio project. You can add an application manifest to the project and set the requestedExecutionLevel to requireAdministrator.
-
-    <?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-    <asmv1:assembly manifestVersion=&quot;1.0&quot; xmlns=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv1=&quot;urn:schemas-microsoft-com:asm.v1&quot; xmlns:asmv2=&quot;urn:schemas-microsoft-com:asm.v2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
-      <assemblyIdentity version=&quot;1.0.0.0&quot; name=&quot;MyApplication.app&quot;/&gt;
-      <trustInfo xmlns=&quot;urn:schemas-microsoft-com:asm.v2&quot;&gt;
-        <security&gt;
-          <requestedPrivileges xmlns=&quot;urn:schemas-microsoft-com:asm.v3&quot;&gt;
-            <!-- UAC Manifest Options
-                If you want to change the Windows User Account Control level replace the 
-                requestedExecutionLevel node with one of the following.
+This is actually really easy to achieve in a Visual Studio project. You can add an application manifest to the project and set the requestedExecutionLevel to requireAdministrator.{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
+    <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
+    <security>
+        <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+            If you want to change the Windows User Account Control level replace the 
+            requestedExecutionLevel node with one of the following.
     
-            <requestedExecutionLevel  level=&quot;asInvoker&quot; uiAccess=&quot;false&quot; /&gt;
-            <requestedExecutionLevel  level=&quot;requireAdministrator&quot; uiAccess=&quot;false&quot; /&gt;
-            <requestedExecutionLevel  level=&quot;highestAvailable&quot; uiAccess=&quot;false&quot; /&gt;
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
     
-                Specifying requestedExecutionLevel node will disable file and registry virtualization.
-                If you want to utilize File and Registry Virtualization for backward 
-                compatibility then delete the requestedExecutionLevel node.
-            --&gt;
-            <requestedExecutionLevel level=&quot;requireAdministrator&quot; uiAccess=&quot;false&quot; /&gt;
-          </requestedPrivileges&gt;
-        </security&gt;
-      </trustInfo&gt;  
-    </asmv1:assembly&gt;{% endhighlight %}
+            Specifying requestedExecutionLevel node will disable file and registry virtualization.
+            If you want to utilize File and Registry Virtualization for backward 
+            compatibility then delete the requestedExecutionLevel node.
+        -->
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+        </requestedPrivileges>
+    </security>
+    </trustInfo>  
+</asmv1:assembly>
+{% endhighlight %}
 
 The app.manifest file will then cause Windows to automatically elevate the application when it is started. At this point, all other downstream applications (the MSI execution) will also be elevated. The app.manifest is compiled into the assembly which still leaves the bootstrapper being completely self-contained.
 

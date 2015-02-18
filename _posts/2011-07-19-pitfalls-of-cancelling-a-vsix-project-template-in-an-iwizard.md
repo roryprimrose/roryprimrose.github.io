@@ -15,45 +15,45 @@ Basically any exception thrown from IWizard.RunStarted will cause the wizard pro
 
 Once the exception has been thrown however, the project template still exists on disk. It is up to the VSIX developer to manually clean up the new project folder under the solution to make the disk look like it did before attempting to add the project. 
 
-My project uses the following logic to achieve this.
-
-    public void RunStarted(
-        Object automationObject, Dictionary<String, String&gt; replacementsDictionary, WizardRunKind runKind, Object[] customParams)
+My project uses the following logic to achieve this.{% highlight csharp linenos %}
+public void RunStarted(
+    Object automationObject, Dictionary<String, String> replacementsDictionary, WizardRunKind runKind, Object[] customParams)
+{
+    DTE dte = automationObject as DTE;
+    
+    String destinationDirectory = replacementsDictionary["$destinationdirectory$"];
+    
+    try
     {
-        DTE dte = automationObject as DTE;
-    
-        String destinationDirectory = replacementsDictionary[&quot;$destinationdirectory$&quot;];
-    
-        try
+        using (PackageDefinition definition = new PackageDefinition(dte, destinationDirectory))
         {
-            using (PackageDefinition definition = new PackageDefinition(dte, destinationDirectory))
+            DialogResult dialogResult = definition.ShowDialog();
+    
+            if (dialogResult != DialogResult.OK)
             {
-                DialogResult dialogResult = definition.ShowDialog();
-    
-                if (dialogResult != DialogResult.OK)
-                {
-                    throw new WizardBackoutException();
-                }
-    
-                replacementsDictionary.Add(&quot;$packagePath$&quot;, definition.PackagePath);
-                replacementsDictionary.Add(&quot;$packageExtension$&quot;, Path.GetExtension(definition.PackagePath));
-    
-                _dependentProjectName = definition.SelectedProject;
-            }
-        }
-        catch (Exception ex)
-        {
-            // Clean up the template that was written to disk
-            if (Directory.Exists(destinationDirectory))
-            {
-                Directory.Delete(destinationDirectory, true);
+                throw new WizardBackoutException();
             }
     
-            Debug.WriteLine(ex);
+            replacementsDictionary.Add("$packagePath$", definition.PackagePath);
+            replacementsDictionary.Add("$packageExtension$", Path.GetExtension(definition.PackagePath));
     
-            throw;
+            _dependentProjectName = definition.SelectedProject;
         }
-    }{% endhighlight %}
+    }
+    catch (Exception ex)
+    {
+        // Clean up the template that was written to disk
+        if (Directory.Exists(destinationDirectory))
+        {
+            Directory.Delete(destinationDirectory, true);
+        }
+    
+        Debug.WriteLine(ex);
+    
+        throw;
+    }
+}
+{% endhighlight %}
 
 The replacementsDictionary parameter contains the path of the new project. The wizard process will then catch any exceptions and delete the directory to clean up the failed project template. This also covers the scenario where the user cancels or backs out of the wizard in the template.
 

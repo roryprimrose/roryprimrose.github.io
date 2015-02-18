@@ -9,38 +9,38 @@ The TypePresenter control is the UI that the WF designer displays for selecting 
 
 This drop down list provides some common types and includes some of the types already found in the current activity context. Selecting “Browse for Types …” allows for all referenced types to be searched in a dialog.![image][1]
 
-Sometimes you don’t want the TypePresenter to provide every available type. The TypePresenter has a great feature that allows you to restrict the types it displays in this list and the associated “Browse for Types …” dialog. This is done by providing a Func<Type, Boolean&gt; reference on the TypePresenter’s Filter property. 
+Sometimes you don’t want the TypePresenter to provide every available type. The TypePresenter has a great feature that allows you to restrict the types it displays in this list and the associated “Browse for Types …” dialog. This is done by providing a Func<Type, Boolean> reference on the TypePresenter’s Filter property. 
 
-In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.
+In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.{% highlight xml linenos %}
+<sapv:TypePresenter HorizontalAlignment="Left"
+    VerticalAlignment="Center"
+    Margin="6"
+    Grid.Row="0"
+    Grid.Column="1"
+    Filter="ExceptionTypeFilter"
+    AllowNull="false"
+    BrowseTypeDirectly="false"
+    Label="Exception type"
+    Type="{Binding Path=ModelItem.ExceptionType, Mode=TwoWay, Converter={StaticResource modelItemConverter}}"
+    Context="{Binding Context}" />
+{% endhighlight %}
 
-    <sapv:TypePresenter HorizontalAlignment=&quot;Left&quot;
-        VerticalAlignment=&quot;Center&quot;
-        Margin=&quot;6&quot;
-        Grid.Row=&quot;0&quot;
-        Grid.Column=&quot;1&quot;
-        Filter=&quot;ExceptionTypeFilter&quot;
-        AllowNull=&quot;false&quot;
-        BrowseTypeDirectly=&quot;false&quot;
-        Label=&quot;Exception type&quot;
-        Type=&quot;{Binding Path=ModelItem.ExceptionType, Mode=TwoWay, Converter={StaticResource modelItemConverter}}&quot;
-        Context=&quot;{Binding Context}&quot; /&gt;{% endhighlight %}
-
-The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func<Type, Boolean&gt; signature. The filter method related to the xaml above is the following.
-
-    public Boolean ExceptionTypeFilter(Type typeToValidate)
+The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func<Type, Boolean> signature. The filter method related to the xaml above is the following.{% highlight csharp linenos %}
+public Boolean ExceptionTypeFilter(Type typeToValidate)
+{
+    if (typeToValidate == null)
     {
-        if (typeToValidate == null)
-        {
-            return false;
-        }
-    
-        if (typeof(Exception).IsAssignableFrom(typeToValidate))
-        {
-            return true;
-        }
-    
         return false;
-    }{% endhighlight %}
+    }
+    
+    if (typeof(Exception).IsAssignableFrom(typeToValidate))
+    {
+        return true;
+    }
+    
+    return false;
+}
+{% endhighlight %}
 
 The designer for this activity will now only display exception types in the TypePresenter.![image][2]
 
@@ -50,43 +50,43 @@ Unfortunately the property grid will still use the default TypePresenter impleme
 
 I haven’t figured out a way to change this behaviour and I suspect that it is not possible. 
 
-The final piece of the puzzle is to address what happens when the developer selects an inappropriate type using the property grid. This is where activity validation using CacheMetadata comes into play.
-
-    protected override void CacheMetadata(NativeActivityMetadata metadata)
+The final piece of the puzzle is to address what happens when the developer selects an inappropriate type using the property grid. This is where activity validation using CacheMetadata comes into play.{% highlight csharp linenos %}
+protected override void CacheMetadata(NativeActivityMetadata metadata)
+{
+    metadata.AddDelegate(Body);
+    metadata.AddImplementationChild(_internalDelay);
+    metadata.AddImplementationVariable(_attemptCount);
+    metadata.AddImplementationVariable(_delayDuration);
+    
+    RuntimeArgument maxAttemptsArgument = new RuntimeArgument("MaxAttempts", typeof(Int32), ArgumentDirection.In, true);
+    RuntimeArgument retryIntervalArgument = new RuntimeArgument("RetryInterval", typeof(TimeSpan), ArgumentDirection.In, true);
+    
+    metadata.Bind(MaxAttempts, maxAttemptsArgument);
+    metadata.Bind(RetryInterval, retryIntervalArgument);
+    
+    Collection<RuntimeArgument> arguments = new Collection<RuntimeArgument>
+                                            {
+                                                maxAttemptsArgument, 
+                                                retryIntervalArgument
+                                            };
+    
+    metadata.SetArgumentsCollection(arguments);
+    
+    if (Body == null)
     {
-        metadata.AddDelegate(Body);
-        metadata.AddImplementationChild(_internalDelay);
-        metadata.AddImplementationVariable(_attemptCount);
-        metadata.AddImplementationVariable(_delayDuration);
+        ValidationError validationError = new ValidationError(Resources.Retry_NoChildActivitiesDefined, true, "Body");
     
-        RuntimeArgument maxAttemptsArgument = new RuntimeArgument(&quot;MaxAttempts&quot;, typeof(Int32), ArgumentDirection.In, true);
-        RuntimeArgument retryIntervalArgument = new RuntimeArgument(&quot;RetryInterval&quot;, typeof(TimeSpan), ArgumentDirection.In, true);
+        metadata.AddValidationError(validationError);
+    }
     
-        metadata.Bind(MaxAttempts, maxAttemptsArgument);
-        metadata.Bind(RetryInterval, retryIntervalArgument);
+    if (typeof(Exception).IsAssignableFrom(ExceptionType) == false)
+    {
+        ValidationError validationError = new ValidationError(Resources.Retry_InvalidExceptionType, false, "ExceptionType");
     
-        Collection<RuntimeArgument&gt; arguments = new Collection<RuntimeArgument&gt;
-                                                {
-                                                    maxAttemptsArgument, 
-                                                    retryIntervalArgument
-                                                };
-    
-        metadata.SetArgumentsCollection(arguments);
-    
-        if (Body == null)
-        {
-            ValidationError validationError = new ValidationError(Resources.Retry_NoChildActivitiesDefined, true, &quot;Body&quot;);
-    
-            metadata.AddValidationError(validationError);
-        }
-    
-        if (typeof(Exception).IsAssignableFrom(ExceptionType) == false)
-        {
-            ValidationError validationError = new ValidationError(Resources.Retry_InvalidExceptionType, false, &quot;ExceptionType&quot;);
-    
-            metadata.AddValidationError(validationError);
-        }
-    }{% endhighlight %}
+        metadata.AddValidationError(validationError);
+    }
+}
+{% endhighlight %}
 
 The validation at the end of this method checks for an inappropriate type. It is marked as an error so that the activity is not able to be executed in this state. For example, it the property grid is used to assign the type of System.String, the designer will display the following.![image][5]
 

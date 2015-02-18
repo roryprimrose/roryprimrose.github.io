@@ -9,77 +9,79 @@ I’ve been playing with WPF over the last month. It has been great to finally w
 
 I can only guess what the design reason is behind this. The only thing the control seems to do is fire off a RequestNavigate event. Every implementation of this control in a form then needs to manually handle this event to fire off the navigation uri. This is obviously going to be duplicated effort as each usage of the hyperlink control will execute the same logic to achieve this outcome.
 
-I have put together the following custom control for my project to suit my purposes.
-
-    namespace Neovolve.Switch.Controls
+I have put together the following custom control for my project to suit my purposes.{% highlight csharp linenos %}
+namespace Neovolve.Switch.Controls
+{
+    using System;
+    using System.Diagnostics;
+    using System.Windows.Documents;
+    
+    public class ClickableLink : Hyperlink
     {
-        using System;
-        using System.Diagnostics;
-        using System.Windows.Documents;
-    
-        public class ClickableLink : Hyperlink
+        protected override void OnClick()
         {
-            protected override void OnClick()
+            base.OnClick();
+    
+            Uri navigateUri = ResolveAddressValue(NavigateUri);
+    
+            if (navigateUri == null)
             {
-                base.OnClick();
-    
-                Uri navigateUri = ResolveAddressValue(NavigateUri);
-    
-                if (navigateUri == null)
-                {
-                    return;
-                }
-    
-                String address = navigateUri.ToString();
-    
-                ProcessStartInfo startInfo = new ProcessStartInfo(address);
-                
-                Process.Start(startInfo);
+                return;
             }
+    
+            String address = navigateUri.ToString();
+    
+            ProcessStartInfo startInfo = new ProcessStartInfo(address);
+                
+            Process.Start(startInfo);
+        }
             
-            private static Uri ResolveAddressValue(Uri navigateUri)
+        private static Uri ResolveAddressValue(Uri navigateUri)
+        {
+            if (navigateUri == null)
             {
-                if (navigateUri == null)
-                {
-                    return null;
-                }
+                return null;
+            }
     
-                // Disallow file urls
-                if (navigateUri.IsFile)
-                {
-                    return null;
-                }
+            // Disallow file urls
+            if (navigateUri.IsFile)
+            {
+                return null;
+            }
     
-                if (navigateUri.IsUnc)
-                {
-                    return null;
-                }
+            if (navigateUri.IsUnc)
+            {
+                return null;
+            }
     
-                String address = navigateUri.ToString();
+            String address = navigateUri.ToString();
     
-                if (String.IsNullOrWhiteSpace(address))
-                {
-                    return null;
-                }
+            if (String.IsNullOrWhiteSpace(address))
+            {
+                return null;
+            }
     
-                if (address.Contains(&quot;@&quot;) && address.StartsWith(&quot;mailto:&quot;, StringComparison.OrdinalIgnoreCase) == false)
-                {
-                    address = &quot;mailto:&quot; + address;
-                }
-                else if (address.StartsWith(&quot;http://&quot;, StringComparison.OrdinalIgnoreCase) == false &&
-                         address.StartsWith(&quot;https://&quot;, StringComparison.OrdinalIgnoreCase) == false)
-                {
-                    address = &quot;http://&quot; + address;
-                }
+            if (address.Contains("@") && address.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase) == false)
+            {
+                address = "mailto:" + address;
+            }
+            else if (address.StartsWith("http://", StringComparison.OrdinalIgnoreCase) == false &&
+                        address.StartsWith("https://", StringComparison.OrdinalIgnoreCase) == false)
+            {
+                address = "http://" + address;
+            }
     
-                try
-                {
-                    return new Uri(address);
-                }
-                catch (UriFormatException)
-                {
-                    return null;
-                }
+            try
+            {
+                return new Uri(address);
+            }
+            catch (UriFormatException)
+            {
+                return null;
             }
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
+
+

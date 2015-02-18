@@ -17,150 +17,150 @@ Next thing to do is add support for importing BTE types via MEF. This can either
 
 The MultiTask class will take the EventWriter service from BTE as a constructor import. It will also task the TaskExecutor service as a property import. The TaskExecutor cannot be imported in the constructor because it has a reference to TaskResolver which in turn as a reference too all loaded tasks. Having a task import TaskExecutor or TaskResolver in its constructor would cause a circular reference and MEF would throw a composition exception.
 
-MultiTask defines the structure for the command line arguments so that the user can define multiple tasks and their arguments.
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    namespace Neovolve.BuildTaskExecutor.ThirdParty
+MultiTask defines the structure for the command line arguments so that the user can define multiple tasks and their arguments.{% highlight csharp linenos %}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+namespace Neovolve.BuildTaskExecutor.ThirdParty
+{
+    using System.ComponentModel.Composition;
+    using System.Diagnostics;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using Neovolve.BuildTaskExecutor.Extensibility;
+    using Neovolve.BuildTaskExecutor.Services;
+    
+    [Export(typeof(ITask))]
+    public class MultiTask : ITask
     {
-        using System.ComponentModel.Composition;
-        using System.Diagnostics;
-        using System.Text;
-        using System.Text.RegularExpressions;
-        using Neovolve.BuildTaskExecutor.Extensibility;
-        using Neovolve.BuildTaskExecutor.Services;
+        private Regex _taskExpression = new Regex("/task\\d+:(?<taskName>.+)", RegexOptions.Singleline);
     
-        [Export(typeof(ITask))]
-        public class MultiTask : ITask
+        [ImportingConstructor]
+        public MultiTask(EventWriter writer)
         {
-            private Regex _taskExpression = new Regex("/task\\d+:(?<taskName&gt;.+)", RegexOptions.Singleline);
+            Writer = writer;
+        }
     
-            [ImportingConstructor]
-            public MultiTask(EventWriter writer)
+        public Boolean Execute(IEnumerable<String> arguments)
+        {
+            List<String> taskArguments = null;
+    
+            foreach (String argument in arguments)
             {
-                Writer = writer;
-            }
+                Match taskNameMatch = _taskExpression.Match(argument);
     
-            public Boolean Execute(IEnumerable<String&gt; arguments)
-            {
-                List<String&gt; taskArguments = null;
-    
-                foreach (String argument in arguments)
+                if (taskNameMatch.Success)
                 {
-                    Match taskNameMatch = _taskExpression.Match(argument);
-    
-                    if (taskNameMatch.Success)
+                    // This is a new task, execute any arguments already calculated
+                    if (InvokeTask(taskArguments) == false)
                     {
-                        // This is a new task, execute any arguments already calculated
-                        if (InvokeTask(taskArguments) == false)
-                        {
-                            return false;
-                        }
-    
-                        // Parse out the task name
-                        String taskName = taskNameMatch.Groups["taskName"].Value;
-    
-                        taskArguments = new List<String&gt;
-                                        {
-                                            taskName
-                                        };
+                        return false;
                     }
-                    else if (taskArguments != null)
-                    {
-                        taskArguments.Add(argument);   
-                    }
+    
+                    // Parse out the task name
+                    String taskName = taskNameMatch.Groups["taskName"].Value;
+    
+                    taskArguments = new List<String>
+                                    {
+                                        taskName
+                                    };
                 }
+                else if (taskArguments != null)
+                {
+                    taskArguments.Add(argument);   
+                }
+            }
                 
-                return InvokeTask(taskArguments);
-            }
+            return InvokeTask(taskArguments);
+        }
     
-            private Boolean InvokeTask(List<String&gt; taskArguments)
+        private Boolean InvokeTask(List<String> taskArguments)
+        {
+            if (taskArguments == null)
             {
-                if (taskArguments == null)
-                {
-                    return true;
-                }
-    
-                String message = "Invoking";
-    
-                taskArguments.ForEach(x =&gt; message += " " + x);
-    
-                Writer.WriteMessage(TraceEventType.Verbose, message);
-    
-                return Executor.Execute(taskArguments);
-            }
-    
-            public Boolean IsValidArgumentSet(IEnumerable<String&gt; arguments)
-            {
-                if (arguments.Any() == false)
-                {
-                    Writer.WriteMessage(TraceEventType.Verbose, "No command line arguments provided");
-    
-                    return false;
-                }
-    
-                String firstTask = arguments.First();
-    
-                if (_taskExpression.IsMatch(firstTask) == false)
-                {
-                    Writer.WriteMessage(TraceEventType.Verbose, "The first argument is not in the form '/taskN:' where N is a number.");
-    
-                    return false;
-                }
-    
                 return true;
             }
     
-            public String CommandLineArgumentHelp
+            String message = "Invoking";
+    
+            taskArguments.ForEach(x => message += " " + x);
+    
+            Writer.WriteMessage(TraceEventType.Verbose, message);
+    
+            return Executor.Execute(taskArguments);
+        }
+    
+        public Boolean IsValidArgumentSet(IEnumerable<String> arguments)
+        {
+            if (arguments.Any() == false)
             {
-                get
-                {
-                    StringBuilder builder = new StringBuilder("/task1:<task1Name&gt; [<task1Args&gt;] [/task2:<task2Name&gt; [<task2Args&gt;]] ... [/taskN:<taskNName&gt; [<taskNArgs&gt;]]");
+                Writer.WriteMessage(TraceEventType.Verbose, "No command line arguments provided");
     
-                    builder.AppendLine();
-                    builder.AppendLine();
-                    builder.AppendLine("/taskN:<taskNName&gt;\tThe task number to execute.");
-                    builder.AppendLine("\t\t\tN should be sequential in the command line.");
-                    builder.AppendLine("<taskNArgs&gt;\t\tThe command line arguments for the associated task.");
-    
-                    return builder.ToString();
-                }
+                return false;
             }
     
-            public String Description
+            String firstTask = arguments.First();
+    
+            if (_taskExpression.IsMatch(firstTask) == false)
             {
-                get
-                {
-                    return "Executes multiple tasks.";
-                }
+                Writer.WriteMessage(TraceEventType.Verbose, "The first argument is not in the form '/taskN:' where N is a number.");
+    
+                return false;
             }
     
-            public IEnumerable<String&gt; Names
-            {
-                get
-                {
-                    return new[]
-                           {
-                               "MultiTask", "mt"
-                           };
-                }
-            }
+            return true;
+        }
     
-            [Import]
-            private TaskExecutor Executor
+        public String CommandLineArgumentHelp
+        {
+            get
             {
-                get;
-                set;
-            }
+                StringBuilder builder = new StringBuilder("/task1:<task1Name> [<task1Args>] [/task2:<task2Name> [<task2Args>]] ... [/taskN:<taskNName> [<taskNArgs>]]");
     
-            private EventWriter Writer
-            {
-                get;
-                set;
+                builder.AppendLine();
+                builder.AppendLine();
+                builder.AppendLine("/taskN:<taskNName>\tThe task number to execute.");
+                builder.AppendLine("\t\t\tN should be sequential in the command line.");
+                builder.AppendLine("<taskNArgs>\t\tThe command line arguments for the associated task.");
+    
+                return builder.ToString();
             }
         }
-    }{% endhighlight %}
+    
+        public String Description
+        {
+            get
+            {
+                return "Executes multiple tasks.";
+            }
+        }
+    
+        public IEnumerable<String> Names
+        {
+            get
+            {
+                return new[]
+                        {
+                            "MultiTask", "mt"
+                        };
+            }
+        }
+    
+        [Import]
+        private TaskExecutor Executor
+        {
+            get;
+            set;
+        }
+    
+        private EventWriter Writer
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
 The assembly that contains this custom task needs to reside in the same directory as BuildTaskExecutor.exe for MEF to resolve the task. Running BTE with the generic help task will prove that this custom task is being picked up by MEF.![image][2]
 
