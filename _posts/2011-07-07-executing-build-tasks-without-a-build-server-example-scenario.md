@@ -1,0 +1,239 @@
+---
+title: Executing build tasks without a build server – Example scenario
+categories : .Net
+tags : Extensibility, TFS, WiX
+date: 2011-07-07 00:14:06 +10:00
+---
+
+My last few posts have described the process of building an application that can manage custom build tasks without the availability of a full TFS environment ([here][0], [here][1] and [here][2]). This post will look at how I use this application and all its tasks to manage the product version of a Visual Studio solution. The product I originally wrote BuildTaskExecutor (BTE) for is the .Net port of my old VB6 [Switch][3] program which is now hosted out on Codeplex ([here][4]).
+
+The build tasks I want to execute when this solution compiles are:
+
+* Increment the build number of the product version
+
+  * Check out from TFS as required
+
+* Sync updated product version into wix project
+
+  * Check out from TFS as required
+
+* Rename wix output to include the product version
+
+The solution for Switch has several projects. These are:
+
+* Neovolve.Switch.Extensibility
+* Neovolve.Switch.Skinning
+* Neovolve.Switch
+* Neovolve.Switch.Deployment
+* Unit test projects
+![image][5]
+
+All the code projects link in a ProductInfo.cs file so that they all compile with the same product information.![image][6]
+
+The important configuration in this file with regard to versioning the product is the AssemblyVersionAttribute. Each project that links in this file will compile a binary with the same version information.
+
+**Increment the build number of the product version**
+
+The first task for the custom build actions is to increment the build number of the product before it compiles. This is done by invoking BTE in the pre-build event of the project that will compile first. You can look at the build order of the solution to easily figure out which project this will be.![image][7]
+
+The pre-build event of this project can then invoke BTE to increment the build number. BTE will attempt to check out the file from TFS before incrementing the build number as this action will make a change to the file. 
+
+The pre-build event for the Neovolve.Switch.Extensibility project has been changed to invoke the BTE TfsEdit task followed by the IncrementAssemblyVersion task.
+
+    If Not '$(ConfigurationName)' == 'Release' GOTO End
+    
+    CD &quot;$(SolutionDir)&quot;
+    CALL bte tfsedit /pattern:&quot;$(SolutionDir)Solution Items\ProductInfo.cs&quot; /i
+    CALL bte iav /pattern:&quot;$(SolutionDir)Solution Items\ProductInfo.cs&quot; /b
+    
+    GOTO End
+    
+    :End{% endhighlight %}
+
+This script will only execute BTE when the Release build is selected. I didn’t want to increment the build number for Debug build configurations. When it is in a release build, the TfsEdit task has been configured here to ignore any failures to cater for scenarios where someone is building the solution without a TFS workspace mapping for the solution. The script then increments just the build number in the specified file.
+
+**Sync updated product version into wix project**
+
+The next step is to get the generation of the Wix project to use the same version information (which has now been incremented). This is unfortunately not as simple as linking in a common ProductInfo.cs file as it is with the C# projects. Wix projects define the version of the MSI in a version attribute on the Product element. This may also use a wix variable that may be declared in any file in the Wix project.
+
+This is the scenario for the Neovolve.Switch.Deployment project. The beginning of the Product.wxs file defines the product version using a wix variable that is defined in an include file.
+
+    <?xml version=&quot;1.0&quot;
+          encoding=&quot;UTF-8&quot; ?&gt;
+    <?include Definitions.wxi ?&gt;
+    
+    <Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;
+         xmlns:netfx=&quot;http://schemas.microsoft.com/wix/NetFxExtension&quot;&gt;
+      <Product Id=&quot;*&quot;
+               Name=&quot;$(var.PRODUCTNAME)&quot;
+               Language=&quot;1033&quot;
+               Version=&quot;$(var.ProductVersion)&quot;
+               Manufacturer=&quot;$(var.COMPANYNAME)&quot;
+               UpgradeCode=&quot;0FD2155F-5676-448F-864A-482BE0C26E97&quot;&gt;{% endhighlight %}
+
+The Neovolve.Switch.Deployment project will also define a pre-build event script like the one defined above for the Neovolve.Switch.Extensibility project.
+
+    CD &quot;$(SolutionDir)&quot;
+    CALL bte tfsedit /pattern:&quot;$(ProjectDir)Definitions.wxi&quot; /i
+    CALL bte swv /pattern:&quot;$(ProjectPath)&quot; /source:&quot;$(SolutionDir)Neovolve.Switch\$(OutDir)Switch.exe&quot; /M /m /b /r{% endhighlight %}
+
+The BTE TfsEdit task is used again here to attempt to check out the Definitions.wxi file from TFS as it is this file that contains the product version in a project variable. The BTE SyncWixVersion task then obtains the product version from the compiled Switch application and synchronises it into the Wix project before the MSI is compiled.
+
+One important thing to note here is that the source of the version number is the compiled output of the Switch application (in the current solution build) rather than reading the version from a source file (ProductInfo.cs). This is important because the AssemblyVersionAttribute in ProductInfo.cs may only define 1.0.*, or 1.0.1.*. The full version information for wildcard version numbers is only available after the compiler has generated the application. In this case, the SyncWixVersion (or swv) task is taking all version parts&#160; (/M = major, /m = minor, /b = build, /r = revision) from Switch.exe and pushing them into the wix product version value.
+
+**Rename wix output to include the product version**
+
+Lastly, I want the output of the Wix project to include the version number. This task could update the output file name in the project property prior to compiling the MSI. This would however be messy for two reasons:
+
+
+      1. Changing the project during compilation will cause Visual Studio to want to reload the project. This is not really a problem but is a bad user experience as reload project dialogs will get in the way.
+
+    
+      1. The next time the project compiles, the task will have to deal with having a prior version number in the output name that it will need to parse out and replace. Easily achievable with a regular expression, but messy.
+
+    
+The simpler solution is to just rename the output of the project once compilation has completed.
+
+A post-build event script is added to the Neovolve.Switch.Deployment project in order to resolve the output of the Wix project and rename it.
+
+    CD &quot;$(SolutionDir)&quot;
+    CALL bte wov /pattern:&quot;$(ProjectPath)&quot;{% endhighlight %}
+
+BTE invokes the WixOutputVersion task against the wix project. It will look at all the build configuration for the project and rename as many files as possible that match the output name of the project. It will use the product version information that is defined against the Wix project that was synchronised in the pre-build event script.
+
+**The result**
+
+When this solution is compiled, the following is seen in the build log (severely cut down for brevity).
+
+    ------ Rebuild All started: Project: Neovolve.Switch.Extensibility, Configuration: Release Any CPU ------
+      BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
+      
+      Executing task 'TfsCheckout'.
+      Using 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\tf.exe' to check out files.
+      Searching for matching files under 'D:\Codeplex\Neovolve.Switch\Solution Items\'.
+      Checking out file 'D:\Codeplex\Neovolve.Switch\Solution Items\ProductInfo.cs'.
+      Solution Items:
+      ProductInfo.cs
+      
+      BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
+      
+      Executing task 'IncrementAssemblyVersion'.
+      Searching for matching files under 'D:\Codeplex\Neovolve.Switch\Solution Items\'.
+      Updating file 'D:\Codeplex\Neovolve.Switch\Solution Items\ProductInfo.cs' from version '2.0.2.0' to '2.0.3.0'.
+      elapsed time: 134.0076ms
+      elapsed time: 239.0136ms
+      
+      Microsoft (R) .NET Framework Strong Name Utility  Version 3.5.30729.1
+      Copyright (c) Microsoft Corporation.  All rights reserved.
+      
+      Assembly 'obj\Release\Neovolve.Switch.Extensibility.dll' successfully re-signed
+      Neovolve.Switch.Extensibility -&gt; D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Extensibility\bin\Release\Neovolve.Switch.Extensibility.dll
+    ------ Rebuild All started: Project: Neovolve.Switch.Skinning, Configuration: Release Any CPU ------
+    
+      Microsoft (R) .NET Framework Strong Name Utility  Version 3.5.30729.1
+      Copyright (c) Microsoft Corporation.  All rights reserved.
+      
+      Assembly 'obj\Release\Neovolve.Switch.Skinning.dll' successfully re-signed
+      Neovolve.Switch.Skinning -&gt; D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Skinning\bin\Release\Neovolve.Switch.Skinning.dll
+    ------ Rebuild All started: Project: Neovolve.Switch.Extensibility.UnitTests, Configuration: Release Any CPU ------
+      
+      Microsoft (R) .NET Framework Strong Name Utility  Version 3.5.30729.1
+      Copyright (c) Microsoft Corporation.  All rights reserved.
+      
+      Assembly 'obj\Release\Neovolve.Switch.Extensibility.UnitTests.dll' successfully re-signed
+      Neovolve.Switch.Extensibility.UnitTests -&gt; D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Extensibility.UnitTests\bin\Release\Neovolve.Switch.Extensibility.UnitTests.dll
+    ------ Rebuild All started: Project: Neovolve.Switch, Configuration: Release x86 ------
+      
+      Microsoft (R) .NET Framework Strong Name Utility  Version 3.5.30729.1
+      Copyright (c) Microsoft Corporation.  All rights reserved.
+      
+      Assembly 'obj\x86\Release\Switch.exe' successfully re-signed
+      Neovolve.Switch -&gt; D:\Codeplex\Neovolve.Switch\Neovolve.Switch\bin\Release\Switch.exe
+    ------ Rebuild All started: Project: Neovolve.Switch.UnitTests, Configuration: Release Any CPU ------
+      Neovolve.Switch.UnitTests -&gt; D:\Codeplex\Neovolve.Switch\Neovolve.Switch.UnitTests\bin\Release\Neovolve.Switch.UnitTests.dll
+    ------ Rebuild All started: Project: Neovolve.Switch.Deployment, Configuration: Release x86 ------
+            CD &quot;D:\Codeplex\Neovolve.Switch\&quot;
+    CALL bte tfsedit /pattern:&quot;D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\Definitions.wxi&quot; /i
+    CALL bte swv /pattern:&quot;D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\Neovolve.Switch.Deployment.wixproj&quot; /source:&quot;D:\Codeplex\Neovolve.Switch\Neovolve.Switch\bin\Release\Switch.exe&quot; /M /m /b /r
+            BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
+            Executing task 'TfsCheckout'.
+            Using 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\tf.exe' to check out files.
+            Searching for matching files under 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\'.
+            Checking out file 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\Definitions.wxi'.
+            Neovolve.Switch.Deployment:
+            Definitions.wxi
+            BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
+            Executing task 'SyncWixVersion'.
+            Searching for matching files under 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\'.
+            Updating wix project 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\Neovolve.Switch.Deployment.wixproj' from version '2.0.2.0' to '2.0.3.0'.
+    
+            CD &quot;D:\Codeplex\Neovolve.Switch\&quot;
+    CALL bte wov /pattern:&quot;D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\Neovolve.Switch.Deployment.wixproj&quot;
+            BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
+            Executing task 'WixOutputVersion'.
+            Searching for matching files under 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\'.
+            Moving 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\bin\Release\Neovolve Switch.msi' to 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\bin\Release\Neovolve Switch 2.0.3.0.msi'.
+            Moving 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\bin\Release\Neovolve Switch.wixpdb' to 'D:\Codeplex\Neovolve.Switch\Neovolve.Switch.Deployment\bin\Release\Neovolve Switch 2.0.3.0.wixpdb'.
+    ========== Rebuild All: 6 succeeded, 0 failed, 0 skipped ==========
+    
+    Build Summary
+    -------------
+    00:13.492 - Success - Release Any CPU - Neovolve.Switch.Extensibility\Neovolve.Switch.Extensibility.csproj
+    00:12.825 - Success - Release x86 - Neovolve.Switch\Neovolve.Switch.csproj
+    00:12.793 - Success - Release x86 - Neovolve.Switch.Deployment\Neovolve.Switch.Deployment.wixproj
+    00:07.458 - Success - Release Any CPU - Neovolve.Switch.Skinning\Neovolve.Switch.Skinning.csproj
+    00:07.067 - Success - Release Any CPU - Neovolve.Switch.Extensibility.UnitTests\Neovolve.Switch.Extensibility.UnitTests.csproj
+    00:01.879 - Success - Release Any CPU - Neovolve.Switch.UnitTests\Neovolve.Switch.UnitTests.csproj
+    
+    Total build time: 00:55.555
+    
+    ========== Rebuild All: 6 succeeded or up-to-date, 0 failed, 0 skipped =========={% endhighlight %}
+
+You can see from the logs that BTE has done the following throughout the build of the solution:
+
+
+      * Checked out ProductInfo.cs from TFS
+
+    
+      * Identified the existing version as 2.0.2.0
+
+    
+      * Incremented version to 2.0.3.0
+
+    
+      * Synchronised the Wix project to 2.0.3.0
+
+    
+      * Moved the Wix project output to the same filename with the addition of the version number.
+
+    
+The solution now contains two files that are checked out. These are ProductInfo.cs and Definitions.wxi.![image][8]
+
+The target directory of the Neovolve.Switch.Deployment project now contains nicely renamed output.![image][9]
+
+Running all the BTE executions in the project build events is a batch file called bte.bat. This is located in the solution root and makes it easy for any project in the solution to invoke BTE with minimal noise in the build event script window. The batch file simply invokes BTE with all the command line parameters and manages the return code.
+
+    @ECHO OFF
+    References\Neovolve\BuildTaskExecutor\BuildTaskExecutor.exe %*
+    
+    If errorlevel 1 GOTO BuildTaskFailed
+    GOTO BuildTaskSuccessful
+    
+    :BuildTaskFailed
+    exit 1
+    :BuildTaskSuccessful{% endhighlight %}
+
+You have seen here how a flexible little tool like BTE can integrate into a solution build to achieve valuable results when you don’t have access to a TFS build infrastructure.
+
+The next post will provide an example of how to create a custom task for BTE to pick up and execute.
+
+[0]: /post/2011/07/01/Executing-build-tasks-without-a-build-server-%E2%80%93-Design.aspx
+[1]: /post/2011/07/03/Executing-build-tasks-without-a-build-server-%E2%80%93-Implementation.aspx
+[2]: /post/2011/07/06/Executing-build-tasks-without-a-build-server-%E2%80%93-In-action.aspx
+[3]: /post/2002/08/06/Switch-170.aspx
+[4]: http://switch.codeplex.com/
+[5]: //blogfiles/image_110.png
+[6]: //blogfiles/image_111.png
+[7]: //blogfiles/image_112.png
+[8]: //blogfiles/image_113.png
+[9]: //blogfiles/image_114.png

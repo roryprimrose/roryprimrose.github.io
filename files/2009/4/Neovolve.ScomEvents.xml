@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ManagementPack ContentReadable="true"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>Neovolve.ScomEvents</ID>
+      <Version>1.0.0.0</Version>
+    </Identity>
+    <Name>Neovolve - Event Logging</Name>
+    <References>
+      <Reference Alias="SCDW">
+        <ID>Microsoft.SystemCenter.DataWarehouse.Library</ID>
+        <Version>6.0.6278.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Windows">
+        <ID>Microsoft.Windows.Library</ID>
+        <Version>6.0.6278.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="MicrosoftSystemCenterInstanceGroupLibrary">
+        <ID>Microsoft.SystemCenter.InstanceGroup.Library</ID>
+        <Version>6.0.6278.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="System">
+        <ID>System.Library</ID>
+        <Version>6.0.6278.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="SystemCenter">
+        <ID>Microsoft.SystemCenter.Library</ID>
+        <Version>6.0.6278.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="Neovolve.ScomEvents.Group"
+                   Accessibility="Public"
+                   Abstract="false"
+                   Base="MicrosoftSystemCenterInstanceGroupLibrary!Microsoft.SystemCenter.InstanceGroup"
+                   Hosted="false"
+                   Singleton="true" />
+      </ClassTypes>
+    </EntityTypes>
+    <ModuleTypes>
+      <DataSourceModuleType ID="EventLog.DataSource.Module"
+                            Accessibility="Public"
+                            Batching="false">
+        <Configuration>
+          <xsd:element name="ConnectionString"
+                       type="xsd:string"
+                       xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Query"
+                       type="xsd:string"
+                       xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="IntervalSeconds"
+                       type="xsd:int"
+                       xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="TimeoutSeconds"
+                       type="xsd:int"
+                       xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="ConnectionString"
+                                 Selector="$Config/ConnectionString$"
+                                 ParameterType="string" />
+          <OverrideableParameter ID="Query"
+                                 Selector="$Config/Query$"
+                                 ParameterType="string" />
+          <OverrideableParameter ID="IntervalSeconds"
+                                 Selector="$Config/IntervalSeconds$"
+                                 ParameterType="int" />
+          <OverrideableParameter ID="TimeoutSeconds"
+                                 Selector="$Config/TimeoutSeconds$"
+                                 ParameterType="int" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="EventLog.DataSource"
+                          TypeID="Windows!Microsoft.Windows.TimedScript.EventProvider">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime />
+                <ScriptName>Neovolve.ScomEvents.vbs</ScriptName>
+                <Arguments />
+                <ScriptBody>
+                  <![CDATA[
+
+Option Explicit
+
+Const adOpenForwardOnly = 0 
+Const adLockReadOnly = 1
+Const adCmdStoredProc = 4
+
+On Error Resume Next
+
+Dim momApi
+Set momApi = Nothing
+Set momApi = CreateObject("MOM.ScriptAPI")
+
+If Not momApi Is Nothing Then
+
+    Dim recordCount
+    
+    recordCount = 0
+
+    Dim conn
+    Set conn = CreateObject("ADODB.Connection")
+
+    conn.Open "$Config/ConnectionString$"
+
+    ' Check if the connection is open
+    If conn.State <> 1 Then
+
+      Err.Raise 101, "Neovolve.ScomEvents.vbs", "Failed to connect to database"
+
+    End If
+
+    If Err.number = 0 Then
+
+        Dim rs
+        Set rs = CreateObject("ADODB.Recordset")
+        Set rs.ActiveConnection = conn
+        rs.CursorType = adOpenForwardOnly
+        rs.LockType = adLockReadOnly
+
+        rs.Open "$Config/Query$"
+
+        If Err.number = 0 Then
+
+            If Not rs Is Nothing Then
+            
+                If Not rs.EOF Then
+
+                    While Not rs.EOF
+
+                        recordCount = recordCount + 1
+
+                        Dim propertyBag
+                        Set propertyBag = momApi.CreatePropertyBag()
+
+                        ' & "" is added to each value to cast null values to a valid string value
+                        Call propertyBag.AddValue("ID", rs.Fields("ID").Value & "")
+                        Call propertyBag.AddValue("ApplicationName", rs.Fields("ApplicationName").Value & "")
+                        Call propertyBag.AddValue("ComputerName", rs.Fields("ComputerName").Value & "")
+                        Call propertyBag.AddValue("EnvironmentIdentity", rs.Fields("EnvironmentIdentity").Value & "")
+                        Call propertyBag.AddValue("Message", rs.Fields("Message").Value & "")
+                        Call propertyBag.AddValue("ScomEventLevel", rs.Fields("ScomEventLevel").Value & "")
+                        
+                        ' Additional example fields
+                        Call propertyBag.AddValue("FieldA", rs.Fields("FieldA").Value & "")
+                        Call propertyBag.AddValue("FieldB", rs.Fields("FieldB").Value & "")
+                        Call propertyBag.AddValue("FieldC", rs.Fields("FieldC").Value & "")
+                        Call propertyBag.AddValue("FieldD", rs.Fields("FieldD").Value & "")
+                        Call propertyBag.AddValue("FieldE", rs.Fields("FieldE").Value & "")
+                        Call propertyBag.AddValue("FieldF", rs.Fields("FieldF").Value & "")
+                        Call propertyBag.AddValue("FieldH", rs.Fields("FieldH").Value & "")
+                        Call propertyBag.AddValue("FieldI", rs.Fields("FieldI").Value & "")
+                        Call propertyBag.AddValue("FieldJ", rs.Fields("FieldJ").Value & "")
+                        Call propertyBag.AddValue("FieldK", rs.Fields("FieldK").Value & "")
+                        Call propertyBag.AddValue("FieldL", rs.Fields("FieldL").Value & "")
+
+                        momApi.AddItem(propertyBag)
+
+                        rs.MoveNext
+
+                    Wend
+
+                End If
+
+            End If
+
+        End If  ' End checking if there is an error after attempting to open the recordset
+
+        If Not rs Is Nothing And rs.State <> 0 Then
+
+            rs.Close
+            Set rs = Nothing
+
+        End If  ' End checking if the recordset exists
+
+    End If ' End checking if there is an error after attempting to connect to the database
+
+    ' Check if there is a connection that is open
+    If Not conn Is Nothing And conn.State <> 0 Then
+
+        conn.Close
+        Set conn = Nothing
+
+    End If  ' End checking if the connection exists
+
+    If recordCount > 0 Then
+
+        momApi.ReturnItems()
+        
+    End If
+    
+    If Err.number <> 0 Then
+
+        momApi.LogScriptEvent "Neovolve.ScomEvents.vbs", 101, 1, "Failed to read database records:" & vbCrLf & vbCrLf & "Number: " & Err.number & vbCrLf & "Description: " & Err.Description & vbCrLf & "Source: " & Err.Source
+
+    End If  ' End checking if there is an error available
+
+End If  ' End checking if the MOM API object was FieldL
+
+]]>
+                </ScriptBody>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+                <EventOriginId>$MPElement$</EventOriginId>
+                <PublisherId>$MPElement$</PublisherId>
+                <PublisherName>$Data/Property[@Name='ApplicationName']$</PublisherName>
+                <Channel>Neovolve.ScomEvents</Channel>
+                <LoggingComputer>$Data/Property[@Name='ComputerName']$</LoggingComputer>
+                <EventNumber>$Data/Property[@Name='ID']$</EventNumber>
+                <EventCategory>0</EventCategory>
+                <EventLevel>$Data/Property[@Name='ScomEventLevel']$</EventLevel>
+                <UserName>$Data/Property[@Name='EnvironmentIdentity']$</UserName>
+                <Description>$Data/Property[@Name='Message']$</Description>
+                <Params>
+                  <Param>$Data/Property[@Name='ID']$</Param>
+                  <Param>$Data/Property[@Name='ApplicationName']$</Param>
+                  <Param>$Data/Property[@Name='ComputerName']$</Param>
+                  <Param>$Data/Property[@Name='EnvironmentIdentity']$</Param>
+                  <Param>$Data/Property[@Name='Message']$</Param>
+                  <Param>$Data/Property[@Name='ScomEventLevel']$</Param>
+                  
+                  <!-- Additional example fields -->
+                  <Param>$Data/Property[@Name='FieldA']$</Param>
+                  <Param>$Data/Property[@Name='FieldB']$</Param>
+                  <Param>$Data/Property[@Name='FieldC']$</Param>
+                  <Param>$Data/Property[@Name='FieldD']$</Param>
+                  <Param>$Data/Property[@Name='FieldE']$</Param>
+                  <Param>$Data/Property[@Name='FieldF']$</Param>
+                  <Param>$Data/Property[@Name='FieldH']$</Param>
+                  <Param>$Data/Property[@Name='FieldI']$</Param>
+                  <Param>$Data/Property[@Name='FieldJ']$</Param>
+                  <Param>$Data/Property[@Name='FieldK']$</Param>
+                  <Param>$Data/Property[@Name='FieldL']$</Param>
+                </Params>
+              </DataSource>
+            </MemberModules>
+            <Composition>
+              <Node ID="EventLog.DataSource" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Event.Data</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+  <Monitoring>
+    <Rules>
+      <Rule ID="EventLogRule"
+            Enabled="true"
+            Target="Neovolve.ScomEvents.Group"
+            ConfirmDelivery="false"
+            Remotable="true"
+            Priority="Normal"
+            DiscardLevel="100">
+        <Category>EventCollection</Category>
+        <DataSources>
+          <DataSource ID="EventLogRuleDS"
+                      TypeID="EventLog.DataSource.Module">
+            <ConnectionString>PROVIDER=SQLOLEDB;Integrated Security=SSPI;Initial Catalog=Neovolve.ScomEvents;Data Source=localhost</ConnectionString>
+            <Query>EXEC [dbo].[ReadUnprocessedEventLogs]</Query>
+            <IntervalSeconds>60</IntervalSeconds>
+            <TimeoutSeconds>60</TimeoutSeconds>
+          </DataSource>
+        </DataSources>
+        <WriteActions>
+          <WriteAction ID="WriteToDB"
+                       TypeID="SystemCenter!Microsoft.SystemCenter.CollectEvent" />
+          <WriteAction ID="WriteToDW"
+                       TypeID="SCDW!Microsoft.SystemCenter.DataWarehouse.PublishEventData" />
+        </WriteActions>
+      </Rule>
+    </Rules>
+  </Monitoring>
+  <Presentation>
+    <Views>
+      <View ID="EventRecordsView"
+            Accessibility="Public"
+            Enabled="true"
+            Target="System!System.Entity"
+            TypeID="SystemCenter!Microsoft.SystemCenter.EventViewType"
+            Visible="true">
+        <Category>Operations</Category>
+        <Criteria>
+          <RuleList>
+            <Rule>$MPElement[Name="EventLogRule"]$</Rule>
+          </RuleList>
+        </Criteria>
+        <Presentation>
+          <ColumnInfo Index="0"
+                      SortIndex="-1"
+                      Width="100"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="true"
+                      SortOrder="Ascending">
+            <Name>Level</Name>
+            <Id>LevelId</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="1"
+                      SortIndex="0"
+                      Width="150"
+                      Grouped="false"
+                      Sorted="true"
+                      IsSortable="true"
+                      Visible="true"
+                      SortOrder="Descending">
+            <Name>Date and Time</Name>
+            <Id>TimeGenerated</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="2"
+                      SortIndex="-1"
+                      Width="200"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="true"
+                      SortOrder="Ascending">
+            <Name>Source</Name>
+            <Id>PublisherName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="3"
+                      SortIndex="-1"
+                      Width="100"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="false"
+                      SortOrder="Ascending">
+            <Name>Name</Name>
+            <Id>MonitoringObjectDisplayName</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="4"
+                      SortIndex="-1"
+                      Width="150"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="true"
+                      SortOrder="Ascending">
+            <Name>User</Name>
+            <Id>User</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="5"
+                      SortIndex="-1"
+                      Width="100"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="true"
+                      SortOrder="Ascending">
+            <Name>Logging Computer</Name>
+            <Id>LoggingComputer</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="6"
+                      SortIndex="-1"
+                      Width="100"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="false"
+                      SortOrder="Ascending">
+            <Name>Log Name</Name>
+            <Id>Channel</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="7"
+                      SortIndex="-1"
+                      Width="100"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="true"
+                      SortOrder="Ascending">
+            <Name>Event Number</Name>
+            <Id>Number</Id>
+          </ColumnInfo>
+          <ColumnInfo Index="8"
+                      SortIndex="-1"
+                      Width="100"
+                      Grouped="false"
+                      Sorted="false"
+                      IsSortable="true"
+                      Visible="false"
+                      SortOrder="Ascending">
+            <Name>Rule Name</Name>
+            <Id>MonitoringRuleDisplayName</Id>
+          </ColumnInfo>
+        </Presentation>
+        <Target />
+      </View>
+    </Views>
+    <Folders>
+      <Folder ID="RootFolder"
+              Accessibility="Public"
+              ParentFolder="SystemCenter!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
+    </Folders>
+    <FolderItems>
+      <FolderItem ElementID="EventRecordsView"
+                  Folder="RootFolder" />
+    </FolderItems>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENA"
+                  IsDefault="false">
+      <DisplayStrings>
+        <DisplayString ElementID="Neovolve.ScomEvents">
+          <Name>Neovolve - Event Logging</Name>
+        </DisplayString>
+        <DisplayString ElementID="Neovolve.ScomEvents.Group">
+          <Name>Neovolve - Event Logging</Name>
+        </DisplayString>
+        <DisplayString ElementID="RootFolder">
+          <Name>Neovolve - Event Logging</Name>
+        </DisplayString>
+        <DisplayString ElementID="EventRecordsView">
+          <Name>Event Records</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+    <LanguagePack ID="ENU"
+                  IsDefault="false">
+      <DisplayStrings>
+        <DisplayString ElementID="Neovolve.ScomEvents">
+          <Name>Neovolve - Event Logging</Name>
+        </DisplayString>
+        <DisplayString ElementID="Neovolve.ScomEvents.Group">
+          <Name>Neovolve - Event Logging</Name>
+        </DisplayString>
+        <DisplayString ElementID="RootFolder">
+          <Name>Neovolve - Event Logging</Name>
+        </DisplayString>
+        <DisplayString ElementID="EventRecordsView">
+          <Name>Event Records</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPack>
