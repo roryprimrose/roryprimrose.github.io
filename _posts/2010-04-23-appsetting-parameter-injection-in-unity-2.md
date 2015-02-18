@@ -11,189 +11,189 @@ There are some issues with adopting Unity 2 in the short-term. Unity 2 isn’t a
 
 Given these constraints, I have a working solution after several hours of surfing Reflector.
 
-Firstly, the configuration for Unity 2 is much neater and removes redundant configuration. The feature I like the most is that type information is now interpreted where previously it needed to be specified.
-
-    <?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-    <configuration&gt;
+Firstly, the configuration for Unity 2 is much neater and removes redundant configuration. The feature I like the most is that type information is now interpreted where previously it needed to be specified.{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
      
-      <configSections&gt;
-        <section name=&quot;unity&quot;
-                 type=&quot;Microsoft.Practices.Unity.Configuration.UnityConfigurationSection, Microsoft.Practices.Unity.Configuration&quot; /&gt;
-      </configSections&gt;
+    <configSections>
+    <section name="unity"
+                type="Microsoft.Practices.Unity.Configuration.UnityConfigurationSection, Microsoft.Practices.Unity.Configuration" />
+    </configSections>
     
-      <appSettings&gt;
-        <add key=&quot;MyTestSetting&quot;
-             value=&quot;234234&quot; /&gt;
-      </appSettings&gt;
+    <appSettings>
+    <add key="MyTestSetting"
+            value="234234" />
+    </appSettings>
     
-      <unity&gt;
+    <unity>
         
-        <sectionExtension type=&quot;Neovolve.Toolkit.Unity.AppSettingParameterValueExtension, Neovolve.Toolkit.Unity&quot; /&gt;
+    <sectionExtension type="Neovolve.Toolkit.Unity.AppSettingParameterValueExtension, Neovolve.Toolkit.Unity" />
     
-        <containers&gt;
-          <container&gt;
-            <register type=&quot;Neovolve.Toolkit.Unity.IntegrationTests.IDoSomething, Neovolve.Toolkit.Unity.IntegrationTests&quot;
-                      mapTo=&quot;Neovolve.Toolkit.Unity.IntegrationTests.CachedSomethingDone, Neovolve.Toolkit.Unity.IntegrationTests&quot;&gt;
-              <constructor&gt;
-                <param name=&quot;dependency&quot;&gt;
-                  <dependency name=&quot;CacheSomething&quot; /&gt;
-                </param&gt;
-                <param name=&quot;maxAgeInMilliseconds&quot;&gt;
-                  <appSetting appSettingKey=&quot;MyTestSetting&quot; /&gt;
-                </param&gt;
-              </constructor&gt;
+    <containers>
+        <container>
+        <register type="Neovolve.Toolkit.Unity.IntegrationTests.IDoSomething, Neovolve.Toolkit.Unity.IntegrationTests"
+                    mapTo="Neovolve.Toolkit.Unity.IntegrationTests.CachedSomethingDone, Neovolve.Toolkit.Unity.IntegrationTests">
+            <constructor>
+            <param name="dependency">
+                <dependency name="CacheSomething" />
+            </param>
+            <param name="maxAgeInMilliseconds">
+                <appSetting appSettingKey="MyTestSetting" />
+            </param>
+            </constructor>
     
-            </register&gt;
+        </register>
     
-            <register type=&quot;Neovolve.Toolkit.Unity.IntegrationTests.IDoSomething, Neovolve.Toolkit.Unity.IntegrationTests&quot;
-                      mapTo=&quot;Neovolve.Toolkit.Unity.IntegrationTests.SomethingDone, Neovolve.Toolkit.Unity.IntegrationTests&quot;
-                      name=&quot;CacheSomething&quot;/&gt;
+        <register type="Neovolve.Toolkit.Unity.IntegrationTests.IDoSomething, Neovolve.Toolkit.Unity.IntegrationTests"
+                    mapTo="Neovolve.Toolkit.Unity.IntegrationTests.SomethingDone, Neovolve.Toolkit.Unity.IntegrationTests"
+                    name="CacheSomething"/>
     
-          </container&gt;
-        </containers&gt;
-      </unity&gt;
-    </configuration&gt;{% endhighlight %}
+        </container>
+    </containers>
+    </unity>
+</configuration>
+{% endhighlight %}
 
 The big change for supporting custom parameter injection is that the InjectionParameterValueElement is now called ParameterValueElement and no longer supports the elementType attribute. While this cleans up the configuration of the injection itself, it means that more work needs to be done to tell Unity how to inject the parameter using a custom implementation. 
 
-A Unity SectionExtension is used to achieve this. The configuration for the extension is shown as the first line in the unity configuration above.
-
-    using Microsoft.Practices.Unity.Configuration;
+A Unity SectionExtension is used to achieve this. The configuration for the extension is shown as the first line in the unity configuration above.{% highlight csharp linenos %}
+using Microsoft.Practices.Unity.Configuration;
     
-    namespace Neovolve.Toolkit.Unity
+namespace Neovolve.Toolkit.Unity
+{
+    public class AppSettingParameterValueExtension : SectionExtension
     {
-        public class AppSettingParameterValueExtension : SectionExtension
+        public override void AddExtensions(SectionExtensionContext context)
         {
-            public override void AddExtensions(SectionExtensionContext context)
+            context.AddElement<AppSettingsParameterValueElement>(AppSettingsParameterValueElement.ElementName);
+        }
+    }
+}
+{% endhighlight %}
+
+This extension simply tells the Unity configuration system how to understand a custom parameter injection handler. The context.AddElement method tells Unity which type to use when processing a particular configuration element name. The appSetting configuration element is now hooked up to use the AppSettingParameterValueElement which looks like the following:{% highlight csharp linenos %}
+using System;
+using System.ComponentModel;
+using System.Configuration;
+using System.Globalization;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using Neovolve.Toolkit.Storage;
+    
+namespace Neovolve.Toolkit.Unity
+{
+    public class AppSettingsParameterValueElement : ParameterValueElement
+    {
+        public const String ElementName = "appSetting";
+    
+        public AppSettingsParameterValueElement()
+        {
+            Config = ConfigurationStoreFactory.Create();
+        }
+    
+        public Object CreateValue(Type parameterType)
+        {
+            String configurationValue = Config.GetApplicationSetting<String>(AppSettingKey);
+            Object injectionValue;
+    
+            if (parameterType == typeof(String))
             {
-                context.AddElement<AppSettingsParameterValueElement&gt;(AppSettingsParameterValueElement.ElementName);
+                injectionValue = configurationValue;
+            }
+            else
+            {
+                TypeConverter converter = GetTypeConverter(parameterType);
+    
+                try
+                {
+                    injectionValue = converter.ConvertFromInvariantString(configurationValue);
+                }
+                catch (NotSupportedException ex)
+                {
+                    const String MessageFormat = "The AppSetting with key '{0}' and value '{1}' cannot be converted to type '{2}'";
+                    String settingValue = configurationValue ?? "(null)";
+    
+                    String failureMessage = String.Format(
+                        CultureInfo.InvariantCulture, MessageFormat, AppSettingKey, settingValue, parameterType.FullName);
+    
+                    throw new ConfigurationErrorsException(failureMessage, ex);
+                }
+            }
+    
+            return injectionValue;
+        }
+    
+        public override InjectionParameterValue GetInjectionParameterValue(IUnityContainer container, Type parameterType)
+        {
+            Object injectionValue = CreateValue(parameterType);
+    
+            return new InjectionParameter(parameterType, injectionValue);
+        }
+    
+        private TypeConverter GetTypeConverter(Type parameterType)
+        {
+            if (String.IsNullOrEmpty(TypeConverterTypeName) == false)
+            {
+                Type converterType = Type.GetType(TypeConverterTypeName);
+    
+                if (converterType == null)
+                {
+                    const String MessageFormat = "The type '{0}' could not be loaded.";
+                    String message = String.Format(CultureInfo.InvariantCulture, MessageFormat, TypeConverterTypeName);
+    
+                    throw new ConfigurationErrorsException(message);
+                }
+    
+                if (typeof(TypeConverter).IsAssignableFrom(converterType) == false)
+                {
+                    const String MessageFormat = "The type '{0}' does not inherit from '{1}'.";
+                    String message = String.Format(CultureInfo.InvariantCulture, MessageFormat, TypeConverterTypeName, typeof(TypeConverter).FullName);
+    
+                    throw new ConfigurationErrorsException(message);
+                }
+    
+                return (TypeConverter)Activator.CreateInstance(converterType);
+            }
+    
+            return TypeDescriptor.GetConverter(parameterType);
+        }
+    
+        [ConfigurationProperty("appSettingKey", IsRequired = true)]
+        public String AppSettingKey
+        {
+            get
+            {
+                return (String)base["appSettingKey"];
+            }
+    
+            set
+            {
+                base["appSettingKey"] = value;
             }
         }
-    }{% endhighlight %}
-
-This extension simply tells the Unity configuration system how to understand a custom parameter injection handler. The context.AddElement method tells Unity which type to use when processing a particular configuration element name. The appSetting configuration element is now hooked up to use the AppSettingParameterValueElement which looks like the following:
-
-    using System;
-    using System.ComponentModel;
-    using System.Configuration;
-    using System.Globalization;
-    using Microsoft.Practices.Unity;
-    using Microsoft.Practices.Unity.Configuration;
-    using Neovolve.Toolkit.Storage;
     
-    namespace Neovolve.Toolkit.Unity
-    {
-        public class AppSettingsParameterValueElement : ParameterValueElement
+        [ConfigurationProperty("typeConverter", IsRequired = false, DefaultValue = null)]
+        public String TypeConverterTypeName
         {
-            public const String ElementName = &quot;appSetting&quot;;
-    
-            public AppSettingsParameterValueElement()
+            get
             {
-                Config = ConfigurationStoreFactory.Create();
+                return (String)base["typeConverter"];
             }
     
-            public Object CreateValue(Type parameterType)
+            set
             {
-                String configurationValue = Config.GetApplicationSetting<String&gt;(AppSettingKey);
-                Object injectionValue;
-    
-                if (parameterType == typeof(String))
-                {
-                    injectionValue = configurationValue;
-                }
-                else
-                {
-                    TypeConverter converter = GetTypeConverter(parameterType);
-    
-                    try
-                    {
-                        injectionValue = converter.ConvertFromInvariantString(configurationValue);
-                    }
-                    catch (NotSupportedException ex)
-                    {
-                        const String MessageFormat = &quot;The AppSetting with key '{0}' and value '{1}' cannot be converted to type '{2}'&quot;;
-                        String settingValue = configurationValue ?? &quot;(null)&quot;;
-    
-                        String failureMessage = String.Format(
-                            CultureInfo.InvariantCulture, MessageFormat, AppSettingKey, settingValue, parameterType.FullName);
-    
-                        throw new ConfigurationErrorsException(failureMessage, ex);
-                    }
-                }
-    
-                return injectionValue;
-            }
-    
-            public override InjectionParameterValue GetInjectionParameterValue(IUnityContainer container, Type parameterType)
-            {
-                Object injectionValue = CreateValue(parameterType);
-    
-                return new InjectionParameter(parameterType, injectionValue);
-            }
-    
-            private TypeConverter GetTypeConverter(Type parameterType)
-            {
-                if (String.IsNullOrEmpty(TypeConverterTypeName) == false)
-                {
-                    Type converterType = Type.GetType(TypeConverterTypeName);
-    
-                    if (converterType == null)
-                    {
-                        const String MessageFormat = &quot;The type '{0}' could not be loaded.&quot;;
-                        String message = String.Format(CultureInfo.InvariantCulture, MessageFormat, TypeConverterTypeName);
-    
-                        throw new ConfigurationErrorsException(message);
-                    }
-    
-                    if (typeof(TypeConverter).IsAssignableFrom(converterType) == false)
-                    {
-                        const String MessageFormat = &quot;The type '{0}' does not inherit from '{1}'.&quot;;
-                        String message = String.Format(CultureInfo.InvariantCulture, MessageFormat, TypeConverterTypeName, typeof(TypeConverter).FullName);
-    
-                        throw new ConfigurationErrorsException(message);
-                    }
-    
-                    return (TypeConverter)Activator.CreateInstance(converterType);
-                }
-    
-                return TypeDescriptor.GetConverter(parameterType);
-            }
-    
-            [ConfigurationProperty(&quot;appSettingKey&quot;, IsRequired = true)]
-            public String AppSettingKey
-            {
-                get
-                {
-                    return (String)base[&quot;appSettingKey&quot;];
-                }
-    
-                set
-                {
-                    base[&quot;appSettingKey&quot;] = value;
-                }
-            }
-    
-            [ConfigurationProperty(&quot;typeConverter&quot;, IsRequired = false, DefaultValue = null)]
-            public String TypeConverterTypeName
-            {
-                get
-                {
-                    return (String)base[&quot;typeConverter&quot;];
-                }
-    
-                set
-                {
-                    base[&quot;typeConverter&quot;] = value;
-                }
-            }
-    
-            private IConfigurationStore Config
-            {
-                get;
-                set;
+                base["typeConverter"] = value;
             }
         }
-    }{% endhighlight %}
+    
+        private IConfigurationStore Config
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
 The class is similar to the original version with most of the changes being a refactored Unity API. My implementation uses a interface based configuration store, but this can be easily substituted for ConfigurationManager.AppSettings.
 

@@ -11,267 +11,267 @@ The poor mans injection option is to create a unity container within the constru
 
 The second option is to create a custom service host factory. This option allows a service type to be created with constructor dependencies rather than a default constructor. It uses the mark-up in svc files to identify the custom factory to be used rather than the default one. The 4.0 framework also supports this configuration via web.config as svc files are no longer required.
 
-The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].
-
-    using System;
-    using System.ServiceModel;
-    using System.ServiceModel.Activation;
-    using Microsoft.Practices.Unity;
-    using Neovolve.Toolkit.Storage;
+The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].{% highlight csharp linenos %}
+using System;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using Microsoft.Practices.Unity;
+using Neovolve.Toolkit.Storage;
     
-    namespace Neovolve.Toolkit.Unity
+namespace Neovolve.Toolkit.Unity
+{
+    public class UnityServiceHostFactory : ServiceHostFactory
     {
-        public class UnityServiceHostFactory : ServiceHostFactory
+        public UnityServiceHostFactory()
+            : this(null, String.Empty, String.Empty)
         {
-            public UnityServiceHostFactory()
-                : this(null, String.Empty, String.Empty)
+        }
+    
+        public UnityServiceHostFactory(IConfigurationStore configuration, String unitySectionName, String containerName)
+        {
+            Container = UnityContainerResolver.Resolve(configuration, unitySectionName, containerName);
+        }
+    
+        public UnityServiceHostFactory(IUnityContainer container)
+        {
+            if (container == null)
             {
+                throw new ArgumentNullException("container");
             }
     
-            public UnityServiceHostFactory(IConfigurationStore configuration, String unitySectionName, String containerName)
+            Container = container;
+        }
+    
+        protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
+        {
+            return new UnityServiceHost(serviceType, Container, baseAddresses);
+        }
+    
+        public IUnityContainer Container
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
+
+The configuration for the factory via svc mark-up is the following.{% highlight xml linenos %}
+<%@ ServiceHost 
+    Language="C#" 
+    Debug="true" 
+    Service="Neovolve.Toolkit.Unity.WebIntegrationTests.TestService" 
+    Factory="Neovolve.Toolkit.Unity.UnityServiceHostFactory" %>
+{% endhighlight %}
+
+The configuration via web.config (.net 4.0 only) is like this. This configuration also includes an example Unity container configuration.{% highlight xml linenos %}
+<configuration>
+    <configSections>
+        <section name="unity"
+                    type="Microsoft.Practices.Unity.Configuration.UnityConfigurationSection, Microsoft.Practices.Unity.Configuration"/>
+    </configSections>
+    <unity>
+        <containers>
+            <container>
+                <register type="Neovolve.Toolkit.Unity.WebIntegrationTests.TestService, Neovolve.Toolkit.Unity.WebIntegrationTests">
+                    <constructor>
+                        <param name="prefix">
+                            <value value="Injected by default unity section and container"/>
+                        </param>
+                    </constructor>
+                </register>
+            </container>
+        </containers>
+    </unity>
+    <system.serviceModel>
+        <serviceHostingEnvironment>
+            <serviceActivations>
+                <add service="Neovolve.Toolkit.Unity.WebIntegrationTests.TestService" 
+                        factory="Neovolve.Toolkit.Unity.UnityServiceHostFactory" 
+                        relativeAddress="/TestService.svc" />
+            </serviceActivations>
+        </serviceHostingEnvironment>
+    </system.serviceModel>
+</configuration>
+{% endhighlight %}
+
+The UnityServiceHost class is used to configure the host for a behaviour that is used to create the service instances.{% highlight csharp linenos %}
+using System;
+using System.ServiceModel;
+using Microsoft.Practices.Unity;
+    
+namespace Neovolve.Toolkit.Unity
+{
+    internal class UnityServiceHost : ServiceHost
+    {
+        public UnityServiceHost(Type serviceType, IUnityContainer container, params Uri[] baseAddresses)
+            : base(serviceType, baseAddresses)
+        {
+            if (container == null)
             {
-                Container = UnityContainerResolver.Resolve(configuration, unitySectionName, containerName);
+                throw new ArgumentNullException("container");
             }
     
-            public UnityServiceHostFactory(IUnityContainer container)
+            Container = container;
+        }
+    
+        protected override void OnOpening()
+        {
+            if (Description.Behaviors.Find<UnityServiceBehavior>() == null)
             {
-                if (container == null)
+                Description.Behaviors.Add(new UnityServiceBehavior(Container));
+            }
+    
+            base.OnOpening();
+        }
+    
+        protected IUnityContainer Container
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
+
+The UnityServiceBehavior is used assign a new instance provider to each endpoint in the service host.{% highlight csharp linenos %}
+using System;
+using System.Collections.ObjectModel;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
+using System.ServiceModel.Dispatcher;
+using Microsoft.Practices.Unity;
+    
+namespace Neovolve.Toolkit.Unity
+{
+    internal class UnityServiceBehavior : IServiceBehavior
+    {
+        public UnityServiceBehavior(IUnityContainer container)
+        {
+            if (container == null)
+            {
+                throw new ArgumentNullException("container");
+            }
+    
+            Container = container;
+        }
+    
+        public void AddBindingParameters(
+            ServiceDescription serviceDescription, 
+            ServiceHostBase serviceHostBase, 
+            Collection<ServiceEndpoint> endpoints, 
+            BindingParameterCollection bindingParameters)
+        {
+        }
+    
+        public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
+        {
+            if (serviceDescription == null)
+            {
+                throw new ArgumentNullException("serviceDescription");
+            }
+    
+            if (serviceHostBase == null)
+            {
+                throw new ArgumentNullException("serviceHostBase");
+            }
+    
+            for (Int32 dispatcherIndex = 0; dispatcherIndex < serviceHostBase.ChannelDispatchers.Count; dispatcherIndex++)
+            {
+                ChannelDispatcherBase dispatcher = serviceHostBase.ChannelDispatchers[dispatcherIndex];
+                ChannelDispatcher channelDispatcher = (ChannelDispatcher)dispatcher;
+    
+                for (Int32 endpointIndex = 0; endpointIndex < channelDispatcher.Endpoints.Count; endpointIndex++)
                 {
-                    throw new ArgumentNullException(&quot;container&quot;);
+                    EndpointDispatcher endpointDispatcher = channelDispatcher.Endpoints[endpointIndex];
+    
+                    endpointDispatcher.DispatchRuntime.InstanceProvider = new UnityInstanceProvider(Container, serviceDescription.ServiceType);
                 }
-    
-                Container = container;
-            }
-    
-            protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
-            {
-                return new UnityServiceHost(serviceType, Container, baseAddresses);
-            }
-    
-            public IUnityContainer Container
-            {
-                get;
-                set;
             }
         }
-    }{% endhighlight %}
-
-The configuration for the factory via svc mark-up is the following.
-
-    <%@ ServiceHost 
-        Language=&quot;C#&quot; 
-        Debug=&quot;true&quot; 
-        Service=&quot;Neovolve.Toolkit.Unity.WebIntegrationTests.TestService&quot; 
-        Factory=&quot;Neovolve.Toolkit.Unity.UnityServiceHostFactory&quot; %&gt;{% endhighlight %}
-
-The configuration via web.config (.net 4.0 only) is like this. This configuration also includes an example Unity container configuration.
-
-    <configuration&gt;
-        <configSections&gt;
-            <section name=&quot;unity&quot;
-                     type=&quot;Microsoft.Practices.Unity.Configuration.UnityConfigurationSection, Microsoft.Practices.Unity.Configuration&quot;/&gt;
-        </configSections&gt;
-        <unity&gt;
-            <containers&gt;
-                <container&gt;
-                    <register type=&quot;Neovolve.Toolkit.Unity.WebIntegrationTests.TestService, Neovolve.Toolkit.Unity.WebIntegrationTests&quot;&gt;
-                        <constructor&gt;
-                            <param name=&quot;prefix&quot;&gt;
-                                <value value=&quot;Injected by default unity section and container&quot;/&gt;
-                            </param&gt;
-                        </constructor&gt;
-                    </register&gt;
-                </container&gt;
-            </containers&gt;
-        </unity&gt;
-        <system.serviceModel&gt;
-            <serviceHostingEnvironment&gt;
-                <serviceActivations&gt;
-                    <add service=&quot;Neovolve.Toolkit.Unity.WebIntegrationTests.TestService&quot; 
-                         factory=&quot;Neovolve.Toolkit.Unity.UnityServiceHostFactory&quot; 
-                         relativeAddress=&quot;/TestService.svc&quot; /&gt;
-                </serviceActivations&gt;
-            </serviceHostingEnvironment&gt;
-        </system.serviceModel&gt;
-    </configuration&gt;{% endhighlight %}
-
-The UnityServiceHost class is used to configure the host for a behaviour that is used to create the service instances.
-
-    using System;
-    using System.ServiceModel;
-    using Microsoft.Practices.Unity;
     
-    namespace Neovolve.Toolkit.Unity
-    {
-        internal class UnityServiceHost : ServiceHost
+        public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
-            public UnityServiceHost(Type serviceType, IUnityContainer container, params Uri[] baseAddresses)
-                : base(serviceType, baseAddresses)
-            {
-                if (container == null)
-                {
-                    throw new ArgumentNullException(&quot;container&quot;);
-                }
-    
-                Container = container;
-            }
-    
-            protected override void OnOpening()
-            {
-                if (Description.Behaviors.Find<UnityServiceBehavior&gt;() == null)
-                {
-                    Description.Behaviors.Add(new UnityServiceBehavior(Container));
-                }
-    
-                base.OnOpening();
-            }
-    
-            protected IUnityContainer Container
-            {
-                get;
-                set;
-            }
         }
-    }{% endhighlight %}
-
-The UnityServiceBehavior is used assign a new instance provider to each endpoint in the service host.
-
-    using System;
-    using System.Collections.ObjectModel;
-    using System.ServiceModel;
-    using System.ServiceModel.Channels;
-    using System.ServiceModel.Description;
-    using System.ServiceModel.Dispatcher;
-    using Microsoft.Practices.Unity;
     
-    namespace Neovolve.Toolkit.Unity
-    {
-        internal class UnityServiceBehavior : IServiceBehavior
+        protected IUnityContainer Container
         {
-            public UnityServiceBehavior(IUnityContainer container)
-            {
-                if (container == null)
-                {
-                    throw new ArgumentNullException(&quot;container&quot;);
-                }
-    
-                Container = container;
-            }
-    
-            public void AddBindingParameters(
-                ServiceDescription serviceDescription, 
-                ServiceHostBase serviceHostBase, 
-                Collection<ServiceEndpoint&gt; endpoints, 
-                BindingParameterCollection bindingParameters)
-            {
-            }
-    
-            public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-            {
-                if (serviceDescription == null)
-                {
-                    throw new ArgumentNullException(&quot;serviceDescription&quot;);
-                }
-    
-                if (serviceHostBase == null)
-                {
-                    throw new ArgumentNullException(&quot;serviceHostBase&quot;);
-                }
-    
-                for (Int32 dispatcherIndex = 0; dispatcherIndex < serviceHostBase.ChannelDispatchers.Count; dispatcherIndex++)
-                {
-                    ChannelDispatcherBase dispatcher = serviceHostBase.ChannelDispatchers[dispatcherIndex];
-                    ChannelDispatcher channelDispatcher = (ChannelDispatcher)dispatcher;
-    
-                    for (Int32 endpointIndex = 0; endpointIndex < channelDispatcher.Endpoints.Count; endpointIndex++)
-                    {
-                        EndpointDispatcher endpointDispatcher = channelDispatcher.Endpoints[endpointIndex];
-    
-                        endpointDispatcher.DispatchRuntime.InstanceProvider = new UnityInstanceProvider(Container, serviceDescription.ServiceType);
-                    }
-                }
-            }
-    
-            public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-            {
-            }
-    
-            protected IUnityContainer Container
-            {
-                get;
-                set;
-            }
+            get;
+            set;
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
-The UnityInstanceProvider is used to resolve an instance from a Unity container using the service type defined for an endpoint. This is where the real work happens to create a service instance with injected dependencies. This implementation also calls the Unity container to destroy the service instance according to its configuration.
-
-    using System;
-    using System.Configuration;
-    using System.Globalization;
-    using System.ServiceModel;
-    using System.ServiceModel.Channels;
-    using System.ServiceModel.Dispatcher;
-    using Microsoft.Practices.Unity;
+The UnityInstanceProvider is used to resolve an instance from a Unity container using the service type defined for an endpoint. This is where the real work happens to create a service instance with injected dependencies. This implementation also calls the Unity container to destroy the service instance according to its configuration.{% highlight csharp linenos %}
+using System;
+using System.Configuration;
+using System.Globalization;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Dispatcher;
+using Microsoft.Practices.Unity;
     
-    namespace Neovolve.Toolkit.Unity
+namespace Neovolve.Toolkit.Unity
+{
+    internal class UnityInstanceProvider : IInstanceProvider
     {
-        internal class UnityInstanceProvider : IInstanceProvider
+        public UnityInstanceProvider(IUnityContainer container, Type serviceType)
         {
-            public UnityInstanceProvider(IUnityContainer container, Type serviceType)
+            if (container == null)
             {
-                if (container == null)
-                {
-                    throw new ArgumentNullException(&quot;container&quot;);
-                }
-    
-                if (serviceType == null)
-                {
-                    throw new ArgumentNullException(&quot;serviceType&quot;);
-                }
-    
-                Container = container;
-                ServiceType = serviceType;
+                throw new ArgumentNullException("container");
             }
     
-            public Object GetInstance(InstanceContext instanceContext)
+            if (serviceType == null)
             {
-                return GetInstance(instanceContext, null);
+                throw new ArgumentNullException("serviceType");
             }
     
-            public Object GetInstance(InstanceContext instanceContext, Message message)
-            {
-                Object instance = Container.Resolve(ServiceType);
-    
-                if (instance == null)
-                {
-                    const String MessageFormat = &quot;No unity configuration was found for service type '{0}'&quot;;
-                    String failureMessage = String.Format(CultureInfo.InvariantCulture, MessageFormat, ServiceType.FullName);
-    
-                    throw new ConfigurationErrorsException(failureMessage);
-                }
-    
-                return instance;
-            }
-    
-            public void ReleaseInstance(InstanceContext instanceContext, Object instance)
-            {
-                Container.Teardown(instance);
-            }
-    
-            protected Type ServiceType
-            {
-                get;
-                set;
-            }
-    
-            private IUnityContainer Container
-            {
-                get;
-                set;
-            }
+            Container = container;
+            ServiceType = serviceType;
         }
-    }{% endhighlight %}
+    
+        public Object GetInstance(InstanceContext instanceContext)
+        {
+            return GetInstance(instanceContext, null);
+        }
+    
+        public Object GetInstance(InstanceContext instanceContext, Message message)
+        {
+            Object instance = Container.Resolve(ServiceType);
+    
+            if (instance == null)
+            {
+                const String MessageFormat = "No unity configuration was found for service type '{0}'";
+                String failureMessage = String.Format(CultureInfo.InvariantCulture, MessageFormat, ServiceType.FullName);
+    
+                throw new ConfigurationErrorsException(failureMessage);
+            }
+    
+            return instance;
+        }
+    
+        public void ReleaseInstance(InstanceContext instanceContext, Object instance)
+        {
+            Container.Teardown(instance);
+        }
+    
+        protected Type ServiceType
+        {
+            get;
+            set;
+        }
+    
+        private IUnityContainer Container
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
 That’s it for the custom service host factory code. The one disadvantage with this technique is that there is no configuration support for ServiceHostFactory implementations. The UnityServiceHostFactory is restricted to resolving the default (un-named) container using the standard unity section name of “unity”. If this restriction is not suitable, then a custom UnityServiceBehavior must be used.
 

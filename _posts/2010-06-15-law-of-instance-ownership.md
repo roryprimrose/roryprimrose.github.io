@@ -7,18 +7,18 @@ date: 2010-06-15 10:41:53 +10:00
 
 I’ve been writing a custom Unity extension for disposing build trees when a container is asked to tear down an instance. This has brought up some interesting ideas about the conditions in which an instance should be destroyed. This has lead to me come up with the Law of Instance Ownership.
 
-**> Law of Instance Ownership**
+**Law of Instance Ownership**
 
-> An instance is owned by the highest stack frame that holds a direct reference to an instance, or the application domain for globally held instances.
+> _An instance is owned by the highest stack frame that holds a direct reference to an instance, or the application domain for globally held instances._
 
 A common misconception is that the member that creates an instance is responsible for its lifetime management. The scenario that quickly breaks this idea is when a member returns an instance that requires lifetime management (such as IDisposable instance). In this case, the method that created the instance can’t destroy it because its usage is outside the scope of the member that created it. 
 
-Take System.IO.File.Open() method for example.
-
-    public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
-    {
-        return new FileStream(path, mode, access, share);
-    }{% endhighlight %}
+Take System.IO.File.Open() method for example.{% highlight csharp linenos %}
+public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
+{
+    return new FileStream(path, mode, access, share);
+}
+{% endhighlight %}
 
 This method returns a Stream which must be disposed when it is no longer required. While the File.Open method created the stream instance, it is up to the member that owns the stream to dispose of it.
 

@@ -9,9 +9,35 @@ I’ve been playing with the MSF over the last couple of years. For too long I h
 
 The latest design allows clients to simply work with services and not have to have any understanding of MSF. There are a few hurdles with this design however. The provider implementation on the server needs to implement a preview sync so it can tell the client what changes needs to happen without doing them at that time. When a change does happens, the client will only action a single change at a time each of which must operate within a sync session in the service. This means that the sync provider also needs to work with a filtered sync session.
 
-I created a POC project to prove that I could actually achieve these features with MSF before I invested any more time in the latest design. The POC aims to sync a data item that looks like the following.
+I created a POC project to prove that I could actually achieve these features with MSF before I invested any more time in the latest design. The POC aims to sync a data item that looks like the following.    
 
- {% highlight csharp linenos %}using System; namespace CachedSyncPOC { public class ItemData { public ItemData() { Id = Guid.NewGuid().ToString(); Data = Guid.NewGuid().ToString(); } public String Id { get; set; } public String Data { get; set; } } }{% endhighlight %} 
+{% highlight csharp linenos %}
+using System;
+    
+namespace CachedSyncPOC
+{
+    public class ItemData
+    {
+        public ItemData()
+        {
+            Id = Guid.NewGuid().ToString();
+            Data = Guid.NewGuid().ToString();
+        }
+    
+        public String Id
+        {
+            get;
+            set;
+        }
+    
+        public String Data
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
 The code aims to store both the Id and the Data of each item in the metadata store of each replica.
 
@@ -19,13 +45,69 @@ The code aims to store both the Id and the Data of each item in the metadata sto
 
 This was actually easy to implement and is done in two parts.
 
-The first part is that the provider notifies any interested parties of changes found using a custom event raised in GetChangeBatch.
+The first part is that the provider notifies any interested parties of changes found using a custom event raised in GetChangeBatch.    
 
- {% highlight csharp linenos %}public override ChangeBatch GetChangeBatch( UInt32 batchSize, SyncKnowledge destinationKnowledge, out Object changeDataRetriever) { ChangeBatch batch = Metadata.GetChangeBatch(batchSize, destinationKnowledge); IList changes = new List(batch.Count()); ItemDataRetriever retriever = new ItemDataRetriever(Metadata); foreach (ItemChange change in batch) { changes.Add(retriever.LoadFromSyncId(change.ItemId)); } OnChangesFound( new ChangesFoundEventArgs { Changes = changes, ReplicaId = ReplicaId.GetGuidId() }); changeDataRetriever = retriever; return batch; }{% endhighlight %} 
+{% highlight csharp linenos %}
+public override ChangeBatch GetChangeBatch(
+    UInt32 batchSize, SyncKnowledge destinationKnowledge, out Object changeDataRetriever)
+{
+    ChangeBatch batch = Metadata.GetChangeBatch(batchSize, destinationKnowledge); 
+    
+    IList changes = new List(batch.Count());
+    ItemDataRetriever retriever = new ItemDataRetriever(Metadata);
+    
+    foreach (ItemChange change in batch)
+    {
+        changes.Add(retriever.LoadFromSyncId(change.ItemId));
+    }
+    
+    OnChangesFound(
+        new ChangesFoundEventArgs
+        {
+            Changes = changes,
+            ReplicaId = ReplicaId.GetGuidId()
+        });
+    
+    changeDataRetriever = retriever;
+    
+    return batch;
+}
+{% endhighlight %}
 
-The second part is that the ProcessChangeBatch simply ignores any changes when in preview mode.
+The second part is that the ProcessChangeBatch simply ignores any changes when in preview mode.    
 
- {% highlight csharp linenos %}public override void ProcessChangeBatch( ConflictResolutionPolicy resolutionPolicy, ChangeBatch sourceChanges, Object changeDataRetriever, SyncCallbacks syncCallbacks, SyncSessionStatistics sessionStatistics) { if (IsPreview) { return; } // Use a NotifyingChangeApplier object to process the changes. // This object is passed as the INotifyingChangeApplierTarget // object that will be called to apply changes to the item store. NotifyingChangeApplier changeApplier = new NotifyingChangeApplier(IdFormats); INotifyingChangeApplierTarget2 applier = new ItemDataChangeApplier(this, Metadata, Filter); changeApplier.ApplyChanges( resolutionPolicy, Configuration.CollisionConflictResolutionPolicy, sourceChanges, (IChangeDataRetriever)changeDataRetriever, Metadata.GetKnowledge(), Metadata.GetForgottenKnowledge(), applier, null, SessionContext, syncCallbacks); }{% endhighlight %} 
+{% highlight csharp linenos %}
+public override void ProcessChangeBatch(
+    ConflictResolutionPolicy resolutionPolicy, 
+    ChangeBatch sourceChanges, 
+    Object changeDataRetriever, 
+    SyncCallbacks syncCallbacks, 
+    SyncSessionStatistics sessionStatistics)
+{
+    if (IsPreview)
+    {
+        return;
+    }
+    
+    // Use a NotifyingChangeApplier object to process the changes. 
+    // This object is passed as the INotifyingChangeApplierTarget
+    // object that will be called to apply changes to the item store.
+    NotifyingChangeApplier changeApplier = new NotifyingChangeApplier(IdFormats);
+    INotifyingChangeApplierTarget2 applier = new ItemDataChangeApplier(this, Metadata, Filter);
+    
+    changeApplier.ApplyChanges(
+        resolutionPolicy, 
+        Configuration.CollisionConflictResolutionPolicy, 
+        sourceChanges, 
+        (IChangeDataRetriever)changeDataRetriever, 
+        Metadata.GetKnowledge(), 
+        Metadata.GetForgottenKnowledge(), 
+        applier, 
+        null, 
+        SessionContext, 
+        syncCallbacks);
+}
+{% endhighlight %}
 
 This example is a little simplistic in that the event does not indicate what action is going to be taken for each item but that should be easily implemented down the track.
 
@@ -35,17 +117,134 @@ The MSF team has [provided many examples][0] on how to use the framework. My ini
 
 As I started to look through the code, I realised that there were a couple of different types of filtering being demonstrated. I came across a MSDN document about MSF filtering ([here][3]) and found that what I needed wasn’t actually that complex. I need to filter an item in a session rather than filter a change unit or implement full custom filtering. It is the latter two that are demonstrated in the sync filtering sample code.
 
-You need to update the provider implementation and provide a filter type in order to filter an item in a sync session. The filter type in my example works with the Id property of the filter item and provides logic for comparing filters between providers.
+You need to update the provider implementation and provide a filter type in order to filter an item in a sync session. The filter type in my example works with the Id property of the filter item and provides logic for comparing filters between providers.    
 
- {% highlight csharp linenos %}using System; using Microsoft.Synchronization; namespace CachedSyncPOC { public class ItemDataFilter : ISyncFilter { public ItemDataFilter(String id) { if (String.IsNullOrEmpty(id)) { const String IdParameterName = &quot;id&quot;; throw new ArgumentNullException(IdParameterName); } Id = id; } public Boolean IsIdentical(ISyncFilter otherFilter) { ItemDataFilter itemFilter = otherFilter as ItemDataFilter; return itemFilter != null && Id.Equals(itemFilter.Id); } public Byte[] Serialize() { throw new NotImplementedException(); } public String Id { get; set; } } }{% endhighlight %} 
+{% highlight csharp linenos %}
+using System;
+using Microsoft.Synchronization;
+    
+namespace CachedSyncPOC
+{
+    public class ItemDataFilter : ISyncFilter
+    {
+        public ItemDataFilter(String id)
+        {
+            if (String.IsNullOrEmpty(id))
+            {
+                const String IdParameterName = "id";
+    
+                throw new ArgumentNullException(IdParameterName);
+            }
+    
+            Id = id;
+        }
+    
+        public Boolean IsIdentical(ISyncFilter otherFilter)
+        {
+            ItemDataFilter itemFilter = otherFilter as ItemDataFilter;
+    
+            return itemFilter != null && Id.Equals(itemFilter.Id);
+        }
+    
+        public Byte[] Serialize()
+        {
+            throw new NotImplementedException();
+        }
+    
+        public String Id
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
-The provider needs to support a couple of filter interfaces. I need to implement both interfaces as I intend on using the same provider as both source and destination provider.
+The provider needs to support a couple of filter interfaces. I need to implement both interfaces as I intend on using the same provider as both source and destination provider.    
 
- {% highlight csharp linenos %}internal class CustomProvider : KnowledgeSyncProvider, ISupportFilteredSync, IRequestFilteredSync, IDisposable { public void SpecifyFilter(FilterRequestCallback filterRequest) { if (Filter != null) { if (!filterRequest(Filter, FilteringType.CurrentItemsOnly)) { throw new Exception(&quot;Filter not accepted at source&quot;); } } } public Boolean TryAddFilter(Object filter, FilteringType filteringType) { ISyncFilter syncFilter = filter as ISyncFilter; if (syncFilter == null) { return false; } return true; } // Rest of class removed for brevity }{% endhighlight %} 
+{% highlight csharp linenos %}
+internal class CustomProvider : KnowledgeSyncProvider, ISupportFilteredSync, IRequestFilteredSync, IDisposable
+{
+    public void SpecifyFilter(FilterRequestCallback filterRequest)
+    {
+        if (Filter != null)
+        {
+            if (!filterRequest(Filter, FilteringType.CurrentItemsOnly))
+            {
+                throw new Exception("Filter not accepted at source");
+            }
+        }
+    }
+    
+    public Boolean TryAddFilter(Object filter, FilteringType filteringType)
+    {
+        ISyncFilter syncFilter = filter as ISyncFilter;
+    
+        if (syncFilter == null)
+        {
+            return false;
+        }
+    
+        return true;
+    }
+    
+    // Rest of class removed for brevity
+    
+}
+{% endhighlight %}
 
-The next change is the GetChangeBatch method needs to deal with the filter. The ChangeBatch returned to the other provider should only contain changes related to the filter. This was the bit I was dreading in the filter process, but the MSF makes this really easy for item filtering. The GetFilteredChangeBatch method takes a delegate that determines whether items should be in the filtered change batch or not.
+The next change is the GetChangeBatch method needs to deal with the filter. The ChangeBatch returned to the other provider should only contain changes related to the filter. This was the bit I was dreading in the filter process, but the MSF makes this really easy for item filtering. The GetFilteredChangeBatch method takes a delegate that determines whether items should be in the filtered change batch or not.    
 
- {% highlight csharp linenos %}public override ChangeBatch GetChangeBatch( UInt32 batchSize, SyncKnowledge destinationKnowledge, out Object changeDataRetriever) { ChangeBatch batch; if (Filter != null) { FilterInfo filterInfo = new ItemListFilterInfo(IdFormats); batch = Metadata.GetFilteredChangeBatch(batchSize, destinationKnowledge, filterInfo, ItemFilterCallback); } else { batch = Metadata.GetChangeBatch(batchSize, destinationKnowledge); } IList changes = new List(batch.Count()); ItemDataRetriever retriever = new ItemDataRetriever(Metadata); foreach (ItemChange change in batch) { changes.Add(retriever.LoadFromSyncId(change.ItemId)); } OnChangesFound( new ChangesFoundEventArgs { Changes = changes, ReplicaId = ReplicaId.GetGuidId() }); changeDataRetriever = retriever; return batch; } private Boolean ItemFilterCallback(ItemMetadata itemmetadata) { // TODO: Cache this lookup in GetChangeBatch as we don't want to unnecessarily call this for each item checked ItemMetadata metadata = Metadata.FindItemMetadataByUniqueIndexedField(&quot;Id&quot;, Filter.Id); if (metadata == null) { return false; } return itemmetadata.GlobalId == metadata.GlobalId; }{% endhighlight %} 
+{% highlight csharp linenos %}
+public override ChangeBatch GetChangeBatch(
+    UInt32 batchSize, SyncKnowledge destinationKnowledge, out Object changeDataRetriever)
+{
+    ChangeBatch batch;
+    
+    if (Filter != null)
+    {
+        FilterInfo filterInfo = new ItemListFilterInfo(IdFormats);
+    
+        batch = Metadata.GetFilteredChangeBatch(batchSize, destinationKnowledge, filterInfo, ItemFilterCallback);
+    }
+    else
+    {
+        batch = Metadata.GetChangeBatch(batchSize, destinationKnowledge);
+    }
+    
+    IList changes = new List(batch.Count());
+    ItemDataRetriever retriever = new ItemDataRetriever(Metadata);
+    
+    foreach (ItemChange change in batch)
+    {
+        changes.Add(retriever.LoadFromSyncId(change.ItemId));
+    }
+    
+    OnChangesFound(
+        new ChangesFoundEventArgs
+            {
+                Changes = changes, 
+                ReplicaId = ReplicaId.GetGuidId()
+            });
+    
+    changeDataRetriever = retriever;
+    
+    return batch;
+}
+    
+private Boolean ItemFilterCallback(ItemMetadata itemmetadata)
+{
+    // TODO: Cache this lookup in GetChangeBatch as we don't want to unnecessarily call this for each item checked
+    ItemMetadata metadata = Metadata.FindItemMetadataByUniqueIndexedField("Id", Filter.Id);
+    
+    if (metadata == null)
+    {
+        return false;
+    }
+    
+    return itemmetadata.GlobalId == metadata.GlobalId;
+}
+{% endhighlight %}
 
 That's all there is to it. Not too hard after all.
 

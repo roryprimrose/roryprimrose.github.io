@@ -11,156 +11,156 @@ Take the following solution for example.![][0]
 
 Heat generates a wxs file at compile time for each harvested project (found in obj\Debug or obj\Release). ![][1]
 
-The wxs file for each project contains the harvested groups and all the items found for those groups. Each of these groups is then listed in the Product.Generated.wsx file. 
+The wxs file for each project contains the harvested groups and all the items found for those groups. Each of these groups is then listed in the Product.Generated.wsx file. {% highlight xml linenos %}
+<?xml version='1.0' encoding='UTF-8'?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+    <ComponentGroup Id="Product.Generated">
+        <ComponentGroupRef Id="Neovolve.Testing.Business.Binaries" />
+        <ComponentGroupRef Id="Neovolve.Testing.Business.Content" />
+        <ComponentGroupRef Id="Neovolve.Testing.Business.Satellites" />
+        <ComponentGroupRef Id="Neovolve.Testing.DataAccess.Binaries" />
+        <ComponentGroupRef Id="Neovolve.Testing.DataAccess.Content" />
+        <ComponentGroupRef Id="Neovolve.Testing.DataAccess.Satellites" />
+        <ComponentGroupRef Id="Neovolve.Testing.Website.Binaries" />
+        <ComponentGroupRef Id="Neovolve.Testing.Website.Content" />
+        <ComponentGroupRef Id="Neovolve.Testing.Website.Satellites" />
+    </ComponentGroup>
+    </Fragment>
+</Wix>
+{% endhighlight %}
 
-    <?xml version='1.0' encoding='UTF-8'?&gt;
-    <Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;&gt;
-      <Fragment&gt;
-        <ComponentGroup Id=&quot;Product.Generated&quot;&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.Business.Binaries&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.Business.Content&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.Business.Satellites&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.DataAccess.Binaries&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.DataAccess.Content&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.DataAccess.Satellites&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.Website.Binaries&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.Website.Content&quot; /&gt;
-          <ComponentGroupRef Id=&quot;Neovolve.Testing.Website.Satellites&quot; /&gt;
-        </ComponentGroup&gt;
-      </Fragment&gt;
-    </Wix&gt;{% endhighlight %}
-
-Product.wxs references the Product.Generated groups in order to bring in each of these components that have been harvested from the referenced projects.
-
-    <?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-    <Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;&gt;
-        <Product Id=&quot;9be5cd9c-59fd-42bc-b26a-9adb277748fc&quot; Name=&quot;Neovolve.Testing.Website.Deployment&quot; Language=&quot;1033&quot; Version=&quot;1.0.0.0&quot; Manufacturer=&quot;Neovolve.Testing.Website.Deployment&quot; UpgradeCode=&quot;93f93da8-dc45-440f-9281-e0c95ff0a047&quot;&gt;
-            <Package InstallerVersion=&quot;200&quot; Compressed=&quot;yes&quot; /&gt;
+Product.wxs references the Product.Generated groups in order to bring in each of these components that have been harvested from the referenced projects.{% highlight xml linenos %}
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="9be5cd9c-59fd-42bc-b26a-9adb277748fc" Name="Neovolve.Testing.Website.Deployment" Language="1033" Version="1.0.0.0" Manufacturer="Neovolve.Testing.Website.Deployment" UpgradeCode="93f93da8-dc45-440f-9281-e0c95ff0a047">
+        <Package InstallerVersion="200" Compressed="yes" />
     
-            <Media Id=&quot;1&quot; Cabinet=&quot;media1.cab&quot; EmbedCab=&quot;yes&quot; /&gt;
+        <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
     
-            <Directory Id=&quot;TARGETDIR&quot; Name=&quot;SourceDir&quot;&gt;
-                <Directory Id=&quot;ProgramFilesFolder&quot;&gt;
-                    <Directory Id=&quot;INSTALLLOCATION&quot; Name=&quot;Neovolve.Testing.Website.Deployment&quot;&gt;
-                        <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. --&gt;
-                        <!-- <Component Id=&quot;ProductComponent&quot; Guid=&quot;3d82ebb4-534c-45a3-bb2a-b2549e34f324&quot;&gt; --&gt;
-                            <!-- TODO: Insert files, registry keys, and other resources here. --&gt;
-                        <!-- </Component&gt; --&gt;
-                    </Directory&gt;
-                </Directory&gt;
-            </Directory&gt;
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLLOCATION" Name="Neovolve.Testing.Website.Deployment">
+                    <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+                    <!-- <Component Id="ProductComponent" Guid="3d82ebb4-534c-45a3-bb2a-b2549e34f324"> -->
+                        <!-- TODO: Insert files, registry keys, and other resources here. -->
+                    <!-- </Component> -->
+                </Directory>
+            </Directory>
+        </Directory>
     
-            <Feature Id=&quot;ProductFeature&quot; Title=&quot;Neovolve.Testing.Website.Deployment&quot; Level=&quot;1&quot;&gt;
-                <!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. --&gt;
-                <!-- <ComponentRef Id=&quot;ProductComponent&quot; /&gt; --&gt;
+        <Feature Id="ProductFeature" Title="Neovolve.Testing.Website.Deployment" Level="1">
+            <!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
+            <!-- <ComponentRef Id="ProductComponent" /> -->
                 
-                <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. --&gt;
-                <ComponentGroupRef Id=&quot;Product.Generated&quot; /&gt;
-            </Feature&gt;
-        </Product&gt;
-    </Wix&gt;{% endhighlight %}
+            <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+            <ComponentGroupRef Id="Product.Generated" />
+        </Feature>
+    </Product>
+</Wix>
+{% endhighlight %}
 
 The issue with web projects is that they have a different output model to other projects. The binaries (and satellite files) need to be written to the bin directory whereas all the other groups get pushed into the root directory. The issue with WiX is that Heat can only be told one location to put the files for a project reference via the Directory Id property.![][2]
 
-As you can see here, the WiX will define that the groups found in the website project will be written to INSTALLLOCATION. The wxs file generated by Heat points all groups to that location.
-
-    <?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-    <Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;&gt;
-        <Fragment&gt;
-            <DirectoryRef Id=&quot;INSTALLLOCATION&quot;&gt;
-                <Component Id=&quot;cmpF5DE28615909286A5CF94B63995C6D55&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;fil51E45E008FA549C8FEC2368DEF501052&quot; Source=&quot;$(var.Neovolve.Testing.Website.TargetDir)\Neovolve.Testing.Website.dll&quot; /&gt;
-                </Component&gt;
-            </DirectoryRef&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <ComponentGroup Id=&quot;Neovolve.Testing.Website.Binaries&quot;&gt;
-                <ComponentRef Id=&quot;cmpF5DE28615909286A5CF94B63995C6D55&quot; /&gt;
-            </ComponentGroup&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <DirectoryRef Id=&quot;INSTALLLOCATION&quot;&gt;
-                <Component Id=&quot;cmp7447AC93EFB528AD42357B92D13DA248&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;filB6E856E8FCE544386E258755DFA62FB2&quot; Source=&quot;$(var.Neovolve.Testing.Website.TargetDir)\Neovolve.Testing.Website.pdb&quot; /&gt;
-                </Component&gt;
-            </DirectoryRef&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <ComponentGroup Id=&quot;Neovolve.Testing.Website.Symbols&quot;&gt;
-                <ComponentRef Id=&quot;cmp7447AC93EFB528AD42357B92D13DA248&quot; /&gt;
-            </ComponentGroup&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <DirectoryRef Id=&quot;INSTALLLOCATION&quot;&gt;
-                <Component Id=&quot;cmpBADFDF35D069BB612B0C36E0B91E0CEE&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;fil7C5AF9F50D8F59F3001208BFF05BD9EC&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Default.aspx.cs&quot; /&gt;
-                </Component&gt;
-                <Component Id=&quot;cmpCA420CF266EE0AC6E6353B17282AFA0B&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;filBE5A41EDAE3AD2CE56A8E144CF450A44&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Default.aspx.designer.cs&quot; /&gt;
-                </Component&gt;
-                <Component Id=&quot;cmp3B7EB2172A9FEBEA083DB686E3A685DA&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;filF8E47D5133125739D9DB05BBE1CEE782&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Neovolve.Testing.Website.csproj&quot; /&gt;
-                </Component&gt;
-                <Directory Id=&quot;dirC8411BF1562B264784B7DF0627B19B93&quot; Name=&quot;Properties&quot;&gt;
-                    <Component Id=&quot;cmp6BDA64642971F4B5910D37B5EA49D5A6&quot; Guid=&quot;*&quot;&gt;
-                        <File Id=&quot;fil5861A17AB40D6B9D2E8AE31ACD735043&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Properties\AssemblyInfo.cs&quot; /&gt;
-                    </Component&gt;
-                </Directory&gt;
-            </DirectoryRef&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <ComponentGroup Id=&quot;Neovolve.Testing.Website.Sources&quot;&gt;
-                <ComponentRef Id=&quot;cmpBADFDF35D069BB612B0C36E0B91E0CEE&quot; /&gt;
-                <ComponentRef Id=&quot;cmpCA420CF266EE0AC6E6353B17282AFA0B&quot; /&gt;
-                <ComponentRef Id=&quot;cmp3B7EB2172A9FEBEA083DB686E3A685DA&quot; /&gt;
-                <ComponentRef Id=&quot;cmp6BDA64642971F4B5910D37B5EA49D5A6&quot; /&gt;
-            </ComponentGroup&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <DirectoryRef Id=&quot;INSTALLLOCATION&quot;&gt;
-                <Component Id=&quot;cmp122BECA26B8394BF625F932899B0A96B&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;fil0BDB8FF098B6E41D5C4392D5D9403EC6&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Default.aspx&quot; /&gt;
-                </Component&gt;
-                <Component Id=&quot;cmp317A8DE3944BF93D29FBA73385C7FB3C&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;fil2AA289B048C9CB1673EB85175274E9A7&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Web.config&quot; /&gt;
-                </Component&gt;
-                <Component Id=&quot;cmpFFE68B22B3EF3B6AD1EAA3654AAD8CB6&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;fil7A038E012724A00962169C23F4D3158B&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Web.Debug.config&quot; /&gt;
-                </Component&gt;
-                <Component Id=&quot;cmpBFD25437421ACC4246FDBC9C2CB1D3A6&quot; Guid=&quot;*&quot;&gt;
-                    <File Id=&quot;filA6CE0BCA1DD718573234014E6E2F2945&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Web.Release.config&quot; /&gt;
-                </Component&gt;
-                <Directory Id=&quot;dir60CCC7F604F341FEF1A6E222A97C4319&quot; Name=&quot;Scripts&quot;&gt;
-                    <Component Id=&quot;cmpCE48EDC196DDDD38F8AB29828A86E7F3&quot; Guid=&quot;*&quot;&gt;
-                        <File Id=&quot;filD1C3DAD47E6A3C50AAA61D862AEEE443&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Scripts\jquery-1.4.1-vsdoc.js&quot; /&gt;
-                    </Component&gt;
-                    <Component Id=&quot;cmpFB9055B4DA9F2CFF916FBF3CD5219635&quot; Guid=&quot;*&quot;&gt;
-                        <File Id=&quot;filDB215DE9951F6E985AC917B9AE075EB0&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Scripts\jquery-1.4.1.js&quot; /&gt;
-                    </Component&gt;
-                    <Component Id=&quot;cmp3E6685FA6EB5434F852D1B4DA48980BF&quot; Guid=&quot;*&quot;&gt;
-                        <File Id=&quot;fil051C169AB656BE24EDE133EAFEC885B6&quot; Source=&quot;$(var.Neovolve.Testing.Website.ProjectDir)\Scripts\jquery-1.4.1.min.js&quot; /&gt;
-                    </Component&gt;
-                </Directory&gt;
-            </DirectoryRef&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <ComponentGroup Id=&quot;Neovolve.Testing.Website.Content&quot;&gt;
-                <ComponentRef Id=&quot;cmp122BECA26B8394BF625F932899B0A96B&quot; /&gt;
-                <ComponentRef Id=&quot;cmp317A8DE3944BF93D29FBA73385C7FB3C&quot; /&gt;
-                <ComponentRef Id=&quot;cmpFFE68B22B3EF3B6AD1EAA3654AAD8CB6&quot; /&gt;
-                <ComponentRef Id=&quot;cmpBFD25437421ACC4246FDBC9C2CB1D3A6&quot; /&gt;
-                <ComponentRef Id=&quot;cmpCE48EDC196DDDD38F8AB29828A86E7F3&quot; /&gt;
-                <ComponentRef Id=&quot;cmpFB9055B4DA9F2CFF916FBF3CD5219635&quot; /&gt;
-                <ComponentRef Id=&quot;cmp3E6685FA6EB5434F852D1B4DA48980BF&quot; /&gt;
-            </ComponentGroup&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <ComponentGroup Id=&quot;Neovolve.Testing.Website.Satellites&quot; /&gt;
-        </Fragment&gt;
-        <Fragment&gt;
-            <ComponentGroup Id=&quot;Neovolve.Testing.Website.Documents&quot; /&gt;
-        </Fragment&gt;
-    </Wix&gt;{% endhighlight %}
+As you can see here, the WiX will define that the groups found in the website project will be written to INSTALLLOCATION. The wxs file generated by Heat points all groups to that location.{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="cmpF5DE28615909286A5CF94B63995C6D55" Guid="*">
+                <File Id="fil51E45E008FA549C8FEC2368DEF501052" Source="$(var.Neovolve.Testing.Website.TargetDir)\Neovolve.Testing.Website.dll" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Neovolve.Testing.Website.Binaries">
+            <ComponentRef Id="cmpF5DE28615909286A5CF94B63995C6D55" />
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="cmp7447AC93EFB528AD42357B92D13DA248" Guid="*">
+                <File Id="filB6E856E8FCE544386E258755DFA62FB2" Source="$(var.Neovolve.Testing.Website.TargetDir)\Neovolve.Testing.Website.pdb" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Neovolve.Testing.Website.Symbols">
+            <ComponentRef Id="cmp7447AC93EFB528AD42357B92D13DA248" />
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="cmpBADFDF35D069BB612B0C36E0B91E0CEE" Guid="*">
+                <File Id="fil7C5AF9F50D8F59F3001208BFF05BD9EC" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Default.aspx.cs" />
+            </Component>
+            <Component Id="cmpCA420CF266EE0AC6E6353B17282AFA0B" Guid="*">
+                <File Id="filBE5A41EDAE3AD2CE56A8E144CF450A44" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Default.aspx.designer.cs" />
+            </Component>
+            <Component Id="cmp3B7EB2172A9FEBEA083DB686E3A685DA" Guid="*">
+                <File Id="filF8E47D5133125739D9DB05BBE1CEE782" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Neovolve.Testing.Website.csproj" />
+            </Component>
+            <Directory Id="dirC8411BF1562B264784B7DF0627B19B93" Name="Properties">
+                <Component Id="cmp6BDA64642971F4B5910D37B5EA49D5A6" Guid="*">
+                    <File Id="fil5861A17AB40D6B9D2E8AE31ACD735043" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Properties\AssemblyInfo.cs" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Neovolve.Testing.Website.Sources">
+            <ComponentRef Id="cmpBADFDF35D069BB612B0C36E0B91E0CEE" />
+            <ComponentRef Id="cmpCA420CF266EE0AC6E6353B17282AFA0B" />
+            <ComponentRef Id="cmp3B7EB2172A9FEBEA083DB686E3A685DA" />
+            <ComponentRef Id="cmp6BDA64642971F4B5910D37B5EA49D5A6" />
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="INSTALLLOCATION">
+            <Component Id="cmp122BECA26B8394BF625F932899B0A96B" Guid="*">
+                <File Id="fil0BDB8FF098B6E41D5C4392D5D9403EC6" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Default.aspx" />
+            </Component>
+            <Component Id="cmp317A8DE3944BF93D29FBA73385C7FB3C" Guid="*">
+                <File Id="fil2AA289B048C9CB1673EB85175274E9A7" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Web.config" />
+            </Component>
+            <Component Id="cmpFFE68B22B3EF3B6AD1EAA3654AAD8CB6" Guid="*">
+                <File Id="fil7A038E012724A00962169C23F4D3158B" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Web.Debug.config" />
+            </Component>
+            <Component Id="cmpBFD25437421ACC4246FDBC9C2CB1D3A6" Guid="*">
+                <File Id="filA6CE0BCA1DD718573234014E6E2F2945" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Web.Release.config" />
+            </Component>
+            <Directory Id="dir60CCC7F604F341FEF1A6E222A97C4319" Name="Scripts">
+                <Component Id="cmpCE48EDC196DDDD38F8AB29828A86E7F3" Guid="*">
+                    <File Id="filD1C3DAD47E6A3C50AAA61D862AEEE443" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Scripts\jquery-1.4.1-vsdoc.js" />
+                </Component>
+                <Component Id="cmpFB9055B4DA9F2CFF916FBF3CD5219635" Guid="*">
+                    <File Id="filDB215DE9951F6E985AC917B9AE075EB0" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Scripts\jquery-1.4.1.js" />
+                </Component>
+                <Component Id="cmp3E6685FA6EB5434F852D1B4DA48980BF" Guid="*">
+                    <File Id="fil051C169AB656BE24EDE133EAFEC885B6" Source="$(var.Neovolve.Testing.Website.ProjectDir)\Scripts\jquery-1.4.1.min.js" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Neovolve.Testing.Website.Content">
+            <ComponentRef Id="cmp122BECA26B8394BF625F932899B0A96B" />
+            <ComponentRef Id="cmp317A8DE3944BF93D29FBA73385C7FB3C" />
+            <ComponentRef Id="cmpFFE68B22B3EF3B6AD1EAA3654AAD8CB6" />
+            <ComponentRef Id="cmpBFD25437421ACC4246FDBC9C2CB1D3A6" />
+            <ComponentRef Id="cmpCE48EDC196DDDD38F8AB29828A86E7F3" />
+            <ComponentRef Id="cmpFB9055B4DA9F2CFF916FBF3CD5219635" />
+            <ComponentRef Id="cmp3E6685FA6EB5434F852D1B4DA48980BF" />
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Neovolve.Testing.Website.Satellites" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="Neovolve.Testing.Website.Documents" />
+    </Fragment>
+</Wix>
+{% endhighlight %}
 
 This means that binaries and satellite files will get installed to the root directory of a website rather than into the bin directory. 
 
@@ -168,199 +168,198 @@ The fix to this issue is to write a Heat extension that will redirect Binaries a
 
 The first task is to create the extension project by adding a new library project. It must reference wix.dll. This extension will hijack the operations of VSProjectHarvester so WixVSExtension.dll also needs to be referenced.![][3]
 
-Heat uses an assembly attribute to indicate the heat extension type so this must be added to the AssemblyInfo.cs.
+Heat uses an assembly attribute to indicate the heat extension type so this must be added to the AssemblyInfo.cs.{% highlight csharp linenos %}
+[assembly: AssemblyDefaultHeatExtension(typeof(VsWebProjectHeatExtension))]
+{% endhighlight %}
 
-    [assembly: AssemblyDefaultHeatExtension(typeof(VsWebProjectHeatExtension))]{% endhighlight %}
-
-The VsWebProjectHeatExtension checks to see if the VSProjectHarvester is already assigned as the harvester to use for the current project processed by Heat.
-
-    using System;
-    using System.Reflection;
-    using Microsoft.Tools.WindowsInstallerXml.Extensions;
-    using Microsoft.Tools.WindowsInstallerXml.Tools;
+The VsWebProjectHeatExtension checks to see if the VSProjectHarvester is already assigned as the harvester to use for the current project processed by Heat.{% highlight csharp linenos %}
+using System;
+using System.Reflection;
+using Microsoft.Tools.WindowsInstallerXml.Extensions;
+using Microsoft.Tools.WindowsInstallerXml.Tools;
     
-    namespace Neovolve.WixExtensions
+namespace Neovolve.WixExtensions
+{
+    public class VsWebProjectHeatExtension : HeatExtension
     {
-        public class VsWebProjectHeatExtension : HeatExtension
+        public override void ParseOptions(String type, String[] args)
         {
-            public override void ParseOptions(String type, String[] args)
+            VSProjectHarvester harvester = Core.Harvester.Extension as VSProjectHarvester;
+    
+            if (harvester != null)
             {
-                VSProjectHarvester harvester = Core.Harvester.Extension as VSProjectHarvester;
+                // Hijack this harvester
+                VsWebProjectHarvester webHarvester = new VsWebProjectHarvester(harvester);
+                FieldInfo field = Core.Harvester.GetType().GetField(
+                    "harvesterExtension", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.SetField | BindingFlags.Instance);
     
-                if (harvester != null)
-                {
-                    // Hijack this harvester
-                    VsWebProjectHarvester webHarvester = new VsWebProjectHarvester(harvester);
-                    FieldInfo field = Core.Harvester.GetType().GetField(
-                        &quot;harvesterExtension&quot;, BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.SetField | BindingFlags.Instance);
-    
-                    field.SetValue(Core.Harvester, webHarvester);
-                }
-            }
-    
-            public override HeatCommandLineOption[] CommandLineTypes
-            {
-                get
-                {
-                    return new HeatCommandLineOption[0];
-                }
+                field.SetValue(Core.Harvester, webHarvester);
             }
         }
-    }{% endhighlight %}
+    
+        public override HeatCommandLineOption[] CommandLineTypes
+        {
+            get
+            {
+                return new HeatCommandLineOption[0];
+            }
+        }
+    }
+}
+{% endhighlight %}
 
 This is where things get a little hacky. While Heat is extensible, it doesn’t adhere to the [Open/Closed principle][4] as almost everything is sealed and isn’t open to extension. The extensibility in Heat is really only there to provide new functionality and doesn’t allow you to extend existing functionality. In this case, Core.Harvester throws an exception if trying to assign a harvester when one has already been assigned. This is an issue because I still want VSProjectHarvester to do it’s work, I just want to modify its output. The hack around this is to use reflection to force my custom harvester into the field behind Core.Harvester.
 
-The VsWebProjectHarvester class calls down to the original VSProjectHarvester to generate all the fragments for the harvested items. If the project harvested is a web project (determined via the project type guid), then the fragments are modified to direct binaries and satellite files to a hard coded directory with the Id of BINLOCATION.
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml;
-    using Microsoft.Tools.WindowsInstallerXml;
-    using Microsoft.Tools.WindowsInstallerXml.Extensions;
-    using Microsoft.Tools.WindowsInstallerXml.Serialize;
+The VsWebProjectHarvester class calls down to the original VSProjectHarvester to generate all the fragments for the harvested items. If the project harvested is a web project (determined via the project type guid), then the fragments are modified to direct binaries and satellite files to a hard coded directory with the Id of BINLOCATION.{% highlight csharp linenos %}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
+using Microsoft.Tools.WindowsInstallerXml;
+using Microsoft.Tools.WindowsInstallerXml.Extensions;
+using Microsoft.Tools.WindowsInstallerXml.Serialize;
     
-    namespace Neovolve.WixExtensions
+namespace Neovolve.WixExtensions
+{
+    public class VsWebProjectHarvester : HarvesterExtension
     {
-        public class VsWebProjectHarvester : HarvesterExtension
+        public const String WebProjectTypeGuidValue = "{349c5851-65df-11da-9384-00065b846f21}";
+    
+        public VsWebProjectHarvester(VSProjectHarvester harvester)
         {
-            public const String WebProjectTypeGuidValue = &quot;{349c5851-65df-11da-9384-00065b846f21}&quot;;
+            ProjectHarvester = harvester;
+        }
     
-            public VsWebProjectHarvester(VSProjectHarvester harvester)
+        public override Fragment[] Harvest(String argument)
+        {
+            ProjectHarvester.Core = Core;
+    
+            Fragment[] fragments = ProjectHarvester.Harvest(argument);
+    
+            if (IsWebProject(argument) == false)
             {
-                ProjectHarvester = harvester;
-            }
-    
-            public override Fragment[] Harvest(String argument)
-            {
-                ProjectHarvester.Core = Core;
-    
-                Fragment[] fragments = ProjectHarvester.Harvest(argument);
-    
-                if (IsWebProject(argument) == false)
-                {
-                    return fragments;
-                }
-    
-                foreach (Fragment fragment in fragments)
-                {
-                    ComponentGroup binariesGroup = fragment.Children.OfType<ComponentGroup&gt;().FirstOrDefault(
-                        child =&gt; child.Id != null && (child.Id.EndsWith(&quot;.Binaries&quot;, StringComparison.InvariantCulture) || child.Id.EndsWith(&quot;.Satellites&quot;, StringComparison.InvariantCulture)));
-    
-                    if (binariesGroup == null)
-                    {
-                        continue;
-                    }
-    
-                    IEnumerable<ComponentRef&gt; componentRefs = binariesGroup.Children.OfType<ComponentRef&gt;();
-    
-                    foreach (IEnumerable<DirectoryRef&gt; directoryRefs in from componentReference in componentRefs
-                                                                        from childFragment in fragments
-                                                                        select
-                                                                            childFragment.Children.OfType<DirectoryRef&gt;().Where(
-                                                                                x =&gt;
-                                                                                x.Children.OfType<Component&gt;().Where(y =&gt; y.Id == componentReference.Id).
-                                                                                    FirstOrDefault() != null))
-                    {
-                        directoryRefs.ToList().ForEach(x =&gt; x.Id = &quot;BINLOCATION&quot;);
-                    }
-                }
-    
                 return fragments;
             }
     
-            private static Boolean IsWebProject(String filePath)
+            foreach (Fragment fragment in fragments)
             {
-                XmlDocument doc = new XmlDocument();
+                ComponentGroup binariesGroup = fragment.Children.OfType<ComponentGroup>().FirstOrDefault(
+                    child => child.Id != null && (child.Id.EndsWith(".Binaries", StringComparison.InvariantCulture) || child.Id.EndsWith(".Satellites", StringComparison.InvariantCulture)));
     
-                doc.Load(filePath);
-    
-                XmlNamespaceManager manager = new XmlNamespaceManager(doc.NameTable);
-    
-                manager.AddNamespace(&quot;ns&quot;, &quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;);
-    
-                XmlNode projectTypeNode = doc.SelectSingleNode(&quot;//ns:Project/ns:PropertyGroup/ns:ProjectTypeGuids&quot;, manager);
-    
-                if (projectTypeNode == null)
+                if (binariesGroup == null)
                 {
-                    return false;
+                    continue;
                 }
     
-                String value = projectTypeNode.InnerText;
+                IEnumerable<ComponentRef> componentRefs = binariesGroup.Children.OfType<ComponentRef>();
     
-                if (value.IndexOf(WebProjectTypeGuidValue, StringComparison.InvariantCultureIgnoreCase) &gt; -1)
+                foreach (IEnumerable<DirectoryRef> directoryRefs in from componentReference in componentRefs
+                                                                    from childFragment in fragments
+                                                                    select
+                                                                        childFragment.Children.OfType<DirectoryRef>().Where(
+                                                                            x =>
+                                                                            x.Children.OfType<Component>().Where(y => y.Id == componentReference.Id).
+                                                                                FirstOrDefault() != null))
                 {
-                    return true;
+                    directoryRefs.ToList().ForEach(x => x.Id = "BINLOCATION");
                 }
+            }
     
+            return fragments;
+        }
+    
+        private static Boolean IsWebProject(String filePath)
+        {
+            XmlDocument doc = new XmlDocument();
+    
+            doc.Load(filePath);
+    
+            XmlNamespaceManager manager = new XmlNamespaceManager(doc.NameTable);
+    
+            manager.AddNamespace("ns", "http://schemas.microsoft.com/developer/msbuild/2003");
+    
+            XmlNode projectTypeNode = doc.SelectSingleNode("//ns:Project/ns:PropertyGroup/ns:ProjectTypeGuids", manager);
+    
+            if (projectTypeNode == null)
+            {
                 return false;
             }
     
-            protected VSProjectHarvester ProjectHarvester
+            String value = projectTypeNode.InnerText;
+    
+            if (value.IndexOf(WebProjectTypeGuidValue, StringComparison.InvariantCultureIgnoreCase) > -1)
             {
-                get;
-                set;
+                return true;
             }
+    
+            return false;
         }
-    }{% endhighlight %}
+    
+        protected VSProjectHarvester ProjectHarvester
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
-Heat now needs to be told about the extension. The extension assembly needs to be put into the same directory as Heat once it is built. The heat.exe.config then needs to be updated to include this extension.
-
-    <?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-    <!--
-        Copyright (c) Microsoft Corporation.  All rights reserved.
-    --&gt;
-    <configuration&gt;
-        <appSettings&gt;
-            <add key=&quot;extensions&quot; value=&quot;WixIIsExtension;WixUtilExtension;WixVSExtension;Neovolve.WixExtensions&quot;/&gt;
-        </appSettings&gt;
-        <startup useLegacyV2RuntimeActivationPolicy=&quot;true&quot;&gt;
-            <supportedRuntime version=&quot;v4.0&quot; /&gt;
-            <supportedRuntime version=&quot;v2.0.50727&quot; /&gt;
-        </startup&gt;
-    </configuration&gt;{% endhighlight %}
+Heat now needs to be told about the extension. The extension assembly needs to be put into the same directory as Heat once it is built. The heat.exe.config then needs to be updated to include this extension.{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) Microsoft Corporation.  All rights reserved.
+-->
+<configuration>
+    <appSettings>
+        <add key="extensions" value="WixIIsExtension;WixUtilExtension;WixVSExtension;Neovolve.WixExtensions"/>
+    </appSettings>
+    <startup useLegacyV2RuntimeActivationPolicy="true">
+        <supportedRuntime version="v4.0" />
+        <supportedRuntime version="v2.0.50727" />
+    </startup>
+</configuration>
+{% endhighlight %}
 
 The heat extensions are processed in order so the custom Neovolve.WixExtensions assembly is defined last. Heat will loop through each extension to determine who is going to harvest a project. The WixVSExtension project will say that it will take care of the web project and its harvester will get assigned to Core.Harvester. The custom extension gets called next at which point the harvester is hijacked.
 
 The next time you compile you will get an error saying 
 
-> > Unresolved reference to symbol 'Directory:BINLOCATION' in section 'Fragment’
+> Unresolved reference to symbol 'Directory:BINLOCATION' in section 'Fragment’
 
-> 
-    So now the automatically generated wxs file for the web project points binaries and satellite files to the BINLOCATION directory. This now needs to be defined by adding a <Directory Id=”BINLOCATION” Name=”bin” /&gt; under the INSTALLLOCATION Directory in Product.wxs. This defines the directory location for the website binaries to be written to.
+So now the automatically generated wxs file for the web project points binaries and satellite files to the BINLOCATION directory. This now needs to be defined by adding a <Directory Id=”BINLOCATION” Name=”bin” /> under the INSTALLLOCATION Directory in Product.wxs. This defines the directory location for the website binaries to be written to.
 
-The Product.wxs now looks like the following:
-
-    <?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-    <Wix xmlns=&quot;http://schemas.microsoft.com/wix/2006/wi&quot;&gt;
-        <Product Id=&quot;9be5cd9c-59fd-42bc-b26a-9adb277748fc&quot; Name=&quot;Neovolve.Testing.Website.Deployment&quot; Language=&quot;1033&quot; Version=&quot;1.0.0.0&quot; Manufacturer=&quot;Neovolve.Testing.Website.Deployment&quot; UpgradeCode=&quot;93f93da8-dc45-440f-9281-e0c95ff0a047&quot;&gt;
-            <Package InstallerVersion=&quot;200&quot; Compressed=&quot;yes&quot; /&gt;
+The Product.wxs now looks like the following:{% highlight xml linenos %}
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="9be5cd9c-59fd-42bc-b26a-9adb277748fc" Name="Neovolve.Testing.Website.Deployment" Language="1033" Version="1.0.0.0" Manufacturer="Neovolve.Testing.Website.Deployment" UpgradeCode="93f93da8-dc45-440f-9281-e0c95ff0a047">
+        <Package InstallerVersion="200" Compressed="yes" />
     
-            <Media Id=&quot;1&quot; Cabinet=&quot;media1.cab&quot; EmbedCab=&quot;yes&quot; /&gt;
+        <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
     
-            <Directory Id=&quot;TARGETDIR&quot; Name=&quot;SourceDir&quot;&gt;
-                <Directory Id=&quot;ProgramFilesFolder&quot;&gt;
-                    <Directory Id=&quot;INSTALLLOCATION&quot; Name=&quot;Neovolve.Testing.Website.Deployment&quot;&gt;
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder">
+                <Directory Id="INSTALLLOCATION" Name="Neovolve.Testing.Website.Deployment">
     
-              <Directory Id=&quot;BINLOCATION&quot; Name=&quot;bin&quot; /&gt;          
+            <Directory Id="BINLOCATION" Name="bin" />          
               
-                        <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. --&gt;
-                        <!-- <Component Id=&quot;ProductComponent&quot; Guid=&quot;3d82ebb4-534c-45a3-bb2a-b2549e34f324&quot;&gt; --&gt;
-                            <!-- TODO: Insert files, registry keys, and other resources here. --&gt;
-                        <!-- </Component&gt; --&gt;
-                    </Directory&gt;
-                </Directory&gt;
-            </Directory&gt;
+                    <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+                    <!-- <Component Id="ProductComponent" Guid="3d82ebb4-534c-45a3-bb2a-b2549e34f324"> -->
+                        <!-- TODO: Insert files, registry keys, and other resources here. -->
+                    <!-- </Component> -->
+                </Directory>
+            </Directory>
+        </Directory>
     
-            <Feature Id=&quot;ProductFeature&quot; Title=&quot;Neovolve.Testing.Website.Deployment&quot; Level=&quot;1&quot;&gt;
-                <!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. --&gt;
-                <!-- <ComponentRef Id=&quot;ProductComponent&quot; /&gt; --&gt;
+        <Feature Id="ProductFeature" Title="Neovolve.Testing.Website.Deployment" Level="1">
+            <!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
+            <!-- <ComponentRef Id="ProductComponent" /> -->
                 
-                <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. --&gt;
-                <ComponentGroupRef Id=&quot;Product.Generated&quot; /&gt;
-            </Feature&gt;
-        </Product&gt;
-    </Wix&gt;{% endhighlight %}
+            <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+            <ComponentGroupRef Id="Product.Generated" />
+        </Feature>
+    </Product>
+</Wix>
+{% endhighlight %}
 
 The last step is dealing with the other project dependencies. The properties of all other projects referenced by the website project are also added as Wix project references. These now need to be pointed to BINLOCATION as well. Note that the website project is still deployed to INSTALLLOCATION as the heat extension hijacks just the Binaries and Satellite groups and redirects them to BINLOCATION at compile time.
 
