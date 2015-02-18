@@ -12,25 +12,23 @@ date: 2011-07-06 23:02:00 +10:00
 [![image][7]][6]
 1. Executing with verbose logging
 [![image][9]][8]The first version of BTE provides the following tasks built into the application (as defined by the help output):
-{% highlight text linenos %}
-BuildTaskExecutor BinaryOutputVersion|bov
-Renames the project output to include the product version of the project output.
+> BuildTaskExecutor BinaryOutputVersion|bov
+> Renames the project output to include the product version of the project output.
 
-BuildTaskExecutor Help|/?
-Displays help information about the available tasks
-
-BuildTaskExecutor IncrementAssemblyVersion|iav
-Increments version number parts in AssemblyVersionAttribute entries in code files
-
-BuildTaskExecutor SyncWixVersion|swv
-Synchronizes the product version in a Wix project to the version of a binary file.
-
-BuildTaskExecutor TfsCheckout|tfsedit
-Checks out files from TFS based on a search pattern. The checkout will use default credentials resolved for the identified files.
-
-BuildTaskExecutor WixOutputVersion|wov
-Renames the Wix project output to include the wix product version.
-{% endhighlight %}
+> BuildTaskExecutor Help|/?
+> Displays help information about the available tasks
+> 
+> BuildTaskExecutor IncrementAssemblyVersion|iav
+> Increments version number parts in AssemblyVersionAttribute entries in code files
+> 
+> BuildTaskExecutor SyncWixVersion|swv
+> Synchronizes the product version in a Wix project to the version of a binary file.
+> 
+> BuildTaskExecutor TfsCheckout|tfsedit
+> Checks out files from TFS based on a search pattern. The checkout will use default credentials resolved for the identified files.
+> 
+> BuildTaskExecutor WixOutputVersion|wov
+> Renames the Wix project output to include the wix product version.
 The next post will provide a scenario where these tasks are used to manage the version of a solution without a full TFS environment.
 
 [0]: /2011/07/03/Executing-build-tasks-without-a-build-server-%E2%80%93-Implementation/
