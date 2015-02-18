@@ -9,7 +9,23 @@ I have had a performance bottleneck in a load test that I have been running. The
 
 The methods on TraceSource check TraceInternal.UseGlobalLock (also referenced by Trace.UseGlobalLock) which is determined by the _system.diagnostics/trace/useGlobalLock_ configuration value: 
 
-{% highlight xml linenos %}<?xml version="1.0" encoding="utf-8" ?&gt; <configuration&gt; <system.diagnostics&gt; <trace useGlobalLock="false" /&gt; <sources&gt; <source name="MySource" switchValue="All"&gt; <listeners&gt; <add name="ListenerName" type="MyApplication.LoadTests.LoadTestTraceListener, MyApplication.LoadTests" /&gt; </listeners&gt; </source&gt; </sources&gt; </system.diagnostics&gt; </configuration&gt; {% endhighlight %}
+{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8" ?> 
+<configuration> 
+    <system.diagnostics> 
+    <trace useGlobalLock="false" /> 
+    <sources> 
+        <source name="MySource" 
+                switchValue="All"> 
+            <listeners> 
+                <add name="ListenerName" 
+                    type="MyApplication.LoadTests.LoadTestTraceListener, MyApplication.LoadTests" /> 
+            </listeners> 
+        </source> 
+    </sources>    
+    </system.diagnostics> 
+</configuration> 
+{% endhighlight %}
 
 TraceSource checks whether a global lock should be used when a trace message is written. 
 
@@ -23,7 +39,52 @@ I find that [System.Diagnostics.XmlWriterTraceListener][3] is the best listener 
 
 On a side note, I created a custom listener to use in my load test because I wanted to be able to test the performance of my tracing components while minimizing the performance &quot;noise&quot; of the .Net framework part of the tracing execution. The listener looks something like this: 
 
-{% highlight csharp linenos %}using System; using System.Diagnostics; namespace MyApplication.LoadTests { /// <summary&gt; /// The <see cref="LoadTestTraceListener"/&gt; /// class is used to help run load tests against the tracing components. /// </summary&gt; public class LoadTestTraceListener : TraceListener { /// <summary&gt; /// Writes the provided message to the listener you create in the derived class. /// </summary&gt; /// <param name="message"&gt;A message to write.</param&gt; public override void Write(String message) { Debug.WriteLine(message); } /// <summary&gt; /// Writes a message to the listener you create in the derived class, followed by a line terminator. /// </summary&gt; /// <param name="message"&gt;A message to write.</param&gt; public override void WriteLine(String message) { Debug.WriteLine(message); } /// <summary&gt; /// Gets a value indicating whether the trace listener is thread safe. /// </summary&gt; /// <value&gt;</value&gt; /// <returns&gt;true if the trace listener is thread safe; otherwise, false. The default is false. /// </returns&gt; public override Boolean IsThreadSafe { get { return true; } } } } {% endhighlight %}
+{% highlight csharp linenos %}
+using System; 
+using System.Diagnostics; 
+    
+namespace MyApplication.LoadTests 
+{ 
+    /// <summary> 
+    /// The <see cref="LoadTestTraceListener"/> 
+    /// class is used to help run load tests against the tracing components. 
+    /// </summary> 
+    public class LoadTestTraceListener : TraceListener 
+    { 
+        /// <summary> 
+        /// Writes the provided message to the listener you create in the derived class. 
+        /// </summary> 
+        /// <param name="message">A message to write.</param> 
+        public override void Write(String message) 
+        { 
+            Debug.WriteLine(message); 
+        } 
+    
+        /// <summary> 
+        /// Writes a message to the listener you create in the derived class, followed by a line terminator. 
+        /// </summary> 
+        /// <param name="message">A message to write.</param> 
+        public override void WriteLine(String message) 
+        { 
+            Debug.WriteLine(message); 
+        }
+    
+        /// <summary> 
+        /// Gets a value indicating whether the trace listener is thread safe. 
+        /// </summary> 
+        /// <value></value> 
+        /// <returns>true if the trace listener is thread safe; otherwise, false. The default is false. 
+        /// </returns> 
+        public override Boolean IsThreadSafe 
+        { 
+            get 
+            { 
+                return true; 
+            } 
+        } 
+    } 
+} 
+{% endhighlight %}
 
 This listener will output the trace messages in debug mode, but the compiler will not include the debug statements under a release build. It also indicates that the listener is thread safe to improve performance of TraceSource implementations that use this listener when global locking is disabled. 
 

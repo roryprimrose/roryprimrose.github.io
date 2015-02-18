@@ -12,7 +12,24 @@ I quickly realised that the current working directory of a Windows service is pr
 
 The simple fix for my service is to set the current directory for the process to the directory containing the executing assembly when the service is started.
 
- {% highlight csharp linenos %}using System; using System.IO; using System.Reflection; using System.ServiceProcess; internal static class Program { private static void Main() { Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); MyService service = new MyService(); ServiceBase.Run(service); } }{% endhighlight %} 
+{% highlight csharp linenos %}
+using System;
+using System.IO;
+using System.Reflection;
+using System.ServiceProcess;
+    
+internal static class Program
+{
+    private static void Main()
+    {
+    	Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    
+    	MyService service = new MyService();
+    
+    	ServiceBase.Run(service);
+    }
+}
+{% endhighlight %}
 
 Now any configured relative path will be relative to the service assembly. Problem solved.
 

@@ -11,11 +11,48 @@ When the TraceSource.Listeners property is referenced, the collection is initial
 
 All the tracing methods of this listener implementation call down to an internalWrite method that has the following implementation: 
 
-{% highlight csharp linenos %}private void internalWrite(string message) { if (Debugger.IsLogging()) { Debugger.Log(0, null, message); } else if (message == null) { SafeNativeMethods.OutputDebugString(string.Empty); } else { SafeNativeMethods.OutputDebugString(message); } } {% endhighlight %}
+{% highlight csharp linenos %}
+private void internalWrite(string message)
+{
+    if (Debugger.IsLogging())
+    {
+        Debugger.Log(0, null, message);
+    }
+    else if (message == null)
+    {
+        SafeNativeMethods.OutputDebugString(string.Empty);
+    }
+    else
+    {
+        SafeNativeMethods.OutputDebugString(message);
+    }
+}
+    
+{% endhighlight %}
 
-This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _<clear /&gt;_ element as the first item in the listeners element for each source you have defined in your configuration. 
+This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _<clear />_ element as the first item in the listeners element for each source you have defined in your configuration. 
 
-{% highlight xml linenos %}<?xml version="1.0" encoding="utf-8" ?&gt; <configuration&gt; <system.diagnostics&gt; <trace useGlobalLock="false" /&gt; <sources&gt; <source name="MySource" switchValue="All"&gt; <listeners&gt; <clear /&gt; <add name="ListenerName" type="MyApplication.LoadTests.LoadTestTraceListener, MyApplication.LoadTests" /&gt; </listeners&gt; </source&gt; </sources&gt; </system.diagnostics&gt; </configuration&gt; {% endhighlight %}
+{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8" ?> 
+<configuration> 
+    <system.diagnostics>
+    <trace useGlobalLock="false" /> 
+    <sources> 
+        <source name="MySource" 
+                switchValue="All"> 
+        <listeners>
+    
+            <clear />
+    
+            <add name="ListenerName" 
+                type="MyApplication.LoadTests.LoadTestTraceListener, MyApplication.LoadTests" /> 
+        </listeners> 
+        </source> 
+    </sources>    
+    </system.diagnostics> 
+</configuration> 
+    
+{% endhighlight %}
 
 [0]: /post/2009/01/08/Disable-Trace-UseGlobalLock-For-Better-Tracing-Performance.aspx
 [1]: http://msdn.microsoft.com/en-us/library/system.diagnostics.defaulttracelistener.aspx

@@ -11,7 +11,90 @@ The difficulty with this scenario is that Type.GetType (using the configuration 
 
 Here is a slimmed down example.
 
-{% highlight csharp linenos %}using System; using System.Configuration; using Microsoft.VisualStudio.TestTools.UnitTesting; using Rhino.Mocks; namespace TestProject1 { public class ClassToTest { public void SomethingToTest() { IDependency dependency = DependencyFactory.Create(); if (string.IsNullOrEmpty(dependency.GetValue())) { throw new InvalidOperationException(); } } } public interface IDependency { String GetValue(); } public static class DependencyFactory { public const string DependencyTypeConfigurationKey = "DependencyType"; public static IDependency Create() { Type dependencyType = Type.GetType(ConfigurationManager.AppSettings[DependencyTypeConfigurationKey]); return (IDependency)Activator.CreateInstance(dependencyType); } } [TestClass] public class UnitTest1 { /// <summary&gt; /// Runs test for something to test throws exception when dependency returns an empty value. /// </summary&gt; [TestMethod] [ExpectedException(typeof(InvalidOperationException))] public void SomethingToTestThrowsExceptionWhenDependencyReturnsAnEmptyValueTest() { ConfigurationManager.AppSettings[DependencyFactory.DependencyTypeConfigurationKey] = typeof(DependencyMockWrapper).AssemblyQualifiedName; MockRepository mock = new MockRepository(); IDependency dependency = mock.CreateMock<IDependency&gt;(); using (mock.Record()) { dependency.GetValue(); LastCall.Return(String.Empty); } ClassToTest target = new ClassToTest(); using (mock.Playback()) { DependencyMockWrapper.MockInstance = dependency; target.SomethingToTest(); } } } public class DependencyMockWrapper : IDependency { public string GetValue() { return MockInstance.GetValue(); } public static IDependency MockInstance { get; set; } } } {% endhighlight %}
+{% highlight csharp linenos %}
+using System;
+using System.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Rhino.Mocks;
+     
+namespace TestProject1
+{
+    public class ClassToTest
+    {
+        public void SomethingToTest()
+        {
+            IDependency dependency = DependencyFactory.Create();
+     
+            if (string.IsNullOrEmpty(dependency.GetValue()))
+            {
+                throw new InvalidOperationException();
+            }
+        }
+    }
+     
+    public interface IDependency
+    {
+        String GetValue();
+    }
+     
+    public static class DependencyFactory
+    {
+        public const string DependencyTypeConfigurationKey = "DependencyType";
+     
+        public static IDependency Create()
+        {
+            Type dependencyType = Type.GetType(ConfigurationManager.AppSettings[DependencyTypeConfigurationKey]);
+            return (IDependency)Activator.CreateInstance(dependencyType);
+        }
+    }
+     
+    [TestClass]
+    public class UnitTest1
+    {
+        /// <summary&gt;
+        /// Runs test for something to test throws exception when dependency returns an empty value.
+        /// </summary&gt;
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void SomethingToTestThrowsExceptionWhenDependencyReturnsAnEmptyValueTest()
+        {
+            ConfigurationManager.AppSettings[DependencyFactory.DependencyTypeConfigurationKey] =
+                typeof(DependencyMockWrapper).AssemblyQualifiedName;
+            MockRepository mock = new MockRepository();
+            IDependency dependency = mock.CreateMock<IDependency&gt;();
+     
+            using (mock.Record())
+            {
+                dependency.GetValue();
+                LastCall.Return(String.Empty);
+            }
+     
+            ClassToTest target = new ClassToTest();
+     
+            using (mock.Playback())
+            {
+                DependencyMockWrapper.MockInstance = dependency;
+                target.SomethingToTest();
+            }
+        }
+    }
+     
+    public class DependencyMockWrapper : IDependency
+    {
+        public string GetValue()
+        {
+            return MockInstance.GetValue();
+        }
+     
+        public static IDependency MockInstance
+        {
+            get;
+            set;
+        }
+    }
+}
+    
+{% endhighlight %}
 
 The ClassToTest is, as the name suggests, the class being tested. It makes a call to DependencyFactory to create an instance of something for it to use. Ideally we want this to be the mock, however we need to settle for a static wrapper around a mock. The DependencyFactory consults configuration to determine the type to create and it instantiates the type and returns it.
 

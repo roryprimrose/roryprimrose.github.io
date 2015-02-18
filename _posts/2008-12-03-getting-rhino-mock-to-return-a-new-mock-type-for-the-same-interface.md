@@ -11,12 +11,30 @@ To achieve this, I generate a cache key that identifies the manager (constant st
 
 When I was unit testing this behaviour, I found that Rhino mock is reusing mocked types. This means that the following code failed: 
 
-{% highlight csharp linenos %}MockRepository mock = new MockRepository(); ITraceSourceResolver firstResolver = mock.CreateMock<ITraceSourceResolver&gt;(); ITraceSourceResolver secondResolver = mock.CreateMock<ITraceSourceResolver&gt;(); Assert.AreNotEqual( firstResolver.GetType().AssemblyQualifiedName, secondResolver.GetType().AssemblyQualifiedName, "Resolvers have the same name");{% endhighlight %}
+{% highlight csharp linenos %}
+MockRepository mock = new MockRepository();
+ITraceSourceResolver firstResolver = mock.CreateMock<ITraceSourceResolver>();
+ITraceSourceResolver secondResolver = mock.CreateMock<ITraceSourceResolver>();
+    
+Assert.AreNotEqual(
+    firstResolver.GetType().AssemblyQualifiedName,
+    secondResolver.GetType().AssemblyQualifiedName,
+    "Resolvers have the same name");
+{% endhighlight %}
 
 The easiest way around this was to get Rhino mock to see the mock definitions as different. The way to do this is request a multi-mock using some interface that means nothing to the test and therefore would have no impact on the test. I chose ICloneable to achieve this. 
 
 The following now succeeds and I have two unique mocked types of the same interface to use in my unit tests. 
 
-{% highlight csharp linenos %}MockRepository mock = new MockRepository(); ITraceSourceResolver firstResolver = mock.CreateMock<ITraceSourceResolver&gt;(); ITraceSourceResolver secondResolver = mock.CreateMultiMock<ITraceSourceResolver&gt;(typeof(ICloneable)); Assert.AreNotEqual( firstResolver.GetType().AssemblyQualifiedName, secondResolver.GetType().AssemblyQualifiedName, "Resolvers have the same name");{% endhighlight %}
+{% highlight csharp linenos %}
+MockRepository mock = new MockRepository();
+ITraceSourceResolver firstResolver = mock.CreateMock<ITraceSourceResolver>();
+ITraceSourceResolver secondResolver = mock.CreateMultiMock<ITraceSourceResolver>(typeof(ICloneable));
+    
+Assert.AreNotEqual(
+    firstResolver.GetType().AssemblyQualifiedName,
+    secondResolver.GetType().AssemblyQualifiedName,
+    "Resolvers have the same name");
+{% endhighlight %}
 
 

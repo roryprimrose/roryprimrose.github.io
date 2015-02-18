@@ -9,7 +9,26 @@ PostSharp is a very power AOP framework. It changes the IL emitted from the comp
 
 The demos in this series will look at a very simple scenario. PostSharp will be used to aspect the RunTest() method in the following code. The aspect used will output console messages surrounding the RunTest method. 
 
-{% highlight csharp linenos %}using System; namespace ConsoleApplication1 { internal class Program { private static void Main(string[] args) { RunTest(); Console.ReadKey(); } private static void RunTest() { Console.WriteLine("Running the test method"); } } } {% endhighlight %}
+{% highlight csharp linenos %}
+using System; 
+    
+namespace ConsoleApplication1 
+{ 
+    internal class Program 
+    { 
+        private static void Main(string[] args) 
+        { 
+            RunTest(); 
+            Console.ReadKey(); 
+        } 
+        private static void RunTest() 
+        { 
+            Console.WriteLine("Running the test method"); 
+        } 
+    } 
+} 
+    
+{% endhighlight %}
 
 Two different implementations of the demo will be run. One with PostSharp.Laos (the easy part) and the other with PostSharp.Core (the hard part). The outcome of each demo will look at the: 
 
@@ -18,5 +37,3 @@ Two different implementations of the demo will be run. One with PostSharp.Laos (
 * impact on the IL of the final assembly
 * references required on the final assembly
 * debugging experience
-
-

@@ -9,11 +9,32 @@ I have been writing lots of unit tests for my [Toolkit][0] project on CodePlex. 
 
 This is easily reproduced with the following code: 
 
-{% highlight csharp linenos %}using System.Diagnostics; using Microsoft.VisualStudio.TestTools.UnitTesting; namespace TestProject2 { [TestClass] public class UnitTest1 { [TestMethod] public void TestMethod1() { Trace.CorrelationManager.StartLogicalOperation(new TestObject()); } } internal class TestObject { } } {% endhighlight %}
+{% highlight csharp linenos %}
+using System.Diagnostics; 
+using Microsoft.VisualStudio.TestTools.UnitTesting; 
+      
+namespace TestProject2 
+{ 
+    [TestClass] 
+    public class UnitTest1 
+    { 
+        [TestMethod] 
+        public void TestMethod1() 
+        { 
+            Trace.CorrelationManager.StartLogicalOperation(new TestObject()); 
+        } 
+    } 
+      
+    internal class TestObject 
+    { 
+    } 
+} 
+    
+{% endhighlight %}
 
 This fails with the message: 
 
-_> Unit Test Adapter threw exception: Type 'TestProject2.TestObject' in assembly 'TestProject2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null' is not marked as serializable._
+> _Unit Test Adapter threw exception: Type 'TestProject2.TestObject' in assembly 'TestProject2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null' is not marked as serializable._ 
 
 It seems that there is an assumption somewhere in the unit test adapter that assumes that the object added to the logical operation stack is the one that the adapter put there (an object that must be serializable). Given that any user code can start its own operation with a custom object, this is a bit of a problem. 
 
@@ -21,7 +42,28 @@ The workaround is to ensure that your test stops the logical operation that it s
 
 For example, the following code passes: 
 
-{% highlight csharp linenos %}using System.Diagnostics; using Microsoft.VisualStudio.TestTools.UnitTesting; namespace TestProject2 { [TestClass] public class UnitTest1 { [TestMethod] public void TestMethod1() { Trace.CorrelationManager.StartLogicalOperation(new TestObject()); Trace.CorrelationManager.StopLogicalOperation(); } } internal class TestObject { } } {% endhighlight %}
+{% highlight csharp linenos %}
+using System.Diagnostics; 
+using Microsoft.VisualStudio.TestTools.UnitTesting; 
+      
+namespace TestProject2 
+{ 
+    [TestClass] 
+    public class UnitTest1 
+    { 
+        [TestMethod] 
+        public void TestMethod1() 
+        { 
+            Trace.CorrelationManager.StartLogicalOperation(new TestObject()); 
+            Trace.CorrelationManager.StopLogicalOperation(); 
+        } 
+    } 
+     
+    internal class TestObject 
+    { 
+    } 
+}     
+{% endhighlight %}
 
 I have raised a bug in Connect [here][1]. 
 

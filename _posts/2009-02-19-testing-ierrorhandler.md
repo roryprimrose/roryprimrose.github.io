@@ -11,7 +11,43 @@ The reason for posting this is that I recently found that I had a bug in a servi
 
 The following method came about after a bit of research (mainly from [here][3]) and playing with code to make the solution work and easy to use. This method will assist unit testing the output of ProvideFault as it provides an easy way to extract a Fault from a Message returned by the ProvideFault method. This fault can then be tested for expected outcomes of the unit test.
 
-{% highlight csharp linenos %}private static T ReadFaultDetail<T&gt;(Message reply) where T : class { const String DetailElementName = "Detail"; using (XmlDictionaryReader reader = reply.GetReaderAtBodyContents()) { // Find the <soap:Detail&gt; element while (reader.Read()) { if (reader.NodeType == XmlNodeType.Element && reader.LocalName == DetailElementName) { break; } } // Check that the reader is at the detail element now that we are outside the loop if (reader.NodeType != XmlNodeType.Element || reader.LocalName != DetailElementName) { return null; } // Read again to move the reader into the contents of the details element if (!reader.Read()) { return null; } // Deserialize the fault DataContractSerializer serializer = new DataContractSerializer(typeof(T)); return serializer.ReadObject(reader) as T; } }{% endhighlight %}
+{% highlight csharp linenos %}
+private static T ReadFaultDetail<T>(Message reply) where T : class
+{
+    const String DetailElementName = "Detail";
+    
+    using (XmlDictionaryReader reader = reply.GetReaderAtBodyContents())
+    {
+        // Find the <soap:Detail> element
+        while (reader.Read())
+        {
+            if (reader.NodeType == XmlNodeType.Element
+                && reader.LocalName == DetailElementName)
+            {
+                break;
+            }
+        }
+     
+        // Check that the reader is at the detail element now that we are outside the loop
+        if (reader.NodeType != XmlNodeType.Element
+            || reader.LocalName != DetailElementName)
+        {
+            return null;
+        }
+    
+        // Read again to move the reader into the contents of the details element
+        if (!reader.Read())
+        {
+            return null;
+        }
+    
+        // Deserialize the fault
+        DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+    
+        return serializer.ReadObject(reader) as T;
+    }
+}
+{% endhighlight %}
 
 [0]: /page/WCF-service-contract-design.aspx
 [1]: /post/2008/04/07/implementing-ierrorhandler.aspx

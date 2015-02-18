@@ -9,18 +9,28 @@ Opening an application configuration is useful when you need access to informati
 
 The following code is how I have previously achieved this.
 
-{% highlight csharp linenos %}Configuration appConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); ServiceModelSectionGroup serviceModel = ServiceModelSectionGroup.GetSectionGroup(appConfig); {% endhighlight %}
+{% highlight csharp linenos %}
+Configuration appConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+ServiceModelSectionGroup serviceModel = ServiceModelSectionGroup.GetSectionGroup(appConfig);
+{% endhighlight %}
 
 This works fine while the application is an exe. Unfortunately it fails when the code is hosted in IIS. You will get an error in the event log like the following:
 
-_> A Webhost unhandled exception occurred.   
-> Exception: System.ServiceModel.Diagnostics.CallbackException: A user callback threw an exception.&#160; Check the exception stack and inner exception to determine the callback that failed. ---&gt; System.ArgumentException: exePath must be specified when not running inside a stand alone exe.   
-> &#160;&#160; at System.Configuration.ConfigurationManager.OpenExeConfigurationImpl(ConfigurationFileMap fileMap, Boolean isMachine, ConfigurationUserLevel userLevel, String exePath)   
-> &#160;&#160; at System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel userLevel)_
+> A Webhost unhandled exception occurred. 
+            
+> Exception: System.ServiceModel.Diagnostics.CallbackException: A user callback threw an exception.  Check the exception stack and inner exception to determine the callback that failed. ---> System.ArgumentException: exePath must be specified when not running inside a stand alone exe. 
+    
+            
+>    at System.Configuration.ConfigurationManager.OpenExeConfigurationImpl(ConfigurationFileMap fileMap, Boolean isMachine, ConfigurationUserLevel userLevel, String exePath) 
+    
+            
+>    at System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel userLevel)
 
 The issue here is that IIS doesn't have an exe path for the configuration manager to load from. The simple workaround for this is to access the required configuration section (rather than configuration group) directly using the ConfigurationManager and a wicked cool syntax. The previous example can now be rewritten like this:
 
-{% highlight csharp linenos %} ClientSection client = ConfigurationManager.GetSection("system.serviceModel/client") as ClientSection;{% endhighlight %}
+{% highlight csharp linenos %}
+        ClientSection client = ConfigurationManager.GetSection("system.serviceModel/client") as ClientSection;
+{% endhighlight %}
 
 In this case I was after the client configuration for WCF services.
 

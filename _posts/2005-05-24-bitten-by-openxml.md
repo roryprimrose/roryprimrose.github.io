@@ -71,7 +71,7 @@ The way I write these procedures is to define a temporary table (like the above 
 
 The way I would use the above code would be something like this:
 
-{% highlight sql linenos %
+{% highlight sql linenos %}
 DECLARE @sXML NVARCHAR(4000)
 DECLARE @hDoc INT
 

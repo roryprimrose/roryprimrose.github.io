@@ -9,14 +9,218 @@ Automatically generating technical documentation from code comments is really ea
 
 Dynamically creating documentation is an easy solution that essentially documents all dll files found in the build directory with some known exclusions. This has the advantage that you don’t need to manage the documentation configuration as assemblies are added and removed from the solution. The disadvantages is that it potentially generates documentation for more assemblies than intended, namely the dependencies for the solution. The dynamic documentation generation is really good for framework/toolkit type solutions that don’t have external dependencies. The dynamic solution tells SHFB the information that it requires that would otherwise be defined via a project file. The MSBuild script looks something like the following.
 
-{% highlight xml linenos %}<Target Name="BuildSandcastleWithDynamicProjectDefinition"&gt; <!-- Uses Sandcastle Help File Builder to build a CHM documentation for all assemblies in the output directory. --&gt; <Message Text="Setting empty DocumentationName to ProductName '$(ProductName)'" /&gt; <CreateProperty Value="$(ProductName)" Condition="$(DocumentationName) == ''"&gt; <Output TaskParameter="Value" PropertyName="DocumentationName"/&gt; </CreateProperty&gt; <!-- Find all assemblies in the output directory --&gt; <CreateItem Include="$(OutDir)*.dll" Exclude="$(OutDir)*Tests.dll;$(OutDir)*_Accessor.dll"&gt; <Output ItemName="Assemblies" TaskParameter="Include" /&gt; </CreateItem&gt; <!-- Document assemblies that have corresponding XML documentation files --&gt; <CreateItem Include="@(Assemblies)" Condition="Exists('%(Assemblies.RelativeDir)%(Assemblies.Filename).xml')"&gt; <Output ItemName="AssembliesToDocument" TaskParameter="Include" /&gt; </CreateItem&gt; <!-- Include assemblies that are missing XML documentation files as dependencies --&gt; <CreateItem Include="@(Assemblies)" Condition="!Exists('%(Assemblies.RelativeDir)%(Assemblies.Filename).xml')"&gt; <Output ItemName="DependenciesToDocument" TaskParameter="Include" /&gt; </CreateItem&gt; <!-- Include all files in the \Documentation subdirectory of a project as content --&gt; <CreateItem Include="$(SolutionRoot)\**\Documentation\*" Exclude="$(SolutionRoot)\**\Thumbs.db"&gt; <Output ItemName="DocumentationContent" TaskParameter="Include" /&gt; </CreateItem&gt; <!-- Check if the assemblies for corresponding XML files exist --&gt; <Error Text="Assembly not found %(AssembliesToDocument.RelativeDir)%(AssembliesToDocument.Filename).dll, but XML was." Condition="!Exists('%(AssembliesToDocument.RelativeDir)%(AssembliesToDocument.Filename).dll')" /&gt; <PropertyGroup&gt; <SandcastleBuilderPath&gt;$(ProgramFiles)\EWSoftware\Sandcastle Help File Builder\SandcastleBuilderConsole.exe</SandcastleBuilderPath&gt; <SandcastleBuilderArguments&gt;-new @(AssembliesToDocument -&gt; '-assembly=&quot;%(RelativeDir)%(Filename).dll&quot;',' ') @(DependenciesToDocument -&gt; '-dependency=&quot;%(RelativeDir)%(Filename).dll&quot;',' ') @(DocumentationContent -&gt; '-addcontent=&quot;%(Fullpath)*.*,html\Documentation&quot;',' ') -outputpath=&quot;$(OutDir).&quot; -HelpTitle=&quot;Documentation for $(ProductName)&quot; -Language=&quot;en-AU&quot; -HtmlHelpName=&quot;$(DocumentationName)&quot; -FooterText=&quot;Version: $(VersionNumber) <br /&gt; Build Number: $(BuildNumber)&quot; -KeepLogFile=&quot;false&quot; -RootNamespaceContainer=&quot;true&quot; -SyntaxFilters=&quot;CSharp&quot;</SandcastleBuilderArguments&gt; </PropertyGroup&gt; <!-- Execute sandcastle --&gt; <Message Text="Running Sandcastle: &quot;$(SandcastleBuilderPath)&quot; $(SandcastleBuilderArguments)" /&gt; <Exec Command="&quot;$(SandcastleBuilderPath)&quot; $(SandcastleBuilderArguments)" /&gt; </Target&gt; {% endhighlight %}
+{% highlight xml linenos %}
+<Target Name="BuildSandcastleWithDynamicProjectDefinition">
+    
+    <!-- Uses Sandcastle Help File Builder to build a CHM documentation for all assemblies in the output directory. -->
+    <Message Text="Setting empty DocumentationName to ProductName '$(ProductName)'" />
+    
+    <CreateProperty Value="$(ProductName)"
+                    Condition="$(DocumentationName) == ''">
+    <Output TaskParameter="Value"
+            PropertyName="DocumentationName"/>
+    </CreateProperty>
+    
+    <!-- Find all assemblies in the output directory -->
+    <CreateItem Include="$(OutDir)*.dll"
+                Exclude="$(OutDir)*Tests.dll;$(OutDir)*_Accessor.dll">
+    <Output ItemName="Assemblies"
+            TaskParameter="Include" />
+    </CreateItem>
+    
+    <!-- Document assemblies that have corresponding XML documentation files -->
+    <CreateItem Include="@(Assemblies)"
+                Condition="Exists('%(Assemblies.RelativeDir)%(Assemblies.Filename).xml')">
+    <Output ItemName="AssembliesToDocument"
+            TaskParameter="Include" />
+    </CreateItem>
+    
+    <!-- Include assemblies that are missing XML documentation files as dependencies -->
+    <CreateItem Include="@(Assemblies)"
+                Condition="!Exists('%(Assemblies.RelativeDir)%(Assemblies.Filename).xml')">
+    <Output ItemName="DependenciesToDocument"
+            TaskParameter="Include" />
+    </CreateItem>
+    
+    <!-- Include all files in the \Documentation subdirectory of a project as content -->
+    <CreateItem Include="$(SolutionRoot)\**\Documentation\*"
+                Exclude="$(SolutionRoot)\**\Thumbs.db">
+    <Output ItemName="DocumentationContent"
+            TaskParameter="Include" />
+    </CreateItem>
+    
+    <!-- Check if the assemblies for corresponding XML files exist -->
+    <Error Text="Assembly not found %(AssembliesToDocument.RelativeDir)%(AssembliesToDocument.Filename).dll, but XML was."
+            Condition="!Exists('%(AssembliesToDocument.RelativeDir)%(AssembliesToDocument.Filename).dll')" />
+    
+    <PropertyGroup>
+    <SandcastleBuilderPath>$(ProgramFiles)\EWSoftware\Sandcastle Help File Builder\SandcastleBuilderConsole.exe</SandcastleBuilderPath>
+    <SandcastleBuilderArguments>-new @(AssembliesToDocument -> '-assembly=&quot;%(RelativeDir)%(Filename).dll&quot;',' ') @(DependenciesToDocument -> '-dependency=&quot;%(RelativeDir)%(Filename).dll&quot;',' ') @(DocumentationContent -> '-addcontent=&quot;%(Fullpath)*.*,html\Documentation&quot;',' ') -outputpath=&quot;$(OutDir).&quot; -HelpTitle=&quot;Documentation for $(ProductName)&quot; -Language=&quot;en-AU&quot; -HtmlHelpName=&quot;$(DocumentationName)&quot; -FooterText=&quot;Version: $(VersionNumber) <br /> Build Number: $(BuildNumber)&quot; -KeepLogFile=&quot;false&quot; -RootNamespaceContainer=&quot;true&quot; -SyntaxFilters=&quot;CSharp&quot;</SandcastleBuilderArguments>
+    </PropertyGroup>
+    
+    <!-- Execute sandcastle -->
+    <Message Text="Running Sandcastle: &quot;$(SandcastleBuilderPath)&quot; $(SandcastleBuilderArguments)" />
+    <Exec Command="&quot;$(SandcastleBuilderPath)&quot; $(SandcastleBuilderArguments)" />
+    
+</Target>
+    
+{% endhighlight %}
 
 Dynamically creating documentation is easy, but the resultant documentation can become dirty as external dependencies appear in the build directory. This is when using a SHFB project file becomes an advantage. This allows the solution to contain the specific definition of what gets included in the Sandcastle generated documentation. The best option for managing the SHFB project file is to add it as a solution item in Visual Studio. The MSBuild script for using the SHFB project file looks like the following.
 
-{% highlight xml linenos %}<Target Name="BuildSandcastleProjectFile"&gt; <Message Text="Building Sandcastle documentation using the project '$(SandcastleProjectFilePath)'" /&gt; <Message Text="Setting empty DocumentationName to ProductName '$(ProductName)'" /&gt; <CreateProperty Value="$(ProductName)" Condition="$(DocumentationName) == ''"&gt; <Output TaskParameter="Value" PropertyName="DocumentationName"/&gt; </CreateProperty&gt; <PropertyGroup&gt; <SandcastleBuilderArguments&gt;-outputpath=&quot;$(OutDir).&quot; -HelpTitle=&quot;Documentation for $(ProductName)&quot; -Language=&quot;en-AU&quot; -HtmlHelpName=&quot;$(DocumentationName)&quot; -FooterText=&quot;Build Number: $(BuildNumber)&quot; -KeepLogFile=&quot;false&quot; -RootNamespaceContainer=&quot;true&quot; -SyntaxFilters=&quot;CSharp&quot;</SandcastleBuilderArguments&gt; </PropertyGroup&gt; <!-- Execute sandcastle --&gt; <Message Text="Running Sandcastle: &quot;$(SandcastleBuilderPath)&quot; &quot;$(SandcastleProjectFilePath)&quot; $(SandcastleBuilderArguments)" /&gt; <Exec Command="&quot;$(SandcastleBuilderPath)&quot; &quot;$(SandcastleProjectFilePath)&quot; $(SandcastleBuilderArguments)" /&gt; </Target&gt; {% endhighlight %}
+{% highlight xml linenos %}
+<Target Name="BuildSandcastleProjectFile">
+     
+    <Message Text="Building Sandcastle documentation using the project '$(SandcastleProjectFilePath)'" />
+     
+    <Message Text="Setting empty DocumentationName to ProductName '$(ProductName)'" />
+     
+    <CreateProperty Value="$(ProductName)"
+                    Condition="$(DocumentationName) == ''">
+    <Output TaskParameter="Value"
+            PropertyName="DocumentationName"/>
+    </CreateProperty>
+     
+    <PropertyGroup>
+    <SandcastleBuilderArguments>-outputpath=&quot;$(OutDir).&quot; -HelpTitle=&quot;Documentation for $(ProductName)&quot; -Language=&quot;en-AU&quot; -HtmlHelpName=&quot;$(DocumentationName)&quot; -FooterText=&quot;Build Number: $(BuildNumber)&quot; -KeepLogFile=&quot;false&quot; -RootNamespaceContainer=&quot;true&quot; -SyntaxFilters=&quot;CSharp&quot;</SandcastleBuilderArguments>
+    </PropertyGroup>
+     
+    <!-- Execute sandcastle -->
+    <Message Text="Running Sandcastle: &quot;$(SandcastleBuilderPath)&quot; &quot;$(SandcastleProjectFilePath)&quot; $(SandcastleBuilderArguments)" />
+    <Exec Command="&quot;$(SandcastleBuilderPath)&quot; &quot;$(SandcastleProjectFilePath)&quot; $(SandcastleBuilderArguments)" />
+     
+</Target>
+    
+{% endhighlight %}
 
 These targets run the implementation for generating the documentation. The following targets are used to orchestrate this work.
 
-{% highlight xml linenos %}<PropertyGroup&gt; <ProductName&gt;</ProductName&gt; <!-- Enables/Disables generation of Sandcastle Documentation --&gt; <BuildDocumentation&gt;true</BuildDocumentation&gt; <!-- Defines the name of the Sandcastle project file to build If not defined, a search is run for *.shfb files. The build fails if multiple project definitions are found. --&gt; <SandcastleProjectFile&gt;</SandcastleProjectFile&gt; <SandcastleProjectFilePath Condition="'$(SandcastleProjectFile)' != ''"&gt;$(SolutionRoot)\$(SandcastleProjectFile)</SandcastleProjectFilePath&gt; <!-- Defines the documentation name --&gt; <DocumentationName&gt;</DocumentationName&gt; <SandcastleBuilderPath&gt;$(ProgramFiles)\EWSoftware\Sandcastle Help File Builder\SandcastleBuilderConsole.exe</SandcastleBuilderPath&gt; <!-- Used to store the updated version number for generating Sandcastle documentation --&gt; <EmptyVersionNumber&gt;0.0.0.0</EmptyVersionNumber&gt; <VersionNumber&gt;$(EmptyVersionNumber)</VersionNumber&gt; </PropertyGroup&gt; <Target Name="GenerateDocumentation" Condition="$(BuildDocumentation)"&gt; <GetBuildProperties TeamFoundationServerUrl="$(TeamFoundationServerUrl)" BuildUri="$(BuildUri)"&gt; <Output TaskParameter="TestSuccess" PropertyName="TestSuccess" /&gt; </GetBuildProperties&gt; <Message Text="Skipping Sandcastle documentation generation" Condition="$(TestSuccess) == false" /&gt; <CallTarget Targets="FindSandcastleProjectFile" Condition="$(TestSuccess)" /&gt; <CallTarget Targets="GenerateSandcastleDocumentation" Condition="$(TestSuccess)" /&gt; </Target&gt; <Target Name="FindSandcastleProjectFile" Condition="'$(SandcastleProjectFilePath)' == ''"&gt; <Message Text="No Sandcastle project defined. Searching %24(SolutionRoot)\**\*.shfb" /&gt; <ItemGroup&gt; <SandcastleProjectDefinitionFiles Include="$(SolutionRoot)\**\*.shfb" /&gt; </ItemGroup&gt; <Message Text="Searching failed to find a Sandcastle project file." Condition="'@(SandcastleProjectDefinitionFiles)' == ''" /&gt; <Message Text="Found the following Sandcastle project files: %0D%0A @(SandcastleProjectDefinitionFiles -&gt; '%(FullPath)', '%0D%0A')" Condition="'@(SandcastleProjectDefinitionFiles)' != ''" /&gt; <StringComparison Comparison="Contains" Param1="@(SandcastleProjectDefinitionFiles)" Param2=";" Condition="'@(SandcastleProjectDefinitionFiles)' != ''"&gt; <Output TaskParameter="Result" ItemName="MultipleSandcastleProjectsFound" /&gt; </StringComparison&gt; <Error Text="Multiple Sandcastle project definitions found." Condition="'@(SandcastleProjectDefinitionFiles)' != '' And @(MultipleSandcastleProjectsFound) == true" /&gt; <PropertyGroup&gt; <SandcastleProjectFilePath&gt;@(SandcastleProjectDefinitionFiles)</SandcastleProjectFilePath&gt; </PropertyGroup&gt; </Target&gt; <Target Name="GenerateSandcastleDocumentation"&gt; <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)" BuildUri="$(BuildUri)" Name="Generating Sandcastle documentation" Message="Generating Sandcastle documentation"&gt; <Output TaskParameter="Id" PropertyName="SandcastleBuildStepId" /&gt; </BuildStep&gt; <!-- Check if builder and files exist --&gt; <Error Text="Sandcastle Help File Builder is not found at $(SandcastleBuilderPath)." Condition="!Exists('$(SandcastleBuilderPath)')" /&gt; <Error Text="No ProductName property value has been defined." Condition="'$(ProductName)' == ''" /&gt; <Error Text="Sandcastle project file '$(SandcastleProjectFilePath)' does not exist" Condition="'$(SandcastleProjectFilePath)' != '' And !Exists('$(SandcastleProjectFilePath)')" /&gt; <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)" BuildUri="$(BuildUri)" Id="$(SandcastleBuildStepId)" Message="Compiling Sandcastle documentation project" Condition="'$(SandcastleProjectFilePath)' != ''" /&gt; <CallTarget Targets="BuildSandcastleProjectFile" Condition="'$(SandcastleProjectFilePath)' != ''" /&gt; <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)" BuildUri="$(BuildUri)" Id="$(SandcastleBuildStepId)" Message="Compiling Sandcastle documentation without a project" Condition="'$(SandcastleProjectFilePath)' == ''" /&gt; <CallTarget Targets="BuildSandcastleWithDynamicProjectDefinition" Condition="'$(SandcastleProjectFilePath)' == ''" /&gt; <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)" BuildUri="$(BuildUri)" Id="$(SandcastleBuildStepId)" Status="Succeeded" /&gt; </Target&gt; {% endhighlight %}
+{% highlight xml linenos %}
+<PropertyGroup>
+     
+    <ProductName></ProductName>
+    
+    <!-- Enables/Disables generation of Sandcastle Documentation -->
+    <BuildDocumentation>true</BuildDocumentation>
+     
+    <!-- 
+    Defines the name of the Sandcastle project file to build 
+    If not defined, a search is run for *.shfb files. The build fails if multiple project definitions are found.
+    -->
+    <SandcastleProjectFile></SandcastleProjectFile>
+    <SandcastleProjectFilePath Condition="'$(SandcastleProjectFile)' != ''">$(SolutionRoot)\$(SandcastleProjectFile)</SandcastleProjectFilePath>
+     
+    <!-- Defines the documentation name -->
+    <DocumentationName></DocumentationName>
+     
+    <SandcastleBuilderPath>$(ProgramFiles)\EWSoftware\Sandcastle Help File Builder\SandcastleBuilderConsole.exe</SandcastleBuilderPath>
+     
+    <!-- Used to store the updated version number for generating Sandcastle documentation -->
+    <EmptyVersionNumber>0.0.0.0</EmptyVersionNumber>
+    <VersionNumber>$(EmptyVersionNumber)</VersionNumber>
+     
+</PropertyGroup>
+     
+<Target Name="GenerateDocumentation"
+        Condition="$(BuildDocumentation)">
+     
+    <GetBuildProperties TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                        BuildUri="$(BuildUri)">
+    <Output TaskParameter="TestSuccess"
+            PropertyName="TestSuccess" />
+    </GetBuildProperties>
+     
+    <Message Text="Skipping Sandcastle documentation generation"
+            Condition="$(TestSuccess) == false" />
+     
+    <CallTarget Targets="FindSandcastleProjectFile"
+                Condition="$(TestSuccess)" />
+     
+    <CallTarget Targets="GenerateSandcastleDocumentation"
+                Condition="$(TestSuccess)" />
+     
+</Target>
+     
+<Target Name="FindSandcastleProjectFile"
+        Condition="'$(SandcastleProjectFilePath)' == ''">
+     
+    <Message Text="No Sandcastle project defined. Searching %24(SolutionRoot)\**\*.shfb" />
+     
+    <ItemGroup>
+     
+    <SandcastleProjectDefinitionFiles Include="$(SolutionRoot)\**\*.shfb" />
+     
+    </ItemGroup>
+     
+    <Message Text="Searching failed to find a Sandcastle project file."
+            Condition="'@(SandcastleProjectDefinitionFiles)' == ''" />
+    <Message Text="Found the following Sandcastle project files: %0D%0A @(SandcastleProjectDefinitionFiles -> '%(FullPath)', '%0D%0A')"
+            Condition="'@(SandcastleProjectDefinitionFiles)' != ''" />
+     
+    <StringComparison Comparison="Contains"
+                    Param1="@(SandcastleProjectDefinitionFiles)"
+                    Param2=";"
+                    Condition="'@(SandcastleProjectDefinitionFiles)' != ''">
+    <Output TaskParameter="Result"
+            ItemName="MultipleSandcastleProjectsFound" />
+    </StringComparison>
+     
+    <Error Text="Multiple Sandcastle project definitions found."
+            Condition="'@(SandcastleProjectDefinitionFiles)' != '' And @(MultipleSandcastleProjectsFound) == true" />
+     
+    <PropertyGroup>
+     
+    <SandcastleProjectFilePath>@(SandcastleProjectDefinitionFiles)</SandcastleProjectFilePath>
+     
+    </PropertyGroup>
+     
+</Target>
+     
+<Target Name="GenerateSandcastleDocumentation">
+    
+    <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                BuildUri="$(BuildUri)"
+                Name="Generating Sandcastle documentation"
+                Message="Generating Sandcastle documentation">
+    <Output TaskParameter="Id"
+            PropertyName="SandcastleBuildStepId" />
+    </BuildStep>
+     
+    <!-- Check if builder and files exist -->
+    <Error Text="Sandcastle Help File Builder is not found at $(SandcastleBuilderPath)."
+            Condition="!Exists('$(SandcastleBuilderPath)')"  />
+     
+    <Error Text="No ProductName property value has been defined."
+            Condition="'$(ProductName)' == ''" />
+     
+    <Error Text="Sandcastle project file '$(SandcastleProjectFilePath)' does not exist"
+            Condition="'$(SandcastleProjectFilePath)' != '' And !Exists('$(SandcastleProjectFilePath)')" />
+     
+    <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                BuildUri="$(BuildUri)"
+                Id="$(SandcastleBuildStepId)"
+                Message="Compiling Sandcastle documentation project"
+                Condition="'$(SandcastleProjectFilePath)' != ''" />
+     
+    <CallTarget Targets="BuildSandcastleProjectFile"
+                Condition="'$(SandcastleProjectFilePath)' != ''" />
+     
+    <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                BuildUri="$(BuildUri)"
+                Id="$(SandcastleBuildStepId)"
+                Message="Compiling Sandcastle documentation without a project"
+                Condition="'$(SandcastleProjectFilePath)' == ''" />
+     
+    <CallTarget Targets="BuildSandcastleWithDynamicProjectDefinition"
+                Condition="'$(SandcastleProjectFilePath)' == ''" />
+     
+    <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
+                BuildUri="$(BuildUri)"
+                Id="$(SandcastleBuildStepId)"
+                Status="Succeeded" />
+     
+</Target>
+    
+{% endhighlight %}
 
 
