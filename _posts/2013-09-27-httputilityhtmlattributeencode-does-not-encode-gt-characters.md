@@ -9,58 +9,58 @@ I’ve been working on a side project that works with HTML responses from websit
 
 So my debugging efforts seem to have uncovered an issue in HttpUtility.HtmlAttributeEncode (or more specifically the HttpEncoder class).
 
-The problem can be simply expressed by the following code.
-
-    using System;
-    using System.Web;
-    namespace ConsoleApplication1
+The problem can be simply expressed by the following code.{% highlight csharp linenos %}
+using System;
+using System.Web;
+namespace ConsoleApplication1
+{
+    class Program
     {
-        class Program
+        static void Main(string[] args)
         {
-            static void Main(string[] args)
-            {
-                Console.WriteLine(HttpUtility.HtmlAttributeEncode(&quot;<p/&gt;&quot;));
-                Console.ReadKey();
-            }
+            Console.WriteLine(HttpUtility.HtmlAttributeEncode("<p/>"));
+            Console.ReadKey();
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
-The call to HttpUtility.HtmlAttributeEncode produces the result <p/&gt; instead of <p/&gt;. This is a problem in terms of putting encoded XML in a HTML attribute. It is up to the HTML parser to determine how to fix up the corrupted HTML.
+The call to HttpUtility.HtmlAttributeEncode produces the result <p/> instead of <p/>. This is a problem in terms of putting encoded XML in a HTML attribute. It is up to the HTML parser to determine how to fix up the corrupted HTML.
 
-For example, encode &quot;<p/&gt;&quot; and put it into a hidden field and you then get HTML like the following:
+For example, encode "<p/>" and put it into a hidden field and you then get HTML like the following:{% highlight xml linenos %}
+<form>
+    <input type="hidden" name="DataSet" value="<p/>" />
+    <input type="submit" name="Submit" />
+</form>
+{% endhighlight %}
 
-    <form&gt;
-        <input type=&quot;hidden&quot; name=&quot;DataSet&quot; value=&quot;<p/&gt;&quot; /&gt;
-        <input type=&quot;submit&quot; name=&quot;Submit&quot; /&gt;
-    </form&gt;{% endhighlight %}
+The interpretation of this HTML could either implicitly consider the > in the attribute as > or add in an implicit " before the literal > to close out the attribute. The first outcome would be correct HTML and the second would continue to produce incorrect HTML. The big problem here is an assumption that all interpreters of HTML are going to make the same decision.
 
-The interpretation of this HTML could either implicitly consider the &gt; in the attribute as &gt; or add in an implicit &quot; before the literal &gt; to close out the attribute. The first outcome would be correct HTML and the second would continue to produce incorrect HTML. The big problem here is an assumption that all interpreters of HTML are going to make the same decision.
-
-The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the &gt; character.
-
-    public class TagHttpEncoder : HttpEncoder
+The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the > character.{% highlight csharp linenos %}
+public class TagHttpEncoder : HttpEncoder
+{
+    /// <inheritdoc />
+    protected override void HtmlAttributeEncode(string value, TextWriter output)
     {
-        /// <inheritdoc /&gt;
-        protected override void HtmlAttributeEncode(string value, TextWriter output)
-        {
-            var firstWriter = new StringWriter(CultureInfo.InvariantCulture);
+        var firstWriter = new StringWriter(CultureInfo.InvariantCulture);
     
-            base.HtmlAttributeEncode(value, firstWriter);
+        base.HtmlAttributeEncode(value, firstWriter);
     
-            var encoded = firstWriter.ToString();
+        var encoded = firstWriter.ToString();
     
-            var fixedEncoding = encoded.Replace(&quot;&gt;&quot;, &quot;&gt;&quot;);
+        var fixedEncoding = encoded.Replace(">", ">");
     
-            output.Write(fixedEncoding);
-        }
-    }{% endhighlight %}
+        output.Write(fixedEncoding);
+    }
+}
+{% endhighlight %}
 
-This encoder can then be hooked up to ASP.Net in Global.asax.
-
-    protected void Application_Start(object sender, EventArgs e)
-    {
-        HttpEncoder.Current = new TagHttpEncoder();
-    }{% endhighlight %}
+This encoder can then be hooked up to ASP.Net in Global.asax.{% highlight csharp linenos %}
+protected void Application_Start(object sender, EventArgs e)
+{
+    HttpEncoder.Current = new TagHttpEncoder();
+}
+{% endhighlight %}
 
 I’ve raised this bug on [Connect][0].
 

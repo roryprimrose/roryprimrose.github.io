@@ -7,86 +7,86 @@ date: 2013-03-26 20:09:36 +10:00
 
 I’ve been wondering about this for a long time. None of the reading that I’ve done has conclusively answered this question. It just so happens that I’ve been developing in a VM for the last couple of months. I got the chance tonight to downgrade the VM specs to a single core to run some tests. The results were very pleasing, yet completely unexpected.
 
-My test code is very unscientific but achieves the objective.
-
-    using System;
-    using System.Collections.Concurrent;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
+My test code is very unscientific but achieves the objective.{% highlight csharp linenos %}
+using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
     
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    class Program
     {
-        class Program
+        private static ConcurrentBag<int> _taskThreadIds =new ConcurrentBag<int>();
+        private static ConcurrentBag<int> _parallelThreadIds =new ConcurrentBag<int>();
+    
+        static void Main(string[] args)
         {
-            private static ConcurrentBag<int&gt; _taskThreadIds =new ConcurrentBag<int&gt;();
-            private static ConcurrentBag<int&gt; _parallelThreadIds =new ConcurrentBag<int&gt;();
+            Console.WriteLine("Starting task array on {0}", Thread.CurrentThread.ManagedThreadId);
+            Stopwatch watch = Stopwatch.StartNew();
     
-            static void Main(string[] args)
+            Task[] tasks = new Task[100];
+    
+            for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine(&quot;Starting task array on {0}&quot;, Thread.CurrentThread.ManagedThreadId);
-                Stopwatch watch = Stopwatch.StartNew();
-    
-                Task[] tasks = new Task[100];
-    
-                for (int i = 0; i < 100; i++)
-                {
-                    tasks[i] = Task.Factory.StartNew(TaskAction, i);
-                }
-    
-                Task.WaitAll(tasks);
-    
-                watch.Stop();
-    
-                OutputResults(_taskThreadIds, watch, &quot;task array&quot;);
-    
-                Console.WriteLine(&quot;Starting parallel loop on {0}&quot;, Thread.CurrentThread.ManagedThreadId);
-                watch = Stopwatch.StartNew();
-    
-                Parallel.For(0, 100, ParallelAction);
-    
-                watch.Stop();
-    
-                OutputResults(_parallelThreadIds, watch, &quot;parallel&quot;);
-    
-                Console.WriteLine(&quot;Press key to close&quot;);
-                Console.ReadKey();
+                tasks[i] = Task.Factory.StartNew(TaskAction, i);
             }
     
-            private static void OutputResults(ConcurrentBag<int&gt; ids, Stopwatch watch, string testType)
+            Task.WaitAll(tasks);
+    
+            watch.Stop();
+    
+            OutputResults(_taskThreadIds, watch, "task array");
+    
+            Console.WriteLine("Starting parallel loop on {0}", Thread.CurrentThread.ManagedThreadId);
+            watch = Stopwatch.StartNew();
+    
+            Parallel.For(0, 100, ParallelAction);
+    
+            watch.Stop();
+    
+            OutputResults(_parallelThreadIds, watch, "parallel");
+    
+            Console.WriteLine("Press key to close");
+            Console.ReadKey();
+        }
+    
+        private static void OutputResults(ConcurrentBag<int> ids, Stopwatch watch, string testType)
+        {
+            var allIds = ids.ToList();
+            var uniqueIds = allIds.Distinct().ToList();
+    
+            Console.WriteLine("Completed {0} on {1} in {2} millseconds using {3} threads", testType,
+                                Thread.CurrentThread.ManagedThreadId, watch.ElapsedMilliseconds, uniqueIds.Count);
+    
+            for (int i = 0; i < uniqueIds.Count; i++)
             {
-                var allIds = ids.ToList();
-                var uniqueIds = allIds.Distinct().ToList();
-    
-                Console.WriteLine(&quot;Completed {0} on {1} in {2} millseconds using {3} threads&quot;, testType,
-                                  Thread.CurrentThread.ManagedThreadId, watch.ElapsedMilliseconds, uniqueIds.Count);
-    
-                for (int i = 0; i < uniqueIds.Count; i++)
-                {
-                    Console.WriteLine(&quot;Thread {0} was used {1} times&quot;, uniqueIds[i], allIds.Count(x =&gt; x == uniqueIds[i]));
-                }
-            }
-    
-            private static void TaskAction(object x)
-            {
-                _taskThreadIds.Add(Thread.CurrentThread.ManagedThreadId);
-    
-                //Console.WriteLine(&quot;{0}: Starting on {1}&quot;, x, Thread.CurrentThread.ManagedThreadId);
-                Thread.Sleep(500);
-                //Console.WriteLine(&quot;{0}: Completing on {1}&quot;, x, Thread.CurrentThread.ManagedThreadId);
-            }
-    
-            private static void ParallelAction(int x)
-            {
-                _parallelThreadIds.Add(Thread.CurrentThread.ManagedThreadId);
-    
-                //Console.WriteLine(&quot;{0}: Starting on {1}&quot;, x, Thread.CurrentThread.ManagedThreadId);
-                Thread.Sleep(500);
-                //Console.WriteLine(&quot;{0}: Completing on {1}&quot;, x, Thread.CurrentThread.ManagedThreadId);
+                Console.WriteLine("Thread {0} was used {1} times", uniqueIds[i], allIds.Count(x => x == uniqueIds[i]));
             }
         }
-    }{% endhighlight %}
+    
+        private static void TaskAction(object x)
+        {
+            _taskThreadIds.Add(Thread.CurrentThread.ManagedThreadId);
+    
+            //Console.WriteLine("{0}: Starting on {1}", x, Thread.CurrentThread.ManagedThreadId);
+            Thread.Sleep(500);
+            //Console.WriteLine("{0}: Completing on {1}", x, Thread.CurrentThread.ManagedThreadId);
+        }
+    
+        private static void ParallelAction(int x)
+        {
+            _parallelThreadIds.Add(Thread.CurrentThread.ManagedThreadId);
+    
+            //Console.WriteLine("{0}: Starting on {1}", x, Thread.CurrentThread.ManagedThreadId);
+            Thread.Sleep(500);
+            //Console.WriteLine("{0}: Completing on {1}", x, Thread.CurrentThread.ManagedThreadId);
+        }
+    }
+}
+{% endhighlight %}
 
 And here is the answer.![image][0]
 

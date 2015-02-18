@@ -9,37 +9,37 @@ I have been hitting an issue with MVC4 Web Api where my global error handling fi
 
 I have finally figured out that returning a lazy IEnumerable instance will also cause the global error handler to not execute. In fact, it won’t cause controller or action level exception filters to execute either. 
 
-Consider the following:
-
-    namespace MyService
+Consider the following:{% highlight csharp linenos %}
+namespace MyService
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Web.Http;
+    using System.Web.Http.ModelBinding;
+    
+    public class TestController : ApiController
     {
-        using System;
-        using System.Collections.Generic;
-        using System.Collections.ObjectModel;
-        using System.Linq;
-        using System.Net;
-        using System.Net.Http;
-        using System.Web.Http;
-        using System.Web.Http.ModelBinding;
-    
-        public class TestController : ApiController
+        [HttpGet]
+        public HttpResponseMessage MyAction()
         {
-            [HttpGet]
-            public HttpResponseMessage MyAction()
-            {
-                var data = BuildData();
+            var data = BuildData();
     
-                return Request.CreateResponse(HttpStatusCode.OK, data);
-            }
-    
-            private static IEnumerable<int&gt; BuildData()
-            {
-                yield return 1;
-    
-                throw new InvalidOperationException();
-            }
+            return Request.CreateResponse(HttpStatusCode.OK, data);
         }
-    }{% endhighlight %}
+    
+        private static IEnumerable<int> BuildData()
+        {
+            yield return 1;
+    
+            throw new InvalidOperationException();
+        }
+    }
+}
+{% endhighlight %}
 
 This will write information using [a registered ITraceWriter][1] implementation (which [has its problems][2]) but will not fire the exception filter attributes. The reason is that the part of the pipeline that evaluates the data to send in the response (therefore forcing the enumeration and hitting an exception)would presumably be beyond the part of the pipeline that is covered by the error handling.
 

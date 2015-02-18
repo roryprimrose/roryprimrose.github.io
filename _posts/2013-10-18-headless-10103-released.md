@@ -21,35 +21,35 @@ Some of the features of Headless are:
 
 **Examples**
 
-Headless can use a page model class that describes the model, location and behaviour of a page.
+Headless can use a page model class that describes the model, location and behaviour of a page.{% highlight csharp linenos %}
+using (var browser = new Browser())
+{
+    var homePage = browser.GoTo<HomePage>();
+    
+    var contactPage = homePage.Contact.Click<ContactPage>();
+    
+    contactPage.Email.Value = "my@address.com";
+    contactPage.Name.Value = "My Name";
+    contactPage.Comment.Value = "Hi there!";
+    
+    var thankYouPage = contactPage.Submit.Click<ThankYouPage>();
+}
+{% endhighlight %}
 
-    using (var browser = new Browser())
-    {
-        var homePage = browser.GoTo<HomePage&gt;();
+It also supports the dynamic keyword if you don’t want to use a model. You can also jump between these two models if that suits.{% highlight csharp linenos %}
+using (var browser = new Browser())
+{
+    var homePage = browser.GoTo(new Uri("http://mysite"));
     
-        var contactPage = homePage.Contact.Click<ContactPage&gt;();
+    var contactPage = homePage.Contact.Click();
     
-        contactPage.Email.Value = &quot;my@address.com&quot;;
-        contactPage.Name.Value = &quot;My Name&quot;;
-        contactPage.Comment.Value = &quot;Hi there!&quot;;
+    contactPage.Email.Value = "my@address.com";
+    contactPage.Name.Value = "My Name";
+    contactPage.Comment.Value = "Hi there!";
     
-        var thankYouPage = contactPage.Submit.Click<ThankYouPage&gt;();
-    }{% endhighlight %}
-
-It also supports the dynamic keyword if you don’t want to use a model. You can also jump between these two models if that suits.
-
-    using (var browser = new Browser())
-    {
-        var homePage = browser.GoTo(new Uri(&quot;http://mysite&quot;));
-    
-        var contactPage = homePage.Contact.Click();
-    
-        contactPage.Email.Value = &quot;my@address.com&quot;;
-        contactPage.Name.Value = &quot;My Name&quot;;
-        contactPage.Comment.Value = &quot;Hi there!&quot;;
-    
-        var thankYouPage = contactPage.Submit.Click();
-    }{% endhighlight %}
+    var thankYouPage = contactPage.Submit.Click();
+}
+{% endhighlight %}
 
 Headless is open source on GitHub at [https://github.com/roryprimrose/Headless][0] and you can get it from NuGet at [http://www.nuget.org/packages/Headless][1]. 
 

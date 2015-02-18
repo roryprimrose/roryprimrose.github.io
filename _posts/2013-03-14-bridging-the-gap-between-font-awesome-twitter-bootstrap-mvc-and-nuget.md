@@ -11,62 +11,63 @@ I don’t want to change either the css file from the Nuget package or the locat
 
 I looked at custom routing options but these just seemed to cause more problems than they solved. It then dawned on me that I could use an IBundleBuilder implementation now that I know [how they work][1].
 
-This is what I have for my current Font Awesome StyleBundle configuration.
+This is what I have for my current Font Awesome StyleBundle configuration.{% highlight csharp linenos %}
+bundles.Add(
+    new StyleBundle("~/css/fontawesome")
+        .Include("~/Content/font-awesome.css"));
+{% endhighlight %}
 
-    bundles.Add(
-        new StyleBundle(&quot;~/css/fontawesome&quot;)
-            .Include(&quot;~/Content/font-awesome.css&quot;));{% endhighlight %}
-
-The contents of the css file need to be adjusted when the bundle is created so that they include the Content directory, but also make the resource reference relative to the application root. Enter the ReplaceContentsBundleBuilder.
-
-    namespace MyNamespace
+The contents of the css file need to be adjusted when the bundle is created so that they include the Content directory, but also make the resource reference relative to the application root. Enter the ReplaceContentsBundleBuilder.{% highlight csharp linenos %}
+namespace MyNamespace
+{
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Web.Optimization;
+    using Seterlund.CodeGuard;
+    
+    public class ReplaceContentsBundleBuilder : IBundleBuilder
     {
-        using System.Collections.Generic;
-        using System.IO;
-        using System.Web.Optimization;
-        using Seterlund.CodeGuard;
+        private readonly string _find;
     
-        public class ReplaceContentsBundleBuilder : IBundleBuilder
+        private readonly string _replaceWith;
+    
+        private readonly IBundleBuilder _builder;
+    
+        public ReplaceContentsBundleBuilder(string find, string replaceWith)
+            : this(find, replaceWith, new DefaultBundleBuilder())
         {
-            private readonly string _find;
-    
-            private readonly string _replaceWith;
-    
-            private readonly IBundleBuilder _builder;
-    
-            public ReplaceContentsBundleBuilder(string find, string replaceWith)
-                : this(find, replaceWith, new DefaultBundleBuilder())
-            {
-            }
-    
-            public ReplaceContentsBundleBuilder(string find, string replaceWith, IBundleBuilder builder)
-            {
-                Guard.That(() =&gt; find).IsNotNullOrEmpty();
-                Guard.That(() =&gt; replaceWith).IsNotNullOrEmpty();
-                Guard.That(() =&gt; builder).IsNotNull();
-    
-                _find = find;
-                _replaceWith = replaceWith;
-                _builder = builder;
-            }
-    
-            public string BuildBundleContent(Bundle bundle, BundleContext context, IEnumerable<FileInfo&gt; files)
-            {
-                string contents = _builder.BuildBundleContent(bundle, context, files);
-    
-                return contents.Replace(_find, _replaceWith);
-            }
         }
-    }{% endhighlight %}
-
-This class makes it super easy to modify the bundle of the fly to give me the translation that I require without having to tweek anything coming from Nuget. The bundle config is now:
-
-    bundles.Add(
-        new StyleBundle(&quot;~/css/fontawesome&quot;)
+    
+        public ReplaceContentsBundleBuilder(string find, string replaceWith, IBundleBuilder builder)
         {
-            Builder = new ReplaceContentsBundleBuilder(&quot;url('font/&quot;, &quot;url('/Content/font/&quot;)
-        }.Include(&quot;~/Content/font-awesome.css&quot;));{% endhighlight %}
-    This will replace any content in the bundle that has a relative reference to font/ with a reference to /Content/font/ which is relative to the site root.
+            Guard.That(() => find).IsNotNullOrEmpty();
+            Guard.That(() => replaceWith).IsNotNullOrEmpty();
+            Guard.That(() => builder).IsNotNull();
+    
+            _find = find;
+            _replaceWith = replaceWith;
+            _builder = builder;
+        }
+    
+        public string BuildBundleContent(Bundle bundle, BundleContext context, IEnumerable<FileInfo> files)
+        {
+            string contents = _builder.BuildBundleContent(bundle, context, files);
+    
+            return contents.Replace(_find, _replaceWith);
+        }
+    }
+}
+{% endhighlight %}
+
+This class makes it super easy to modify the bundle of the fly to give me the translation that I require without having to tweek anything coming from Nuget. The bundle config is now:{% highlight csharp linenos %}
+bundles.Add(
+    new StyleBundle("~/css/fontawesome")
+    {
+        Builder = new ReplaceContentsBundleBuilder("url('font/", "url('/Content/font/")
+    }.Include("~/Content/font-awesome.css"));
+{% endhighlight %}
+
+This will replace any content in the bundle that has a relative reference to font/ with a reference to /Content/font/ which is relative to the site root.
 
 Easy done.
 

@@ -8,295 +8,295 @@ I recently [posted][0] about an EntityAdapter class that can be the bridge betwe
 
 I hit this issue because I started working with a model class that exposes an enum property. The integration tests failed because the read of the entity using the adapter returned the default enum value for the property rather than the one I attempted to write to the table. I have updated the EntityAdapter class to cater for this by using reflection and type converters to fill in the gaps.
 
-The class now looks like the following:
-
-    namespace MySystem.DataAccess.Azure
+The class now looks like the following:{% highlight csharp linenos %}
+namespace MySystem.DataAccess.Azure
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Table;
+    using Seterlund.CodeGuard;
+    
+    /// <summary>
+    ///     The <see cref="EntityAdapter{T}" />
+    ///     class provides the base adapter implementation for reading and writing a POCO class with Azure Table Storage.
+    /// </summary>
+    /// <typeparam name="T">
+    ///     The type of value.
+    /// </typeparam>
+    [CLSCompliant(false)]
+    public abstract class EntityAdapter<T> : ITableEntity where T : class, new()
     {
-        using System;
-        using System.Collections.Generic;
-        using System.ComponentModel;
-        using System.Linq;
-        using System.Reflection;
-        using Microsoft.WindowsAzure.Storage;
-        using Microsoft.WindowsAzure.Storage.Table;
-        using Seterlund.CodeGuard;
+        /// <summary>
+        ///     The synchronization lock.
+        /// </summary>
+        /// <remarks>A dictionary is not required here because the static will have a different value for each generic type.</remarks>
+        private static readonly Object _syncLock = new Object();
     
-        /// <summary&gt;
-        ///     The <see cref=&quot;EntityAdapter{T}&quot; /&gt;
-        ///     class provides the base adapter implementation for reading and writing a POCO class with Azure Table Storage.
-        /// </summary&gt;
-        /// <typeparam name=&quot;T&quot;&gt;
-        ///     The type of value.
-        /// </typeparam&gt;
-        [CLSCompliant(false)]
-        public abstract class EntityAdapter<T&gt; : ITableEntity where T : class, new()
+        /// <summary>
+        ///     The additional properties to map for types.
+        /// </summary>
+        /// <remarks>A dictionary is not required here because the static will have a different value for each generic type.</remarks>
+        private static List<PropertyInfo> _additionalProperties;
+    
+        /// <summary>
+        ///     The partition key
+        /// </summary>
+        private string _partitionKey;
+    
+        /// <summary>
+        ///     The row key
+        /// </summary>
+        private string _rowKey;
+    
+        /// <summary>
+        ///     The entity value.
+        /// </summary>
+        private T _value;
+    
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="EntityAdapter{T}" /> class.
+        /// </summary>
+        protected EntityAdapter()
         {
-            /// <summary&gt;
-            ///     The synchronization lock.
-            /// </summary&gt;
-            /// <remarks&gt;A dictionary is not required here because the static will have a different value for each generic type.</remarks&gt;
-            private static readonly Object _syncLock = new Object();
+        }
     
-            /// <summary&gt;
-            ///     The additional properties to map for types.
-            /// </summary&gt;
-            /// <remarks&gt;A dictionary is not required here because the static will have a different value for each generic type.</remarks&gt;
-            private static List<PropertyInfo&gt; _additionalProperties;
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="EntityAdapter{T}" /> class.
+        /// </summary>
+        /// <param name="value">
+        ///     The value.
+        /// </param>
+        protected EntityAdapter(T value)
+        {
+            Guard.That(value, "value").IsNotNull();
     
-            /// <summary&gt;
-            ///     The partition key
-            /// </summary&gt;
-            private string _partitionKey;
+            _value = value;
+        }
     
-            /// <summary&gt;
-            ///     The row key
-            /// </summary&gt;
-            private string _rowKey;
+        /// <inheritdoc />
+        public void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
+        {
+            _value = new T();
     
-            /// <summary&gt;
-            ///     The entity value.
-            /// </summary&gt;
-            private T _value;
+            TableEntity.ReadUserObject(Value, properties, operationContext);
     
-            /// <summary&gt;
-            ///     Initializes a new instance of the <see cref=&quot;EntityAdapter{T}&quot; /&gt; class.
-            /// </summary&gt;
-            protected EntityAdapter()
+            var additionalMappings = GetAdditionPropertyMappings(Value, properties);
+    
+            if (additionalMappings.Count > 0)
             {
-            }
-    
-            /// <summary&gt;
-            ///     Initializes a new instance of the <see cref=&quot;EntityAdapter{T}&quot; /&gt; class.
-            /// </summary&gt;
-            /// <param name=&quot;value&quot;&gt;
-            ///     The value.
-            /// </param&gt;
-            protected EntityAdapter(T value)
-            {
-                Guard.That(value, &quot;value&quot;).IsNotNull();
-    
-                _value = value;
-            }
-    
-            /// <inheritdoc /&gt;
-            public void ReadEntity(IDictionary<string, EntityProperty&gt; properties, OperationContext operationContext)
-            {
-                _value = new T();
-    
-                TableEntity.ReadUserObject(Value, properties, operationContext);
-    
-                var additionalMappings = GetAdditionPropertyMappings(Value, properties);
-    
-                if (additionalMappings.Count &gt; 0)
+                // Populate the properties missing from ReadUserObject
+                foreach (var additionalMapping in additionalMappings)
                 {
-                    // Populate the properties missing from ReadUserObject
-                    foreach (var additionalMapping in additionalMappings)
+                    if (properties.ContainsKey(additionalMapping.Name) == false)
                     {
-                        if (properties.ContainsKey(additionalMapping.Name) == false)
-                        {
-                            // We will let the object assign its default value for that property
-                            continue;
-                        }
-    
-                        var propertyValue = properties[additionalMapping.Name];
-                        var converter = TypeDescriptor.GetConverter(additionalMapping.PropertyType);
-                        var convertedValue = converter.ConvertFromInvariantString(propertyValue.StringValue);
-    
-                        additionalMapping.SetValue(Value, convertedValue);
+                        // We will let the object assign its default value for that property
+                        continue;
                     }
-                }
     
-                ReadValues(properties, operationContext);
+                    var propertyValue = properties[additionalMapping.Name];
+                    var converter = TypeDescriptor.GetConverter(additionalMapping.PropertyType);
+                    var convertedValue = converter.ConvertFromInvariantString(propertyValue.StringValue);
+    
+                    additionalMapping.SetValue(Value, convertedValue);
+                }
             }
     
-            /// <inheritdoc /&gt;
-            public IDictionary<string, EntityProperty&gt; WriteEntity(OperationContext operationContext)
+            ReadValues(properties, operationContext);
+        }
+    
+        /// <inheritdoc />
+        public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
+        {
+            var properties = TableEntity.WriteUserObject(Value, operationContext);
+    
+            var additionalMappings = GetAdditionPropertyMappings(Value, properties);
+    
+            if (additionalMappings.Count > 0)
             {
-                var properties = TableEntity.WriteUserObject(Value, operationContext);
-    
-                var additionalMappings = GetAdditionPropertyMappings(Value, properties);
-    
-                if (additionalMappings.Count &gt; 0)
+                // Populate the properties missing from WriteUserObject
+                foreach (var additionalMapping in additionalMappings)
                 {
-                    // Populate the properties missing from WriteUserObject
-                    foreach (var additionalMapping in additionalMappings)
-                    {
-                        var propertyValue = additionalMapping.GetValue(Value);
-                        var converter = TypeDescriptor.GetConverter(additionalMapping.PropertyType);
-                        var convertedValue = converter.ConvertToInvariantString(propertyValue);
+                    var propertyValue = additionalMapping.GetValue(Value);
+                    var converter = TypeDescriptor.GetConverter(additionalMapping.PropertyType);
+                    var convertedValue = converter.ConvertToInvariantString(propertyValue);
     
-                        properties[additionalMapping.Name] = EntityProperty.GeneratePropertyForString(convertedValue);
-                    }
+                    properties[additionalMapping.Name] = EntityProperty.GeneratePropertyForString(convertedValue);
                 }
-    
-                WriteValues(properties, operationContext);
-    
-                return properties;
             }
     
-            /// <summary&gt;
-            ///     Builds the entity partition key.
-            /// </summary&gt;
-            /// <returns&gt;
-            ///     The partition key of the entity.
-            /// </returns&gt;
-            protected abstract string BuildPartitionKey();
+            WriteValues(properties, operationContext);
     
-            /// <summary&gt;
-            ///     Builds the entity row key.
-            /// </summary&gt;
-            /// <returns&gt;
-            ///     The <see cref=&quot;string&quot; /&gt;.
-            /// </returns&gt;
-            protected abstract string BuildRowKey();
+            return properties;
+        }
     
-            /// <summary&gt;
-            ///     Reads the values from the specified properties.
-            /// </summary&gt;
-            /// <param name=&quot;properties&quot;&gt;
-            ///     The properties of the entity.
-            /// </param&gt;
-            /// <param name=&quot;operationContext&quot;&gt;
-            ///     The operation context.
-            /// </param&gt;
-            protected virtual void ReadValues(
-                IDictionary<string, EntityProperty&gt; properties,
-                OperationContext operationContext)
+        /// <summary>
+        ///     Builds the entity partition key.
+        /// </summary>
+        /// <returns>
+        ///     The partition key of the entity.
+        /// </returns>
+        protected abstract string BuildPartitionKey();
+    
+        /// <summary>
+        ///     Builds the entity row key.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="string" />.
+        /// </returns>
+        protected abstract string BuildRowKey();
+    
+        /// <summary>
+        ///     Reads the values from the specified properties.
+        /// </summary>
+        /// <param name="properties">
+        ///     The properties of the entity.
+        /// </param>
+        /// <param name="operationContext">
+        ///     The operation context.
+        /// </param>
+        protected virtual void ReadValues(
+            IDictionary<string, EntityProperty> properties,
+            OperationContext operationContext)
+        {
+        }
+    
+        /// <summary>
+        ///     Writes the entity values to the specified properties.
+        /// </summary>
+        /// <param name="properties">
+        ///     The properties.
+        /// </param>
+        /// <param name="operationContext">
+        ///     The operation context.
+        /// </param>
+        protected virtual void WriteValues(
+            IDictionary<string, EntityProperty> properties,
+            OperationContext operationContext)
+        {
+        }
+    
+        /// <summary>
+        ///     Gets the additional property mappings.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="properties">The mapped properties.</param>
+        /// <returns>
+        ///     The additional property mappings.
+        /// </returns>
+        private static List<PropertyInfo> GetAdditionPropertyMappings(
+            T value,
+            IDictionary<string, EntityProperty> properties)
+        {
+            if (_additionalProperties != null)
             {
+                return _additionalProperties;
             }
     
-            /// <summary&gt;
-            ///     Writes the entity values to the specified properties.
-            /// </summary&gt;
-            /// <param name=&quot;properties&quot;&gt;
-            ///     The properties.
-            /// </param&gt;
-            /// <param name=&quot;operationContext&quot;&gt;
-            ///     The operation context.
-            /// </param&gt;
-            protected virtual void WriteValues(
-                IDictionary<string, EntityProperty&gt; properties,
-                OperationContext operationContext)
-            {
-            }
+            List<PropertyInfo> additionalProperties;
     
-            /// <summary&gt;
-            ///     Gets the additional property mappings.
-            /// </summary&gt;
-            /// <param name=&quot;value&quot;&gt;The value.</param&gt;
-            /// <param name=&quot;properties&quot;&gt;The mapped properties.</param&gt;
-            /// <returns&gt;
-            ///     The additional property mappings.
-            /// </returns&gt;
-            private static List<PropertyInfo&gt; GetAdditionPropertyMappings(
-                T value,
-                IDictionary<string, EntityProperty&gt; properties)
+            lock (_syncLock)
             {
+                // Check the mappings again to protect against race conditions on the lock
                 if (_additionalProperties != null)
                 {
                     return _additionalProperties;
                 }
     
-                List<PropertyInfo&gt; additionalProperties;
+                additionalProperties = ResolvePropertyMappings(value, properties);
     
-                lock (_syncLock)
-                {
-                    // Check the mappings again to protect against race conditions on the lock
-                    if (_additionalProperties != null)
-                    {
-                        return _additionalProperties;
-                    }
-    
-                    additionalProperties = ResolvePropertyMappings(value, properties);
-    
-                    _additionalProperties = additionalProperties;
-                }
-    
-                return additionalProperties;
+                _additionalProperties = additionalProperties;
             }
     
-            /// <summary&gt;
-            ///     Resolves the additional property mappings.
-            /// </summary&gt;
-            /// <param name=&quot;value&quot;&gt;The value.</param&gt;
-            /// <param name=&quot;properties&quot;&gt;The properties.</param&gt;
-            /// <returns&gt;The additional properties.</returns&gt;
-            private static List<PropertyInfo&gt; ResolvePropertyMappings(
-                T value,
-                IDictionary<string, EntityProperty&gt; properties)
-            {
-                var objectProperties = value.GetType().GetProperties();
+            return additionalProperties;
+        }
     
-                return
-                    objectProperties.Where(objectProperty =&gt; properties.ContainsKey(objectProperty.Name) == false).ToList();
-            }
+        /// <summary>
+        ///     Resolves the additional property mappings.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="properties">The properties.</param>
+        /// <returns>The additional properties.</returns>
+        private static List<PropertyInfo> ResolvePropertyMappings(
+            T value,
+            IDictionary<string, EntityProperty> properties)
+        {
+            var objectProperties = value.GetType().GetProperties();
     
-            /// <inheritdoc /&gt;
-            public string ETag
-            {
-                get;
-                set;
-            }
+            return
+                objectProperties.Where(objectProperty => properties.ContainsKey(objectProperty.Name) == false).ToList();
+        }
     
-            /// <inheritdoc /&gt;
-            public string PartitionKey
+        /// <inheritdoc />
+        public string ETag
+        {
+            get;
+            set;
+        }
+    
+        /// <inheritdoc />
+        public string PartitionKey
+        {
+            get
             {
-                get
+                if (_partitionKey == null)
                 {
-                    if (_partitionKey == null)
-                    {
-                        _partitionKey = BuildPartitionKey();
-                    }
-    
-                    return _partitionKey;
+                    _partitionKey = BuildPartitionKey();
                 }
     
-                set
-                {
-                    _partitionKey = value;
-                }
+                return _partitionKey;
             }
     
-            /// <inheritdoc /&gt;
-            public string RowKey
+            set
             {
-                get
-                {
-                    if (_rowKey == null)
-                    {
-                        _rowKey = BuildRowKey();
-                    }
-    
-                    return _rowKey;
-                }
-    
-                set
-                {
-                    _rowKey = value;
-                }
-            }
-    
-            /// <inheritdoc /&gt;
-            public DateTimeOffset Timestamp
-            {
-                get;
-                set;
-            }
-    
-            /// <summary&gt;
-            ///     Gets the value managed by the adapter.
-            /// </summary&gt;
-            /// <value&gt;
-            ///     The value.
-            /// </value&gt;
-            public T Value
-            {
-                get
-                {
-                    return _value;
-                }
+                _partitionKey = value;
             }
         }
-    }{% endhighlight %}
+    
+        /// <inheritdoc />
+        public string RowKey
+        {
+            get
+            {
+                if (_rowKey == null)
+                {
+                    _rowKey = BuildRowKey();
+                }
+    
+                return _rowKey;
+            }
+    
+            set
+            {
+                _rowKey = value;
+            }
+        }
+    
+        /// <inheritdoc />
+        public DateTimeOffset Timestamp
+        {
+            get;
+            set;
+        }
+    
+        /// <summary>
+        ///     Gets the value managed by the adapter.
+        /// </summary>
+        /// <value>
+        ///     The value.
+        /// </value>
+        public T Value
+        {
+            get
+            {
+                return _value;
+            }
+        }
+    }
+}
+{% endhighlight %}
 
 [0]: /post/2013/11/18/Entity-Adapter-for-Azure-Table-Storage.aspx

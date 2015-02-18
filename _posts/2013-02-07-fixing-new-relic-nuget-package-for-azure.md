@@ -11,17 +11,17 @@ I tried to install the [New Relic][0] Nuget package for an Azure solution. Unfor
 
 One of the good things about Nuget is that the install scripts are easily available to the solution.
 
-The install script was trying to add the following xml fragment to the start of the web role definition in ServiceDefinition.csdef file.
-
-    <Startup&gt;
-      <Task commandLine=&quot;newrelic.cmd&quot; executionContext=&quot;elevated&quot; taskType=&quot;simple&quot;&gt;
-        <Environment&gt;
-          <Variable name=&quot;EMULATED&quot;&gt;
-            <RoleInstanceValue xpath=&quot;/RoleEnvironment/Deployment/@emulated&quot;/&gt;
-          </Variable&gt;
-        </Environment&gt;
-      </Task&gt; 
-    </Startup&gt;{% endhighlight %}
+The install script was trying to add the following xml fragment to the start of the web role definition in ServiceDefinition.csdef file.{% highlight xml linenos %}
+<Startup>
+    <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
+    <Environment>
+        <Variable name="EMULATED">
+        <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated"/>
+        </Variable>
+    </Environment>
+    </Task> 
+</Startup>
+{% endhighlight %}
 
 Adding this manually and we are good to go.
 

@@ -9,42 +9,42 @@ I’ve previously posted about Nuget package update pain with the NewRelic Azure
 
 Here are the ServiceDefinition.csdef configurations for the two types of roles. The setup of this configuration seems to be the most common point of failure in the installation scripts.
 
-**Web Role**
+**Web Role**{% highlight xml linenos %}
+<WebRole>
+    <Startup>
+    <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
+        <Environment>
+        <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+        </Variable>
+        <Variable name="IsWorkerRole" value="false" />
+        </Environment>
+    </Task>
+    </Startup>
+</WebRole>
+{% endhighlight %}
 
-    <WebRole&gt;
-      <Startup&gt;
-        <Task commandLine=&quot;newrelic.cmd&quot; executionContext=&quot;elevated&quot; taskType=&quot;simple&quot;&gt;
-          <Environment&gt;
-            <Variable name=&quot;EMULATED&quot;&gt;
-              <RoleInstanceValue xpath=&quot;/RoleEnvironment/Deployment/@emulated&quot; /&gt;
-            </Variable&gt;
-            <Variable name=&quot;IsWorkerRole&quot; value=&quot;false&quot; /&gt;
-          </Environment&gt;
-        </Task&gt;
-      </Startup&gt;
-    </WebRole&gt;{% endhighlight %}
-
-**Worker Role**
-
-    <WorkerRole&gt;
-      <Startup&gt;
-        <Task commandLine=&quot;newrelic.cmd&quot; executionContext=&quot;elevated&quot; taskType=&quot;simple&quot;&gt;
-          <Environment&gt;
-            <Variable name=&quot;EMULATED&quot;&gt;
-              <RoleInstanceValue xpath=&quot;/RoleEnvironment/Deployment/@emulated&quot; /&gt;
-            </Variable&gt;
-            <Variable name=&quot;IsWorkerRole&quot; value=&quot;true&quot; /&gt;
-          </Environment&gt;
-        </Task&gt;
-      </Startup&gt;
-      <Runtime&gt;
-        <Environment&gt;
-          <Variable name=&quot;COR_ENABLE_PROFILING&quot; value=&quot;1&quot; /&gt;
-          <Variable name=&quot;COR_PROFILER&quot; value=&quot;{FF68FEB9-E58A-4B75-A2B8-90CE7D915A26}&quot; /&gt;
-          <Variable name=&quot;NEWRELIC_HOME&quot; value=&quot;D:\ProgramData\New Relic\.NET Agent\&quot; /&gt;
-        </Environment&gt;
-      </Runtime&gt;
-    </WorkerRole&gt;{% endhighlight %}
+**Worker Role**{% highlight xml linenos %}
+<WorkerRole>
+    <Startup>
+    <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
+        <Environment>
+        <Variable name="EMULATED">
+            <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+        </Variable>
+        <Variable name="IsWorkerRole" value="true" />
+        </Environment>
+    </Task>
+    </Startup>
+    <Runtime>
+    <Environment>
+        <Variable name="COR_ENABLE_PROFILING" value="1" />
+        <Variable name="COR_PROFILER" value="{FF68FEB9-E58A-4B75-A2B8-90CE7D915A26}" />
+        <Variable name="NEWRELIC_HOME" value="D:\ProgramData\New Relic\.NET Agent\" />
+    </Environment>
+    </Runtime>
+</WorkerRole>
+{% endhighlight %}
 
 [0]: /post/2013/02/07/Fixing-New-Relic-Nuget-package-for-Azure.aspx
 [1]: /post/2013/04/03/NewRelic-Azure-NuGet-package-update-pain-again.aspx
