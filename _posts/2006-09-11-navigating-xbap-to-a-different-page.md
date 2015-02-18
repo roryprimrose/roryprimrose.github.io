@@ -11,11 +11,31 @@ Could it be this difficult? Should it be? The answer to these questions is no, b
 
 One of the bits of information I came across was from the [MSDNMag]. I found the following code sample a little suspect though:
 
-{% highlight csharp linenos %}void viewHyperlink_Click(object sender, RoutedEventArgs e) { // View Order ViewOrderPage page = new ViewOrderPage(GetSelectedOrder()); NavigationWindow window = (NavigationWindow)this.Parent; // Don’t do this! window.Navigate(page); }{% endhighlight %}
+    {% highlight csharp linenos %}
+    void viewHyperlink_Click(object sender, RoutedEventArgs e)
+    {
+        // View Order
+        ViewOrderPage page = new ViewOrderPage(GetSelectedOrder());
+        NavigationWindow window =
+          (NavigationWindow)this.Parent; // Don’t do this!
+    
+        window.Navigate(page);
+    }
+    {% endhighlight %}
 
 It said &quot;Don't do this!&quot;, but I was desperate and tried it anyway. It didn't work. Thankfully, later on in the article, it gave an example of how it is done in a way that works:
 
-{% highlight csharp linenos %}void viewHyperlink_Click(object sender, RoutedEventArgs e) { // View Order ViewOrderPage page = new ViewOrderPage(GetSelectedOrder()); NavigationService ns = NavigationService.GetNavigationService(this); ns.Navigate(page); }{% endhighlight %}
+    {% highlight csharp linenos %}
+    void viewHyperlink_Click(object sender, RoutedEventArgs e)
+    {
+        // View Order
+        ViewOrderPage page = new ViewOrderPage(GetSelectedOrder());
+        NavigationService ns =
+          NavigationService.GetNavigationService(this);
+    
+        ns.Navigate(page);
+    }
+    {% endhighlight %}
 
 That's better!
 

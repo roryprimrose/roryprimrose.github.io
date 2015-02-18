@@ -17,11 +17,114 @@ Project.Log() invokes OnMessageLogged(). After searching for what is hooked up t
 
 This opens up a very simple solution. Regardless of how logging is invoked higher up the call chain, this implementation will always correctly define the log threshold at runtime because it is done directly on the loggers. This is of course assuming the logger implementation checks the threshold assigned to it.
 
-{% highlight csharp linenos %}using NAnt.Core; using NAnt.Core.Attributes; namespace Neovolve.NAnt.Tasks { /// <summary&gt; /// The <see cref="LogLevelTask"/&gt; /// class is a NAnt task that is used to determine the logging level used to execute /// a set of child tasks. /// </summary&gt; /// <remarks&gt;This code was inspired from the blog post found at http://jayflowers.com/WordPress/?p=133</remarks&gt; [TaskName("loglevel")] public class LogLevelTask : TaskContainer { #region Declarations /// <summary&gt; /// Stores the LogLevel value. /// </summary&gt; private Level _logLevel; #endregion #region Methods /// <summary&gt; /// Executes the task. /// </summary&gt; protected override void ExecuteTask() { Level OldLevel = Project.Threshold; AssignLogLevel(LogLevel); base.ExecuteTask(); AssignLogLevel(OldLevel); } /// <summary&gt; /// Assigns the log level. /// </summary&gt; /// <param name="newLevel"&gt;The new level.</param&gt; private void AssignLogLevel(Level newLevel) { // Loop through each logger foreach (IBuildListener listener in Project.BuildListeners) { IBuildLogger logger = listener as IBuildLogger; // Assign the new threshold if (logger != null) { logger.Threshold = newLevel; } } } #endregion #region Properties /// <summary&gt; /// Gets or sets the log level. /// </summary&gt; /// <value&gt;The log level.</value&gt; [TaskAttribute("level", Required = true)] public Level LogLevel { get { return _logLevel; } set { _logLevel = value; } } #endregion } } {% endhighlight %}
+    {% highlight csharp linenos %}
+    using NAnt.Core;
+    using NAnt.Core.Attributes;
+     
+    namespace Neovolve.NAnt.Tasks
+    {
+        /// <summary>
+        /// The <see cref="LogLevelTask"/>
+        /// class is a NAnt task that is used to determine the logging level used to execute
+        /// a set of child tasks.
+        /// </summary>
+        /// <remarks>This code was inspired from the blog post found at http://jayflowers.com/WordPress/?p=133</remarks>
+        [TaskName("loglevel")]
+        public class LogLevelTask : TaskContainer
+        {
+            #region Declarations
+     
+            /// <summary>
+            /// Stores the LogLevel value.
+            /// </summary>
+            private Level _logLevel;
+     
+            #endregion
+     
+            #region Methods
+     
+            /// <summary>
+            /// Executes the task.
+            /// </summary>
+            protected override void ExecuteTask()
+            {
+                Level OldLevel = Project.Threshold;
+                AssignLogLevel(LogLevel);
+    
+                base.ExecuteTask();
+    
+                AssignLogLevel(OldLevel);
+            }
+     
+            /// <summary>
+            /// Assigns the log level.
+            /// </summary>
+            /// <param name="newLevel">The new level.</param>
+            private void AssignLogLevel(Level newLevel)
+            {
+                // Loop through each logger
+                foreach (IBuildListener listener in Project.BuildListeners)
+                {
+                    IBuildLogger logger = listener as IBuildLogger;
+     
+                    // Assign the new threshold
+                    if (logger != null)
+                    {
+                        logger.Threshold = newLevel;
+                    }
+                }
+            }
+     
+            #endregion
+     
+            #region Properties
+     
+            /// <summary>
+            /// Gets or sets the log level.
+            /// </summary>
+            /// <value>The log level.</value>
+            [TaskAttribute("level", Required = true)]
+            public Level LogLevel
+            {
+                get
+                {
+                    return _logLevel;
+                }
+                set
+                {
+                    _logLevel = value;
+                }
+            }
+     
+            #endregion
+        }
+    }
+    
+    {% endhighlight %}
 
 To change the logging level, add the loglevel task around other tasks and set the level value. For example:
 
-{% highlight xml linenos %}<loglevel level="None"&gt; <!-- Determine whether the template is a project or item related template --&gt; <foreach item="Line" in="${Path.ProjectFileExpressions}" delim="," property="pathExpression"&gt; <if test="${ProjectTemplateFile == ''}"&gt; <regex pattern="${pathExpression}" input="${childFile}" options="IgnoreCase" failonerror="false" /&gt; </if&gt; </foreach&gt; </loglevel&gt; {% endhighlight %}
+    {% highlight xml linenos %}
+    <loglevel level="None">
+     
+      <!-- Determine whether the template is a project or item related template -->
+      <foreach item="Line"
+              in="${Path.ProjectFileExpressions}"
+              delim=","
+              property="pathExpression">
+     
+        <if test="${ProjectTemplateFile == ''}">
+          <regex pattern="${pathExpression}"
+                input="${childFile}"
+                options="IgnoreCase"
+                failonerror="false" />
+        </if>
+     
+      </foreach>
+     
+    </loglevel>
+    
+    {% endhighlight %}
 
 [0]: http://nant.sourceforge.net/release/0.85-rc1/help/tasks/xmlpeek.html
 [1]: http://nant.sourceforge.net/nightly/latest/help/tasks/regex.html

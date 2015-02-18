@@ -21,11 +21,35 @@ In order to ensure thread safety of adding a new item to the dictionary, a lock 
 
 **#1 - This is what people would normally do**&#160;
 
-{% highlight csharp linenos %}lock (MyDictionary) { // Check if a value needs to be stored if (MyDictionary.ContainsKey(myKey) == false) { // Store the value MyDictionary.Add(myKey, myValue); } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    lock (MyDictionary)
+    {
+        // Check if a value needs to be stored
+        if (MyDictionary.ContainsKey(myKey) == false)
+        {
+            // Store the value
+            MyDictionary.Add(myKey, myValue);
+        }
+    }
+    {% endhighlight %}
 
 **#2 - I think this would perform better**&#160;
 
-{% highlight csharp linenos %}// Check if a value needs to be stored if (MyDictionary.ContainsKey(myKey) == false) { lock (MyDictionary) { // Check if a value needs to be stored if (MyDictionary.ContainsKey(myKey) == false) { // Store the value MyDictionary.Add(myKey, myValue); } } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    // Check if a value needs to be stored
+    if (MyDictionary.ContainsKey(myKey) == false)
+    {
+        lock (MyDictionary)
+        {
+            // Check if a value needs to be stored
+            if (MyDictionary.ContainsKey(myKey) == false)
+            {
+                // Store the value
+                MyDictionary.Add(myKey, myValue);
+            }
+        }
+    }
+    {% endhighlight %}
 
 The reason I think the second solution will perform better is that the first if statement gets executed as part of the normal code flow of the method. This means lots of executions on multiple threads. It will first check that an item needs to be added before causing the lock. This results in the lock only happening in rare cases. Inside the lock, it ensures that another thread isn't about to do the same thing by making a defensive call to ContainsKey.
 

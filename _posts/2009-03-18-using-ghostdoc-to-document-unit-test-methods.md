@@ -8,7 +8,20 @@ GhostDoc is one of the coolest tools around for Visual Studio. Sometimes it need
 
 For example,
 
- {% highlight csharp linenos %}/// <summary&gt; /// Creates the returns cache store instance test. /// </summary&gt; [TestMethod] [Description("Black box tests")] public void CreateReturnsCacheStoreInstanceTest() { ICacheStore actual = CacheStoreFactory.Create(); Assert.IsNotNull(actual, "Create failed to return an instance"); } {% endhighlight %} 
+    {% highlight csharp linenos %}
+    /// <summary&gt;
+    /// Creates the returns cache store instance test.
+    /// </summary&gt;
+    [TestMethod] 
+    [Description("Black box tests")]
+    public void CreateReturnsCacheStoreInstanceTest()
+    {
+        ICacheStore actual = CacheStoreFactory.Create();
+     
+        Assert.IsNotNull(actual, "Create failed to return an instance");
+    }
+    
+    {% endhighlight %}
 
 Creating a custom GhostDoc rule for unit test methods can assist in cleaning the documentation up a little.
 
@@ -22,7 +35,20 @@ Enter the new rule name, identify that the method name must end in "_Test_" and 
 
 Using this new rule, the example above now gets the following documentation generated.
 
- {% highlight csharp linenos %}/// <summary&gt; /// Runs test for create returns cache store instance. /// </summary&gt; [TestMethod] [Description("Black box tests")] public void CreateReturnsCacheStoreInstanceTest() { ICacheStore actual = CacheStoreFactory.Create(); Assert.IsNotNull(actual, "Create failed to return an instance"); } {% endhighlight %} 
+    {% highlight csharp linenos %}
+    /// <summary&gt;
+    /// Runs test for create returns cache store instance.
+    /// </summary&gt;
+    [TestMethod]
+    [Description("Black box tests")]
+    public void CreateReturnsCacheStoreInstanceTest()
+    {
+        ICacheStore actual = CacheStoreFactory.Create();
+     
+        Assert.IsNotNull(actual, "Create failed to return an instance");
+    }
+    
+    {% endhighlight %}
 
 It's not perfect, but its a lot better.
 

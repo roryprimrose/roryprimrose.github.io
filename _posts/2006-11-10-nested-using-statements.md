@@ -8,11 +8,33 @@ The using statement in the .Net framework is a really good way of neatly using a
 
 The following is an example taken from [John Papa's][0] latest [Data Points][1] [MSDNMag] article:
 
-{% highlight csharp linenos %}using (TransactionScope ts = new TransactionScope()) { using (SqlConnection cn2005 = new SqlConnection(cnString)) { SqlCommand cmd = new SqlCommand(updateSql1, cn2005); cn2005.Open(); cmd.ExecuteNonQuery(); } ts.Complete(); }{% endhighlight %}
+    {% highlight csharp linenos %}
+    using (TransactionScope ts = new TransactionScope())    
+    {
+        using (SqlConnection cn2005 = new SqlConnection(cnString))
+        {
+            SqlCommand cmd = new SqlCommand(updateSql1, cn2005);
+            cn2005.Open();
+            cmd.ExecuteNonQuery();
+        }
+    
+        ts.Complete();
+    }
+    {% endhighlight %}
 
 As far as the messy look of it goes, I know that you can also do the following.
 
-{% highlight csharp linenos %}using (TransactionScope ts = new TransactionScope()) using (SqlConnection cn2005 = new SqlConnection(cnString)) { SqlCommand cmd = new SqlCommand(updateSql1, cn2005); cn2005.Open(); cmd.ExecuteNonQuery(); } ts.Complete();{% endhighlight %}
+    {% highlight csharp linenos %}
+    using (TransactionScope ts = new TransactionScope())
+    using (SqlConnection cn2005 = new SqlConnection(cnString))
+    {
+        SqlCommand cmd = new SqlCommand(updateSql1, cn2005);
+        cn2005.Open();
+        cmd.ExecuteNonQuery();
+    }
+    
+    ts.Complete();
+    {% endhighlight %}
 
 I have some vague recollection that someone had a problem with this way of coding the using statement.
 

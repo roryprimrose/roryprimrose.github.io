@@ -16,26 +16,135 @@ So my assumption was correct. Identities on threads do get propagated to their c
 
 Here is an example:
 
-{% highlight csharp linenos %}using System; using System.Security.Principal; using System.Threading; namespace ConsoleApplication1 { internal class Program { private static void Main(String[] args) { Thread newThread = new Thread(ThreadTest); newThread.Start("Default AppDomain"); newThread.Join(); Console.WriteLine(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.NoPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain NoPrincipal"); newThread.Join(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.UnauthenticatedPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain UnauthenticatedPrincipal"); newThread.Join(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain WindowsPrincipal"); newThread.Join(); Console.WriteLine(); Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity("NewIdentity"), null); Console.WriteLine("Assigned new identity to thread"); Console.WriteLine(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.NoPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain NoPrincipal"); newThread.Join(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.UnauthenticatedPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain UnauthenticatedPrincipal"); newThread.Join(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain WindowsPrincipal"); newThread.Join(); Console.WriteLine(); Thread.CurrentPrincipal = null; Console.WriteLine("Removed identity from thread"); Console.WriteLine(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.NoPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain NoPrincipal"); newThread.Join(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.UnauthenticatedPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain UnauthenticatedPrincipal"); newThread.Join(); AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal); newThread = new Thread(ThreadTest); newThread.Start("AppDomain WindowsPrincipal"); newThread.Join(); Console.ReadKey(); } private static void ThreadTest(Object value) { IPrincipal principal = Thread.CurrentPrincipal; String name = "null"; if (principal != null && principal.Identity != null) { name = principal.Identity.Name; if (String.IsNullOrEmpty(name)) { name = "empty"; } } Console.WriteLine(value + " - " + name); } } } {% endhighlight %}
+    {% highlight csharp linenos %}
+    using System;
+    using System.Security.Principal;
+    using System.Threading;
+     
+    namespace ConsoleApplication1
+    {
+        internal class Program
+        {
+            private static void Main(String[] args)
+            {
+                Thread newThread = new Thread(ThreadTest);
+                newThread.Start("Default AppDomain");
+                newThread.Join();
+     
+                Console.WriteLine();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.NoPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain NoPrincipal");
+                newThread.Join();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.UnauthenticatedPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain UnauthenticatedPrincipal");
+                newThread.Join();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain WindowsPrincipal");
+                newThread.Join();
+     
+                Console.WriteLine();
+     
+                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity("NewIdentity"), null);
+     
+                Console.WriteLine("Assigned new identity to thread");
+                Console.WriteLine();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.NoPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain NoPrincipal");
+                newThread.Join();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.UnauthenticatedPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain UnauthenticatedPrincipal");
+                newThread.Join();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain WindowsPrincipal");
+                newThread.Join();
+     
+                Console.WriteLine();
+     
+                Thread.CurrentPrincipal = null;
+     
+                Console.WriteLine("Removed identity from thread");
+                Console.WriteLine();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.NoPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain NoPrincipal");
+                newThread.Join();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.UnauthenticatedPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain UnauthenticatedPrincipal");
+                newThread.Join();
+     
+                AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+                newThread = new Thread(ThreadTest);
+                newThread.Start("AppDomain WindowsPrincipal");
+                newThread.Join();
+     
+                Console.ReadKey();
+            }
+     
+            private static void ThreadTest(Object value)
+            {
+                IPrincipal principal = Thread.CurrentPrincipal;
+                String name = "null";
+     
+                if (principal != null
+                    && principal.Identity != null)
+                {
+                    name = principal.Identity.Name;
+     
+                    if (String.IsNullOrEmpty(name))
+                    {
+                        name = "empty";
+                    }
+                }
+     
+                Console.WriteLine(value + " - " + name);
+            }
+        }
+    }
+    
+    {% endhighlight %}
 
 The results in the following output (with the windows account removed):
 
-> Default AppDomain - empty 
+> > Default AppDomain - empty 
 
-> AppDomain NoPrincipal - null   
-> AppDomain UnauthenticatedPrincipal - empty   
+> > AppDomain NoPrincipal - null
+          
+> AppDomain UnauthenticatedPrincipal - empty
+    
+          
 > AppDomain WindowsPrincipal - [WindowsAccountRemoved] 
 
-> Assigned new identity to thread 
+> > Assigned new identity to thread 
 
-> AppDomain NoPrincipal - NewIdentity   
-> AppDomain UnauthenticatedPrincipal - NewIdentity   
+> > AppDomain NoPrincipal - NewIdentity
+          
+> AppDomain UnauthenticatedPrincipal - NewIdentity
+    
+          
 > AppDomain WindowsPrincipal - NewIdentity 
 
-> Removed identity from thread 
+> > Removed identity from thread 
 
-> AppDomain NoPrincipal - null   
-> AppDomain UnauthenticatedPrincipal - empty   
+> > AppDomain NoPrincipal - null
+          
+> AppDomain UnauthenticatedPrincipal - empty
+    
+          
 > AppDomain WindowsPrincipal - [WindowsAccountRemoved]
 
 [0]: http://msdn.microsoft.com/en-us/library/system.security.principal.principalpolicy.aspx

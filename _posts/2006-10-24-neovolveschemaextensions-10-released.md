@@ -15,12 +15,28 @@ This project is configuration driven so that when a web service changes, the con
 
 After the package is installed, add your object mappings to the configuration file. The configuration for the mappings looks like this:
 
-{% highlight xml linenos %}<MapperItem key="MyService.XmlNodeKey" xmlName="XmlNode" xmlNamespace="http://www.myservice.com/project" /&gt; <MapperItem key="MyService.XmlNodeCollectionKey" xmlName="ArrayOfXmlNode" xmlNamespace="http://www.myservice.com/project" name="List<XmlNode&gt;"&gt; <AssemblyDependencies&gt; <AssemblyDependency assemblyName="SomeAssembly.dll" /&gt; <AssemblyDependency assemblyName="Another.dll" /&gt; </AssemblyDependencies&gt; <NamespaceDependencies&gt; <NamespaceDependency namespace="System.Collections.Generic" /&gt; <NamespaceDependency namespace="System.Xml" /&gt; </NamespaceDependencies&gt; </MapperItem&gt;{% endhighlight %}
+    {% highlight xml linenos %}
+    <MapperItem key="MyService.XmlNodeKey"
+                xmlName="XmlNode"
+                xmlNamespace="http://www.myservice.com/project" /&gt;
+    
+    <MapperItem key="MyService.XmlNodeCollectionKey"
+                xmlName="ArrayOfXmlNode"
+                xmlNamespace="http://www.myservice.com/project"
+                name="List<XmlNode&gt;"&gt;
+        <AssemblyDependencies&gt;
+            <AssemblyDependency assemblyName="SomeAssembly.dll" /&gt;
+            <AssemblyDependency assemblyName="Another.dll" /&gt;
+        </AssemblyDependencies&gt;
+        <NamespaceDependencies&gt;
+            <NamespaceDependency namespace="System.Collections.Generic" /&gt;
+            <NamespaceDependency namespace="System.Xml" /&gt;
+        </NamespaceDependencies&gt;
+    </MapperItem&gt;
+    {% endhighlight %}
 
 Check the log file for the project (found through the start menu) to identify the object types that have not been successfully mapped when web references are updated (assuming logging is enabled in the configuration file). The start menu also has a shortcut to the schema for the configuration file. Because the IDE doesn't restart when a configuration file changes, the IDE must be restarted before changes to the configuration will be reflected in updates to web references. 
 
-&#160;
-
 Download: [Neovolve.Schema.Extensions.Setup.msi (485.50 kb)][0]
 
-[0]: /blogfiles/2008%2f9%2fNeovolve.Schema.Extensions.Setup.msi
+[0]: /blogfiles/2008/9/Neovolve.Schema.Extensions.Setup.msi

@@ -17,6 +17,90 @@ Second solution was to use just the one runtime that uses the ManualWorkflowSche
 
 Third solution was to use a delegate by calling BeginInvoke. This worked, but then I realised that I can use a thread and manually call for impersonation from inside its execution. To do this, I need to pass the WindowsIdentity along with my other parameter to a thread wrapper. My solution now looks like this:
 
-{% highlight csharp linenos %}using System; using System.Collections.Generic; using System.Security.Principal; using System.Threading; using Neovolve.Framework.Workflow; using Neovolve.Jabiru.Sessions; using Neovolve.Jabiru.Transfer.Service.BusinessWorkflows; namespace Neovolve.Jabiru.Transfer.Service { /// <summary&gt; /// The <see cref="Neovolve.Jabiru.Transfer.Service.ServerItemSearcher"/&gt; /// class is used to search for items on the server. /// </summary&gt; internal class ServerItemSearcher { #region Declarations /// <summary&gt; /// Stores the session reference. /// </summary&gt; private TransferSession _session; /// <summary&gt; /// Stores the executing identity. /// </summary&gt; private WindowsIdentity _identity; /// <summary&gt; /// Stores the search thread. /// </summary&gt; private Thread _searchThread; #endregion #region Constructors /// <summary&gt; /// Initializes a new instance of the /// <see cref="Neovolve.Jabiru.Transfer.Service.ServerItemSearcher"/&gt; class. /// </summary&gt; /// <param name="session"&gt;The session.</param&gt; /// <param name="identity"&gt;The identity.</param&gt; public ServerItemSearcher(TransferSession session, WindowsIdentity identity) { _session = session; _identity = identity; } #endregion #region Methods /// <summary&gt; /// Runs the search. /// </summary&gt; public void RunSearch() { // Create and start the thread _searchThread = new Thread(new ThreadStart(RunSearchInternal)); _searchThread.IsBackground = true; _searchThread.Start(); } /// <summary&gt; /// Runs the search internal. /// </summary&gt; private void RunSearchInternal() { using (WindowsImpersonationContext context = _identity.Impersonate()) { Dictionary<String, Object&gt; searchParameters = new Dictionary<String, Object&gt;(); searchParameters.Add("Session", _session); // Invoke the server item search workflow asynchronously SynchronousWorkflowRuntime.Current.ExecuteWorkflow(typeof(SearchNewServerItemsWorkflow), searchParameters); } } #endregion } } {% endhighlight %}
+    {% highlight csharp linenos %}
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Principal;
+    using System.Threading;
+    using Neovolve.Framework.Workflow;
+    using Neovolve.Jabiru.Sessions;
+    using Neovolve.Jabiru.Transfer.Service.BusinessWorkflows;
+     
+    namespace Neovolve.Jabiru.Transfer.Service
+    {
+        /// <summary&gt;
+        /// The <see cref="Neovolve.Jabiru.Transfer.Service.ServerItemSearcher"/&gt;
+        /// class is used to search for items on the server.
+        /// </summary&gt;
+        internal class ServerItemSearcher
+        {
+            #region Declarations
+     
+            /// <summary&gt;
+            /// Stores the session reference.
+            /// </summary&gt;
+            private TransferSession _session;
+     
+            /// <summary&gt;
+            /// Stores the executing identity.
+            /// </summary&gt;
+            private WindowsIdentity _identity;
+     
+            /// <summary&gt;
+            /// Stores the search thread.
+            /// </summary&gt;
+            private Thread _searchThread;
+     
+            #endregion
+     
+            #region Constructors
+     
+            /// <summary&gt;
+            /// Initializes a new instance of the 
+            /// <see cref="Neovolve.Jabiru.Transfer.Service.ServerItemSearcher"/&gt; class.
+            /// </summary&gt;
+            /// <param name="session"&gt;The session.</param&gt;
+            /// <param name="identity"&gt;The identity.</param&gt;
+            public ServerItemSearcher(TransferSession session, WindowsIdentity identity)
+            {
+                _session = session;
+                _identity = identity;
+            }
+     
+            #endregion
+     
+            #region Methods
+     
+            /// <summary&gt;
+            /// Runs the search.
+            /// </summary&gt;
+            public void RunSearch()
+            {
+                // Create and start the thread
+                _searchThread = new Thread(new ThreadStart(RunSearchInternal));
+                _searchThread.IsBackground = true;
+                _searchThread.Start();
+            }
+     
+            /// <summary&gt;
+            /// Runs the search internal.
+            /// </summary&gt;
+            private void RunSearchInternal()
+            {
+                using (WindowsImpersonationContext context = _identity.Impersonate())
+                {
+                    Dictionary<String, Object&gt; searchParameters = new Dictionary<String, Object&gt;();
+                    searchParameters.Add("Session", _session);
+     
+                    // Invoke the server item search workflow asynchronously
+                    SynchronousWorkflowRuntime.Current.ExecuteWorkflow(typeof(SearchNewServerItemsWorkflow), searchParameters);
+                }
+            }
+     
+            #endregion
+        }
+    }
+    
+    {% endhighlight %}
 
 

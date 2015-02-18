@@ -9,7 +9,17 @@ I have an interesting scenario that I have just come across in my code. I have a
 
 Here is the situation. I have a flush method that looks like this:
 
-{% highlight csharp linenos %}public void Flush() { // Loop through each listener foreach (TraceListener listener in Source.Listeners) { // Flush the listener listener.Flush(); } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    public void Flush()
+    {
+        // Loop through each listener
+        foreach (TraceListener listener in Source.Listeners)
+        {
+            // Flush the listener
+            listener.Flush();
+        }
+    }
+    {% endhighlight %}
 
 Code coverage for this method says that 2 blocks not covered, 12.5% not covered, 14 blocks covered, 87.5% covered. Code metrics for this method are maintainability index is 80, cyclomatic complexity is 3, class coupling is 5 and lines of code is 2.
 
@@ -115,7 +125,19 @@ The UI for code coverage indicates that each line of code is hit. My guess is th
 
 I changed the code to this:
 
-{% highlight csharp linenos %}public void Flush() { // Loop through each listener for (Int32 index = 0; index < Source.Listeners.Count; index++ ) { TraceListener listener = Source.Listeners[index]; // Flush the listener listener.Flush(); } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    public void Flush()
+    {
+        // Loop through each listener
+        for (Int32 index = 0; index < Source.Listeners.Count; index++ )
+        {
+            TraceListener listener = Source.Listeners[index];
+    
+            // Flush the listener
+            listener.Flush();
+        }
+    }
+    {% endhighlight %}
 
 Code coverage now says that 0 blocks not covered, 0% not covered, 11 blocks covered, 100% covered. Code metrics for this method now say that maintainability index is 75, cyclomatic complexity is2, class coupling is 3 and lines of code is 3.
 

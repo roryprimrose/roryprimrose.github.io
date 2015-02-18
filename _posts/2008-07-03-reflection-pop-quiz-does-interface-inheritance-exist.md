@@ -8,7 +8,17 @@ I've written some code that reflections MethodInfo objects from a type using its
 
 Consider the following code:
 
-{% highlight csharp linenos %}internal interface IBaseInterface { void GetSomething(); } internal interface IDerivedInterface : IBaseInterface { void DoSomethingElse(); }{% endhighlight %}
+    {% highlight csharp linenos %}
+    internal interface IBaseInterface
+    {
+        void GetSomething();
+    }
+    
+    internal interface IDerivedInterface : IBaseInterface
+    {
+        void DoSomethingElse();
+    }
+    {% endhighlight %}
 
 Does interface inheritance exist?
 
@@ -24,6 +34,87 @@ Now things get a little curly here. An interface that implements an interface do
 
 Here is the complete source:
 
-{% highlight csharp linenos %}using System; using System.Reflection; namespace ConsoleApplication1 { internal class Program { private static void Main(String[] args) { // _______________________________________________________ // // Base Interface test // _______________________________________________________ Type baseInterfaceTest = typeof(IBaseInterface); // This returns 1 method MethodInfo[] baseInterfaceMethods = baseInterfaceTest.GetMethods(); // This returns false Boolean baseInterfaceHasBaseClass = baseInterfaceTest.BaseType != null; // This returns null Type[] baseInterfaceInterfaces = baseInterfaceTest.GetInterfaces(); // _______________________________________________________ // // Derived Interface test // _______________________________________________________ Type derivedInterfaceTest = typeof(IDerivedInterface); // This will only return 1 method MethodInfo[] derivedInterfaceMethods = derivedInterfaceTest.GetMethods(); // This returns false Boolean derivedInterfaceHasBaseClass = derivedInterfaceTest.BaseType != null; // This returns 1 interface type Type[] derivedInterfaceInterfaces = derivedInterfaceTest.GetInterfaces(); // _______________________________________________________ // // Derived Type test // _______________________________________________________ Type derivedTypeTest = typeof(DerivedType); // This will return 2 methods (in addition to the 4 from System.Object) MethodInfo[] derivedTypeMethods = derivedTypeTest.GetMethods(); // This will return true (System.Object) Boolean derivedTypeHasBaseClass = derivedTypeTest.BaseType != null; // This returns 2 interface type Type[] derivedTypeInterfaces = derivedTypeTest.GetInterfaces(); } } internal interface IBaseInterface { void GetSomething(); } internal interface IDerivedInterface : IBaseInterface { void DoSomethingElse(); } internal class DerivedType : IDerivedInterface { public void DoSomethingElse() { } public void GetSomething() { } } } {% endhighlight %}
+    {% highlight csharp linenos %}
+    using System;
+    using System.Reflection;
+     
+    namespace ConsoleApplication1
+    {
+        internal class Program
+        {
+            private static void Main(String[] args)
+            {
+                // _______________________________________________________
+                //
+                // Base Interface test
+                // _______________________________________________________
+                Type baseInterfaceTest = typeof(IBaseInterface);
+     
+                // This returns 1 method
+                MethodInfo[] baseInterfaceMethods = baseInterfaceTest.GetMethods();
+     
+                // This returns false
+                Boolean baseInterfaceHasBaseClass = baseInterfaceTest.BaseType != null;
+     
+                // This returns null
+                Type[] baseInterfaceInterfaces = baseInterfaceTest.GetInterfaces();
+     
+                // _______________________________________________________
+                //
+                // Derived Interface test
+                // _______________________________________________________
+     
+                Type derivedInterfaceTest = typeof(IDerivedInterface);
+     
+                // This will only return 1 method
+                MethodInfo[] derivedInterfaceMethods = derivedInterfaceTest.GetMethods();
+     
+                // This returns false
+                Boolean derivedInterfaceHasBaseClass = derivedInterfaceTest.BaseType != null;
+     
+                // This returns 1 interface type
+                Type[] derivedInterfaceInterfaces = derivedInterfaceTest.GetInterfaces();
+     
+                // _______________________________________________________
+                //
+                // Derived Type test
+                // _______________________________________________________
+     
+                Type derivedTypeTest = typeof(DerivedType);
+     
+                // This will return 2 methods (in addition to the 4 from System.Object)
+                MethodInfo[] derivedTypeMethods = derivedTypeTest.GetMethods();
+     
+                // This will return true (System.Object)
+                Boolean derivedTypeHasBaseClass = derivedTypeTest.BaseType != null;
+     
+                // This returns 2 interface type
+                Type[] derivedTypeInterfaces = derivedTypeTest.GetInterfaces();
+            }
+        }
+     
+        internal interface IBaseInterface
+        {
+            void GetSomething();
+        }
+     
+        internal interface IDerivedInterface : IBaseInterface
+        {
+            void DoSomethingElse();
+        }
+     
+        internal class DerivedType : IDerivedInterface
+        {
+            public void DoSomethingElse()
+            {
+            }
+     
+            public void GetSomething()
+            {
+            }
+        }
+    }
+    
+    {% endhighlight %}
 
 

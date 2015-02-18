@@ -9,15 +9,31 @@ Have you ever needed to have nested databound controls using multiple ObjectData
 
 You have no doubt tried the following:
 
-{% highlight xml linenos %}<asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL"&gt; <SelectParameters&gt; <asp:Parameter Name="countryCode" DefaultValue='<%# Eval("CountryCode") %&gt;' /&gt; </SelectParameters&gt; </asp:ObjectDataSource&gt; {% endhighlight %}
+    {% highlight xml linenos %}
+    <asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL"&gt;
+        <SelectParameters&gt;
+            <asp:Parameter Name="countryCode" DefaultValue='<%# Eval("CountryCode") %&gt;' /&gt;
+        </SelectParameters&gt;
+    </asp:ObjectDataSource&gt;
+    
+    {% endhighlight %}
 
 If you try this, you will get an error that says:
 
-_> Databinding expressions are only supported on objects that have a DataBinding event. System.Web.UI.WebControls.Parameter does not have a DataBinding event._
+> _> Databinding expressions are only supported on objects that have a DataBinding event. System.Web.UI.WebControls.Parameter does not have a DataBinding event._
 
-So you can't bind to your value to the parameter. There is a really simple way around this. Redirect the bound value through a control that does support databinding.
+> 
+    So you can't bind to your value to the parameter. There is a really simple way around this. Redirect the bound value through a control that does support databinding.
 
-{% highlight xml linenos %}<asp:TextBox runat="server" ID="txtCountryCode" Visible="false" Text='<%# Eval("CountryCode") %&gt;' /&gt; <asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL"&gt; <SelectParameters&gt; <asp:ControlParameter Name="countryCode" ControlID="txtCountryCode" PropertyName="Text" /&gt; </SelectParameters&gt; </asp:ObjectDataSource&gt; {% endhighlight %}
+    {% highlight xml linenos %}
+    <asp:TextBox runat="server" ID="txtCountryCode" Visible="false" Text='<%# Eval("CountryCode") %&gt;' /&gt;
+    <asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL"&gt;
+        <SelectParameters&gt;
+            <asp:ControlParameter Name="countryCode" ControlID="txtCountryCode" PropertyName="Text" /&gt;
+        </SelectParameters&gt;
+    </asp:ObjectDataSource&gt;
+    
+    {% endhighlight %}
 
 By doing it this way, the containing ObjectDataSource will provide the required value to the TextBox which is not rendered to the browser. The nested ObjectDataSource that requires the databound value can then obtain the value from the TextBox using a ControlParameter. Easy [:)].
 

@@ -24,7 +24,68 @@ Another thing also comes to mind. What about performance? By using the array, I 
 
 A quick test gave me a suitable answer.
 
-{% highlight csharp linenos %}using System; using System.Collections.ObjectModel; using System.Diagnostics; using System.Threading; namespace ConsoleApplication1 { internal class Program { private static void Main(String[] args) { Collection<String&gt; items = new Collection<String&gt;(); for (Int32 index = 0; index < 10; index++) { items.Add(Guid.NewGuid().ToString()); } Stopwatch watch = new Stopwatch(); const Int32 Iterations = 10000; Thread.Sleep(1000); watch.Start(); for (Int32 index = 0; index < Iterations; index++) { foreach (String item in items) { Debug.WriteLine(item); } } watch.Stop(); Console.WriteLine("foreach took {0} ticks", watch.ElapsedTicks); watch.Reset(); watch.Start(); for (Int32 index = 0; index < Iterations; index++) { String[] newItems = new String[items.Count]; items.CopyTo(newItems, 0); for (Int32 count = 0; count < newItems.Length; count++) { Debug.WriteLine(newItems[count]); } } watch.Stop(); Console.WriteLine("for took {0} ticks", watch.ElapsedTicks); Console.ReadKey(); } } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Threading;
+     
+    namespace ConsoleApplication1
+    {
+        internal class Program
+        {
+            private static void Main(String[] args)
+            {
+                Collection<String&gt; items = new Collection<String&gt;();
+     
+                for (Int32 index = 0; index < 10; index++)
+                {
+                    items.Add(Guid.NewGuid().ToString());
+                }
+     
+                Stopwatch watch = new Stopwatch();
+                const Int32 Iterations = 10000;
+     
+                Thread.Sleep(1000);
+     
+                watch.Start();
+     
+                for (Int32 index = 0; index < Iterations; index++)
+                {
+                    foreach (String item in items)
+                    {
+                        Debug.WriteLine(item);
+                    }
+                }
+     
+                watch.Stop();
+     
+                Console.WriteLine("foreach took {0} ticks", watch.ElapsedTicks);
+     
+                watch.Reset();
+                watch.Start();
+     
+                for (Int32 index = 0; index < Iterations; index++)
+                {
+                    String[] newItems = new String[items.Count];
+     
+                    items.CopyTo(newItems, 0);
+     
+                    for (Int32 count = 0; count < newItems.Length; count++)
+                    {
+                        Debug.WriteLine(newItems[count]);
+                    }
+                }
+     
+                watch.Stop();
+     
+                Console.WriteLine("for took {0} ticks", watch.ElapsedTicks);
+     
+                Console.ReadKey();
+            }
+        }
+    }
+    {% endhighlight %}
 
 Each time I run this test, the for loop runs at 70% of the time of the foreach loop, even with the array copy.
 

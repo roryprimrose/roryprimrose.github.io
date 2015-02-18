@@ -19,25 +19,215 @@ Setting up the security context of the service is done using [IAuthorizationPoli
 
 The custom ServiceCredentials class implementation returns a custom SecurityTokenManager if custom username password validation is enabled. 
 
-{% highlight csharp linenos %}public class PasswordServiceCredentials : ServiceCredentials { public PasswordServiceCredentials() { } private PasswordServiceCredentials(PasswordServiceCredentials clone) : base(clone) { } protected override ServiceCredentials CloneCore() { return new PasswordServiceCredentials(this); } public override SecurityTokenManager CreateSecurityTokenManager() { // Check if the current validation mode is for custom username password validation if (UserNameAuthentication.UserNamePasswordValidationMode == UserNamePasswordValidationMode.Custom) { return new PasswordSecurityTokenManager(this); } Trace.TraceWarning(Resources.CustomUserNamePasswordValidationNotEnabled); return base.CreateSecurityTokenManager(); } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    public class PasswordServiceCredentials : ServiceCredentials
+    {
+        public PasswordServiceCredentials()
+        {
+        }
+    
+        private PasswordServiceCredentials(PasswordServiceCredentials clone)
+            : base(clone)
+        {
+        }
+    
+        protected override ServiceCredentials CloneCore()
+        {
+            return new PasswordServiceCredentials(this);
+        }
+    
+        public override SecurityTokenManager CreateSecurityTokenManager()
+        {
+            // Check if the current validation mode is for custom username password validation
+            if (UserNameAuthentication.UserNamePasswordValidationMode == UserNamePasswordValidationMode.Custom)
+            {
+                return new PasswordSecurityTokenManager(this);
+            }
+    
+            Trace.TraceWarning(Resources.CustomUserNamePasswordValidationNotEnabled);
+    
+            return base.CreateSecurityTokenManager();
+        }
+    }
+    {% endhighlight %}
 
 **PasswordSecurityTokenManager**
 
 The custom SecurityTokenManager returns a custom SecurityTokenAuthenticator when it finds a SecurityTokenRequirement for username security. It also ensures that a default validator is available if one is not configured. 
 
-{% highlight csharp linenos %}internal class PasswordSecurityTokenManager : ServiceCredentialsSecurityTokenManager { public PasswordSecurityTokenManager(PasswordServiceCredentials credentials) : base(credentials) { } public override SecurityTokenAuthenticator CreateSecurityTokenAuthenticator(SecurityTokenRequirement tokenRequirement, out SecurityTokenResolver outOfBandTokenResolver) { if (tokenRequirement.TokenType == SecurityTokenTypes.UserName) { outOfBandTokenResolver = null; // Get the current validator UserNamePasswordValidator validator = ServiceCredentials.UserNameAuthentication.CustomUserNamePasswordValidator; // Ensure that a validator exists if (validator == null) { Trace.TraceWarning(Resources.NoCustomUserNamePasswordValidatorConfigured); validator = new DefaultPasswordValidator(); } return new PasswordSecurityTokenAuthenticator(validator); } return base.CreateSecurityTokenAuthenticator(tokenRequirement, out outOfBandTokenResolver); } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    internal class PasswordSecurityTokenManager : ServiceCredentialsSecurityTokenManager
+    {
+        public PasswordSecurityTokenManager(PasswordServiceCredentials credentials)
+            : base(credentials)
+        {
+        }
+    
+        public override SecurityTokenAuthenticator CreateSecurityTokenAuthenticator(SecurityTokenRequirement tokenRequirement, out SecurityTokenResolver outOfBandTokenResolver)
+        {
+            if (tokenRequirement.TokenType == SecurityTokenTypes.UserName)
+            {
+                outOfBandTokenResolver = null;
+    
+                // Get the current validator
+                UserNamePasswordValidator validator =
+                    ServiceCredentials.UserNameAuthentication.CustomUserNamePasswordValidator;
+    
+                // Ensure that a validator exists
+                if (validator == null)
+                {
+                    Trace.TraceWarning(Resources.NoCustomUserNamePasswordValidatorConfigured);
+                    validator = new DefaultPasswordValidator();
+                }
+    
+                return new PasswordSecurityTokenAuthenticator(validator);
+            }
+    
+            return base.CreateSecurityTokenAuthenticator(tokenRequirement, out outOfBandTokenResolver);
+        }
+    }
+    {% endhighlight %}
 
 **PasswordSecurityTokenAuthenticator**
 
 The custom SecurityTokenAuthenticator is where the half of the magic happens. Here there is the opportunity to return custom a IAuthorizationPolicy implementation that will allow us to inject a custom IPrincipal and IIdentity on the thread the executes the service code. 
 
-{% highlight csharp linenos %}internal class PasswordSecurityTokenAuthenticator : CustomUserNameSecurityTokenAuthenticator { public PasswordSecurityTokenAuthenticator(UserNamePasswordValidator validator) : base(validator) { } protected override ReadOnlyCollection<IAuthorizationPolicy&gt; ValidateUserNamePasswordCore(String userName, String password) { ReadOnlyCollection<IAuthorizationPolicy&gt; currentPolicies = base.ValidateUserNamePasswordCore( userName, password); List<IAuthorizationPolicy&gt; newPolicies = new List<IAuthorizationPolicy&gt;(currentPolicies); newPolicies.Add(new PasswordAuthorizationPolicy(userName, password)); return newPolicies.AsReadOnly(); } }{% endhighlight %}
+    {% highlight csharp linenos %}
+    internal class PasswordSecurityTokenAuthenticator : CustomUserNameSecurityTokenAuthenticator
+    {
+        public PasswordSecurityTokenAuthenticator(UserNamePasswordValidator validator)
+            : base(validator)
+        {
+        }
+    
+        protected override ReadOnlyCollection<IAuthorizationPolicy&gt; ValidateUserNamePasswordCore(String userName, String password)
+        {
+            ReadOnlyCollection<IAuthorizationPolicy&gt; currentPolicies = base.ValidateUserNamePasswordCore(
+                userName, password);
+            List<IAuthorizationPolicy&gt; newPolicies = new List<IAuthorizationPolicy&gt;(currentPolicies);
+    
+            newPolicies.Add(new PasswordAuthorizationPolicy(userName, password));
+    
+            return newPolicies.AsReadOnly();
+        }
+    }
+    {% endhighlight %}
 
 **PasswordAuthorizationPolicy**
 
 The IAuthorizationPolicy implementation is where the other half of the magic happens. This policy gets passed the username and password so that it can store the password in the security context. The policy will return false until it finds a GenericIdentity in the evaluation context that has the same username as the one provided to the policy. It then creates a custom IIdentity that exposes both the username and password and stores it back into the collection of identities in the evaluation context and also stores it against the PrimaryIdentity property. PrimaryIdentity is then exposed through [ServiceSecurityContext.PrimaryIdentity][3] in the service implementation. A custom principal is then created (without roles) and stores it against the Principal property of the context. Principal is then injected into Thread.CurrentPrincipal by WCF (depending on configuration). 
 
-{% highlight csharp linenos %}using System; using System.Collections.Generic; using System.IdentityModel.Claims; using System.IdentityModel.Policy; using System.Security.Principal; using System.ServiceModel; using System.Threading; namespace Neovolve.Framework.Communication.Security { internal class PasswordAuthorizationPolicy : IAuthorizationPolicy { public PasswordAuthorizationPolicy(String userName, String password) { const String UserNameParameterName = "userName"; if (String.IsNullOrEmpty(userName)) { throw new ArgumentNullException(UserNameParameterName); } Id = Guid.NewGuid().ToString(); Issuer = ClaimSet.System; UserName = userName; Password = password; } public bool Evaluate(EvaluationContext evaluationContext, ref object state) { const String IdentitiesKey = "Identities"; // Check if the properties of the context has the identities list if (evaluationContext.Properties.Count == 0 || evaluationContext.Properties.ContainsKey(IdentitiesKey) == false || evaluationContext.Properties[IdentitiesKey] == null) { return false; } // Get the identities list List<IIdentity&gt; identities = evaluationContext.Properties[IdentitiesKey] as List<IIdentity&gt;; // Validate that the identities list is valid if (identities == null) { return false; } // Get the current identity IIdentity currentIdentity = identities.Find( identityMatch =&gt; identityMatch is GenericIdentity && String.Equals(identityMatch.Name, UserName, StringComparison.OrdinalIgnoreCase)); // Check if an identity was found if (currentIdentity == null) { return false; } // Create new identity PasswordIdentity newIdentity = new PasswordIdentity( UserName, Password, currentIdentity.IsAuthenticated, currentIdentity.AuthenticationType); const String PrimaryIdentityKey = "PrimaryIdentity"; // Update the list and the context with the new identity identities.Remove(currentIdentity); identities.Add(newIdentity); evaluationContext.Properties[PrimaryIdentityKey] = newIdentity; // Create a new principal for this identity PasswordPrincipal newPrincipal = new PasswordPrincipal(newIdentity, null); const String PrincipalKey = "Principal"; // Store the new principal in the context evaluationContext.Properties[PrincipalKey] = newPrincipal; // This policy has successfully been evaluated and doesn't need to be called again return true; } public String Id { get; private set; } public ClaimSet Issuer { get; private set; } private String Password { get; set; } private String UserName { get; set; } } } {% endhighlight %}
+    {% highlight csharp linenos %}
+    using System; 
+    using System.Collections.Generic; 
+    using System.IdentityModel.Claims; 
+    using System.IdentityModel.Policy; 
+    using System.Security.Principal; 
+    using System.ServiceModel; 
+    using System.Threading; 
+    
+    namespace Neovolve.Framework.Communication.Security 
+    { 
+        internal class PasswordAuthorizationPolicy : IAuthorizationPolicy 
+        { 
+            public PasswordAuthorizationPolicy(String userName, String password) 
+            { 
+                const String UserNameParameterName = "userName"; 
+    
+                if (String.IsNullOrEmpty(userName)) 
+                { 
+                    throw new ArgumentNullException(UserNameParameterName); 
+                } 
+      
+                Id = Guid.NewGuid().ToString(); 
+                Issuer = ClaimSet.System; 
+                UserName = userName; 
+                Password = password; 
+            } 
+      
+            public bool Evaluate(EvaluationContext evaluationContext, ref object state) 
+            { 
+                const String IdentitiesKey = "Identities"; 
+      
+                // Check if the properties of the context has the identities list 
+                if (evaluationContext.Properties.Count == 0 
+                    || evaluationContext.Properties.ContainsKey(IdentitiesKey) == false 
+                    || evaluationContext.Properties[IdentitiesKey] == null) 
+                { 
+                    return false; 
+                } 
+      
+                // Get the identities list 
+                List<IIdentity&gt; identities = evaluationContext.Properties[IdentitiesKey] as List<IIdentity&gt;; 
+      
+                // Validate that the identities list is valid 
+                if (identities == null) 
+                { 
+                    return false; 
+                } 
+      
+                // Get the current identity 
+                IIdentity currentIdentity = 
+                    identities.Find( 
+                        identityMatch =&gt; 
+                        identityMatch is GenericIdentity 
+                        && String.Equals(identityMatch.Name, UserName, StringComparison.OrdinalIgnoreCase)); 
+      
+                // Check if an identity was found 
+                if (currentIdentity == null) 
+                { 
+                    return false; 
+                } 
+      
+                // Create new identity 
+                PasswordIdentity newIdentity = new PasswordIdentity( 
+                    UserName, Password, currentIdentity.IsAuthenticated, currentIdentity.AuthenticationType); 
+                const String PrimaryIdentityKey = "PrimaryIdentity"; 
+      
+                // Update the list and the context with the new identity 
+                identities.Remove(currentIdentity); 
+                identities.Add(newIdentity); 
+                evaluationContext.Properties[PrimaryIdentityKey] = newIdentity; 
+      
+                // Create a new principal for this identity 
+                PasswordPrincipal newPrincipal = new PasswordPrincipal(newIdentity, null); 
+                const String PrincipalKey = "Principal"; 
+      
+                // Store the new principal in the context 
+                evaluationContext.Properties[PrincipalKey] = newPrincipal; 
+      
+                // This policy has successfully been evaluated and doesn't need to be called again 
+                return true; 
+            } 
+    
+            public String Id 
+            {
+                get;
+                private set;
+            } 
+    
+    
+            public ClaimSet Issuer 
+            { 
+                get; 
+                private set; 
+            } 
+      
+            private String Password 
+            { 
+                get; 
+                set; 
+            } 
+      
+            private String UserName 
+            { 
+                get; 
+                set; 
+            } 
+        } 
+    } 
+    
+    {% endhighlight %}
 
 **Configuration**
 
@@ -45,7 +235,45 @@ As mentioned above, the custom ServiceCredentials needs to be configured so that
 
 The other thing to note is that because username password credentials are being passed over to the wire to the service, transport security is required to protect the credentials. The security mode should be set to TransportWIthMessageCredentials with a message client credential type as UserName. 
 
-{% highlight csharp linenos %}<?xml version="1.0" encoding="utf-8" ?&gt; <configuration&gt; <system.web&gt; <compilation debug="true" /&gt; </system.web&gt; <system.serviceModel&gt; <bindings&gt; <netTcpBinding&gt; <binding name="netTcpBindingConfig"&gt; <security mode="TransportWithMessageCredential"&gt; <message clientCredentialType="UserName" /&gt; </security&gt; </binding&gt; </netTcpBinding&gt; </bindings&gt; <services&gt; <service behaviorConfiguration="Neovolve.Framework.Communication.SecurityTest.Service1Behavior" name="Neovolve.Framework.Communication.SecurityHost.Service1"&gt; <endpoint address="net.tcp://localhost:8792/PasswordSecurityTest" binding="netTcpBinding" bindingConfiguration="netTcpBindingConfig" contract="Neovolve.Framework.Communication.SecurityHost.IService1" /&gt; </service&gt; </services&gt; <behaviors&gt; <serviceBehaviors&gt; <behavior name="Neovolve.Framework.Communication.SecurityTest.Service1Behavior"&gt; <serviceDebug includeExceptionDetailInFaults="true" /&gt; <serviceCredentials type="Neovolve.Framework.Communication.Security.PasswordServiceCredentials, Neovolve.Framework.Communication.Security"&gt; <serviceCertificate findValue="localhost" x509FindType="FindBySubjectName" /&gt; <userNameAuthentication userNamePasswordValidationMode="Custom" /&gt; </serviceCredentials&gt; <serviceAuthorization principalPermissionMode="Custom" /&gt; </behavior&gt; </serviceBehaviors&gt; </behaviors&gt; </system.serviceModel&gt; </configuration&gt; {% endhighlight %}
+    {% highlight csharp linenos %}
+    <?xml version="1.0" encoding="utf-8" ?> 
+    <configuration> 
+      <system.web> 
+        <compilation debug="true" /> 
+      </system.web> 
+      <system.serviceModel> 
+        <bindings> 
+          <netTcpBinding> 
+            <binding name="netTcpBindingConfig"> 
+              <security mode="TransportWithMessageCredential"> 
+                <message clientCredentialType="UserName" /> 
+              </security> 
+            </binding> 
+          </netTcpBinding> 
+        </bindings> 
+        <services> 
+          <service behaviorConfiguration="Neovolve.Framework.Communication.SecurityTest.Service1Behavior" 
+            name="Neovolve.Framework.Communication.SecurityHost.Service1"> 
+            <endpoint address="net.tcp://localhost:8792/PasswordSecurityTest" 
+              binding="netTcpBinding" bindingConfiguration="netTcpBindingConfig" 
+              contract="Neovolve.Framework.Communication.SecurityHost.IService1" /> 
+          </service> 
+        </services> 
+        <behaviors> 
+          <serviceBehaviors> 
+            <behavior name="Neovolve.Framework.Communication.SecurityTest.Service1Behavior"> 
+              <serviceDebug includeExceptionDetailInFaults="true" /> 
+              <serviceCredentials type="Neovolve.Framework.Communication.Security.PasswordServiceCredentials, Neovolve.Framework.Communication.Security"> 
+                <serviceCertificate findValue="localhost" x509FindType="FindBySubjectName" /> 
+                <userNameAuthentication userNamePasswordValidationMode="Custom" /> 
+              </serviceCredentials> 
+              <serviceAuthorization principalPermissionMode="Custom" /> 
+            </behavior> 
+          </serviceBehaviors> 
+        </behaviors> 
+      </system.serviceModel> 
+    </configuration> 
+    {% endhighlight %}
 
 Download: [Neovolve.Framework.Communication.Security.zip (78.91 kb)][4]
 
