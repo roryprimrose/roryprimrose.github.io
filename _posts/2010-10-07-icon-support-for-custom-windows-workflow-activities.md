@@ -11,10 +11,10 @@ There are two places that provide this icon support. The first is in the Visual 
 
 **Visual Studio toolbox**
 
-Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.
-
-    [ToolboxBitmap(typeof(ExecuteBookmark), &quot;book_open.png&quot;)]
-    public sealed class ExecuteBookmark : NativeActivity{% endhighlight %}
+Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.{% highlight csharp linenos %}
+[ToolboxBitmap(typeof(ExecuteBookmark), "book_open.png")]
+public sealed class ExecuteBookmark : NativeActivity
+{% endhighlight %}
 
 This attribute needs to identify the image file and a type reference that the IDE uses to locate the image. In the above scenario, the book_open.png file is the image to use for the toolbox. The image file in the project needs to have its Build Action property set to Embedded Resource.![image][3]
 
@@ -28,28 +28,28 @@ The workflow designer support for custom icons has a similar layout as the toolb
 
 The reason for the separate file is that the Build Action for the designer image must be set to Resource instead of Embedded Resource that the ToolboxBitmapAttribute requires. Using two files for this purpose should not be a big issue as the designers are typically located in a separate *.Design.dll assembly (see [here][6] for the details).![image][7]
 
-The XAML in the designer for the activity then references this image file.
-
-    <sap:ActivityDesigner x:Class=&quot;Neovolve.Toolkit.Workflow.Design.Presentation.ExecuteBookmarkDesigner&quot;
-        xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
-        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-        xmlns:sap=&quot;clr-namespace:System.Activities.Presentation;assembly=System.Activities.Presentation&quot;
-        xmlns:sapv=&quot;clr-namespace:System.Activities.Presentation.View;assembly=System.Activities.Presentation&quot;&gt;
-      <sap:ActivityDesigner.Icon&gt;
-        <DrawingBrush&gt;
-          <DrawingBrush.Drawing&gt;
-            <ImageDrawing&gt;
-              <ImageDrawing.Rect&gt;
-                <Rect Location=&quot;0,0&quot; Size=&quot;16,16&quot; &gt;</Rect&gt;
-              </ImageDrawing.Rect&gt;
-              <ImageDrawing.ImageSource&gt;
-                <BitmapImage UriSource=&quot;book_open.png&quot; &gt;</BitmapImage&gt;
-              </ImageDrawing.ImageSource&gt;
-            </ImageDrawing&gt;
-          </DrawingBrush.Drawing&gt;
-        </DrawingBrush&gt;
-      </sap:ActivityDesigner.Icon&gt;
-    </sap:ActivityDesigner&gt;{% endhighlight %}
+The XAML in the designer for the activity then references this image file.{% highlight xml linenos %}
+<sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.ExecuteBookmarkDesigner"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sap="clr-namespace:System.Activities.Presentation;assembly=System.Activities.Presentation"
+    xmlns:sapv="clr-namespace:System.Activities.Presentation.View;assembly=System.Activities.Presentation">
+    <sap:ActivityDesigner.Icon>
+    <DrawingBrush>
+        <DrawingBrush.Drawing>
+        <ImageDrawing>
+            <ImageDrawing.Rect>
+            <Rect Location="0,0" Size="16,16" ></Rect>
+            </ImageDrawing.Rect>
+            <ImageDrawing.ImageSource>
+            <BitmapImage UriSource="book_open.png" ></BitmapImage>
+            </ImageDrawing.ImageSource>
+        </ImageDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+    </sap:ActivityDesigner.Icon>
+</sap:ActivityDesigner>
+{% endhighlight %}
 
 The designer should then be associated with the activity. This is done using a class that implements IRegisterMetadata so that there can be a separation of the activity assembly and the design assembly. Again, see [this post][6] for the details.![image][8]
 

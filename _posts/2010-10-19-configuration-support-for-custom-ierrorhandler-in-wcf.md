@@ -9,97 +9,97 @@ My post about [implementing IErrorHandler for WCF][0] a few years ago is my seco
 
 My preference has always been to hook up IErrorHandler using an attribute to avoid any potential security holes. This would be a scenario where the configuration for IErrorHandler is removed and exception shielding is no longer available to prevent potentially sensitive information from being displayed to clients. I am now playing with workflow services and am not able to use an attribute for this purpose. I no longer have a choice and must use a configuration based IErrorHandler implementation.
 
-I have added configuration support for IErrorHandler to my Toolkit project based on the original posts above to assist with this process.
-
-    namespace Neovolve.Toolkit.Communication
+I have added configuration support for IErrorHandler to my Toolkit project based on the original posts above to assist with this process.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Communication
+{
+    using System;
+    using System.Configuration;
+    using System.ServiceModel.Configuration;
+    
+    public class ErrorHandlerElement : BehaviorExtensionElement
     {
-        using System;
-        using System.Configuration;
-        using System.ServiceModel.Configuration;
+        public const String ErrorHandlerTypeAttributeName = &quot;type&quot;;
     
-        public class ErrorHandlerElement : BehaviorExtensionElement
+        private ConfigurationPropertyCollection _properties;
+    
+        protected override Object CreateBehavior()
         {
-            public const String ErrorHandlerTypeAttributeName = &quot;type&quot;;
+            return new ErrorHandlerAttribute(ErrorHandlerType);
+        }
     
-            private ConfigurationPropertyCollection _properties;
-    
-            protected override Object CreateBehavior()
+        public override Type BehaviorType
+        {
+            get
             {
-                return new ErrorHandlerAttribute(ErrorHandlerType);
-            }
-    
-            public override Type BehaviorType
-            {
-                get
-                {
-                    return typeof(ErrorHandlerAttribute);
-                }
-            }
-    
-            [ConfigurationProperty(ErrorHandlerTypeAttributeName)]
-            public String ErrorHandlerType
-            {
-                get
-                {
-                    return (String)base[ErrorHandlerTypeAttributeName];
-                }
-    
-                set
-                {
-                    base[ErrorHandlerTypeAttributeName] = value;
-                }
-            }
-    
-            protected override ConfigurationPropertyCollection Properties
-            {
-                get
-                {
-                    if (_properties == null)
-                    {
-                        ConfigurationPropertyCollection properties = new ConfigurationPropertyCollection();
-    
-                        properties.Add(
-                            new ConfigurationProperty(
-                                ErrorHandlerTypeAttributeName, typeof(String), String.Empty, null, null, ConfigurationPropertyOptions.IsRequired));
-    
-                        _properties = properties;
-                    }
-    
-                    return _properties;
-                }
+                return typeof(ErrorHandlerAttribute);
             }
         }
-    }{% endhighlight %}
+    
+        [ConfigurationProperty(ErrorHandlerTypeAttributeName)]
+        public String ErrorHandlerType
+        {
+            get
+            {
+                return (String)base[ErrorHandlerTypeAttributeName];
+            }
+    
+            set
+            {
+                base[ErrorHandlerTypeAttributeName] = value;
+            }
+        }
+    
+        protected override ConfigurationPropertyCollection Properties
+        {
+            get
+            {
+                if (_properties == null)
+                {
+                    ConfigurationPropertyCollection properties = new ConfigurationPropertyCollection();
+    
+                    properties.Add(
+                        new ConfigurationProperty(
+                            ErrorHandlerTypeAttributeName, typeof(String), String.Empty, null, null, ConfigurationPropertyOptions.IsRequired));
+    
+                    _properties = properties;
+                }
+    
+                return _properties;
+            }
+        }
+    }
+}
+{% endhighlight %}
 
-The ErrorHandlerElement class allows for WCF configuration to configure an IErrorHandler for a service. This class provides the configuration support to define the type of error handler to use. The CreateBehavior method simply forwards the configured IErrorHandler type to the ErrorHandlerAttribute class that is already in the toolkit.
-
-    <?xml version=&quot;1.0&quot; ?&gt;
-    <configuration&gt;
-        <system.serviceModel&gt;
-            <behaviors&gt;
-                <serviceBehaviors&gt;
-                    <behavior name=&quot;ErrorHandlerBehavior&quot;&gt;
-                        <errorHandler type=&quot;Neovolve.Toolkit.IntegrationTests.Communication.KnownErrorHandler, Neovolve.Toolkit.IntegrationTests&quot;/&gt;
-                    </behavior&gt;
-                </serviceBehaviors&gt;
-            </behaviors&gt;
-            <extensions&gt;
-                <behaviorExtensions&gt;
-                    <add name=&quot;errorHandler&quot;
-                         type=&quot;Neovolve.Toolkit.Communication.ErrorHandlerElement, Neovolve.Toolkit&quot;/&gt;
-                </behaviorExtensions&gt;
-            </extensions&gt;
-            <services&gt;
-                <service behaviorConfiguration=&quot;ErrorHandlerBehavior&quot;
-                         name=&quot;Neovolve.Toolkit.IntegrationTests.Communication.TestService&quot;&gt;
-                    <endpoint address=&quot;&quot;
-                              binding=&quot;basicHttpBinding&quot;
-                              bindingConfiguration=&quot;&quot;
-                              contract=&quot;Neovolve.Toolkit.IntegrationTests.Communication.ITestService&quot;/&gt;
-                </service&gt;
-            </services&gt;
-        </system.serviceModel&gt;
-    </configuration&gt; {% endhighlight %}
+The ErrorHandlerElement class allows for WCF configuration to configure an IErrorHandler for a service. This class provides the configuration support to define the type of error handler to use. The CreateBehavior method simply forwards the configured IErrorHandler type to the ErrorHandlerAttribute class that is already in the toolkit.{% highlight xml linenos %}
+<?xml version=&quot;1.0&quot; ?>
+<configuration>
+    <system.serviceModel>
+        <behaviors>
+            <serviceBehaviors>
+                <behavior name=&quot;ErrorHandlerBehavior&quot;>
+                    <errorHandler type=&quot;Neovolve.Toolkit.IntegrationTests.Communication.KnownErrorHandler, Neovolve.Toolkit.IntegrationTests&quot;/>
+                </behavior>
+            </serviceBehaviors>
+        </behaviors>
+        <extensions>
+            <behaviorExtensions>
+                <add name=&quot;errorHandler&quot;
+                        type=&quot;Neovolve.Toolkit.Communication.ErrorHandlerElement, Neovolve.Toolkit&quot;/>
+            </behaviorExtensions>
+        </extensions>
+        <services>
+            <service behaviorConfiguration=&quot;ErrorHandlerBehavior&quot;
+                        name=&quot;Neovolve.Toolkit.IntegrationTests.Communication.TestService&quot;>
+                <endpoint address=&quot;&quot;
+                            binding=&quot;basicHttpBinding&quot;
+                            bindingConfiguration=&quot;&quot;
+                            contract=&quot;Neovolve.Toolkit.IntegrationTests.Communication.ITestService&quot;/>
+            </service>
+        </services>
+    </system.serviceModel>
+</configuration> 
+{% endhighlight %}
 
 The WCF configuration defines the ErrorHandlerElement class as a behavior extension. This service behavior can then use this extension and identify the type of IErrorHandler to hook into the service.
 

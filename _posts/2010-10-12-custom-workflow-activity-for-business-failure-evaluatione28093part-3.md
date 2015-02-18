@@ -11,249 +11,249 @@ Using a custom extension to manage business failures abstracts workflow activiti
 
 The Activity class in WF 3.0 and 3.5 provided a public Activity Parent property that could be used to traverse up the activity tree hierarchy. Unfortunately this property has been marked as internal in WF 4.0. Reflection could be used to [get around this restriction][1] but it is a hack at best. This prevents an automated method of walking up the workflow activity hierarchy. Similarly, inspecting child activity hierarchies is unreliable as there is no standard method for exposing or identifying child activities even if they are publicly available on an activity type. This prevents automated discovery of child activities. In addition to these issues, the automatic detection of activity hierarchies for linking activities may produce unintended results as activities are linked when they were not expected to be. 
 
-The alternative to these automated methods is to implement an explicit opt-in design where a parent activity informs the extension about a link to a child activity. This makes the parent activity responsible for informing the extension about a link to a child activity. The extension then uses this knowledge in the processing of the business failure.
-
-    namespace Neovolve.Toolkit.Workflow.Extensions
-    { 
-        using System;
-        using System.Activities;
-        using System.Activities.Persistence;
-        using System.Collections.Generic;
-        using System.Collections.ObjectModel;
-        using System.Diagnostics;
-        using System.Diagnostics.Contracts;
-        using System.Linq;
-        using System.Threading;
-        using System.Xml.Linq;
-        using Neovolve.Toolkit.Threading;
+The alternative to these automated methods is to implement an explicit opt-in design where a parent activity informs the extension about a link to a child activity. This makes the parent activity responsible for informing the extension about a link to a child activity. The extension then uses this knowledge in the processing of the business failure.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Extensions
+{ 
+    using System;
+    using System.Activities;
+    using System.Activities.Persistence;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+    using System.Threading;
+    using System.Xml.Linq;
+    using Neovolve.Toolkit.Threading;
     
-        public class BusinessFailureExtension<T&gt; : PersistenceParticipant, IDisposable where T : struct
+    public class BusinessFailureExtension<T> : PersistenceParticipant, IDisposable where T : struct
+    {
+        private static readonly XNamespace _persistenceNamespace = XNamespace.Get(&quot;http://www.neovolve.com/toolkit/workflow/properties&quot;);
+    
+        private static readonly XName _scopeEvaluatorsName = _persistenceNamespace.GetName(&quot;ScopeEvaluators&quot;);
+    
+        private static readonly XName _scopeFailuresName = _persistenceNamespace.GetName(&quot;ScopeFailures&quot;);
+    
+        private readonly ReaderWriterLockSlim _scopeEvaluatorsLock = new ReaderWriterLockSlim();
+    
+        private readonly ReaderWriterLockSlim _scopeFailuresLock = new ReaderWriterLockSlim();
+    
+        private Dictionary<String, String> _scopeEvaluators = new Dictionary<String, String>();
+    
+        private Dictionary<String, Collection<BusinessFailure<T>>> _scopeFailures = new Dictionary<String, Collection<BusinessFailure<T>>>();
+    
+        public void Dispose()
         {
-            private static readonly XNamespace _persistenceNamespace = XNamespace.Get(&quot;http://www.neovolve.com/toolkit/workflow/properties&quot;);
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     
-            private static readonly XName _scopeEvaluatorsName = _persistenceNamespace.GetName(&quot;ScopeEvaluators&quot;);
+        public IEnumerable<BusinessFailure<T>> GetFailuresForScope(Activity scopeActivity)
+        {
+            Contract.Requires<ArgumentNullException>(scopeActivity != null);
+            Contract.Requires<ArgumentException>(String.IsNullOrEmpty(scopeActivity.Id) == false);
     
-            private static readonly XName _scopeFailuresName = _persistenceNamespace.GetName(&quot;ScopeFailures&quot;);
+            String activityId = scopeActivity.Id;
     
-            private readonly ReaderWriterLockSlim _scopeEvaluatorsLock = new ReaderWriterLockSlim();
+            RemoveActivitiesLinkedToScope(activityId);
     
-            private readonly ReaderWriterLockSlim _scopeFailuresLock = new ReaderWriterLockSlim();
-    
-            private Dictionary<String, String&gt; _scopeEvaluators = new Dictionary<String, String&gt;();
-    
-            private Dictionary<String, Collection<BusinessFailure<T&gt;&gt;&gt; _scopeFailures = new Dictionary<String, Collection<BusinessFailure<T&gt;&gt;&gt;();
-    
-            public void Dispose()
+            using (new LockWriter(_scopeFailuresLock))
             {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-            }
-    
-            public IEnumerable<BusinessFailure<T&gt;&gt; GetFailuresForScope(Activity scopeActivity)
-            {
-                Contract.Requires<ArgumentNullException&gt;(scopeActivity != null);
-                Contract.Requires<ArgumentException&gt;(String.IsNullOrEmpty(scopeActivity.Id) == false);
-    
-                String activityId = scopeActivity.Id;
-    
-                RemoveActivitiesLinkedToScope(activityId);
-    
-                using (new LockWriter(_scopeFailuresLock))
+                if (_scopeFailures.ContainsKey(activityId))
                 {
-                    if (_scopeFailures.ContainsKey(activityId))
-                    {
-                        Collection<BusinessFailure<T&gt;&gt; failures = _scopeFailures[activityId];
+                    Collection<BusinessFailure<T>> failures = _scopeFailures[activityId];
     
-                        _scopeFailures.Remove(activityId);
+                    _scopeFailures.Remove(activityId);
     
-                        return failures;
-                    }
-                }
-    
-                return null;
-            }
-    
-            public Boolean IsLinkedToScope(Activity activity)
-            {
-                Contract.Requires<ArgumentNullException&gt;(activity != null);
-                Contract.Requires<ArgumentException&gt;(String.IsNullOrEmpty(activity.Id) == false);
-    
-                String activityId = activity.Id;
-    
-                String scopeActivityId = GetOwningScopeId(activityId);
-    
-                if (String.IsNullOrWhiteSpace(scopeActivityId))
-                {
-                    return false;
-                }
-    
-                return true;
-            }
-    
-            public void LinkActivityToScope(Activity scopeActivity, Activity childActivity)
-            {
-                Contract.Requires<ArgumentNullException&gt;(scopeActivity != null);
-                Contract.Requires<ArgumentNullException&gt;(childActivity != null);
-                Contract.Requires<ArgumentException&gt;(String.IsNullOrEmpty(scopeActivity.Id) == false);
-                Contract.Requires<ArgumentException&gt;(String.IsNullOrEmpty(childActivity.Id) == false);
-    
-                using (new LockWriter(_scopeEvaluatorsLock))
-                {
-                    _scopeEvaluators[childActivity.Id] = scopeActivity.Id;
+                    return failures;
                 }
             }
     
-            public void ProcessFailure(Activity activity, BusinessFailure<T&gt; failure)
+            return null;
+        }
+    
+        public Boolean IsLinkedToScope(Activity activity)
+        {
+            Contract.Requires<ArgumentNullException>(activity != null);
+            Contract.Requires<ArgumentException>(String.IsNullOrEmpty(activity.Id) == false);
+    
+            String activityId = activity.Id;
+    
+            String scopeActivityId = GetOwningScopeId(activityId);
+    
+            if (String.IsNullOrWhiteSpace(scopeActivityId))
             {
-                Contract.Requires<ArgumentNullException&gt;(activity != null);
-                Contract.Requires<ArgumentException&gt;(String.IsNullOrEmpty(activity.Id) == false);
-                Contract.Requires<ArgumentNullException&gt;(failure != null);
-    
-                String activityId = activity.Id;
-    
-                String scopeActivityId = GetOwningScopeId(activityId);
-    
-                if (String.IsNullOrEmpty(scopeActivityId))
-                {
-                    // There is no scope activity that contains this evaluator
-                    throw new BusinessFailureException<T&gt;(failure);
-                }
-    
-                using (new LockWriter(_scopeFailuresLock))
-                {
-                    Collection<BusinessFailure<T&gt;&gt; failures;
-    
-                    if (_scopeFailures.ContainsKey(scopeActivityId))
-                    {
-                        failures = _scopeFailures[scopeActivityId];
-                    }
-                    else
-                    {
-                        failures = new Collection<BusinessFailure<T&gt;&gt;();
-    
-                        _scopeFailures.Add(scopeActivityId, failures);
-                    }
-    
-                    // Store the failure for the scope
-                    failures.Add(failure);
-                }
+                return false;
             }
     
-            protected override void CollectValues(out IDictionary<XName, Object&gt; readWriteValues, out IDictionary<XName, Object&gt; writeOnlyValues)
+            return true;
+        }
+    
+        public void LinkActivityToScope(Activity scopeActivity, Activity childActivity)
+        {
+            Contract.Requires<ArgumentNullException>(scopeActivity != null);
+            Contract.Requires<ArgumentNullException>(childActivity != null);
+            Contract.Requires<ArgumentException>(String.IsNullOrEmpty(scopeActivity.Id) == false);
+            Contract.Requires<ArgumentException>(String.IsNullOrEmpty(childActivity.Id) == false);
+    
+            using (new LockWriter(_scopeEvaluatorsLock))
             {
-                Dictionary<String, String&gt; evaluators;
-    
-                using (new LockReader(_scopeEvaluatorsLock))
-                {
-                    evaluators = new Dictionary<String, String&gt;(_scopeEvaluators);
-                }
-    
-                Dictionary<String, Collection<BusinessFailure<T&gt;&gt;&gt; scopeFailures;
-    
-                using (new LockReader(_scopeFailuresLock))
-                {
-                    scopeFailures = new Dictionary<string, Collection<BusinessFailure<T&gt;&gt;&gt;(_scopeFailures);
-                }
-    
-                readWriteValues = new Dictionary<XName, Object&gt;
-                                  {
-                                      {
-                                          _scopeEvaluatorsName, evaluators
-                                          }, 
-                                      {
-                                          _scopeFailuresName, scopeFailures
-                                          }
-                                  };
-    
-                writeOnlyValues = null;
-            }
-    
-            protected virtual void Dispose(Boolean disposing)
-            {
-                if (disposing)
-                {
-                    // Free managed resources
-                    if (Disposed == false)
-                    {
-                        Disposed = true;
-    
-                        _scopeEvaluatorsLock.Dispose();
-                        _scopeFailuresLock.Dispose();
-                    }
-                }
-    
-                // Free native resources if there are any.
-            }
-    
-            protected override void PublishValues(IDictionary<XName, Object&gt; readWriteValues)
-            {
-                base.PublishValues(readWriteValues);
-    
-                Object evaluators;
-    
-                if (readWriteValues.TryGetValue(_scopeEvaluatorsName, out evaluators))
-                {
-                    using (new LockWriter(_scopeEvaluatorsLock))
-                    {
-                        _scopeEvaluators = (Dictionary<String, String&gt;)evaluators;
-                    }
-                }
-    
-                Object failures;
-    
-                if (readWriteValues.TryGetValue(_scopeFailuresName, out failures))
-                {
-                    using (new LockWriter(_scopeFailuresLock))
-                    {
-                        _scopeFailures = (Dictionary<String, Collection<BusinessFailure<T&gt;&gt;&gt;)failures;
-                    }
-                }
-            }
-    
-            private String GetOwningScopeId(String activityId)
-            {
-                Debug.Assert(String.IsNullOrEmpty(activityId) == false, &quot;No activity id provided&quot;);
-    
-                using (new LockReader(_scopeEvaluatorsLock))
-                {
-                    if (_scopeEvaluators.ContainsKey(activityId))
-                    {
-                        return _scopeEvaluators[activityId];
-                    }
-                }
-    
-                return null;
-            }
-    
-            private void RemoveActivitiesLinkedToScope(String scopeActivityId)
-            {
-                List<String&gt; evaluatorIds = new List<String&gt;();
-    
-                using (new LockReader(_scopeEvaluatorsLock))
-                {
-                    evaluatorIds.AddRange(
-                        from valuePair in _scopeEvaluators
-                        where valuePair.Value == scopeActivityId
-                        select valuePair.Key);
-                }
-    
-                using (new LockWriter(_scopeEvaluatorsLock))
-                {
-                    evaluatorIds.ForEach(x =&gt; _scopeEvaluators.Remove(x));
-                }
-            }
-    
-            protected Boolean Disposed
-            {
-                get;
-                set;
+                _scopeEvaluators[childActivity.Id] = scopeActivity.Id;
             }
         }
-    }{% endhighlight %}
+    
+        public void ProcessFailure(Activity activity, BusinessFailure<T> failure)
+        {
+            Contract.Requires<ArgumentNullException>(activity != null);
+            Contract.Requires<ArgumentException>(String.IsNullOrEmpty(activity.Id) == false);
+            Contract.Requires<ArgumentNullException>(failure != null);
+    
+            String activityId = activity.Id;
+    
+            String scopeActivityId = GetOwningScopeId(activityId);
+    
+            if (String.IsNullOrEmpty(scopeActivityId))
+            {
+                // There is no scope activity that contains this evaluator
+                throw new BusinessFailureException<T>(failure);
+            }
+    
+            using (new LockWriter(_scopeFailuresLock))
+            {
+                Collection<BusinessFailure<T>> failures;
+    
+                if (_scopeFailures.ContainsKey(scopeActivityId))
+                {
+                    failures = _scopeFailures[scopeActivityId];
+                }
+                else
+                {
+                    failures = new Collection<BusinessFailure<T>>();
+    
+                    _scopeFailures.Add(scopeActivityId, failures);
+                }
+    
+                // Store the failure for the scope
+                failures.Add(failure);
+            }
+        }
+    
+        protected override void CollectValues(out IDictionary<XName, Object> readWriteValues, out IDictionary<XName, Object> writeOnlyValues)
+        {
+            Dictionary<String, String> evaluators;
+    
+            using (new LockReader(_scopeEvaluatorsLock))
+            {
+                evaluators = new Dictionary<String, String>(_scopeEvaluators);
+            }
+    
+            Dictionary<String, Collection<BusinessFailure<T>>> scopeFailures;
+    
+            using (new LockReader(_scopeFailuresLock))
+            {
+                scopeFailures = new Dictionary<string, Collection<BusinessFailure<T>>>(_scopeFailures);
+            }
+    
+            readWriteValues = new Dictionary<XName, Object>
+                                {
+                                    {
+                                        _scopeEvaluatorsName, evaluators
+                                        }, 
+                                    {
+                                        _scopeFailuresName, scopeFailures
+                                        }
+                                };
+    
+            writeOnlyValues = null;
+        }
+    
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (disposing)
+            {
+                // Free managed resources
+                if (Disposed == false)
+                {
+                    Disposed = true;
+    
+                    _scopeEvaluatorsLock.Dispose();
+                    _scopeFailuresLock.Dispose();
+                }
+            }
+    
+            // Free native resources if there are any.
+        }
+    
+        protected override void PublishValues(IDictionary<XName, Object> readWriteValues)
+        {
+            base.PublishValues(readWriteValues);
+    
+            Object evaluators;
+    
+            if (readWriteValues.TryGetValue(_scopeEvaluatorsName, out evaluators))
+            {
+                using (new LockWriter(_scopeEvaluatorsLock))
+                {
+                    _scopeEvaluators = (Dictionary<String, String>)evaluators;
+                }
+            }
+    
+            Object failures;
+    
+            if (readWriteValues.TryGetValue(_scopeFailuresName, out failures))
+            {
+                using (new LockWriter(_scopeFailuresLock))
+                {
+                    _scopeFailures = (Dictionary<String, Collection<BusinessFailure<T>>>)failures;
+                }
+            }
+        }
+    
+        private String GetOwningScopeId(String activityId)
+        {
+            Debug.Assert(String.IsNullOrEmpty(activityId) == false, &quot;No activity id provided&quot;);
+    
+            using (new LockReader(_scopeEvaluatorsLock))
+            {
+                if (_scopeEvaluators.ContainsKey(activityId))
+                {
+                    return _scopeEvaluators[activityId];
+                }
+            }
+    
+            return null;
+        }
+    
+        private void RemoveActivitiesLinkedToScope(String scopeActivityId)
+        {
+            List<String> evaluatorIds = new List<String>();
+    
+            using (new LockReader(_scopeEvaluatorsLock))
+            {
+                evaluatorIds.AddRange(
+                    from valuePair in _scopeEvaluators
+                    where valuePair.Value == scopeActivityId
+                    select valuePair.Key);
+            }
+    
+            using (new LockWriter(_scopeEvaluatorsLock))
+            {
+                evaluatorIds.ForEach(x => _scopeEvaluators.Remove(x));
+            }
+        }
+    
+        protected Boolean Disposed
+        {
+            get;
+            set;
+        }
+    }
+}
+{% endhighlight %}
 
-The BusinessFailureExtension exposes a LinkActivityToScope method that creates the link between a scope and child activity. Child activities can check if they are linked to a scope by calling the IsLinkedToScope method. The link between these activities uses a Dictionary<String, String&gt; instance to store the associations. The key of the dictionary is the ActivityId of the linked activity and the value is the ActivityId of the scope activity. This design allows for multiple activities to be linked to a scope while enforcing that an activity is only linked to a single scope activity.
+The BusinessFailureExtension exposes a LinkActivityToScope method that creates the link between a scope and child activity. Child activities can check if they are linked to a scope by calling the IsLinkedToScope method. The link between these activities uses a Dictionary<String, String> instance to store the associations. The key of the dictionary is the ActivityId of the linked activity and the value is the ActivityId of the scope activity. This design allows for multiple activities to be linked to a scope while enforcing that an activity is only linked to a single scope activity.
 
-The extension defines a ProcessFailure method for processing failures provided by an activity. The extension will throw a BusinessFailureException<T&gt; straight away if the method does not find a link between the failure activity and a scope activity. The failure is stored in a failure list associated with the scope activity if there is a link found with a scope activity.
+The extension defines a ProcessFailure method for processing failures provided by an activity. The extension will throw a BusinessFailureException<T> straight away if the method does not find a link between the failure activity and a scope activity. The failure is stored in a failure list associated with the scope activity if there is a link found with a scope activity.
 
 The GetFailuresForScope method returns any failures stored against a scope activity. This method returns the collection of failures that have been stored against a scope activity when a linked activity has invoked ProcessFailure. This method also cleans up stored information for the scope by removing any links to other activities and removing the failures stored for it.
 

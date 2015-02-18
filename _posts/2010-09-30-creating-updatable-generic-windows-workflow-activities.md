@@ -6,305 +6,305 @@ date: 2010-09-30 14:17:00 +10:00
 
 This post is a segue from the current series on building a custom activity for supporting dependency resolution in Windows Workflow ([here][0], [here][1], [here][2] and [here][3] so far). This post will outline how to support updating generic type arguments of generic activities in the designer. This technique is used in the designer support for the InstanceResolver activity that has been discussed throughout the series.
 
-The implementation of this is modelled from the support for this functionality in the generic WF4 activities such as ForEach<T&gt; and ParallelForEach<T&gt;. Unfortunately the logic that drives this is marked as internal and is therefore not available to developers who create custom generic activities.
+The implementation of this is modelled from the support for this functionality in the generic WF4 activities such as ForEach<T> and ParallelForEach<T>. Unfortunately the logic that drives this is marked as internal and is therefore not available to developers who create custom generic activities.
 
-In the case of the ForEach<T&gt; activity, the default generic type value used is int. ![image][4]
+In the case of the ForEach<T> activity, the default generic type value used is int. ![image][4]
 
 This can be changed in the property grid of the activity using the TypeArgument property. ![image][5]
 
 Changing this value will update the definition of the activity with the new type argument. For example, the type could be change to Boolean.![image][6]
 
-This post will use my ExecuteBookmark<T&gt; activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.
-
-    namespace Neovolve.Toolkit.Workflow.Activities
-    {
-        using System;
-        using System.Activities;
-        using System.Activities.Presentation;
-        using System.ComponentModel;
-        using System.Drawing;
-        using System.Globalization;
+This post will use my ExecuteBookmark<T> activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Activities
+{
+    using System;
+    using System.Activities;
+    using System.Activities.Presentation;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Globalization;
      
-        [ToolboxBitmap(typeof(ExecuteBookmark), &quot;book_open.png&quot;)]
-        [DefaultTypeArgument(typeof(String))]
-        public sealed class ExecuteBookmark<T&gt; : NativeActivity<T&gt;
+    [ToolboxBitmap(typeof(ExecuteBookmark), "book_open.png")]
+    [DefaultTypeArgument(typeof(String))]
+    public sealed class ExecuteBookmark<T> : NativeActivity<T>
+    {
+        protected override void Execute(NativeActivityContext context)
         {
-            protected override void Execute(NativeActivityContext context)
-            {
-                String bookmarkName = context.GetValue(BookmarkName);
+            String bookmarkName = context.GetValue(BookmarkName);
     
-                if (String.IsNullOrWhiteSpace(bookmarkName))
-                {
-                    throw new ArgumentNullException(&quot;BookmarkName&quot;);
-                }
+            if (String.IsNullOrWhiteSpace(bookmarkName))
+            {
+                throw new ArgumentNullException("BookmarkName");
+            }
                 
-                context.CreateBookmark(bookmarkName, BookmarkResumed);
-            }
+            context.CreateBookmark(bookmarkName, BookmarkResumed);
+        }
     
-            private void BookmarkResumed(NativeActivityContext context, Bookmark bookmark, Object value)
-            {
-                T newValue = (T)Convert.ChangeType(value, typeof(T), CultureInfo.CurrentCulture);
+        private void BookmarkResumed(NativeActivityContext context, Bookmark bookmark, Object value)
+        {
+            T newValue = (T)Convert.ChangeType(value, typeof(T), CultureInfo.CurrentCulture);
     
-                Result.Set(context, newValue);
-            }
+            Result.Set(context, newValue);
+        }
     
-            [RequiredArgument]
-            [Category(&quot;Inputs&quot;)]
-            [Description(&quot;The name used to identify the bookmark&quot;)]
-            public InArgument<String&gt; BookmarkName
-            {
-                get;
-                set;
-            }
+        [RequiredArgument]
+        [Category("Inputs")]
+        [Description("The name used to identify the bookmark")]
+        public InArgument<String> BookmarkName
+        {
+            get;
+            set;
+        }
             
-            protected override Boolean CanInduceIdle
+        protected override Boolean CanInduceIdle
+        {
+            get
             {
-                get
-                {
-                    return true;
-                }
+                return true;
             }
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
 This activity defines the default type of String. Designer support for changing this type is required after dropping the activity on the designer because the DefaultArgumentTypeAttribute avoids the developer having to define the generic type up front. It has the additional benefit of allowing the developer to change the activity type once it is is already on the designer as the workflow is developed and refactored.
 
-The ArgumentType property does not exist on the ExecuteBookmark<T&gt; class. It is an AttachedProperty<Type&gt; instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.
-
-    namespace Neovolve.Toolkit.Workflow.Design.Presentation
-    {
-        using System;
-        using System.Diagnostics;
-        using Neovolve.Toolkit.Workflow.Activities;
+The ArgumentType property does not exist on the ExecuteBookmark<T> class. It is an AttachedProperty<Type> instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Design.Presentation
+{
+    using System;
+    using System.Diagnostics;
+    using Neovolve.Toolkit.Workflow.Activities;
     
-        public partial class ExecuteBookmarkTDesigner
+    public partial class ExecuteBookmarkTDesigner
+    {
+        [DebuggerNonUserCode]
+        public ExecuteBookmarkTDesigner()
         {
-            [DebuggerNonUserCode]
-            public ExecuteBookmarkTDesigner()
+            InitializeComponent();
+        }
+    
+        protected override void OnModelItemChanged(Object newItem)
+        {
+            base.OnModelItemChanged(newItem);
+    
+            GenericArgumentTypeUpdater.Attach(ModelItem);
+        }
+    }
+}
+{% endhighlight %}
+
+The designer calls down into a custom GenericArgumentTypeUpdater class to attach the updatable type functionality to the ModelItem. Unlike the internal Microsoft implementation, this class supports multiple generic type arguments.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Design
+{
+    using System;
+    using System.Activities;
+    using System.Activities.Presentation;
+    using System.Activities.Presentation.Model;
+    using System.Linq;
+    
+    public static class GenericArgumentTypeUpdater
+    {
+        private const String DisplayName = "DisplayName";
+    
+        public static void Attach(ModelItem modelItem)
+        {
+            Attach(modelItem, Int32.MaxValue);
+        }
+    
+        public static void Attach(ModelItem modelItem, Int32 maximumUpdatableTypes)
+        {
+            Type[] genericArguments = modelItem.ItemType.GetGenericArguments();
+    
+            if (genericArguments.Any() == false)
             {
-                InitializeComponent();
+                return;
             }
     
-            protected override void OnModelItemChanged(Object newItem)
-            {
-                base.OnModelItemChanged(newItem);
+            Int32 argumentCount = genericArguments.Length;
+            Int32 updatableArgumentCount = Math.Min(argumentCount, maximumUpdatableTypes);
+            EditingContext context = modelItem.GetEditingContext();
+            AttachedPropertiesService attachedPropertiesService = context.Services.GetService<AttachedPropertiesService>();
     
-                GenericArgumentTypeUpdater.Attach(ModelItem);
+            for (Int32 index = 0; index < updatableArgumentCount; index++)
+            {
+                AttachUpdatableArgumentType(modelItem, attachedPropertiesService, index, updatableArgumentCount);
             }
         }
-    }{% endhighlight %}
-
-The designer calls down into a custom GenericArgumentTypeUpdater class to attach the updatable type functionality to the ModelItem. Unlike the internal Microsoft implementation, this class supports multiple generic type arguments.
-
-    namespace Neovolve.Toolkit.Workflow.Design
-    {
-        using System;
-        using System.Activities;
-        using System.Activities.Presentation;
-        using System.Activities.Presentation.Model;
-        using System.Linq;
     
-        public static class GenericArgumentTypeUpdater
+        private static void AttachUpdatableArgumentType(
+            ModelItem modelItem, AttachedPropertiesService attachedPropertiesService, Int32 argumentIndex, Int32 argumentCount)
         {
-            private const String DisplayName = &quot;DisplayName&quot;;
+            String propertyName = "ArgumentType";
     
-            public static void Attach(ModelItem modelItem)
+            if (argumentCount > 1)
             {
-                Attach(modelItem, Int32.MaxValue);
+                propertyName += argumentIndex + 1;
             }
     
-            public static void Attach(ModelItem modelItem, Int32 maximumUpdatableTypes)
+            AttachedProperty<Type> attachedProperty = new AttachedProperty<Type>
+                                                        {
+                                                            Name = propertyName, 
+                                                            OwnerType = modelItem.ItemType, 
+                                                            IsBrowsable = true
+                                                        };
+    
+            attachedProperty.Getter = (ModelItem arg) => GetTypeArgument(arg, argumentIndex);
+            attachedProperty.Setter = (ModelItem arg, Type newType) => UpdateTypeArgument(arg, argumentIndex, newType);
+    
+            attachedPropertiesService.AddProperty(attachedProperty);
+        }
+    
+        private static bool DisplayNameRequiresUpdate(ModelItem modelItem)
+        {
+            String currentDisplayName = (String)modelItem.Properties[DisplayName].ComputedValue;
+    
+            // Sometimes the display name is empty
+            if (String.IsNullOrWhiteSpace(currentDisplayName))
             {
-                Type[] genericArguments = modelItem.ItemType.GetGenericArguments();
-    
-                if (genericArguments.Any() == false)
-                {
-                    return;
-                }
-    
-                Int32 argumentCount = genericArguments.Length;
-                Int32 updatableArgumentCount = Math.Min(argumentCount, maximumUpdatableTypes);
-                EditingContext context = modelItem.GetEditingContext();
-                AttachedPropertiesService attachedPropertiesService = context.Services.GetService<AttachedPropertiesService&gt;();
-    
-                for (Int32 index = 0; index < updatableArgumentCount; index++)
-                {
-                    AttachUpdatableArgumentType(modelItem, attachedPropertiesService, index, updatableArgumentCount);
-                }
+                return true;
             }
     
-            private static void AttachUpdatableArgumentType(
-                ModelItem modelItem, AttachedPropertiesService attachedPropertiesService, Int32 argumentIndex, Int32 argumentCount)
+            // The default calculation of a generic type does not include spaces in the generic type arguments
+            // However an activity might include these as the default display name
+            // Strip spaces to provide a more accurate match
+            String defaultDisplayName = GetActivityDefaultName(modelItem.ItemType);
+    
+            currentDisplayName = currentDisplayName.Replace(" ", String.Empty);
+            defaultDisplayName = defaultDisplayName.Replace(" ", String.Empty);
+    
+            if (String.Equals(currentDisplayName, defaultDisplayName, StringComparison.Ordinal))
             {
-                String propertyName = &quot;ArgumentType&quot;;
-    
-                if (argumentCount &gt; 1)
-                {
-                    propertyName += argumentIndex + 1;
-                }
-    
-                AttachedProperty<Type&gt; attachedProperty = new AttachedProperty<Type&gt;
-                                                          {
-                                                              Name = propertyName, 
-                                                              OwnerType = modelItem.ItemType, 
-                                                              IsBrowsable = true
-                                                          };
-    
-                attachedProperty.Getter = (ModelItem arg) =&gt; GetTypeArgument(arg, argumentIndex);
-                attachedProperty.Setter = (ModelItem arg, Type newType) =&gt; UpdateTypeArgument(arg, argumentIndex, newType);
-    
-                attachedPropertiesService.AddProperty(attachedProperty);
+                return true;
             }
     
-            private static bool DisplayNameRequiresUpdate(ModelItem modelItem)
-            {
-                String currentDisplayName = (String)modelItem.Properties[DisplayName].ComputedValue;
+            return false;
+        }
     
-                // Sometimes the display name is empty
-                if (String.IsNullOrWhiteSpace(currentDisplayName))
+        private static String GetActivityDefaultName(Type activityType)
+        {
+            Activity activity = (Activity)Activator.CreateInstance(activityType);
+    
+            return activity.DisplayName;
+        }
+    
+        private static Type GetTypeArgument(ModelItem modelItem, Int32 argumentIndex)
+        {
+            return modelItem.ItemType.GetGenericArguments()[argumentIndex];
+        }
+    
+        private static void UpdateTypeArgument(ModelItem modelItem, Int32 argumentIndex, Type newGenericType)
+        {
+            Type itemType = modelItem.ItemType;
+            Type[] genericTypes = itemType.GetGenericArguments();
+    
+            // Replace the type being changed
+            genericTypes[argumentIndex] = newGenericType;
+    
+            Type newType = itemType.GetGenericTypeDefinition().MakeGenericType(genericTypes);
+            EditingContext editingContext = modelItem.GetEditingContext();
+            Object instanceOfNewType = Activator.CreateInstance(newType);
+            ModelItem newModelItem = ModelFactory.CreateItem(editingContext, instanceOfNewType);
+    
+            using (ModelEditingScope editingScope = newModelItem.BeginEdit("Change type argument"))
+            {
+                MorphHelper.MorphObject(modelItem, newModelItem);
+                MorphHelper.MorphProperties(modelItem, newModelItem);
+    
+                if (itemType.IsSubclassOf(typeof(Activity)) && newType.IsSubclassOf(typeof(Activity)))
                 {
-                    return true;
-                }
-    
-                // The default calculation of a generic type does not include spaces in the generic type arguments
-                // However an activity might include these as the default display name
-                // Strip spaces to provide a more accurate match
-                String defaultDisplayName = GetActivityDefaultName(modelItem.ItemType);
-    
-                currentDisplayName = currentDisplayName.Replace(&quot; &quot;, String.Empty);
-                defaultDisplayName = defaultDisplayName.Replace(&quot; &quot;, String.Empty);
-    
-                if (String.Equals(currentDisplayName, defaultDisplayName, StringComparison.Ordinal))
-                {
-                    return true;
-                }
-    
-                return false;
-            }
-    
-            private static String GetActivityDefaultName(Type activityType)
-            {
-                Activity activity = (Activity)Activator.CreateInstance(activityType);
-    
-                return activity.DisplayName;
-            }
-    
-            private static Type GetTypeArgument(ModelItem modelItem, Int32 argumentIndex)
-            {
-                return modelItem.ItemType.GetGenericArguments()[argumentIndex];
-            }
-    
-            private static void UpdateTypeArgument(ModelItem modelItem, Int32 argumentIndex, Type newGenericType)
-            {
-                Type itemType = modelItem.ItemType;
-                Type[] genericTypes = itemType.GetGenericArguments();
-    
-                // Replace the type being changed
-                genericTypes[argumentIndex] = newGenericType;
-    
-                Type newType = itemType.GetGenericTypeDefinition().MakeGenericType(genericTypes);
-                EditingContext editingContext = modelItem.GetEditingContext();
-                Object instanceOfNewType = Activator.CreateInstance(newType);
-                ModelItem newModelItem = ModelFactory.CreateItem(editingContext, instanceOfNewType);
-    
-                using (ModelEditingScope editingScope = newModelItem.BeginEdit(&quot;Change type argument&quot;))
-                {
-                    MorphHelper.MorphObject(modelItem, newModelItem);
-                    MorphHelper.MorphProperties(modelItem, newModelItem);
-    
-                    if (itemType.IsSubclassOf(typeof(Activity)) && newType.IsSubclassOf(typeof(Activity)))
+                    if (DisplayNameRequiresUpdate(modelItem))
                     {
-                        if (DisplayNameRequiresUpdate(modelItem))
-                        {
-                            // Update to the new display name
-                            String newDisplayName = GetActivityDefaultName(newType);
+                        // Update to the new display name
+                        String newDisplayName = GetActivityDefaultName(newType);
     
-                            newModelItem.Properties[DisplayName].SetValue(newDisplayName);
-                        }
+                        newModelItem.Properties[DisplayName].SetValue(newDisplayName);
                     }
-    
-                    DesignerUpdater.UpdateModelItem(modelItem, newModelItem);
-    
-                    editingScope.Complete();
                 }
+    
+                DesignerUpdater.UpdateModelItem(modelItem, newModelItem);
+    
+                editingScope.Complete();
             }
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
 The class determines how many generic type arguments on the activity will be updatable. It then loops through this number and creates an attached property on the ModelItem for each of these. The AttachedProperty is marked as IsBrowsable = true so that it is displayed in the property grid.
 
-The getter Func<T&gt; of the attached property simply returns the generic type argument of the current activity type for the index related to the attached property. The setter is where all the action happens. It is the logic behind the attached property that was copied from Microsoft internal implementation.
+The getter Func<T> of the attached property simply returns the generic type argument of the current activity type for the index related to the attached property. The setter is where all the action happens. It is the logic behind the attached property that was copied from Microsoft internal implementation.
 
-Updating the type involves calculating what the new type will be. For example, SomeActivity<String, Boolean&gt; could be updated to SomeActivity<String, Int32&gt;. This new type is determined and an instance of it is created. The instance of the new type is used to create a new ModelItem for the designer.
+Updating the type involves calculating what the new type will be. For example, SomeActivity<String, Boolean> could be updated to SomeActivity<String, Int32>. This new type is determined and an instance of it is created. The instance of the new type is used to create a new ModelItem for the designer.
 
 An ModelEditingScope is used at this point in order to group a set of designer changes into one unit. This means that there will be one Undo/Redo command in Visual Studio rather than one for each individual designer change detected in this process. 
 
 The editing scope uses a MorphHelper to create the new type from the old type. This process will copy across all the supported changes from the old type to the new type (properties, child activities etc). 
 
-The next job is to detect if the activity has the default display name value. If this is the case, then the display name will be updated to the default display name of the new activity type. This is done because the display name of generic activities is normally calculated as TypeName<TypeName, TypeName, etc, etc&gt;.
+The next job is to detect if the activity has the default display name value. If this is the case, then the display name will be updated to the default display name of the new activity type. This is done because the display name of generic activities is normally calculated as TypeName<TypeName, TypeName, etc, etc>.
 
-Lastly, the class makes a call into a DesignerUpdater helper class that is used to ensure that the updated activity is selected.
-
-    namespace Neovolve.Toolkit.Workflow.Design
+Lastly, the class makes a call into a DesignerUpdater helper class that is used to ensure that the updated activity is selected.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Design
+{
+    using System;
+    using System.Activities.Presentation;
+    using System.Activities.Presentation.Model;
+    using System.Activities.Presentation.View;
+    using System.Windows.Threading;
+    
+    internal sealed class DesignerUpdater
     {
-        using System;
-        using System.Activities.Presentation;
-        using System.Activities.Presentation.Model;
-        using System.Activities.Presentation.View;
-        using System.Windows.Threading;
-    
-        internal sealed class DesignerUpdater
+        public static void UpdateModelItem(ModelItem originalItem, ModelItem updatedItem)
         {
-            public static void UpdateModelItem(ModelItem originalItem, ModelItem updatedItem)
-            {
-                DesignerUpdater class2 = new DesignerUpdater(originalItem, updatedItem);
+            DesignerUpdater class2 = new DesignerUpdater(originalItem, updatedItem);
     
-                Action method = class2.UpdateDesigner;
+            Action method = class2.UpdateDesigner;
     
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, method);
-            }
-    
-            internal DesignerUpdater(ModelItem originalItem, ModelItem newItem)
-            {
-                _originalModelItem = originalItem;
-                _newModelItem = newItem;
-            }
-    
-            private readonly ModelItem _originalModelItem;
-    
-            private readonly ModelItem _newModelItem;
-    
-            public void UpdateDesigner()
-            {
-                EditingContext editingContext = _originalModelItem.GetEditingContext();
-                DesignerView designerView = editingContext.Services.GetService<DesignerView&gt;();
-    
-                if ((designerView.RootDesigner != null) && (((WorkflowViewElement)designerView.RootDesigner).ModelItem == _originalModelItem))
-                {
-                    designerView.MakeRootDesigner(_newModelItem);
-                }
-    
-                Selection.SelectOnly(editingContext, _newModelItem);
-            }
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, method);
         }
-    }{% endhighlight %}
+    
+        internal DesignerUpdater(ModelItem originalItem, ModelItem newItem)
+        {
+            _originalModelItem = originalItem;
+            _newModelItem = newItem;
+        }
+    
+        private readonly ModelItem _originalModelItem;
+    
+        private readonly ModelItem _newModelItem;
+    
+        public void UpdateDesigner()
+        {
+            EditingContext editingContext = _originalModelItem.GetEditingContext();
+            DesignerView designerView = editingContext.Services.GetService<DesignerView>();
+    
+            if ((designerView.RootDesigner != null) && (((WorkflowViewElement)designerView.RootDesigner).ModelItem == _originalModelItem))
+            {
+                designerView.MakeRootDesigner(_newModelItem);
+            }
+    
+            Selection.SelectOnly(editingContext, _newModelItem);
+        }
+    }
+}
+{% endhighlight %}
 
 The final piece of the puzzle is support for changing the type within the designer surface itself. This is modelled from the InvokeMethod activity that allows for custom types to be defined in the designer.![image][7]
 
-The way to get this to work is to add the following into the XAML of the activity designer.
-
-    <sap:ActivityDesigner.Resources&gt;
-        <conv:ModelToObjectValueConverter x:Key=&quot;modelItemConverter&quot;
-            x:Uid=&quot;sadm:ModelToObjectValueConverter_1&quot; /&gt;
-    </sap:ActivityDesigner.Resources&gt;
+The way to get this to work is to add the following into the XAML of the activity designer.{% highlight xml linenos %}
+<sap:ActivityDesigner.Resources>
+    <conv:ModelToObjectValueConverter x:Key="modelItemConverter"
+        x:Uid="sadm:ModelToObjectValueConverter_1" />
+</sap:ActivityDesigner.Resources>
     
-    <sapv:TypePresenter Width=&quot;120&quot;
-        Margin=&quot;5&quot;
-        AllowNull=&quot;false&quot;
-        BrowseTypeDirectly=&quot;false&quot;
-        Label=&quot;Target type&quot;
-        Type=&quot;{Binding Path=ModelItem.TypeArgument, Mode=TwoWay, Converter={StaticResource modelItemConverter}}&quot;
-        Context=&quot;{Binding Context}&quot; /&gt;{% endhighlight %}
+<sapv:TypePresenter Width="120"
+    Margin="5"
+    AllowNull="false"
+    BrowseTypeDirectly="false"
+    Label="Target type"
+    Type="{Binding Path=ModelItem.TypeArgument, Mode=TwoWay, Converter={StaticResource modelItemConverter}}"
+    Context="{Binding Context}" />
+{% endhighlight %}
 
 This will provide the dropdown list of types for the designer. The first important item to note is that the TypePresenter is bound to the attached property created by GenericArgumentTypeUpdater. The second important item is the binding of the EditingContext. Without the editing context, the dropdown list and associated dialog support will not display references to assemblies and types related to the current workflow.
 

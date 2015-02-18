@@ -15,7 +15,7 @@ I’m not a fan of this restriction as my original intention was to group the de
 
 The restriction of this project segregation and specific naming is because of the [IRegisterMetadata][2] implementation. In addition to the project segregation, these assemblies must be in the same directory for the IRegisterMetadata implementation to be picked up and executed. These restrictions are not part of the MSDN documentation but are provided in [this forum post][3]. I have found that adding the following post build script to the designer project is very useful to ensure that the assemblies are co-located.
 
-_> copy &quot;$(TargetDir)Neovolve.Toolkit.Workflow.Design.*&quot; &quot;$(SolutionDir)\Neovolve.Toolkit.Workflow\$(OutDir)&quot;_
+> _copy "$(TargetDir)Neovolve.Toolkit.Workflow.Design.*" "$(SolutionDir)\Neovolve.Toolkit.Workflow\$(OutDir)"_
 
 This script is helpful for testing your activities and their designers with a separate Visual Studio instance. You will obviously need to change the project names to match your own projects for this script to work.
 
@@ -25,56 +25,56 @@ It is important to note that the activity assembly should never reference the de
 
 **IRegisterMetadata**
 
-An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.
-
-    namespace Neovolve.Toolkit.Workflow.Design
+An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Design
+{
+    using System;
+    using System.Activities;
+    using System.Activities.Presentation.Metadata;
+    using System.Activities.Presentation.Model;
+    using System.ComponentModel;
+    using Neovolve.Toolkit.Workflow.Activities;
+    using Neovolve.Toolkit.Workflow.Design.Presentation;
+    
+    public class RegisterMetadata : IRegisterMetadata
     {
-        using System;
-        using System.Activities;
-        using System.Activities.Presentation.Metadata;
-        using System.Activities.Presentation.Model;
-        using System.ComponentModel;
-        using Neovolve.Toolkit.Workflow.Activities;
-        using Neovolve.Toolkit.Workflow.Design.Presentation;
+        private static readonly Type _activityActionGenericType =
+            typeof(
+                ActivityAction
+                    <Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>).
+                GetGenericTypeDefinition();
     
-        public class RegisterMetadata : IRegisterMetadata
+        private static readonly Type _instanceResolverT16GenericType =
+            typeof(
+                InstanceResolver
+                    <Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object>).
+                GetGenericTypeDefinition();
+    
+        public void Register()
         {
-            private static readonly Type _activityActionGenericType =
-                typeof(
-                    ActivityAction
-                        <Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object&gt;).
-                    GetGenericTypeDefinition();
+            AttributeTableBuilder builder = new AttributeTableBuilder();
     
-            private static readonly Type _instanceResolverT16GenericType =
-                typeof(
-                    InstanceResolver
-                        <Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object&gt;).
-                    GetGenericTypeDefinition();
+            builder.AddCustomAttributes(typeof(ExecuteBookmark), new DesignerAttribute(typeof(ExecuteBookmarkDesigner)));
+            builder.AddCustomAttributes(typeof(ExecuteBookmark<>), new DesignerAttribute(typeof(ExecuteBookmarkTDesigner)));
+            builder.AddCustomAttributes(typeof(GetWorkflowInstanceId), new DesignerAttribute(typeof(GetWorkflowInstanceIdDesigner)));
+            builder.AddCustomAttributes(_instanceResolverT16GenericType, new DesignerAttribute(typeof(InstanceResolverDesigner)));
+            builder.AddCustomAttributes(typeof(SystemFailureEvaluator), new DesignerAttribute(typeof(SystemFailureEvaluatorDesigner)));
     
-            public void Register()
+            MetadataStore.AddAttributeTable(builder.CreateTable());
+    
+            MorphHelper.AddPropertyValueMorphHelper(_activityActionGenericType, MorphExtension.MorphActivityAction);
+        }
+    
+        internal static Type InstanceResolverT16GenericType
+        {
+            get
             {
-                AttributeTableBuilder builder = new AttributeTableBuilder();
-    
-                builder.AddCustomAttributes(typeof(ExecuteBookmark), new DesignerAttribute(typeof(ExecuteBookmarkDesigner)));
-                builder.AddCustomAttributes(typeof(ExecuteBookmark<&gt;), new DesignerAttribute(typeof(ExecuteBookmarkTDesigner)));
-                builder.AddCustomAttributes(typeof(GetWorkflowInstanceId), new DesignerAttribute(typeof(GetWorkflowInstanceIdDesigner)));
-                builder.AddCustomAttributes(_instanceResolverT16GenericType, new DesignerAttribute(typeof(InstanceResolverDesigner)));
-                builder.AddCustomAttributes(typeof(SystemFailureEvaluator), new DesignerAttribute(typeof(SystemFailureEvaluatorDesigner)));
-    
-                MetadataStore.AddAttributeTable(builder.CreateTable());
-    
-                MorphHelper.AddPropertyValueMorphHelper(_activityActionGenericType, MorphExtension.MorphActivityAction);
-            }
-    
-            internal static Type InstanceResolverT16GenericType
-            {
-                get
-                {
-                    return _instanceResolverT16GenericType;
-                }
+                return _instanceResolverT16GenericType;
             }
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
 The RegisterMetadata class seen here is the IRegisterMetadata implementation for my custom workflows. This class does two things. Firstly it associates activity designers with their activities. Secondly it takes the opportunity to add a custom morph action into the MorphHelper class.
 
@@ -86,73 +86,73 @@ The [previous post][4] provided the implementation for supporting updatable gene
 
 MorphHelper is used to copy information between ModelItems that are used to describe an activity in the designer. It is used by updatable generic activity types to copy properties and child activity information (among other things) from the original activity type to the new activity type.
 
-Consider what happens when you change ParallelForEach<String&gt; to ParallelForEach<Boolean&gt;. Any property information assigned to the activity (like the enumerable reference and child activity definition) is copied between the activity definitions even though the two activity types are not the same. This is the power of MorphHelper.
+Consider what happens when you change ParallelForEach<String> to ParallelForEach<Boolean>. Any property information assigned to the activity (like the enumerable reference and child activity definition) is copied between the activity definitions even though the two activity types are not the same. This is the power of MorphHelper.
 
 Understandably MorphHelper will not know how to transform any possible data/type structure between ModelItem instances. Thankfully the helper class is extensible as it allows custom morph actions to be added via the AddPropertyValueMorphHelper method. Reflector shows that this is how WF4 configures MorphHelper for the morph actions that come out of the box. These are wired up in the WF4 IRegisterMetadata implementation defined in the System.Activities.Core.Presentation.DesignerMetadata class.
 
-The DesignerMetadata class contains the following default morph actions.
+The DesignerMetadata class contains the following default morph actions.{% highlight csharp linenos %}
+MorphHelper.AddPropertyValueMorphHelper(typeof(InArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
+MorphHelper.AddPropertyValueMorphHelper(typeof(OutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
+MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
+MorphHelper.AddPropertyValueMorphHelper(typeof(ActivityAction<>), new PropertyValueMorphHelper(MorphHelpers.ActivityActionMorphHelper));
+{% endhighlight %}
 
-    MorphHelper.AddPropertyValueMorphHelper(typeof(InArgument<&gt;), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
-    MorphHelper.AddPropertyValueMorphHelper(typeof(OutArgument<&gt;), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
-    MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<&gt;), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
-    MorphHelper.AddPropertyValueMorphHelper(typeof(ActivityAction<&gt;), new PropertyValueMorphHelper(MorphHelpers.ActivityActionMorphHelper));{% endhighlight %}
+There is support for morphing InArgument<>, OutArgument<>, InOutArgument<> and ActivityAction<> properties between ModelItem types.
 
-There is support for morphing InArgument<&gt;, OutArgument<&gt;, InOutArgument<&gt; and ActivityAction<&gt; properties between ModelItem types.
+The issue I had with creating the updatable type support for InstanceResolver was that the 16 handlers defined against ActivityAction<T1…T1> for the activity were not copied from the old ModelItem to the new ModelItem. The reason for this turned about to be that the morph action for ActivityAction<> only supports a single generic argument whereas the InstanceResolver activity has 16. This is another scenario where the Microsoft implementation is limited to a single generic argument like the limitations of the DefaultTypeArgumentAttribute (as indicated in [this post][0]).
 
-The issue I had with creating the updatable type support for InstanceResolver was that the 16 handlers defined against ActivityAction<T1…T1&gt; for the activity were not copied from the old ModelItem to the new ModelItem. The reason for this turned about to be that the morph action for ActivityAction<&gt; only supports a single generic argument whereas the InstanceResolver activity has 16. This is another scenario where the Microsoft implementation is limited to a single generic argument like the limitations of the DefaultTypeArgumentAttribute (as indicated in [this post][0]).
-
-The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction<T1…T16&gt;.
-
-    namespace Neovolve.Toolkit.Workflow.Design
+The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction<T1…T16>.{% highlight csharp linenos %}
+namespace Neovolve.Toolkit.Workflow.Design
+{
+    using System;
+    using System.Activities;
+    using System.Activities.Presentation.Model;
+    
+    internal static class MorphExtension
     {
-        using System;
-        using System.Activities;
-        using System.Activities.Presentation.Model;
-    
-        internal static class MorphExtension
+        public static Object MorphActivityAction(ModelItem originalValue, ModelProperty newModelProperty)
         {
-            public static Object MorphActivityAction(ModelItem originalValue, ModelProperty newModelProperty)
+            Type newActivityActionType = newModelProperty.PropertyType;
+            ActivityDelegate newActivityDelegate = (ActivityDelegate)Activator.CreateInstance(newActivityActionType);
+            ModelItem newModelItem = ModelFactory.CreateItem(originalValue.GetEditingContext(), newActivityDelegate);
+            Type[] genericArguments = newActivityActionType.GetGenericArguments();
+    
+            for (Int32 index = 1; index <= genericArguments.Length; index++)
             {
-                Type newActivityActionType = newModelProperty.PropertyType;
-                ActivityDelegate newActivityDelegate = (ActivityDelegate)Activator.CreateInstance(newActivityActionType);
-                ModelItem newModelItem = ModelFactory.CreateItem(originalValue.GetEditingContext(), newActivityDelegate);
-                Type[] genericArguments = newActivityActionType.GetGenericArguments();
+                String argumentName = "Argument" + index;
+                ModelItem argumentItem = originalValue.Properties[argumentName].Value;
     
-                for (Int32 index = 1; index <= genericArguments.Length; index++)
+                if (argumentItem != null)
                 {
-                    String argumentName = &quot;Argument&quot; + index;
-                    ModelItem argumentItem = originalValue.Properties[argumentName].Value;
+                    Type[] delegateTypeList = new[]
+                                                {
+                                                    genericArguments[index - 1]
+                                                };
+                    DelegateInArgument argument =
+                        (DelegateInArgument)Activator.CreateInstance(typeof(DelegateInArgument<>).MakeGenericType(delegateTypeList));
     
-                    if (argumentItem != null)
-                    {
-                        Type[] delegateTypeList = new[]
-                                                  {
-                                                      genericArguments[index - 1]
-                                                  };
-                        DelegateInArgument argument =
-                            (DelegateInArgument)Activator.CreateInstance(typeof(DelegateInArgument<&gt;).MakeGenericType(delegateTypeList));
-    
-                        argument.Name = (String)argumentItem.Properties[&quot;Name&quot;].Value.GetCurrentValue();
-                        newModelItem.Properties[argumentName].SetValue(argument);
-                    }
+                    argument.Name = (String)argumentItem.Properties["Name"].Value.GetCurrentValue();
+                    newModelItem.Properties[argumentName].SetValue(argument);
                 }
-    
-                const String HandlerName = &quot;Handler&quot;;
-                ModelItem handerItem = originalValue.Properties[HandlerName].Value;
-    
-                if (handerItem != null)
-                {
-                    // Copy the activity of the activity action
-                    newModelItem.Properties[HandlerName].SetValue(handerItem);
-                    originalValue.Properties[HandlerName].SetValue(null);
-                }
-    
-                return newModelItem;
             }
+    
+            const String HandlerName = "Handler";
+            ModelItem handerItem = originalValue.Properties[HandlerName].Value;
+    
+            if (handerItem != null)
+            {
+                // Copy the activity of the activity action
+                newModelItem.Properties[HandlerName].SetValue(handerItem);
+                originalValue.Properties[HandlerName].SetValue(null);
+            }
+    
+            return newModelItem;
         }
-    }{% endhighlight %}
+    }
+}
+{% endhighlight %}
 
-This code is modelled from the Microsoft implementation of ActivityAction<&gt; morphing. This implementation however has full support for multiple generic types. 
+This code is modelled from the Microsoft implementation of ActivityAction<> morphing. This implementation however has full support for multiple generic types. 
 
 With this method registered in MorphHelper via the above RegisterMetadata class, changing a generic type in my InstanceResolver class now correctly morphs the internals of the activity from the old type to the new type.
 
