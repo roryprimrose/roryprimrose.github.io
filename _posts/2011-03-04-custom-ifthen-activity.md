@@ -187,7 +187,7 @@ As you can see here, the IfThen activity is able to streamline your workflow des
 
 You can grab this activity from my Neovolve.Toolkit project out on CodePlex with the latest [Neovolve.Toolkit 1.1 Beta release][3].
 
-[0]: //blogfiles/image_79.png
+[0]: //files/image_79.png
 [1]: http://msdn.microsoft.com/en-us/magazine/gg535667.aspx
-[2]: //blogfiles/image_80.png
+[2]: //files/image_80.png
 [3]: http://neovolve.codeplex.com/releases/view/53499

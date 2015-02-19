@@ -25,6 +25,6 @@ When you start the profiler, it will then kick of mstest which in turn will run 
 
 At the end of it, you then have your data.![image][2]
 
-[0]: //blogfiles/image_131.png
-[1]: //blogfiles/image_132.png
-[2]: //blogfiles/image_133.png
+[0]: //files/image_131.png
+[1]: //files/image_132.png
+[2]: //files/image_133.png

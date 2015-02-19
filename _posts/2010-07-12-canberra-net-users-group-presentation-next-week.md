@@ -9,11 +9,11 @@ I’m going to be presenting at this months .Net Users Group in Canberra. The to
 
 Here is the abstract for the session.
 
-_> Unity is the Microsoft Patterns and Practises implementation of an inversion of control (IoC) container. Using IoC containers facilitates the dependency injection pattern which helps to decouple code from its dependencies._
+> _Unity is the Microsoft Patterns and Practises implementation of an inversion of control (IoC) container. Using IoC containers facilitates the dependency injection pattern which helps to decouple code from its dependencies._
 
-_> A common way to implement IoC in ASP.Net and WCF services is to couple the hosted application to the IoC container. The first half of this session will look at how ASP.Net and WCF applications can be extended to leverage the benefits of IoC while decoupling the hosted application from the container._
+> _A common way to implement IoC in ASP.Net and WCF services is to couple the hosted application to the IoC container. The first half of this session will look at how ASP.Net and WCF applications can be extended to leverage the benefits of IoC while decoupling the hosted application from the container._
 
-_> The second half of the session will look at how Unity can be extended to provide a recursive disposal pattern for build trees created by the container._
+> _The second half of the session will look at how Unity can be extended to provide a recursive disposal pattern for build trees created by the container._
 
 If you are local then I hope to see you there.
 

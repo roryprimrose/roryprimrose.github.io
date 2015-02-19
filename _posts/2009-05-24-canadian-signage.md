@@ -8,5 +8,5 @@ It’s been a while since I came across some signs worthy of posting since [this
 
 [0]: /post/2006/01/26/660.aspx
 [1]: /post/2005/01/26/222.aspx
-[2]: //blogfiles/20090523-072426.jpg
-[3]: //blogfiles/20090523-091846.jpg
+[2]: //files/20090523-072426.jpg
+[3]: //files/20090523-091846.jpg

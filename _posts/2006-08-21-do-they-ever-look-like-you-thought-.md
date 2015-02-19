@@ -15,5 +15,5 @@ Oh, and hopefully [his prior experience][3] doesn't happen to me this week. :)
 
 [0]: http://weblogs.asp.net/scottgu/default.aspx
 [1]: http://blogs.msdn.com/nigel/archive/2006/08/21/709648.aspx
-[2]: /blogfiles/WindowsLiveWriter/Dotheyeverlooklikeyouthought_C944/Scott%20Guthrie_3.jpg
+[2]: /files/WindowsLiveWriter/Dotheyeverlooklikeyouthought_C944/Scott%20Guthrie_3.jpg
 [3]: http://weblogs.asp.net/scottgu/archive/2006/08/18/10-Worst-Presentation-Moments.aspx

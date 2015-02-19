@@ -71,12 +71,12 @@ You can download this template from the Visual Studio gallery at [here][9]. The 
 
 [0]: /post/2011/07/19/Creating-a-simple-bootstrapper-Proof-of-concept.aspx
 [1]: http://blogs.msdn.com/b/visualstudio/archive/2010/03/04/creating-and-sharing-project-item-templates.aspx
-[2]: //blogfiles/image_124.png
-[3]: //blogfiles/image_125.png
-[4]: //blogfiles/image_126.png
-[5]: //blogfiles/image_127.png
-[6]: //blogfiles/image_128.png
-[7]: //blogfiles/image_129.png
-[8]: //blogfiles/image_130.png
+[2]: //files/image_124.png
+[3]: //files/image_125.png
+[4]: //files/image_126.png
+[5]: //files/image_127.png
+[6]: //files/image_128.png
+[7]: //files/image_129.png
+[8]: //files/image_130.png
 [9]: http://visualstudiogallery.msdn.microsoft.com/01e9dab4-73de-4126-91c0-2a207c52b9cd
 [10]: http://neovolvex.codeplex.com

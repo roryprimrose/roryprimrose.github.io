@@ -71,5 +71,5 @@ LOG: All probing URLs attempted and failed.
 In my case I have a binding failure on Sync Framework assemblies. Makes sense since I haven’t installed it yet :).
 
 [0]: http://bartdesmet.net/blogs/bart/archive/2006/10/23/Assembly-probing_2C00_-Fusion-and-fuslogvw-in-5-minutes.aspx
-[1]: /blogfiles/image_9.png
-[2]: /blogfiles/image_10.png
+[1]: /files/image_9.png
+[2]: /files/image_10.png

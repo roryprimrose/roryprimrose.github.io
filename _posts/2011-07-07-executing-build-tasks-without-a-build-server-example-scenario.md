@@ -234,8 +234,8 @@ The next post will provide an example of how to create a custom task for BTE to 
 [1]: /2011/07/03/Executing-build-tasks-without-a-build-server-%E2%80%93-Implementation/
 [2]: /2011/07/06/Executing-build-tasks-without-a-build-server-%E2%80%93-In-action/
 [3]: http://switch.codeplex.com/
-[4]: /blogfiles/image_110.png
-[5]: /blogfiles/image_111.png
-[6]: /blogfiles/image_112.png
-[7]: /blogfiles/image_113.png
-[8]: /blogfiles/image_114.png
+[4]: /files/image_110.png
+[5]: /files/image_111.png
+[6]: /files/image_112.png
+[7]: /files/image_113.png
+[8]: /files/image_114.png

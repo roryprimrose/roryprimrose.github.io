@@ -96,4 +96,4 @@ The obvious observation is that Task.WaitAll on an array of tasks is almost thre
 
 I was honestly expecting Parallel to not execute asynchronously in a single core environment as the documentation seems to be completely geared towards multi-core systems. I am really happy with this outcome, especially because the code flow makes better use of generics.
 
-[0]: //blogfiles/image_154.png
+[0]: //files/image_154.png

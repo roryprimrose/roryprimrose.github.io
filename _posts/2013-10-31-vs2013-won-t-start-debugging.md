@@ -13,4 +13,4 @@ Turns out that this error presents itself when the solution doesn’t have somet
 
 My solution starts multiple projects on F5. One project is an Azure cloud project with web and worker roles (debugger attached) while the other is a local STS website (no debugger attached), all of which run in IIS Express. This error popped up when there were either no projects set to run or when the STS project was set to launch without the debugger and the cloud project was set to None for the multiple project start. Either of these cases causes VS not to debug because there is nothing that is configured for it to attach too.
 
-[0]: //blogfiles/image_158.png
+[0]: //files/image_158.png

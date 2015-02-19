@@ -18,7 +18,7 @@ date: 2005-12-06 02:18:00 +10:00
 
  So now I know that the timer needs to be started from the GUI thread. If I had read the MSDN documentation first, I probably would have come across this: 
 
-_> A **> Timer**>  is used to raise an event at user-defined intervals. This Windows timer is designed for a single-threaded environment where UI threads are used to perform processing. It requires that the user code have a UI message pump available and always operate from the same thread, or marshal the call onto another thread._
+> _A **> Timer**>  is used to raise an event at user-defined intervals. This Windows timer is designed for a single-threaded environment where UI threads are used to perform processing. It requires that the user code have a UI message pump available and always operate from the same thread, or marshal the call onto another thread._
 
  You win some, you lose some. 
 

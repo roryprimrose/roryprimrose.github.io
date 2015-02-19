@@ -9,7 +9,7 @@ I have written some custom activities for WF, but have recently found a bit of a
 
 Even the description of the UserData property sounded appropriate according to my good intentions.
 
-_> Gets an IDictionary that associates custom data with this class instance._
+> _Gets an IDictionary that associates custom data with this class instance._
 
 The problem that came up was that the data put into this property was persisted between multiple calls to execute the workflow type in the workflow runtime across any user that called it. I have had to change my implementation to store the data elsewhere to avoid this issue.
 

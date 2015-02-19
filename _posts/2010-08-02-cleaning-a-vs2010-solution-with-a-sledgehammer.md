@@ -117,5 +117,5 @@ You can either compile the above yourself or grab the executable below.
 
 [Neovolve.SolutionCleaner.zip (2.61 kb)][1]
 
-[0]: //blogfiles/image_22.png
-[1]: /blogfiles/2010/8/Neovolve.SolutionCleaner.zip
+[0]: //files/image_22.png
+[1]: /files/2010/8/Neovolve.SolutionCleaner.zip

@@ -22,4 +22,4 @@ date: 2007-12-06 12:50:00 +10:00
 [0]: /archive/2007/10/04/getting-the-publickey-for-internalsvisibleto.aspx
 [1]: http://davidkean.net/
 [2]: http://davidkean.net/archive/2005/10/06/1183.aspx
-[3]: /blogfiles/2008%2f9%2fGetPublicKey.exe
+[3]: /files/2008%2f9%2fGetPublicKey.exe

@@ -34,7 +34,7 @@ WinMerge stores the line filters in the registry. The easiest way to install the
 [WinMerge Line Filters.reg (978.00 bytes)][4]
 
 [0]: /post/2007/06/19/using-winmerge-with-tfs.aspx
-[1]: //blogfiles/image_93.png
-[2]: //blogfiles/image_94.png
-[3]: //blogfiles/image_95.png
-[4]: /blogfiles/2011%2f3%2fWinMerge+Line+Filters.reg
+[1]: //files/image_93.png
+[2]: //files/image_94.png
+[3]: //files/image_95.png
+[4]: /files/2011%2f3%2fWinMerge+Line+Filters.reg

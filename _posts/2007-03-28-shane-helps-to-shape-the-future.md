@@ -6,7 +6,7 @@ date: 2007-03-28 14:17:29 +10:00
 
 We just had [Shane Morris][0] come to my work to spend some time with us talking about UX. There was a statement he made that really stood out. It was something like:
 
-_> Usability is the natural enemy of functionality. A successful application is usually one with features left out._
+> _Usability is the natural enemy of functionality. A successful application is usually one with features left out._
 
 Hope I'm not misrepresenting him, but I think this is a really important point, especially when UX is normally a developer responsibility. Developers tend to cram in functionality because that is what the business spec told them to do. 
 

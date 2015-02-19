@@ -15,4 +15,4 @@ date: 2009-03-19 09:44:00 +10:00
 [0]: /post/2009/03/18/Using-GhostDoc-to-document-unit-test-methods.aspx
 [1]: /post/2009/03/18/Using-GhostDoc-to-document-unit-test-classes.aspx
 [2]: http://ghostdoc.12.forumer.com/
-[3]: //blogfiles/WindowsLiveWriter/Rolandalreadyhasthegoods_825C/image_3.png
+[3]: //files/WindowsLiveWriter/Rolandalreadyhasthegoods_825C/image_3.png

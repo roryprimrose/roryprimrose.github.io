@@ -324,7 +324,7 @@ Using these techniques will allow a custom activity to provide updatable generic
 [1]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
 [2]: /post/2010/09/29/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-2.aspx
 [3]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-3.aspx
-[4]: //blogfiles/image_32.png
-[5]: //blogfiles/image_33.png
-[6]: //blogfiles/image_34.png
-[7]: //blogfiles/image_35.png
+[4]: //files/image_32.png
+[5]: //files/image_33.png
+[6]: //files/image_34.png
+[7]: //files/image_35.png

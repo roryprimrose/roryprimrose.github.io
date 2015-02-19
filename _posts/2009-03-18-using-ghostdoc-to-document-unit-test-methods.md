@@ -52,7 +52,7 @@ Using this new rule, the example above now gets the following documentation gene
 
 It's not perfect, but its a lot better.
 
-[0]: //blogfiles/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_9.png
-[1]: //blogfiles/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_12.png
-[2]: //blogfiles/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_8.png
-[3]: //blogfiles/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_15.png
+[0]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_9.png
+[1]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_12.png
+[2]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_8.png
+[3]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_15.png

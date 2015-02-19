@@ -14,7 +14,7 @@ date: 2006-02-09 22:33:00 +10:00
 
 [Bobinho][2] made some very interesting comments in a response to the [Channel 9][3] video. I really agree with him when he says: 
 
-_> But Windows developers, on the whole have no sense of style. No taste. No feel for design. And their products suffer greatly as a result._
+> _But Windows developers, on the whole have no sense of style. No taste. No feel for design. And their products suffer greatly as a result._
 
  Developers tend to be people who can appreciate great looking UI, but can't make it themselves. Software projects worked on by small companies and individuals with limited or no budgets are the common victims of bad UI design. This is because they don't have the skills to create good looking UI and can't afford to have skillful people employed to do the work. Development with larger budgets often give a little bit to UI design, but I think there is still not enough focus on it in larger projects. 
 

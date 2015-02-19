@@ -11,7 +11,7 @@ I am having issues with IIS hosting because although the service code is running
 
 Tonight, I have been doing a little bit of reading about this topic and came across this interesting note from the [Hosting Services page][0] in the SDK.
 
-_> The message-based activation provided for an WCF service by IIS 5.1 on Windows XP blocks any other self-hosted WCF service on the same box from using port 80 to communicate._
+> _The message-based activation provided for an WCF service by IIS 5.1 on Windows XP blocks any other self-hosted WCF service on the same box from using port 80 to communicate._
 
 The Hosting Services page is a great reference for helping you to figure out the best way of hosting your WCF service. Windows Activation Service seems like the most comprehensive hosting solution, but obviously requires Vista as the platform.
 

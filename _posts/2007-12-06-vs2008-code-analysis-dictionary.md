@@ -8,13 +8,13 @@ VS2008 Code Analysis has new features that provide spell checking. This is reall
 
 If you look at the help for the _Identifiers should be spelled correctly_ rule, it refers to a custom dictionary. Unfortunately, the help documentation is quite unhelpful where it indicates where the _CustomDictionary.xml_ file is stored:
 
-_> Place the dictionary in the installation directory of the tool, the project directory, or in the directory associated with the tool under the user's profile (%USERPROFILE%\Application Data\...)._
+> _Place the dictionary in the installation directory of the tool, the project directory, or in the directory associated with the tool under the user's profile (%USERPROFILE%\Application Data\...)._
 
 Which tool? I can only assume that it is referring to the Visual Studio IDE? Why is this not specific? The project directory reference is self explanatory, but the users profile directory is as useful as the first reference to 'the tool'.
 
 If you click the _How to: Customize the Code Analysis Dictionary_ link at the bottom of the help page, you get some mildly more helpful help information as it says:
 
-_> To use the custom dictionary with all projects, put the file in the Visual Studio root install folder and restart Visual Studio. For a project-specific custom dictionary, put the file in the project folder._
+> _To use the custom dictionary with all projects, put the file in the Visual Studio root install folder and restart Visual Studio. For a project-specific custom dictionary, put the file in the project folder._
 
 I say mildly, because what is the Visual Studio root install folder? I would assume that to mean _C:\Program Files\Microsoft Visual Studio 9.0_, but it could also be _C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE_ which is where _devenv.exe_ lives. 
 

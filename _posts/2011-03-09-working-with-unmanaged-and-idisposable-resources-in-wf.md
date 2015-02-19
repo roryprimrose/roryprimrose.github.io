@@ -26,6 +26,6 @@ The Catch section of the second TryCatch catches ObjectDisposedException and sim
 Overall this is a messy and incomplete solution. The next post will address this using a new custom WF activity.
 
 [0]: http://msmvps.com/blogs/theproblemsolver/archive/2010/08/22/workflows-and-no-persist-zones.aspx
-[1]: //blogfiles/image_81.png
-[2]: //blogfiles/image_82.png
-[3]: //blogfiles/image_83.png
+[1]: //files/image_81.png
+[2]: //files/image_82.png
+[3]: //files/image_83.png

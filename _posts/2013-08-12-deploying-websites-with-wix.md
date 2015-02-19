@@ -146,6 +146,6 @@ Compile the WiX project and deploy the MSI. You should now have a website deploy
 The only disadvantage with this way of deploying websites is that a website publish has not been executed. This means that operations like xml transformations have not been actioned. We handle those scenarios in WiX anyway (see the util:XmlConfig above) so this isn’t a concern. We simply remove web.Debug.config and web.Release.config from the solution so they don’t end up getting bundled in the MSI in the first place.
 
 [0]: /post/2010/06/22/WiX-Heat-extension-to-deploy-web-projects-to-the-bin-directory.aspx
-[1]: //blogfiles/image_13.png
-[2]: //blogfiles/ScreenShot023.png
-[3]: //blogfiles/image_157.png
+[1]: //files/image_13.png
+[2]: //files/ScreenShot023.png
+[3]: //files/image_157.png

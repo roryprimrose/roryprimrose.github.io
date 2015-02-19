@@ -99,4 +99,4 @@ Easy fix.
 
 [0]: http://www.google.com/search?q=mock+IUnityContainer+BadImageFormatException&amp;hl=en&amp;rls=com.microsoft:en-au&amp;start=0&amp;sa=N
 [1]: http://weblogs.asp.net/rosherove/archive/2008/04/14/creating-a-automockingcontainer-with-microsoft-unity-pretty-darn-simple.aspx
-[2]: //blogfiles/image_2.png
+[2]: //files/image_2.png

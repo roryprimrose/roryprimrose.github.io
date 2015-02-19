@@ -94,4 +94,4 @@ The second important step is to define the “correct” contract name. Ordinari
 
 My hosted workflow services can now respond to a mix of endpoint bindings for the service.
 
-[0]: //blogfiles/image_51.png
+[0]: //files/image_51.png

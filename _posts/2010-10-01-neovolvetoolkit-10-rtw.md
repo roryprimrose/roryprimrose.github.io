@@ -310,5 +310,5 @@ InstanceManagerExtension
 The InstanceManagerExtension class is used to manage instances resolved from a container. 
 
 [0]: http://neovolve.codeplex.com/releases/view/19004
-[1]: //blogfiles/image_38.png
+[1]: //files/image_38.png
 [2]: http://www.famfamfam.com/lab/icons/silk/

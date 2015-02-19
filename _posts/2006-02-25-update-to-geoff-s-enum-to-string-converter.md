@@ -47,7 +47,7 @@ I ran the following test cases:
 
 * T (no change)
 * TSQL (no change)
-* CSharp becomes CSharp&#160; (no change)
+* CSharp becomes CSharp (no change)
 * VisualBasic becomes Visual Basic
 * TWhyAmIDoingThisT becomes TWhy Am IDoing This T. This one is kinda close, but I can't really make a decision about whether multiple upper-case characters should be split.
 * T_WhyAmI_DoingThisT becomes T Why Am I Doing This T

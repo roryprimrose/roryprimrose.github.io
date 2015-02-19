@@ -55,12 +55,12 @@ The content correlation will still work here even though the correlation data is
 
 In this post we have looked at two ways of getting content correlation support to link two WCF service operations in a hosted workflow service. The remaining obstacle is how to return a meaningful service fault back if the user provides an invalid TransactionId to the ConfirmRegistration operation. I hope that a viable solution will pop up in the next post.
 
-[0]: //blogfiles/image_52.png
-[1]: //blogfiles/image_53.png
-[2]: //blogfiles/image_54.png
-[3]: //blogfiles/image_55.png
-[4]: //blogfiles/image_56.png
-[5]: //blogfiles/image_57.png
-[6]: //blogfiles/image_58.png
-[7]: //blogfiles/image_59.png
-[8]: //blogfiles/image_60.png
+[0]: //files/image_52.png
+[1]: //files/image_53.png
+[2]: //files/image_54.png
+[3]: //files/image_55.png
+[4]: //files/image_56.png
+[5]: //files/image_57.png
+[6]: //files/image_58.png
+[7]: //files/image_59.png
+[8]: //files/image_60.png

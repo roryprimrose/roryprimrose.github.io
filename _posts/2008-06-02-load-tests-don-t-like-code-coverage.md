@@ -11,13 +11,13 @@ I have been pulling my hair out this afternoon trying to figure out why my code 
 With code coverage turned on, the report looked like this. 
 </p>
 <p>
-<a href="//blogfiles/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithCodeCoverage.jpg"><img style="border: 0px" src="//blogfiles/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithCodeCoverage_thumb.jpg" border="0" alt="Load Test With Code Coverage" width="491" height="484" /></a> 
+<a href="//files/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithCodeCoverage.jpg"><img style="border: 0px" src="//files/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithCodeCoverage_thumb.jpg" border="0" alt="Load Test With Code Coverage" width="491" height="484" /></a> 
 </p>
 <p>
 After I turned code coverage off, I was much happier. 
 </p>
 <p>
-<a href="//blogfiles/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithoutCodeCoverage.jpg"><img style="border: 0px" src="//blogfiles/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithoutCodeCoverage_thumb.jpg" border="0" alt="Load Test Without Code Coverage" width="526" height="484" /></a> 
+<a href="//files/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithoutCodeCoverage.jpg"><img style="border: 0px" src="//files/WindowsLiveWriter/Loadtestsdontlikecodecoverage_14C6D/LoadTestWithoutCodeCoverage_thumb.jpg" border="0" alt="Load Test Without Code Coverage" width="526" height="484" /></a> 
 </p>
 <p>
 The Test Response Time graphs (top right) highlight the difference between the test run performance as does the the CPU usage (red line in the bottom right graph). Of the four tests, the one that is doing the most work was averaging 6.76 seconds per test with code coverage which is atrocious. Without code coverage, this test was running an average of 0.00024 seconds per test. Just a little different. 

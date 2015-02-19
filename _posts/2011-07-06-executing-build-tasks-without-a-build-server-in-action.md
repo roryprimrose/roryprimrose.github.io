@@ -44,11 +44,11 @@ The next post will provide a scenario where these tasks are used to manage the v
 
 [0]: /2011/07/03/Executing-build-tasks-without-a-build-server-%E2%80%93-Implementation/
 [1]: /2011/07/01/Executing-build-tasks-without-a-build-server-%E2%80%93-Design/
-[2]: /blogfiles/image%5B8%5D.png
-[3]: /blogfiles/image%5B8%5D_thumb.png
-[4]: /blogfiles/image%5B11%5D.png
-[5]: /blogfiles/image%5B11%5D_thumb.png
-[6]: /blogfiles/image%5B14%5D.png
-[7]: /blogfiles/image%5B14%5D_thumb.png
-[8]: /blogfiles/image%5B17%5D.png
-[9]: /blogfiles/image%5B17%5D_thumb.png
+[2]: /files/image%5B8%5D.png
+[3]: /files/image%5B8%5D_thumb.png
+[4]: /files/image%5B11%5D.png
+[5]: /files/image%5B11%5D_thumb.png
+[6]: /files/image%5B14%5D.png
+[7]: /files/image%5B14%5D_thumb.png
+[8]: /files/image%5B17%5D.png
+[9]: /files/image%5B17%5D_thumb.png

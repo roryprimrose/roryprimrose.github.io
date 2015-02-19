@@ -9,4 +9,4 @@ date: 2006-08-30 10:31:00 +10:00
 
  Download: [TechEd Australia 2006 - CON307 - WCF Manageability.zip (876.99 kb)][0]
 
-[0]: /blogfiles/2008%2f9%2fTechEd+Australia+2006+-+CON307+-+WCF+Manageability.zip
+[0]: /files/2008%2f9%2fTechEd+Australia+2006+-+CON307+-+WCF+Manageability.zip

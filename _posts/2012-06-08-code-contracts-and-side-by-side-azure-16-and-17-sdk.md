@@ -36,7 +36,7 @@ Setting the Specific Version property to False then automatically picks up the 1
 
 I don’t know why the Code Contracts rewriter doesn’t like the side by side installation, but the project now compiles successfully.
 
-[0]: /blogfiles/image_141.png
+[0]: /files/image_141.png
 [1]: http://msdn.microsoft.com/en-us/library/2fc472t2(v=vs.90).aspx
-[2]: /blogfiles/image_142.png
-[3]: /blogfiles/image_143.png
+[2]: /files/image_142.png
+[3]: /files/image_143.png

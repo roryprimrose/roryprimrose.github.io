@@ -22,8 +22,8 @@ The following is a list of all the posts in this series.
 
 This workflow activity and several others can be found in my [Neovolve.Toolkit project][10] which can be found [here][11] on Codeplex.
 
-[0]: //blogfiles/image_36.png
-[1]: //blogfiles/image_37.png
+[0]: //files/image_36.png
+[1]: //files/image_37.png
 [2]: /post/2010/09/15/Dependency-injection-options-for-Windows-Workflow-4.aspx
 [3]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
 [4]: /post/2010/09/29/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-2.aspx

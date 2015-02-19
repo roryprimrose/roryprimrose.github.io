@@ -266,4 +266,4 @@ In this process I found that it would be nice if the InstanceValueElement class 
 
 [Neovolve.UnityTesting.zip (8.63 kb)][0]
 
-[0]: /blogfiles/2010/1/Neovolve.UnityTesting.zip
+[0]: /files/2010/1/Neovolve.UnityTesting.zip

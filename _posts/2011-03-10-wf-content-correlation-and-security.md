@@ -18,13 +18,13 @@ Each other service operation then uses the same ReceiveIdentityInspector to get 
 
 All these other service operations can then compare the two identities to protect the service against a hijack attack. The following condition is set against the Invalid Identity activity above:
 
-_> ReadSegmentIdentity Is Nothing OrElse ReadSegmentIdentity.IsAuthenticated = False OrElse ReadSegmentIdentity.Name <&gt; SessionIdentity.Name_
+> _ReadSegmentIdentity Is Nothing OrElse ReadSegmentIdentity.IsAuthenticated = False OrElse ReadSegmentIdentity.Name &gt;&gt; SessionIdentity.Name_
 
 A SecurityException is thrown if this condition is evaluated as True. An authenticated user is now unable to hijack the service of another user even if they can obtain the value used for content correlation. 
 
 Another security measure to protect the content correlation value (and all the data of the service) to use ensure that SSL is used to encrypt the traffic for the service. This should not however remove the requirement for the above security check. Additionally, you should also write integration tests that verify that this potential security hole is successfully managed by your service application.
 
 [0]: /post/2010/11/08/Hosted-workflow-service-with-content-correlation.aspx
-[1]: //blogfiles/image_90.png
+[1]: //files/image_90.png
 [2]: /post/2011/02/21/Extract-WCF-identity-into-a-WorkflowServiceHost-activity.aspx
-[3]: //blogfiles/image_91.png
+[3]: //files/image_91.png

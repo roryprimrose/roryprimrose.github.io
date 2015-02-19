@@ -5,7 +5,7 @@ tags : WF
 date: 2007-08-13 14:07:04 +10:00
 ---
 
-_> An exception of type 'System.Runtime.Serialization.SerializationException' occurred in Neovolve.Framework.Workflow.DLL but was not handled in user code__> Additional information: Type 'System.Workflow.ComponentModel.ActivityExecutionContext' in Assembly 'System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' is not marked as serializable._
+> _An exception of type 'System.Runtime.Serialization.SerializationException' occurred in Neovolve.Framework.Workflow.DLL but was not handled in user code Additional information: Type 'System.Workflow.ComponentModel.ActivityExecutionContext' in Assembly 'System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' is not marked as serializable._
 
 This was a bit of a curly one. 
 

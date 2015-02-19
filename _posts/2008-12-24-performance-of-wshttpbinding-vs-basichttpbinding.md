@@ -18,13 +18,13 @@ This lead me to think that the reason the host was no longer processing requests
 This is the load test result using wsHttpBinding. The test starts well, then the CPU gets saturated dealing with the wsHttpBinding overhead. The test time starts to bounce around the 8 second mark and the CPU on the server is working way too hard.
 </p>
 <p>
-<a href="//blogfiles/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/WsHttpBinding_2.jpg"><img style="border: 0px" src="//blogfiles/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/WsHttpBinding_thumb.jpg" border="0" alt="WsHttpBinding" width="626" height="484" /></a>
+<a href="//files/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/WsHttpBinding_2.jpg"><img style="border: 0px" src="//files/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/WsHttpBinding_thumb.jpg" border="0" alt="WsHttpBinding" width="626" height="484" /></a>
 </p>
 <p>
 Switching over to basicHttpBinding dropped the average test time down to a consistent 28 milliseconds. That is quite an improvement over 8 seconds. This such an increase in performance, I was able to remove the custom throttling configuration and use the default values without a problem.
 </p>
 <p>
-<a href="//blogfiles/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/BasicHttpBinding_2.jpg"><img style="border: 0px" src="//blogfiles/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/BasicHttpBinding_thumb.jpg" border="0" alt="BasicHttpBinding" width="624" height="484" /></a> 
+<a href="//files/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/BasicHttpBinding_2.jpg"><img style="border: 0px" src="//files/WindowsLiveWriter/PerformanceofwsHttpBindingvsbasicHttpBin_9E5E/BasicHttpBinding_thumb.jpg" border="0" alt="BasicHttpBinding" width="624" height="484" /></a> 
 </p>
 <p>
 The CPU on the server is no longer peaking out, but is still working hard because it is processing over 28,000 requests rather than just a few thousand.

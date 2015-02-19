@@ -8,7 +8,7 @@ Since I got an XBox360 after TechEd, I haven't been able to stream videos or liv
 
 It's hard to believe that a network card could be causing this problem. It seemed to be more and more likely though as the machine also locked up five times when I was transferring several gigabytes across the NIC one night.
 
-The onboard NIC in the motherboard didn't work for me prior to this because it couldn't talk properly to my router. I had installed a spare PCI NIC that I had back from my BigPond ADSL (no link deserved [:P]) days.
+The onboard NIC in the motherboard didn't work for me prior to this because it couldn't talk properly to my router. I had installed a spare PCI NIC that I had back from my BigPond ADSL (no link deserved :P) days.
 
 With my research into the MCE issues, the solution seemed to be to get an updated set of drivers for the NIC. I found out that my 'no name' NIC only had drivers back to something like 2003 or 2002. Ok, so no good on that front.
 

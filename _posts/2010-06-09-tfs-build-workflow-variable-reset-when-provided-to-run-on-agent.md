@@ -62,7 +62,7 @@ Initialize Variables
 
 So it seems that information provided to the build agent uses property reflection rather than serialization. Perhaps a particular implementation of serialization is used such that the Serialization attribute alone is not enough. If property reflection alone is used then it would be an odd choice of implementation and one that is quite limiting. Either way, using classes with properties seems to be the answer to providing workflow variables to build agents.
 
-[0]: /blogfiles/image_11.png
+[0]: /files/image_11.png
 [1]: http://social.msdn.microsoft.com/Forums/en-US/tfsbuild/thread/e2e30422-19e8-4868-81a8-fe878860f685/
 [2]: http://oztfs.com/
 [3]: http://blogs.msdn.com/b/granth/

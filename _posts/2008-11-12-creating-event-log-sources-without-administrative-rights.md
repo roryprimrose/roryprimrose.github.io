@@ -10,7 +10,7 @@ I have been coming up against a scenario where I need to create new event log so
 
 Administrative rights are required to create event log sources using the _System.Diagnostics.EventLog_ class. Without administrative rights, CAS kicks in and a SecurityException is thrown.
 
-_> System.Security.SecurityException: The source was not found, but some or all event logs could not be searched.&#160; Inaccessible logs: Security._
+> _System.Security.SecurityException: The source was not found, but some or all event logs could not be searched. Inaccessible logs: Security._
 
 Attempting to create a new source or checking to see if the source already exists will enumerate all the event logs on the machine. This requires administrative rights because some event logs (such as the Security event log) are protected with specific security permissions. Without administrative rights, those event logs fail to be read.
 
@@ -38,4 +38,4 @@ The permissions should look something like this:![image][0]
 
 After further testing, the only permissions required for the event log are _Set Value_ and _Create Subkey_. The above settings for _Query Value_ and _Enumerate Subkeys_ are not required. This is because when you run the above logic, querying for the existence of a key (by simply calling OpenSubKey) is not querying a value and isn't enumerating the keys. Once the source is created, no further registry permissions are required to write to the event log.
 
-[0]: //blogfiles/WindowsLiveWriter/Creatingeventlogsourceswithoutadministra_DCD9/image_3.png
+[0]: //files/WindowsLiveWriter/Creatingeventlogsourceswithoutadministra_DCD9/image_3.png

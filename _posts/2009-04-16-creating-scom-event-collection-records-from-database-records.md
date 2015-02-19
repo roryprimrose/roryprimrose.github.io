@@ -13,4 +13,4 @@ A word of caution though, you need to be careful not to dump too much informatio
 
 [Neovolve.ScomEvents.xml (17.32 kb)][0]
 
-[0]: /blogfiles/2009%2f4%2fNeovolve.ScomEvents.xml
+[0]: /files/2009%2f4%2fNeovolve.ScomEvents.xml

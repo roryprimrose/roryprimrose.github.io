@@ -263,4 +263,4 @@ nsoleApplication2\Program.cs:line 11
     
 The combination of these two pieces of information will now allow you to quickly identify where the exception is being thrown in or through your workflow assembly.
 
-[0]: /blogfiles/image_25.png
+[0]: /files/image_25.png

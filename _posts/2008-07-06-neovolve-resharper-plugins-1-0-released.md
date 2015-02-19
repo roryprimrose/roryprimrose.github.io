@@ -15,28 +15,24 @@ The following is a copy of the [Using ReSharper Plugins 1.0][2] documentation on
   
 **> Configuration**
 
->  The following displays the normal code format profile dialog.  
+> The following displays the normal code format profile dialog.  
 ![ProfileSettings.jpg][3]
-
   
-  
-> When the plugin is installed, the code format profile dialog will include an additional format option called _> Type alias conversion_> .  
+> When the plugin is installed, the code format profile dialog will include an additional format option called _Type alias conversion_.  
 ![CustomFormatProfile.jpg][4]
-
-  
   
 > The type conversion options are:  
-* _> Do not change_>  - No change is made to the code
-* _> Convert to alias type_>  - References of CLR types are converted to their alias types (Boolean to bool for example)
-* _> Convert from alias type_>  - References of alias types are converted to their CLR types (bool to Boolean for example)
+* _Do not change_ - No change is made to the code
+* _Convert to alias type_ - References of CLR types are converted to their alias types (Boolean to bool for example)
+* _Convert from alias type_ - References of alias types are converted to their CLR types (bool to Boolean for example)
 
->  The _> Do not change_>  setting is the default value.  
+>  The _Do not change_ setting is the default value.  
   
 **> Type mappings**
 
->  The following are the type mappings that are supported for converting types between alias types and their CLR types.  
+> The following are the type mappings that are supported for converting types between alias types and their CLR types.  
   
-> Alias type > CLR type 
+> Alias type &gt; CLR type 
 
 > object 
 
@@ -97,14 +93,11 @@ The following is a copy of the [Using ReSharper Plugins 1.0][2] documentation on
 > sbyte 
 
 > SByte 
-
   
 **> Code examples**
 
 >  Code formatted to use alias types  
 ![AliasCode.jpg][5]
-
-  
   
 > Code formatted to use CLR types  
 ![CLRTypeCode.jpg][6]

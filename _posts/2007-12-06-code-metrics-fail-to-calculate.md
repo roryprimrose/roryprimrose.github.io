@@ -8,7 +8,7 @@ This is an interesting one. I have a solution for a WCF service that contains th
 
 Both projects fail because they can't read another module. The modules that they can't read are direct project reference. The reason provided is:
 
-_> Could not resolve type reference: [mscorlib]_
+> _Could not resolve type reference: [mscorlib]_
 
 There is no information about this on the net that I can find. Is anyone else finding this problem?
 

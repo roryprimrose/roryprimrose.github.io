@@ -15,14 +15,16 @@ aspnet_regiis -i
 
 Solution posted [here][0] by Joao Morais.
 
-> I have got the same issue. It seems like Visual studio 2005 and the web application pool running ASP.NET 2.0 are having a conflict over the temporary folder.  
-> The workaround I have got for now is:  
-> - If you have visual studio 2005 is open, close it  
-> - Go tot the ASP.NET temporary folder for v2.0 of the framework  
->  <Windows dir&gt;\Microsoft.Net\Framework\v2.0<extra numbers&gt;\Temporary ASpNET pages  
-> - Remove the folder for your application (or all of them)  
-> - Reset IIS (on a command line window, &gt;iisreset) [not always needed, but I had to use it sometimes]  
-> - First Browse your page from IE (http://localhost/your app)  
-> - Then reopen Visual studio
+I have got the same issue. It seems like Visual studio 2005 and the web application pool running ASP.NET 2.0 are having a conflict over the temporary folder.  
+
+The workaround I have got for now is:  
+
+- If you have visual studio 2005 is open, close it  
+- Go to the ASP.NET temporary folder for v2.0 of the framework  
+ &lt;Windows dir&gt;\Microsoft.Net\Framework\v2.0&lt;extra numbers&gt;\Temporary ASPNET pages  
+- Remove the folder for your application (or all of them)  
+- Reset IIS (on a command line window, iisreset) [not always needed, but I had to use it sometimes]  
+- First Browse your page from IE (http://localhost/your app)  
+- Then reopen Visual studio
 
 [0]: http://forums.asp.net/1109781/ShowPost.aspx

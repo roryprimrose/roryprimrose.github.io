@@ -10,4 +10,4 @@ Yesterday I ran a [couple of sessions][0] at the Canberra .Net users group. I ha
 [Unity Injection With ASP.Net and WCF.zip (1.45 mb)][1]
 
 [0]: /post/2010/07/12/Canberra-Net-Users-Group-Presentation-next-week.aspx
-[1]: /blogfiles/2010%2f7%2fUnity+Injection+With+ASP.Net+and+WCF.zip
+[1]: /files/2010%2f7%2fUnity+Injection+With+ASP.Net+and+WCF.zip

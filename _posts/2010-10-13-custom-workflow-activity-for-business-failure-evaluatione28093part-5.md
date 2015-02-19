@@ -139,6 +139,6 @@ This post has provided the implementation for handling multiple business failure
 
 [0]: /post/2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-4.aspx
 [1]: /post/2010/10/11/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-1.aspx
-[2]: /blogfiles/image_45.png
-[3]: //blogfiles/image_50.png
+[2]: /files/image_45.png
+[3]: //files/image_50.png
 [4]: /post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-3.aspx

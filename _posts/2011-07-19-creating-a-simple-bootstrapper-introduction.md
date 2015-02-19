@@ -30,5 +30,5 @@ I put together what I wanted out of a simple bootstrapper. The following are the
 The next post will outline the proof of concept I put together to see if this was possible.
 
 [0]: http://msiext.codeplex.com/
-[1]: //blogfiles/image_123.png
+[1]: //files/image_123.png
 [2]: http://dotnetinstaller.codeplex.com

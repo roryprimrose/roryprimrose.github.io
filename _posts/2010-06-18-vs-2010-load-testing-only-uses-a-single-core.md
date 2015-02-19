@@ -8,4 +8,4 @@ I have a new machine at work that is a nice beefy machine. It has eight cores an
 
 It&rsquo;s a shame that I only have one core being used for the load test. It would be great if I could really load up this code base on all eight cores.
 
-[0]: //blogfiles/image_12.png
+[0]: //files/image_12.png

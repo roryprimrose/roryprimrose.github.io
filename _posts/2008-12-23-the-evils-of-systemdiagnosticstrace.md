@@ -21,7 +21,7 @@ In this component, I was tracing three messages regarding an operation that reso
 I found this to be the case as I was running load tests against code that used these components. 
 </p>
 <p>
-<a href="//blogfiles/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/UsingTrace_2.jpg"><img style="display: inline; border-width: 0px" src="//blogfiles/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/UsingTrace_thumb.jpg" border="0" alt="Using Trace" title="Using Trace" width="587" height="484" /></a> 
+<a href="//files/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/UsingTrace_2.jpg"><img style="display: inline; border-width: 0px" src="//files/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/UsingTrace_thumb.jpg" border="0" alt="Using Trace" title="Using Trace" width="587" height="484" /></a> 
 </p>
 <p>
 This is the load test with those three trace messages in the code. This is a particular nasty one. The degrading performance of the test rate (blue line in top left or red line in top right) is not reflective of the increase in user load (red line in the top left). The spike in the CPU also has an interesting behaviour. There is a point where a bottleneck is reached because of the load and the CPU just can&rsquo;t keep up. The average test time starts peeking out around 36 seconds a test. Without a doubt, this is unacceptable. 
@@ -30,7 +30,7 @@ This is the load test with those three trace messages in the code. This is a par
 If the three trace statements are removed, the difference is dramatic. 
 </p>
 <p>
-<a href="//blogfiles/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/NotUsingTrace_2.jpg"><img style="display: inline; border-width: 0px" src="//blogfiles/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/NotUsingTrace_thumb.jpg" border="0" alt="Not Using Trace" title="Not Using Trace" width="589" height="484" /></a> 
+<a href="//files/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/NotUsingTrace_2.jpg"><img style="display: inline; border-width: 0px" src="//files/WindowsLiveWriter/TheevilsofSystem.Diagnostics.Trace_14EA6/NotUsingTrace_thumb.jpg" border="0" alt="Not Using Trace" title="Not Using Trace" width="589" height="484" /></a> 
 </p>
 <p>
 The different scales used in the between the two graphs really don&rsquo;t do this difference the justice it deserves. Without the three Trace statements, the tests sit at a comfortable average of 5.7 milliseconds per test with a maximum of 19 milliseconds. The increase in tests/sec also doesn&rsquo;t do this change justice. The maximum tests/sec went from 23 to 58. This isn&rsquo;t however because of a performance bottleneck but quite the opposite. As the performance is now so much better, 58 tests/sec was the maximum number of tests required to execute the test rate defined for 200 users in the load test. This load test could now be cranked up with more tests/user/hr and more users in order to find out what the performance of the code is when running at capacity. 

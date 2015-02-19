@@ -74,5 +74,5 @@ What happens when an exception is thrown? If the exception is thrown in the para
 
 [0]: http://blogs.msdn.com/b/xiaowen/archive/2009/10/25/threadedness-in-wf.aspx
 [1]: http://blogs.msdn.com/b/advancedworkflow/archive/2006/02/23/538160.aspx
-[2]: /blogfiles/image_23.png
-[3]: /blogfiles/image_24.png
+[2]: /files/image_23.png
+[3]: /files/image_24.png

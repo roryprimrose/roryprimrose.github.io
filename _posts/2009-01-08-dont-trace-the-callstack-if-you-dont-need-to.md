@@ -112,7 +112,7 @@ With a total of 86,652 tests executed, the average execution time was 59 millise
 Including the callstack in a trace record appears to take around four times longer to write a trace record. 
 
 [0]: /2009/01/08/Disable-Trace-UseGlobalLock-For-Better-Tracing-Performance/
-[1]: /blogfiles/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_8.png
-[2]: /blogfiles/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_thumb_3.png
-[3]: /blogfiles/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_6.png
-[4]: /blogfiles/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_thumb_2.png
+[1]: /files/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_8.png
+[2]: /files/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_thumb_3.png
+[3]: /files/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_6.png
+[4]: /files/WindowsLiveWriter/Donttracethecallstackifyoudontneedto_D15F/image_thumb_2.png

@@ -259,10 +259,10 @@ We have seen here how a custom activity can make it very easy to get the identit
 [3]: http://wf.codeplex.com/releases/view/48114
 [4]: http://msdn.microsoft.com/en-us/library/system.servicemodel.activities.ireceivemessagecallback.aspx
 [5]: /2010/09/30/Creating-updatable-generic-Windows-Workflow-activities/
-[6]: /blogfiles/image_72.png
-[7]: /blogfiles/image_73.png
-[8]: /blogfiles/image_74.png
-[9]: /blogfiles/image_75.png
-[10]: /blogfiles/image_76.png
-[11]: /blogfiles/image_77.png
+[6]: /files/image_72.png
+[7]: /files/image_73.png
+[8]: /files/image_74.png
+[9]: /files/image_75.png
+[10]: /files/image_76.png
+[11]: /files/image_77.png
 [12]: http://neovolve.codeplex.com/releases/view/53499

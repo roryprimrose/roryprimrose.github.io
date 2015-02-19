@@ -269,4 +269,4 @@ This post has demonstrated how a custom extension can be used by any activity to
 
 [0]: /post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-2.aspx
 [1]: /post/2010/08/18/Getting-meaningful-exceptions-from-WF.aspx
-[2]: //blogfiles/image_45.png
+[2]: //files/image_45.png

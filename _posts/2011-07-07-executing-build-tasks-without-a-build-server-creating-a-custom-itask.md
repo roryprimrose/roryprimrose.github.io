@@ -181,10 +181,10 @@ You can see here that creating a custom ITask implementation to be invoked by BT
 It is now up to you to create your own tasks for any actions that you require in your own solutions. If you like, you could even contribute your tasks to the [BTE project][7] out on Codeplex.
 
 [0]: /post/2011/07/06/Executing-build-tasks-without-a-build-server-%E2%80%93-Example-scenario.aspx
-[1]: //blogfiles/image_115.png
-[2]: //blogfiles/image_116.png
-[3]: //blogfiles/image_117.png
-[4]: //blogfiles/image_118.png
-[5]: //blogfiles/image_119.png
-[6]: //blogfiles/image_120.png
+[1]: //files/image_115.png
+[2]: //files/image_116.png
+[3]: //files/image_117.png
+[4]: //files/image_118.png
+[5]: //files/image_119.png
+[6]: //files/image_120.png
 [7]: http://neovolve.codeplex.com/SourceControl/changeset/view/80333#1583086

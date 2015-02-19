@@ -213,8 +213,8 @@ There are several disadvantages using PostSharp.Laos. The importance of each of 
 
 Wow, this is an unbelievable product. If you want to get some easy advantages out of AOP and don’t mind the few disadvantages stated above, then PostSharp.Laos is your new best friend.
 
-[0]: //blogfiles/WindowsLiveWriter/AOPwithPostSharp.Laos/579CA136/image.png
-[1]: //blogfiles/WindowsLiveWriter/AOPwithPostSharp.Laos/2C580A2F/image.png
-[2]: //blogfiles/WindowsLiveWriter/AOPwithPostSharp.Laos/0C3CFD72/image.png
+[0]: //files/WindowsLiveWriter/AOPwithPostSharp.Laos/579CA136/image.png
+[1]: //files/WindowsLiveWriter/AOPwithPostSharp.Laos/2C580A2F/image.png
+[2]: //files/WindowsLiveWriter/AOPwithPostSharp.Laos/0C3CFD72/image.png
 [3]: http://www.codingglove.com/products/postsharp-10/licensing
 [4]: http://www.postsharp.org/about/faq

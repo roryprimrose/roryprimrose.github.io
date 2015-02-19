@@ -256,4 +256,4 @@ My POC project is attached to this post for reference.
 [1]: http://code.msdn.microsoft.com/sync/Release/ProjectReleases.aspx?ReleaseId=3419
 [2]: http://social.microsoft.com/Forums/en-US/synctechnicaldiscussion/thread/6a0ebe87-7b48-4c05-91cf-e9e0a347f777/
 [3]: http://msdn.microsoft.com/en-us/library/bb902843(SQL.105).aspx
-[4]: /blogfiles/2010%2f1%2fCachedSyncPOC.zip
+[4]: /files/2010%2f1%2fCachedSyncPOC.zip

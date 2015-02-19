@@ -19,8 +19,8 @@ date: 2006-06-29 14:40:00 +10:00
 
 1. Download the code (link below) and compile the Neovolve.VirtualThemeProvider assembly.
 1. Reference the assembly in your web project.
-1. Move your theme directories into the new application theme directory. By default, the path of the application theme directory will be &quot;Themes/&quot;. This name can be configured through application settings in web.config by providing a value to the key &quot;VirtualThemePathProviderThemePath&quot;. Keep in mind that App_Themes still needs to exist.
-1. Move the common theme files to the global theme directory. By default, the global theme directory name is &quot;Global&quot;. This name can be configured through application settings in web.config providing a value to the key &quot;VirtualThemePathProviderGlobalThemeName&quot;.
+1. Move your theme directories into the new application theme directory. By default, the path of the application theme directory will be "Themes/". This name can be configured through application settings in web.config by providing a value to the key "VirtualThemePathProviderThemePath". Keep in mind that App_Themes still needs to exist.
+1. Move the common theme files to the global theme directory. By default, the global theme directory name is "Global". This name can be configured through application settings in web.config providing a value to the key "VirtualThemePathProviderGlobalThemeName".
 1. Include a VirtualThemePathFilters.config file in each directory that requires filtering. The definitions of each of thiese files will only be applied to the directories and files in that physical directory.
 
  An example web application including filter set defintion configuration files is included with the full source in the download link below. The source for the VirtualThemeProvider contains full xml code documentation which has been compiled into an assembly help file. 
@@ -34,4 +34,4 @@ date: 2006-06-29 14:40:00 +10:00
 [2]: http://weblogs.asp.net/scottgu/archive/2005/11/27/431650.aspx
 [3]: http://blogs.msdn.com/davidebb
 [4]: http://blogs.msdn.com/davidebb/archive/2005/11/27/497339.aspx
-[5]: /blogfiles/2008%2f9%2fNeovolve.VirtualThemeProvider+1.0.zip
+[5]: /files/2008%2f9%2fNeovolve.VirtualThemeProvider+1.0.zip

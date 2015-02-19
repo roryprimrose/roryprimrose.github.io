@@ -84,7 +84,7 @@ Total build time: 00:00.910
 ![][3]
 
 Job done.
-[0]: /blogfiles/image_150.png
-[1]: /blogfiles/image_151.png
-[2]: /blogfiles/image_152.png
-[3]: /blogfiles/image_153.png
+[0]: /files/image_150.png
+[1]: /files/image_151.png
+[2]: /files/image_152.png
+[3]: /files/image_153.png

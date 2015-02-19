@@ -21,6 +21,6 @@ Configure the path as contains packages.![image][2]
 
 All done.
 
-[0]: //blogfiles/image_144.png
-[1]: //blogfiles/image_145.png
-[2]: //blogfiles/image_146.png
+[0]: //files/image_144.png
+[1]: //files/image_145.png
+[2]: //files/image_146.png

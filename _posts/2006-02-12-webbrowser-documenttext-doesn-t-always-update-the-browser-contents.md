@@ -8,47 +8,47 @@ I have been developing some new software which uses the WebBrowser control. Depe
 
 The problem I have encountered is that once the HTML has been determined, setting the DocumentText property hasn't been updating what is displayed in the browser. It only displays the HTML that was orginally assigned to the control. The reason for this not working is hinted at in the help documentation for the Document Text property. The documentation says this:
 
-_> Use this property when you want to manipulate the contents of an HTML page displayed in the WebBrowser control using string processing tools. You can use this property, for example, to load pages from a database or to analyze pages using regular expressions. When you set this property, the WebBrowser control automatically navigates to the about:blank URL before loading the specified text. This means that the * Navigating* ,__> Navigated__> , and__> DocumentCompleted__>  events occur when you set this property, and the value of the__> Url__>  property is no longer meaningful._
+> _Use this property when you want to manipulate the contents of an HTML page displayed in the WebBrowser control using string processing tools. You can use this property, for example, to load pages from a database or to analyze pages using regular expressions. When you set this property, the WebBrowser control automatically navigates to the about:blank URL before loading the specified text. This means that the Navigating, Navigated, and DocumentCompleted events occur when you set this property, and the value of the Url property is no longer meaningful._
 
 For my application, I have set up the WebBrowser control to be as restricted as possible because I don't want my application to look like a browser. For example, I don't want the browsers context menu to be displayed when the user right-clicks on it. One of the properties I changed was to set AllowNavigation = false. The help description for the AllowNavigation property says this:
 
-_> Gets or sets a value indicating whether the control can navigate to another page after its initial page has been loaded._
+> _Gets or sets a value indicating whether the control can navigate to another page after its initial page has been loaded._
 
 If you fire up reflector and find the WebBrowser.DocumentText property you will see that internally, setting the WebBrowser.DocumentText property will create a MemoryStream with the new text value and then the stream is assigned to the WebBrowser.DocumentStream property. Reflector shows the DocumentStream property code to be this:
 
  {% highlight csharp linenos %}
 public Stream DocumentStream
 {
-      get
-      {
-            HtmlDocument document1 = this.Document;
-            if (document1 == null)
-            {
-                  return null;
-            }
-            UnsafeNativeMethods.IPersistStreamInit init1 = document1.DomDocument as UnsafeNativeMethods.IPersistStreamInit;
-            if (init1 == null)
-            {
-                  return null;
-            }
-            MemoryStream stream1 = new MemoryStream();
-            UnsafeNativeMethods.IStream stream2 = new UnsafeNativeMethods.ComStreamFromDataStream(stream1);
-            init1.Save(stream2, false);
-            return new MemoryStream(stream1.GetBuffer(), 0, (int) stream1.Length, false);
-      }
-      set
-      {
-            this.documentStreamToSetOnLoad = value;
-            try
-            {
-                  this.webBrowserState[2] = true;
-                  this.Url = new Uri("about:blank");
-            }
-            finally
-            {
-                  this.webBrowserState[2] = false;
-            }
-      }
+    get
+    {
+        HtmlDocument document1 = this.Document;
+        if (document1 == null)
+        {
+                return null;
+        }
+        UnsafeNativeMethods.IPersistStreamInit init1 = document1.DomDocument as UnsafeNativeMethods.IPersistStreamInit;
+        if (init1 == null)
+        {
+                return null;
+        }
+        MemoryStream stream1 = new MemoryStream();
+        UnsafeNativeMethods.IStream stream2 = new UnsafeNativeMethods.ComStreamFromDataStream(stream1);
+        init1.Save(stream2, false);
+        return new MemoryStream(stream1.GetBuffer(), 0, (int) stream1.Length, false);
+    }
+    set
+    {
+        this.documentStreamToSetOnLoad = value;
+        try
+        {
+                this.webBrowserState[2] = true;
+                this.Url = new Uri("about:blank");
+        }
+        finally
+        {
+                this.webBrowserState[2] = false;
+        }
+    }
 }
 {% endhighlight %}
 

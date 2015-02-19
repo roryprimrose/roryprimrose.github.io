@@ -139,8 +139,8 @@ This post has demonstrated the designer support for the BusinessFailureEvaluator
 
 [0]: /2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-5/
 [1]: /2010/10/11/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-1/
-[2]: /blogfiles/image_46.png
+[2]: /files/image_46.png
 [3]: /2010/09/30/Creating-updatable-generic-Windows-Workflow-activities/
-[4]: /blogfiles/image_47.png
-[5]: /blogfiles/image_45.png
-[6]: /blogfiles/image_50.png
+[4]: /files/image_47.png
+[5]: /files/image_45.png
+[6]: /files/image_50.png

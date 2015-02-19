@@ -45,7 +45,7 @@ The disadvantage of this solution is:
 
 
 [0]: /post/2007/12/06/vs2008-code-analysis-dictionary.aspx
-[1]: //blogfiles/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_3.png
-[2]: //blogfiles/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_6.png
-[3]: //blogfiles/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_9.png
-[4]: //blogfiles/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_12.png
+[1]: //files/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_3.png
+[2]: //files/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_6.png
+[3]: //files/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_9.png
+[4]: //files/WindowsLiveWriter/Themiddlegroundforcodeanalysiscustomdict_B193/image_12.png

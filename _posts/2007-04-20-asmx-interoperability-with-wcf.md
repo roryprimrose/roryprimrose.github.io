@@ -9,13 +9,13 @@ If you have an ASMX client, you can get it to call a WCF endpoint with some rest
 
 I have encountered a problem under SSL though. I am wanting to use username/basic authentication with the service over SSL. [This article][0] makes the following reference:
 
-_> The easiest straightforward way for a successful interoperability scenario is to leverage on transport-layer security. This also means that a properly configured WCF implementation can interoperate with a__[> Basic Profile 1.0][1]__>  compliant ASP.NET Web Service (ASMX) that is currently deployed via SSL / HTTPS as well as with a WSE 2.0 service or client and likewise._
+> _The easiest straightforward way for a successful interoperability scenario is to leverage on transport-layer security. This also means that a properly configured WCF implementation can interoperate with a [Basic Profile 1.0][1] compliant ASP.NET Web Service (ASMX) that is currently deployed via SSL / HTTPS as well as with a WSE 2.0 service or client and likewise._
 
-_> WCF has a standard binding called “<basicHttpBinding&gt;” which derives its name from the Basic Profile specifications. There is a security mode within this binding called “TransportWithMessageCredential”. You can choose either a transport or a message credentials in this security mode. Setting it to <message clientCredentialType="UserName"/&gt; uses Transport-Level Security (SSL / HTTPS) with SOAP-Level Username token security credentials. This is in accordance with the__[> WSS SOAP Message Security Username Token Profile 1.0][2]__>  and it implements WSS SOAP Message Security 1.0 specification for username/password (for client authentication) over HTTPS (for privacy)._
+> _WCF has a standard binding called “&lt;basicHttpBinding&gt;” which derives its name from the Basic Profile specifications. There is a security mode within this binding called “TransportWithMessageCredential”. You can choose either a transport or a message credentials in this security mode. Setting it to &lt;message clientCredentialType="UserName"/&gt; uses Transport-Level Security (SSL / HTTPS) with SOAP-Level Username token security credentials. This is in accordance with the [WSS SOAP Message Security Username Token Profile 1.0][2]  and it implements WSS SOAP Message Security 1.0 specification for username/password (for client authentication) over HTTPS (for privacy)._
 
 My WCF client consumes the endpoint correctly as the authenticated user. However, when using an ASMX web reference, I end up with the following error:
 
-_> System.Web.Services.Protocols.SoapHeaderException: An error occurred when verifying security for the message._
+> _System.Web.Services.Protocols.SoapHeaderException: An error occurred when verifying security for the message._
 
 So far, I haven't got a solution.
 
@@ -25,14 +25,17 @@ Still no solution, but I have read in more places that indicate this should be f
 
 MSDN Library - [Bindings and Security][3]:
 
-_> BasicHttp_
+> _BasicHttp_
 
-_> In code, use_[_> BasicHttpBinding_][4]_> ; in configuration, use the_[_> basicHttpBinding Element_][5]_> .__> This binding is designed to be used with a range of existing technologies, such as the following:_* _> ASMX (version 1) Web services._
-* _> Web Service Enhancements (WSE) applications._
-* _> Basic Profile as defined in the WS-I specification (http://www.ws-i.org)._
-* _> Basic security profile as defined in WS-I.__> By default, this binding is not secure. It is designed to interoperate with ASMX services. When security is enabled, the binding is designed for seamless interoperation with IIS security mechanisms, such as Basic authentication, Digest, and Integrated Windows security. For more information, see_[_> Transport Security Overview_][6]_> . This binding supports the following:_* _> HTTPS transport security._
-* _> HTTP Basic authentication._
-* _> WS-Security._
+> _In code, use [BasicHttpBinding][4]; in configuration, use the [basicHttpBinding Element][5]. This binding is designed to be used with a range of existing technologies, such as the following: 
+
+* ASMX (version 1) Web services._
+* _Web Service Enhancements (WSE) applications._
+* _Basic Profile as defined in the WS-I specification (http://www.ws-i.org)._
+* _Basic security profile as defined in WS-I. By default, this binding is not secure. It is designed to interoperate with ASMX services. When security is enabled, the binding is designed for seamless interoperation with IIS security mechanisms, such as Basic authentication, Digest, and Integrated Windows security. For more information, see [Transport Security Overview][6]. This binding supports the following: 
+  * HTTPS transport security._
+  * _HTTP Basic authentication._
+  * _WS-Security._
 
 [William Tay][7] - [Enterprise .NET Community: Securing your WCF Service][8][Michele Leroux Bustamante][9] - [Fundamentals of WCF Security][10]
 

@@ -135,5 +135,5 @@ One of the key points to take away from this that you need to know what your app
 [1]: http://nuget.org/packages/Microsoft.Web.Optimization/
 [2]: /2013/03/14/Bridging-the-gap-between-Font-Awesome-Twitter-Bootstrap-MVC-and-Nuget/
 [3]: /2013/03/12/MVC-bundling-and-line-comments-at-the-end-of-files/
-[4]: /blogfiles/image_155.png
-[5]: /blogfiles/image_156.png
+[4]: /files/image_155.png
+[5]: /files/image_156.png

@@ -383,11 +383,11 @@ The project reference properties for this example now look like the following.![
 
 The compiled MSI will now direct all binaries to the bin directory and all website contents to the root installation directory.
 
-[0]: //blogfiles/image_13.png
-[1]: //blogfiles/image_14.png
-[2]: //blogfiles/ScreenShot023.png
-[3]: //blogfiles/image_15.png
+[0]: //files/image_13.png
+[1]: //files/image_14.png
+[2]: //files/ScreenShot023.png
+[3]: //files/image_15.png
 [4]: http://en.wikipedia.org/wiki/Open/closed_principle
-[5]: //blogfiles/image_16.png
-[6]: //blogfiles/image_17.png
-[7]: //blogfiles/image_18.png
+[5]: //files/image_16.png
+[6]: //files/image_17.png
+[7]: //files/image_18.png

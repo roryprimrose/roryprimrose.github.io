@@ -168,5 +168,5 @@ This post has provided a custom updatable generic type support specific to the I
 [1]: /post/2010/09/30/Creating-updatable-generic-Windows-Workflow-activities.aspx
 [2]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
 [3]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-3.aspx
-[4]: //blogfiles/image%5B10%5D.png
-[5]: //blogfiles/image%5B12%5D.png
+[4]: //files/image%5B10%5D.png
+[5]: //files/image%5B12%5D.png

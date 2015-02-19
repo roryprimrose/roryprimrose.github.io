@@ -64,10 +64,10 @@ The only other thing to keep in mind is that the design assembly must be co-loca
 [0]: /post/2010/10/01/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Wrap-up.aspx
 [1]: http://www.famfamfam.com/lab/icons/silk/
 [2]: http://msdn.microsoft.com/en-us/library/system.drawing.toolboxbitmapattribute.aspx
-[3]: //blogfiles/image_39.png
-[4]: //blogfiles/image_40.png
-[5]: //blogfiles/image_41.png
+[3]: //files/image_39.png
+[4]: //files/image_40.png
+[5]: //files/image_41.png
 [6]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-4.aspx
-[7]: //blogfiles/image_42.png
-[8]: //blogfiles/image_43.png
-[9]: //blogfiles/image_44.png
+[7]: //files/image_42.png
+[8]: //files/image_43.png
+[9]: //files/image_44.png

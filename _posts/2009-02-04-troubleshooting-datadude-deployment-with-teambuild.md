@@ -7,7 +7,7 @@ date: 2009-02-04 11:28:10 +10:00
 
 I'm working through the best way of getting DataDude to build and deploy a database using TeamBuild. When I kicked off a build, the build script failed with the following error:
 
-_> Task &quot;SqlBuildTask&quot;   
+> _Task &quot;SqlBuildTask&quot;   
 > &#160; Building deployment script for [DatabaseName] : AlwaysCreateNewDatabase, EnableFullTextSearch, BlockIncrementalDeploymentIfDataLoss   
 > MSBUILD : Build error TSD158: Cannot open user default database. Login failed.   
 > MSBUILD : Build error TSD158: Login failed for user '[TeamBuildUserName]'.   

@@ -422,6 +422,6 @@ The reason is that IActivityTemplateFactory and its Create method are defined ag
 This post has built upon the underlying framework for resolving dependencies in a workflow and has provided the implementation for a custom activity. The next post will look at the designer support for this activity.
 
 [0]: /post/2010/09/29/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-2.aspx
-[1]: //blogfiles/image_29.png
-[2]: //blogfiles/image_30.png
-[3]: //blogfiles/image_31.png
+[1]: //files/image_29.png
+[2]: //files/image_30.png
+[3]: //files/image_31.png

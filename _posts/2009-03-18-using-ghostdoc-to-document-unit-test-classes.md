@@ -8,14 +8,14 @@ To follow up on my last post about [documenting unit test methods with GhostDoc]
 
 Add a custom rule under the Classes section in the GhostDoc configuration dialog.
 
-I have used the name &quot;_Matches unit test class_&quot; and identified type names that end with &quot;_Tests_&quot;. I have entered the summary documentation with the following value:
+I have used the name "_Matches unit test class_" and identified type names that end with "_Tests_". I have entered the summary documentation with the following value:
 
-_> The $(TypeName.ShortNameAsSee)   
-> class is used to test the <see cref=&quot;$(TypeName.Words.Verbatim.ExceptLast)&quot; /&gt; class.$(End)_
+> _The $(TypeName.ShortNameAsSee)   
+> class is used to test the &lt;see cref="$(TypeName.Words.Verbatim.ExceptLast)" /&gt; class.$(End)_
 
 ![Edit Rule dialog][1]
 
 This produces much nicer documentation that the default documentation provided by Visual Studio.
 
 [0]: /post/2009/03/18/Using-GhostDoc-to-document-unit-test-methods.aspx
-[1]: //blogfiles/WindowsLiveWriter/UsingGhostDoctodocumentunittestclasses_A4F9/image_3.png
+[1]: //files/WindowsLiveWriter/UsingGhostDoctodocumentunittestclasses_A4F9/image_3.png

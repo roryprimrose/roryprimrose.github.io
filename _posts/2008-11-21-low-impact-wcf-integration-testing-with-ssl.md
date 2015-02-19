@@ -402,8 +402,8 @@ Using this solution, a certificate can be under source control, be used to provi
 [2]: http://www.codeplex.com/Neovolve
 [3]: http://blogs.msdn.com/ploeh/
 [4]: http://blogs.msdn.com/ploeh/archive/2006/12/20/IntegrationTestingWithCertificates.aspx
-[5]: /blogfiles/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/MakeCert_3.jpg
-[6]: /blogfiles/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/ComputerCertificates_2.jpg
-[7]: /blogfiles/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/ComputerCertificates_thumb.jpg
-[8]: /blogfiles/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/image_3.png
-[9]: /blogfiles/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/image_6.png
+[5]: /files/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/MakeCert_3.jpg
+[6]: /files/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/ComputerCertificates_2.jpg
+[7]: /files/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/ComputerCertificates_thumb.jpg
+[8]: /files/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/image_3.png
+[9]: /files/WindowsLiveWriter/LowimpactintegrationtestingwithWCFandSSL_139DD/image_6.png

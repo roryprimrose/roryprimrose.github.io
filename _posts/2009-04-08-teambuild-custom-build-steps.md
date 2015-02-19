@@ -45,5 +45,5 @@ You can also see that this report contains a custom build step for working with 
 
 This is a very easy to use task that adds rich information to your build reports. It is especially useful for when custom targets fail. Take the case of automated deployment that occurs before running integration tests. If the target is invoked by the inbuilt test targets (probably by overriding AfterTest), then it will be unclear which part of the build broken if the deployment target fails without trawling through the build log. With custom build steps, the report can identify that deployment broke rather than because of running tests.
 
-[0]: /blogfiles/WindowsLiveWriter/TeamBuildCustombuildsteps_E63E/image_2.png
-[1]: /blogfiles/WindowsLiveWriter/TeamBuildCustombuildsteps_E63E/image_thumb.png
+[0]: /files/WindowsLiveWriter/TeamBuildCustombuildsteps_E63E/image_2.png
+[1]: /files/WindowsLiveWriter/TeamBuildCustombuildsteps_E63E/image_thumb.png

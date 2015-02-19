@@ -121,7 +121,7 @@ namespace Neovolve.Jabiru.Server.Services
 
 Using this policy now avoids the locking problem described in this post. I would still like to know the reason for the locking logic as this SafeSingletonLifetimeManager is completely circumventing that logic.
 
-[0]: //blogfiles/image_96.png
-[1]: //blogfiles/image_97.png
+[0]: //files/image_96.png
+[1]: //files/image_97.png
 [2]: /post/2010/06/18/Unity-Extension-For-Disposing-Build-Trees-On-TearDown.aspx
-[3]: //blogfiles/image_98.png
+[3]: //files/image_98.png

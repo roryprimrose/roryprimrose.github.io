@@ -11,5 +11,5 @@ There is an MSDN forum thread ([here][1]) that provides some reasons why this ha
 
 The one that has been hitting me a lot recently is a docx deployment guide that is disabling this checkbox.
 
-[0]: //blogfiles/image_121.png
+[0]: //files/image_121.png
 [1]: http://social.msdn.microsoft.com/Forums/en-US/tfsbuild/thread/60afe44b-c75d-4e9c-91a1-c8c4f8b77ed4/

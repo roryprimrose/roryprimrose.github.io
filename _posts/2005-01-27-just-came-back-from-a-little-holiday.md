@@ -19,8 +19,8 @@ These ones gave me a bit of a giggle too:
 
 ![PhotoIcy][4]
 
-[0]: /blogfiles/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoKanga_1.jpg
-[1]: /blogfiles/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoWombatKanga_1.jpg
-[2]: /blogfiles/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoKangaSki_1.jpg
-[3]: /blogfiles/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoRocket_1.jpg
-[4]: /blogfiles/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoIcy_1.jpg
+[0]: /files/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoKanga_1.jpg
+[1]: /files/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoWombatKanga_1.jpg
+[2]: /files/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoKangaSki_1.jpg
+[3]: /files/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoRocket_1.jpg
+[4]: /files/WindowsLiveWriter/Justcamebackfromalittleholiday_128A4/PhotoIcy_1.jpg

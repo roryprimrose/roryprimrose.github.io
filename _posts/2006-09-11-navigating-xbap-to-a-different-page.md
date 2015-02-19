@@ -9,36 +9,37 @@ Surprisingly, one of the first major problems I had with WPF was when I tried to
 
 Could it be this difficult? Should it be? The answer to these questions is no, but there just isn't enough information out there because WPF is still and emerging technology that is not widely adopted (it's still only just turned RC1 after all).
 
-One of the bits of information I came across was from the [MSDNMag]. I found the following code sample a little suspect though:
+One of the bits of information I came across was from the [MSDN Magazine][1]. I found the following code sample a little suspect though:
 
-    {% highlight csharp linenos %}
-    void viewHyperlink_Click(object sender, RoutedEventArgs e)
-    {
-        // View Order
-        ViewOrderPage page = new ViewOrderPage(GetSelectedOrder());
-        NavigationWindow window =
-          (NavigationWindow)this.Parent; // Don’t do this!
+{% highlight csharp linenos %}
+void viewHyperlink_Click(object sender, RoutedEventArgs e)
+{
+    // View Order
+    ViewOrderPage page = new ViewOrderPage(GetSelectedOrder());
+    NavigationWindow window =
+        (NavigationWindow)this.Parent; // Don’t do this!
     
-        window.Navigate(page);
-    }
-    {% endhighlight %}
+    window.Navigate(page);
+}
+{% endhighlight %}
 
 It said &quot;Don't do this!&quot;, but I was desperate and tried it anyway. It didn't work. Thankfully, later on in the article, it gave an example of how it is done in a way that works:
 
-    {% highlight csharp linenos %}
-    void viewHyperlink_Click(object sender, RoutedEventArgs e)
-    {
-        // View Order
-        ViewOrderPage page = new ViewOrderPage(GetSelectedOrder());
-        NavigationService ns =
-          NavigationService.GetNavigationService(this);
+{% highlight csharp linenos %}
+void viewHyperlink_Click(object sender, RoutedEventArgs e)
+{
+    // View Order
+    ViewOrderPage page = new ViewOrderPage(GetSelectedOrder());
+    NavigationService ns =
+        NavigationService.GetNavigationService(this);
     
-        ns.Navigate(page);
-    }
-    {% endhighlight %}
+    ns.Navigate(page);
+}
+{% endhighlight %}
 
 That's better!
 
-The [MSDNMag] article I found ([App Fundamentals, Build A Great User Experience With Windows Presentation Foundation][0]) is still a very good article despite the code above.
+The [MSDN Magazine][1] article I found ([App Fundamentals, Build A Great User Experience With Windows Presentation Foundation][0]) is still a very good article despite the code above.
 
 [0]: http://msdn.microsoft.com/msdnmag/issues/06/10/AppFundamentals/
+[1]: https://msdn.microsoft.com/en-us/magazine/
