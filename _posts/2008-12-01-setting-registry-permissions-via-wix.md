@@ -20,7 +20,7 @@ The answer to this was that I was not defining the domain for the account. By de
 Unfortunately it still didn't work. Setting permissions using the alternative element did seem to work successfully.
 
 {% highlight xml linenos %}
-<util:PermissionEx Domain="[APP_POOL_USER_DOMAIN]" User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes" /&gt;
+<util:PermissionEx Domain="[APP_POOL_USER_DOMAIN]" User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes" />
 {% endhighlight %}
 
 [0]: /2008/11/12/creating-event-log-sources-without-administrative-rights/

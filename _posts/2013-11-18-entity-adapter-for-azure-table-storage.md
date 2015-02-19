@@ -19,7 +19,7 @@ namespace MyProject.DataAccess.Azure
     using Microsoft.WindowsAzure.Storage.Table;
     using Seterlund.CodeGuard;
     
-    internal abstract class EntityAdapter<T&gt; : ITableEntity where T : class, new()
+    internal abstract class EntityAdapter<T> : ITableEntity where T : class, new()
     {
         private string _partitionKey;
     
@@ -38,8 +38,8 @@ namespace MyProject.DataAccess.Azure
             _value = value;
         }
     
-        /// <inheritdoc /&gt;
-        public void ReadEntity(IDictionary<string, EntityProperty&gt; properties, OperationContext operationContext)
+        /// <inheritdoc />
+        public void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
         {
             _value = new T();
     
@@ -48,8 +48,8 @@ namespace MyProject.DataAccess.Azure
             ReadValues(properties, operationContext);
         }
     
-        /// <inheritdoc /&gt;
-        public IDictionary<string, EntityProperty&gt; WriteEntity(OperationContext operationContext)
+        /// <inheritdoc />
+        public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
         {
             var properties = TableEntity.WriteUserObject(Value, operationContext);
     
@@ -63,25 +63,25 @@ namespace MyProject.DataAccess.Azure
         protected abstract string BuildRowKey();
     
         protected virtual void ReadValues(
-            IDictionary<string, EntityProperty&gt; properties, 
+            IDictionary<string, EntityProperty> properties, 
             OperationContext operationContext)
         {
         }
     
         protected virtual void WriteValues(
-            IDictionary<string, EntityProperty&gt; properties, 
+            IDictionary<string, EntityProperty> properties, 
             OperationContext operationContext)
         {
         }
     
-        /// <inheritdoc /&gt;
+        /// <inheritdoc />
         public string ETag
         {
             get;
             set;
         }
     
-        /// <inheritdoc /&gt;
+        /// <inheritdoc />
         public string PartitionKey
         {
             get
@@ -100,7 +100,7 @@ namespace MyProject.DataAccess.Azure
             }
         }
     
-        /// <inheritdoc /&gt;
+        /// <inheritdoc />
         public string RowKey
         {
             get
@@ -119,7 +119,7 @@ namespace MyProject.DataAccess.Azure
             }
         }
     
-        /// <inheritdoc /&gt;
+        /// <inheritdoc />
         public DateTimeOffset Timestamp
         {
             get;

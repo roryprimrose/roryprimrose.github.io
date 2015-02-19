@@ -16,21 +16,21 @@ namespace MyProduct.Server.DataAccess.Azure.IntegrationTests
     using System.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     
-    /// <summary&gt;
-    /// The <see cref=&quot;Initialization&quot;/&gt;
+    /// <summary>
+    /// The <see cref=&quot;Initialization&quot;/>
     ///   class is used to run assembly initialization work for the test assembly.
-    /// </summary&gt;
+    /// </summary>
     [TestClass]
     public class Initialization
     {
         #region Setup/Teardown
     
-        /// <summary&gt;
+        /// <summary>
         /// The assembly initialize.
-        /// </summary&gt;
-        /// <param name=&quot;context&quot;&gt;
+        /// </summary>
+        /// <param name=&quot;context&quot;>
         /// The context.
-        /// </param&gt;
+        /// </param>
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
@@ -41,9 +41,9 @@ namespace MyProduct.Server.DataAccess.Azure.IntegrationTests
     
         #region Static Helper Methods
     
-        /// <summary&gt;
+        /// <summary>
         /// The start azure development storage.
-        /// </summary&gt;
+        /// </summary>
         private static void StartAzureDevelopmentStorage()
         {
             Int32 count = Process.GetProcessesByName(&quot;DSService&quot;).Length;

@@ -35,7 +35,7 @@ Module modGlobal
         Try
      
             ' Check if there is at least 1 command line parameter
-            If CmdArgs.Length &gt; 0 Then
+            If CmdArgs.Length > 0 Then
      
                 ' Attempt to resolve the name to an IP address
                 objEntry = System.Net.Dns.Resolve(CmdArgs(0))

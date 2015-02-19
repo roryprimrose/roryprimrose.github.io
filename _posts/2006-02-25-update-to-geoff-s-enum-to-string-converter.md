@@ -26,7 +26,7 @@ Private Function EnumToString(ByVal poSource As Object) As String
     'loop through each char, looking for spaces.
     For i As Int32 = 0 To sVal.Length - 1
 
-        If i &lt;&gt; 0 _
+        If i <> 0 _
             AndAlso System.Char.IsUpper(sVal.Chars(i)) _
             AndAlso System.Char.IsUpper(sVal.Chars(i - 1)) = False Then
 

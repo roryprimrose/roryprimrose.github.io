@@ -51,9 +51,9 @@ namespace TestProject1
     [TestClass]
     public class UnitTest1
     {
-        /// <summary&gt;
+        /// <summary>
         /// Runs test for something to test throws exception when dependency returns an empty value.
-        /// </summary&gt;
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void SomethingToTestThrowsExceptionWhenDependencyReturnsAnEmptyValueTest()
@@ -61,7 +61,7 @@ namespace TestProject1
             ConfigurationManager.AppSettings[DependencyFactory.DependencyTypeConfigurationKey] =
                 typeof(DependencyMockWrapper).AssemblyQualifiedName;
             MockRepository mock = new MockRepository();
-            IDependency dependency = mock.CreateMock<IDependency&gt;();
+            IDependency dependency = mock.CreateMock<IDependency>();
      
             using (mock.Record())
             {

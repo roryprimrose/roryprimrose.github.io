@@ -33,7 +33,7 @@ namespace ConsoleApplication1
             Console.ReadKey();
         }
      
-        private static IEnumerable<Entity&gt; GetItems(Int32 maxItems)
+        private static IEnumerable<Entity> GetItems(Int32 maxItems)
         {
             for (Int32 index = 0; index < maxItems; index++)
             {

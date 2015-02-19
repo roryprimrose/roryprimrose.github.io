@@ -22,7 +22,7 @@ public class SomeClass
         SomeProperty = new Collection<SomeOtherClass>();
     }
     
-    public Collection<SomeOtherClass&gt; SomeProperty
+    public Collection<SomeOtherClass> SomeProperty
     {
         get;
         private set;

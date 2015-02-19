@@ -133,7 +133,7 @@ function InvokeFunction(Handler)
             var sCode = "";
           
             // Store the arguments
-            for (var nCount = 1; nCount &lt; arguments.length; nCount++)
+            for (var nCount = 1; nCount < arguments.length; nCount++)
             {
                 aArgs[nCount - 1] = arguments[nCount];
 
@@ -198,7 +198,7 @@ We have now been able to pass parameters to a function call that is defined by e
                 var sCode = "";
                
                 // Store the arguments
-                for (var nCount = 1; nCount &lt; arguments.length; nCount++)
+                for (var nCount = 1; nCount < arguments.length; nCount++)
                 {
                     aArgs[nCount - 1] = arguments[nCount];
 

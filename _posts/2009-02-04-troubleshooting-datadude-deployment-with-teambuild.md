@@ -28,7 +28,7 @@ Find the SqlBuild target. It looks like the following
 >         DependsOnTargets="$(SqlBuildDependsOn)"   
 >         Inputs="@(SqlBuildInputItems)"   
 >         Outputs="@(SqlBuildOutputItems)"   
->         &gt;    
+>         >    
 >   <SqlBuildTask   
 >         SourceItems="@(Build)"   
 >         PostDeployItems="@(PostDeploy)"   
