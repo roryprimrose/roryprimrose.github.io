@@ -50,7 +50,7 @@ namespace Neovolve.Toolkit.Workflow
 }
 {% endhighlight %}
 
-The BusinessFailure<T> class supports these design goals. There is a constraint defined for the code type T that enforces the type to be a struct. Primarily this is to ensure that the code value is serializable and enforces failure codes to be simple types. One thing to note about this class is that it is marked as Serializable. This is critically important in order to support scenarios where a business failure has been created but not yet processed before the executing workflow is persisted.
+The BusinessFailure&lt;T&gt; class supports these design goals. There is a constraint defined for the code type T that enforces the type to be a struct. Primarily this is to ensure that the code value is serializable and enforces failure codes to be simple types. One thing to note about this class is that it is marked as Serializable. This is critically important in order to support scenarios where a business failure has been created but not yet processed before the executing workflow is persisted.
 
 The next part of the design to address is how a business failure gets processed. The design describes that this will be done using a custom exception. The exception allows calling applications have access to all the failures related to an exception and enforces applications to leverage structured error handling practises to process business failures.
 
@@ -187,10 +187,10 @@ The code analysis rules provided by Microsoft defines the bulk of the signatures
 
 1. Exception construction with business failure information
 1. Custom Message property generation to include failure information
-1. Access to the set of BusinessFailure<T> entities
+1. Access to the set of BusinessFailure&lt;T&gt; entities
 1. Serialization
     
-The custom Message property is important for human readable scenarios, such as output to a UI or writing the exception to a log entry. Exposing the set of BusinessFailure<T> instances is important for automated referencing, such as associating UI field failure indicators using the failure code as the link.
+The custom Message property is important for human readable scenarios, such as output to a UI or writing the exception to a log entry. Exposing the set of BusinessFailure&lt;T&gt; instances is important for automated referencing, such as associating UI field failure indicators using the failure code as the link.
 
 The next post in the series will provide the implementation of a WF activity that evaluates and processes a business failure.
 

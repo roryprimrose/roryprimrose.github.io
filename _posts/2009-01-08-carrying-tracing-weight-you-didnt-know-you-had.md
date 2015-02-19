@@ -26,8 +26,7 @@ private void internalWrite(string message)
     {
         SafeNativeMethods.OutputDebugString(message);
     }
-}
-    
+}    
 {% endhighlight %}
 
 This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _<clear />_ element as the first item in the listeners element for each source you have defined in your configuration. 
@@ -50,8 +49,7 @@ This is extra baggage that you probably didn't know you had. If you want lean tr
         </source> 
     </sources>    
     </system.diagnostics> 
-</configuration> 
-    
+</configuration>     
 {% endhighlight %}
 
 [0]: /2009/01/08/disable-trace-usegloballock-for-better-tracing-performance/

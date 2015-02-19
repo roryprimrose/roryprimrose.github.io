@@ -92,8 +92,7 @@ namespace TestProject1
             set;
         }
     }
-}
-    
+}    
 {% endhighlight %}
 
 The ClassToTest is, as the name suggests, the class being tested. It makes a call to DependencyFactory to create an instance of something for it to use. Ideally we want this to be the mock, however we need to settle for a static wrapper around a mock. The DependencyFactory consults configuration to determine the type to create and it instantiates the type and returns it.

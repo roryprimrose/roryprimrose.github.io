@@ -9,7 +9,7 @@ My [previous post][0] described the design goals for creating a custom WF4 activ
 
 The main issue with dependency resolution/injection in WF is supporting persistence. An exception will be thrown when a workflow is persisted when it holds onto a dependency that is not serializable. The previous post indicated that the solution to this issue is to have the workflow persist the resolution description and explicitly prevent serialization of the resolved instance itself.
 
-The way this is done is via an InstanceHandler<T> class.
+The way this is done is via an InstanceHandler&lt;T&gt; class.
 
 {% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow
@@ -65,7 +65,7 @@ namespace Neovolve.Toolkit.Workflow
 }
 {% endhighlight %}
 
-The InstanceHandler<T> class contains the description of the resolution. This identifies the type of resolution (being <T>) and the name for the resolution. This may by null for default resolutions in Unity. The class also creates a GUID value that identifies a particular instance of this class. This is needed so that instances can be resolved from a cache when the owning activity is either persisted or finalised (completed, aborted or cancelled).
+The InstanceHandler&lt;T&gt; class contains the description of the resolution. This identifies the type of resolution (being &lt;T&gt;) and the name for the resolution. This may by null for default resolutions in Unity. The class also creates a GUID value that identifies a particular instance of this class. This is needed so that instances can be resolved from a cache when the owning activity is either persisted or finalised (completed, aborted or cancelled).
 
 The InstanceHandler also exposes a property for the instance being resolved. It is strongly typed to the generic type argument of T. The serialization of this instance is specifically denied via the NonSerialized attribute on the backing field. The other field used here is a flag that indicates whether the instance resolution has already occurred. This is used in order to support null resolution values.
 
@@ -252,7 +252,7 @@ namespace Neovolve.Toolkit.Workflow.Extensions
 
 The InstanceManagerExtension creates InstanceHandler instances, resolve dependencies and tear down dependencies. The extension will resolve a Unity container from configuration if a container has not already been assigned prior to the first dependency being resolved. This allows for a custom container to be provided if that is required but also falls back on a default behaviour.
 
-The extension will first be used by an activity to create an InstanceHandler<T>. This is done so that the handler GUID can be tracked by the extension. Each InstanceHandlerId created is cached in a list stored against the extension instance.
+The extension will first be used by an activity to create an InstanceHandler&lt;T&gt;. This is done so that the handler GUID can be tracked by the extension. Each InstanceHandlerId created is cached in a list stored against the extension instance.
 
 When an activity execution makes a call to the Instance property of the handler, the handler then comes back to the extension to resolve the dependency using the static method. The reason for the static method is that the handler does not have a reference to the activity context from which the extension instance is obtained. The resolved instance is then cached in a dictionary object. Because the resolution process is static, the cache of instances is also static.
 
@@ -274,6 +274,6 @@ The extension supports persistence by inheriting from PersistenceParticipant and
 
 Finally, the extension implements IDisposable. This will ensure that any resolved instances that are not torn down in any of the above events are correctly disposed when the extension is disposed by the workflow engine.
 
-The InstanceHandler<T> and InstanceManagerExtension classes provide the base framework for resolving and tearing down instances in a workflow execution. The next post will look at a simple custom activity that will leverage these to provide a resolved instance to a workflow execution.
+The InstanceHandler&lt;T&gt; and InstanceManagerExtension classes provide the base framework for resolving and tearing down instances in a workflow execution. The next post will look at a simple custom activity that will leverage these to provide a resolved instance to a workflow execution.
 
-[0]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
+[0]: /2010/09/16/custom-windows-workflow-activity-for-dependency-resolutione28093part-1/

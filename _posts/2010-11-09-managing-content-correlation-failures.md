@@ -127,4 +127,4 @@ The AttemptBusinessFailureExceptionConversion method looks for a predefined Faul
 
 The business failure to return will be determined based on the current service operation. In this scenario there is a check that the failed service operation is the IRegistration.ConfirmRegistration method. A TransactionId value is the content correlation value for this service operation. If the WorkflowServiceHost is not able to identify a workflow instance using the provided TransactionId then the TransactionId value is invalid. This is the business failure that is then returned. The ProvideFault method then continues its existing logic by processing the business failure as an appropriate business fault.
 
-[0]: /post/2010/11/08/Hosted-workflow-service-with-content-correlation.aspx
+[0]: /2010/11/08/hosted-workflow-service-with-content-correlation/

@@ -333,5 +333,5 @@ The extension will now have a build tree for the root instance from the example 
 
 The updated code for the DisposalStrategyExtension can be found [here][1] in my Toolkit project on CodePlex.
 
-[0]: /post/2010/06/18/Unity-Extension-For-Disposing-Build-Trees-On-TearDown.aspx
+[0]: /2010/06/18/unity-extension-for-disposing-build-trees-on-teardown/
 [1]: http://neovolve.codeplex.com/SourceControl/changeset/view/63473#1224390

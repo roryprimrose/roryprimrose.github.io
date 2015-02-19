@@ -114,8 +114,7 @@ The following target overrides the ResolveSolutionPathsForEndToEndIteration MSBu
      
     </Target>
      
-</Project>
-    
+</Project>    
 {% endhighlight %}
 
 The only disadvantage of this solution is that the WiX project needs to be manually updated to include the VersionNumber property. Once this is done, the VersionNumber needs to be defined in the DefineConstants property which is available in the project properties GUI. For example:
@@ -183,8 +182,7 @@ The only disadvantage of this solution is that the WiX project needs to be manua
     <SuppressAllWarnings>False</SuppressAllWarnings>
     <Pedantic>False</Pedantic>
     </PropertyGroup>
-</Project>
-    
+</Project>    
 {% endhighlight %}
 
 This solution makes the version number available to the WiX script.
@@ -207,8 +205,7 @@ This solution makes the version number available to the WiX script.
                 Compressed="yes"
                 Comments="$(var.VersionNumber)" />
     </Product>
-</Wix>
-    
+</Wix>    
 {% endhighlight %}
 
 This method allows the build script to pass a version number into WiX as a build property. A better solution to this is to extract the version number from the AssemblyInfo.cs from a project in the solution rather than manually providing the version number as a build property. Ideally the projects should reference a common ProductInfo.cs that contains the version number to apply to all projects in the solution. This process can then be extended so that the version number in this common file is updated by the build script before the solution is built.

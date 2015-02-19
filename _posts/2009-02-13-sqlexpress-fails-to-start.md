@@ -10,7 +10,9 @@ I have just encountered a problem where the SQLEXPRESS instance installed on my 
 
 After [searching around][0], there seems to be lots of forum posts going back several years about this issue. The problem is that the only known solution seems to be to change the credentials of the SQLEXPRESS service account to Local System. This will then allow the service to start. Doing this through the services console presents a problem however because you can't set the service credentials back to Network Service as you need to know the password.
 
-A better answer was found in [this forum post][1]. Using the SQL Server Configuration Manager, you can change between the system accounts without needing to know the password.![image][2]
+A better answer was found in [this forum post][1]. Using the SQL Server Configuration Manager, you can change between the system accounts without needing to know the password.
+
+![image][2]
 
 What you need to do is change the account to Local System, then click Apply and Start. You can then click Stop and change the account back to Network Service and then click Apply and Start again.
 

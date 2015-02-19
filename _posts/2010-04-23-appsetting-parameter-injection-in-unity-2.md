@@ -205,7 +205,7 @@ The class is similar to the original version with most of the changes being a re
 
 This code can be found out on CodePlex in this [changeset][5].
 
-[0]: /post/2010/01/28/Injecting-AppSetting-values-via-Unity.aspx
+[0]: /2010/01/28/injecting-appsetting-values-via-unity/
 [1]: http://www.alvinashcraft.com/2010/04/21/dew-drop-april-21-2010/?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+alvinashcraft+%28Alvin+Ashcraft%27s+Morning+Dew%29
 [2]: http://blog.cwa.me.uk/2010/04/21/the-morning-brew-584/?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+ReflectivePerspective+%28Reflective+Perspective+-+Chris+Alcock%29
 [3]: http://blogs.msdn.com/agile/archive/2010/04/20/microsoft-enterprise-library-5-0-released.aspx

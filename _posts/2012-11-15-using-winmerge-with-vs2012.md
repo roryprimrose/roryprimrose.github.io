@@ -8,4 +8,4 @@ My [Using WinMerge with TFS][0] post has to be consistently the most viewed post
 
 Enjoy
 
-[0]: /post/2007/06/19/using-winmerge-with-tfs.aspx
+[0]: /2007/06/19/using-winmerge-with-tfs/

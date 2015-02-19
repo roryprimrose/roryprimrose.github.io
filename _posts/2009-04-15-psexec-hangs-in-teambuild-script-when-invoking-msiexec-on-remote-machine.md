@@ -39,8 +39,7 @@ The build script should look like this for executing psexec -> msiexec.
 <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
             BuildUri="$(BuildUri)"
             Id="$(DeployMsiBuildStepId)"
-            Status="Succeeded" />
-    
+            Status="Succeeded" />    
 {% endhighlight %}
 
 

@@ -153,4 +153,4 @@ The unit test method can then use this context in a using statement with the hel
 
 **Updated:** Found issue with AppDomain default principal only being allowed to be set once. Updated TestUserContext to attempt to cater for this.
 
-[0]: /post/2008/08/12/thread-identity-propagation.aspx
+[0]: /2008/08/12/thread-identity-propagation/

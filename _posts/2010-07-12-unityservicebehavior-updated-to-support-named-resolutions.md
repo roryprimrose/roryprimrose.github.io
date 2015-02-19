@@ -9,8 +9,8 @@ I [previously posted][0] about how to get Unity support in WCF services via a Se
 
 I have checked in a new code version that supports this. See [UnityServiceElement][2], [UnityServiceBehavior][3] and [UnityInstanceProvider][4] for the updated code line.
 
-[0]: /post/2010/05/17/Unity-dependency-injections-for-WCF-services-e28093-Part-2.aspx
-[1]: /post/2010/07/12/Canberra-Net-Users-Group-Presentation-next-week.aspx
+[0]: /2010/09/29/custom-windows-workflow-activity-for-dependency-resolutione28093part-2/
+[1]: /2010/07/12/canberra-net-users-group-presentation-next-week/
 [2]: http://neovolve.codeplex.com/SourceControl/changeset/view/62517#1216930
 [3]: http://neovolve.codeplex.com/SourceControl/changeset/view/62517#1149361
 [4]: http://neovolve.codeplex.com/SourceControl/changeset/view/62517#1149347

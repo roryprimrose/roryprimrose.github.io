@@ -26,8 +26,7 @@ namespace ConsoleApplication1
             Console.WriteLine("Running the test method"); 
         } 
     } 
-} 
-    
+}    
 {% endhighlight %}
 
 Two different implementations of the demo will be run. One with PostSharp.Laos (the easy part) and the other with PostSharp.Core (the hard part). The outcome of each demo will look at the: 

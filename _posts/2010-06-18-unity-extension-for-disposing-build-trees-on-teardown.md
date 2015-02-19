@@ -531,10 +531,10 @@ This can also be done via configuration.
 
 All the code (including help documentation) can be found in my [Toolkit project][11] on CodePlex.
 
-[0]: /post/2010/06/15/Law-Of-Instance-Ownership.aspx
-[1]: /post/2010/05/15/Unity-dependency-injection-for-WCF-services-e28093-Part-1.aspx
-[2]: /post/2010/05/17/Unity-dependency-injections-for-WCF-services-e28093-Part-2.aspx
-[3]: /post/2010/05/19/Unity-dependency-injection-for-ASPNet.aspx
+[0]: /2010/06/15/law-of-instance-ownership/
+[1]: /2010/05/15/unity-dependency-injection-for-wcf-services-e28093-part-1/
+[2]: /2010/05/17/unity-dependency-injections-for-wcf-services-e28093-part-2/
+[3]: /2010/05/19/unity-dependency-injection-for-aspnet/
 [4]: http://msdn.microsoft.com/en-us/library/microsoft.practices.unity.iunitycontainer(v=PandP.20).aspx
 [5]: http://msdn.microsoft.com/en-us/library/microsoft.practices.unity.iunitycontainer.teardown(v=PandP.20).aspx
 [6]: http://msdn.microsoft.com/en-us/library/microsoft.practices.objectbuilder2.ibuilderstrategy.preteardown(v=PandP.20).aspx

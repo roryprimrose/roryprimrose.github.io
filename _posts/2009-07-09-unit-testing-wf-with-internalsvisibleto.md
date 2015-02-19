@@ -25,6 +25,6 @@ Project settings now look this this.![image][2]
 
 Problem solved.
 
-[0]: /post/2006/12/13/adding-workflows-to-a-non-wf-project.aspx
+[0]: /2006/12/12/adding-workflows-to-a-non-wf-project/
 [1]: https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=338293
 [2]: /files/image_1.png

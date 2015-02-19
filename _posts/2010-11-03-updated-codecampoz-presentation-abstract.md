@@ -16,4 +16,4 @@ The preparations for my [CodeCampOz][0] presentation have come a long way as has
 > This session will provide a brief introduction to claims-based security and then look at how to implement WIF in ASP.Net and WCF applications without federation dependencies. It will then extend this to include a federation capable architecture.
 
 [0]: http://codecampoz.com/
-[1]: /post/2010/07/18/Speaking-at-CodeCampOz.aspx
+[1]: /2010/07/17/speaking-at-codecampoz/

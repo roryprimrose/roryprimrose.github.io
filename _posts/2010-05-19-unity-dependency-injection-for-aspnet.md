@@ -227,7 +227,7 @@ The only part I do not like about this implementation is that the Unity Dependen
 
 The full code for this module with xml comments can be found on my [Toolkit project][3] in Codeplex.
 
-[0]: /post/2010/05/15/Unity-dependency-injection-for-WCF-services-e28093-Part-1.aspx
-[1]: /post/2010/05/17/Unity-dependency-injections-for-WCF-services-e28093-Part-2.aspx
+[0]: /2010/05/15/unity-dependency-injection-for-wcf-services-e28093-part-1/
+[1]: /2010/05/17/unity-dependency-injections-for-wcf-services-e28093-part-2/
 [2]: http://neovolve.codeplex.com/SourceControl/changeset/view/58851#1195163
 [3]: http://neovolve.codeplex.com/SourceControl/changeset/view/58941#1216713

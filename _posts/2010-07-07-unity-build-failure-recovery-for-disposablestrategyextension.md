@@ -128,4 +128,4 @@ Completing the example proposed above, the resultant build tree when ChildA fail
     
 While using this recovery class satisfies my optional build requirement for proxy injection, it provides an arguably more important feature. Build trees might fail at anytime and applications may recover from or simply ignore the failures and continue. The partial build trees created in these attempts may have created some references that require disposal but this can never occur because the original BuildTreeTracker code would simply lose track of nodes successfully created in a failed build tree. This solution will ensure that these instances are disposed immediately if the build operation fails.
 
-[0]: /post/2010/06/18/Unity-Extension-For-Disposing-Build-Trees-On-TearDown.aspx
+[0]: /2010/06/18/unity-extension-for-disposing-build-trees-on-teardown/

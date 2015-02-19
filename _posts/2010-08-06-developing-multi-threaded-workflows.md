@@ -5,17 +5,17 @@ tags : WF
 date: 2010-08-06 12:21:00 +10:00
 ---
 
-Most people (myself included) assume that the Parallel and ParallelForEach<t>
+Most people (myself included) assume that the Parallel and ParallelForEach&lt;t&gt;
     activities in WF4 run each child in parallel on multiple threads. Unfortunately this is not the case. Each child activity is scheduled in the workflow runtime at the same time. The child activities will only start running in “parallel” if one of the branches is in a waiting state. You can read [this post][0] which links to [this post][1] for some more detailed information
 
-You can achieve multi-threaded parallel execution by using AsyncCodeActivity derived activities (such as InvokeMethod) with the RunAsynchronously set to True running in a Parallel or ParallelForEach<t>
+You can achieve multi-threaded parallel execution by using AsyncCodeActivity derived activities (such as InvokeMethod) with the RunAsynchronously set to True running in a Parallel or ParallelForEach&lt;t&gt;
 activity. Consider the following workflow.
 
 ![image][2]
 
 Each parallel branch writes the start time to the console, runs a Thread.Sleep for 2, 4 or 6 seconds and writes the end time. The following is written to the console if each InvokeMethod activity has RunAsynchronously set to False.
 
-{% highlight csharp linenos %}
+{% highlight text linenos %}
 Starting - 6/08/2010 10:41:38 AM
 Starting First - 6/08/2010 10:41:38 AM
 Finishing First - 6/08/2010 10:41:40 AM
@@ -28,7 +28,8 @@ Completed - 6/08/2010 10:41:51 AM
 
 Each branch in the parallel is waiting until the previous branch has completed. The following is written to the console if each InvokeMethod activity has RunAsynchronously set to True.
 
-{% highlight csharp linenos %}Starting - 6/08/2010 10:47:35 AM
+{% highlight text linenos %}
+Starting - 6/08/2010 10:47:35 AM
 Starting First - 6/08/2010 10:47:35 AM
 Starting Second - 6/08/2010 10:47:35 AM
 Starting Third - 6/08/2010 10:47:35 AM
@@ -40,13 +41,13 @@ Completed - 6/08/2010 10:47:41 AM
 
 Each parallel branch has now executed on different threads. The overall affect is that the workflow now runs must faster.
 
-ParallelForEach<t> works in the same manner. This workflow can be refactored to the following:
+ParallelForEach&lt;t&gt; works in the same manner. This workflow can be refactored to the following:
 
 ![image][3]
 
 The result without asynchronous processing is:
 
-{% highlight csharp linenos %}
+{% highlight text linenos %}
 Starting - 6/08/2010 11:55:09 AM
 Starting 1 - 6/08/2010 11:55:09 AM
 Finishing 1 - 6/08/2010 11:55:11 AM
@@ -59,7 +60,7 @@ Completed - 6/08/2010 11:55:22 AM
     
 The result with asynchronous processing is:
 
-{% highlight csharp linenos %}
+{% highlight text linenos %}
 Starting - 6/08/2010 11:56:02 AM
 Starting 1 - 6/08/2010 11:56:02 AM
 Starting 2 - 6/08/2010 11:56:02 AM

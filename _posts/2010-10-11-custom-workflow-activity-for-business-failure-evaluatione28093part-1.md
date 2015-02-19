@@ -52,4 +52,4 @@ Any custom workflow activity should provide an adequate design time experience. 
 
 The next post will look at the base framework for supporting business validation.
 
-[0]: /post/2010/10/01/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Wrap-up.aspx
+[0]: /2010/10/01/custom-windows-workflow-activity-for-dependency-resolutione28093wrap-up/

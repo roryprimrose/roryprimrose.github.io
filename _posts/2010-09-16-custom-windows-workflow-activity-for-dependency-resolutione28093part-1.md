@@ -11,7 +11,7 @@ This first part will go through the design goals of the custom activity.
 
 The custom activity will have the following characteristics:
 
-* Operate as a scope type activity (like ForEach<T&gt; or ParallelFor<T&gt;)
+* Operate as a scope type activity (like ForEach&lt;T&gt; or ParallelFor&lt;T&gt;)
 * It can hold a single child activity
 * Resolved instance is available to all child activities
 * Resolved instance is strongly typed
@@ -27,19 +27,19 @@ The biggest sticking point identified for dependency resolution in a workflow ac
 
 There are several scenarios that this implementation needs to cater for regarding persistence.
 
-1. A workflow execution where an instance is resolved and used without any persistence ![image][1]
+1. A workflow execution where an instance is resolved and used without any persistence 
 
-  
+![image][1]
   
 This scenario is reasonably simple. The instance will be resolved when it is referenced. It will be torn down by the DI container (via the extension) when the activity completes.
-1. A workflow execution where instances are resolved and used before and after a bookmark ![image][2]
+1. A workflow execution where instances are resolved and used before and after a bookmark 
 
-  
+![image][2]
   
 This scenario requires that the first resolved instance is torn down when the bookmark causes the workflow to persist. The second instance resolution needs to have enough information to create an instance after the workflow has been resumed from the bookmark. The activity then needs to ensure that the second instance is torn down when the activity completes.
-1. A workflow execution where an instance resolution scope surrounds a bookmark ![image][3]
+1. A workflow execution where an instance resolution scope surrounds a bookmark 
 
-  
+![image][3]
   
 As far as the implementation goes, this scenario is actually the same as the second. When the bookmark is resumed, there needs to be some information stored about the instance resolution so that the instance can be recreated again when it is referenced. This instance is then torn down when the activity completes.
 

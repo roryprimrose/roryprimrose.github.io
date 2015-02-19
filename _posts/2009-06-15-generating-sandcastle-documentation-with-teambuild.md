@@ -219,8 +219,7 @@ These targets run the implementation for generating the documentation. The follo
                 Id="$(SandcastleBuildStepId)"
                 Status="Succeeded" />
      
-</Target>
-    
+</Target>    
 {% endhighlight %}
 
 

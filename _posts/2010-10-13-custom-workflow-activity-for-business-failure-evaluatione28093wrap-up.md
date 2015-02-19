@@ -5,4 +5,34 @@ tags : WF
 date: 2010-10-13 14:19:00 +10:00
 ---
 
-<p>My latest series on custom WF activities has provided a solution for managing business failures. </p>  <p>The BusinessFailureEvaluator&lt;T&gt; activity evaluates a single business failure and may result in an exception being thrown.</p>  <p><a href="/files/image_46.png"><img src="/files/image_46.png" /></a></p>  <p>The BusinessFailureScope&lt;T&gt; activity manages multiple business failures and may result in an exception being thrown for a set of failures.</p>  <p><a href="/files/image_45.png"><img src="/files/image_45.png" /></a></p>  <p>The following is a list of all the posts in this series.</p>  <ul>   <li><a href="/post/2010/10/11/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-1.aspx">Custom Workflow activity for business failure evaluation–Part 1</a> – Defines the high-level design requirements for the custom activities </li>    <li><a href="/post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-2.aspx">Custom Workflow activity for business failure evaluation–Part 2</a> – Provides the base classes used to work with business failures </li>    <li><a href="/post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-3.aspx">Custom Workflow activity for business failure evaluation–Part 3</a> – Describes the implementation of the BusinessFailureExtension </li>    <li><a href="/post/2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-4.aspx">Custom Workflow activity for business failure evaluation–Part 4</a> – Describes the implementation of the BusinessFailureEvaluator&lt;T&gt; activity </li>    <li><a href="/post/2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-5.aspx">Custom Workflow activity for business failure evaluation–Part 5</a> – Describes the implementation of the BusinessFailureScope&lt;T&gt; activity </li>    <li><a href="/post/2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-6.aspx">Custom Workflow activity for business failure evaluation–Part 6</a> – Outlines the designer support for the custom activities </li> </ul>  <p>This workflow activity and several others can be found in my <a href="http://neovolve.codeplex.com/releases/view/53499" target="_blank">Neovolve.Toolkit project</a> (in 1.1 Beta with latest source code <a href="http://neovolve.codeplex.com/SourceControl/changeset/view/67800#1422138" target="_blank">here</a>) on <a href="http://www.codeplex.com/">CodePlex</a>.</p> 
+My latest series on custom WF activities has provided a solution for managing business failures.   
+
+The BusinessFailureEvaluator&lt;T&gt; activity evaluates a single business failure and may result in an exception being thrown.  
+
+![][0]
+
+The BusinessFailureScope&lt;T&gt; activity manages multiple business failures and may result in an exception being thrown for a set of failures.  
+![][1]
+
+The following is a list of all the posts in this series.
+
+* [Custom Workflow activity for business failure evaluation–Part 1][2] – Defines the high-level design requirements for the custom activities
+* [Custom Workflow activity for business failure evaluation–Part 2][3] – Provides the base classes used to work with business failures
+* [Custom Workflow activity for business failure evaluation–Part 3][4] – Describes the implementation of the BusinessFailureExtension
+* [Custom Workflow activity for business failure evaluation–Part 4][5] – Describes the implementation of the BusinessFailureEvaluator&lt;T&gt; activity
+* [Custom Workflow activity for business failure evaluation–Part 5][6] – Describes the implementation of the BusinessFailureScope&lt;T&gt; activity
+* [Custom Workflow activity for business failure evaluation–Part 6][7] – Outlines the designer support for the custom activities 
+
+This workflow activity and several others can be found in my [Neovolve.Toolkit project][8] (in 1.1 Beta with latest source code [here][9]) on [CodePlex][10]. 
+
+[0]: /files/image_46.png
+[1]: /files/image_45.png
+[2]: /2010/10/11/custom-workflow-activity-for-business-failure-evaluatione28093part-1/
+[3]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-2/
+[4]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-3/
+[5]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-4/
+[6]: /2010/10/13/custom-workflow-activity-for-business-failure-evaluatione28093part-5/
+[7]: /2010/10/13/custom-workflow-activity-for-business-failure-evaluatione28093part-6/
+[8]: http://neovolve.codeplex.com/releases/view/53499
+[9]: http://neovolve.codeplex.com/SourceControl/changeset/view/67800#1422138
+[10]: http://www.codeplex.com/

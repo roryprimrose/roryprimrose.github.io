@@ -5,15 +5,17 @@ tags : TeamBuild, TFS, WiX
 date: 2010-06-24 13:01:00 +10:00
 ---
 
-I have been putting together a customised build process with TFS Build 2010. Several parts of the functionality added to the build process involve custom types that are used as arguments for the build definition. Deploy and configuration update information are some examples of this. I wanted to get the same designer experience out of the Process tab property grid that is available for properties like the test list definition.![][0]
+I have been putting together a customised build process with TFS Build 2010. Several parts of the functionality added to the build process involve custom types that are used as arguments for the build definition. Deploy and configuration update information are some examples of this. I wanted to get the same designer experience out of the Process tab property grid that is available for properties like the test list definition.
+
+![][0]
 
 The _Automated Tests_ property seen here has a set of sub-items for each test item specified (items in the collection property). Each of these is expandable and the display text of each parent property is customised according to the values of the child properties.
 
 I used the TestSpecList and TestSpec classes via Reflector as a template to determine what I needed to implement to get this support. It involved a combination of expandable object converters and type descriptors. It is not rocket science and happens to be what I was playing with about six years ago.
 
-Unfortunately I just couldn’t get the same result for my custom types. My custom collection types for the build definition (_Configuration Updates_ and _Wix deployment list_seen below) simply got displayed as _(Collection)_.![][1]
+Unfortunately I just couldn’t get the same result for my custom types. My custom collection types for the build definition (_Configuration Updates_ and _Wix deployment list_seen below) simply got displayed as _(Collection)_.
 
-&#160;
+![][1]
 
 The best I could do was to change the workflow argument from CollectionOfT to T[]. This would then display an expandable set of the items in the array. Each of these could then display their own display text by overriding ToString of the type in the array.
 
@@ -23,7 +25,9 @@ I browsed the source for this property grid usage in the Process tab with a bit 
 
 I was [guessing][2] that the reason my expandable object converters and type descriptors were not being picked up was because the property grid was being provided a dynamic type that had been interpreted from XAML serialization. This would mean that the type being displayed in the grid did not have the type converter or type descriptor definitions for the custom types and was only displaying a guess of the type in the grid.
 
-It then occurred to me that the way to make this type available to the code that populates the property grid would be to place my custom assembly in the same location. I copied my assembly into the PrivateAssemblies directory under the Visual Studio installation and viola, I now have expandable collection items.![][3]
+It then occurred to me that the way to make this type available to the code that populates the property grid would be to place my custom assembly in the same location. I copied my assembly into the PrivateAssemblies directory under the Visual Studio installation and viola, I now have expandable collection items.
+
+![][3]
 
 The _Configuration Updates_ and _Wix deployment list_ properties are now expandable to display the children which are also expandable. The WixProjectFile item selected in the screenshot has a custom editor associated with it and this can be used directly from the Process tab without having to go through the collection editor of the _Wix deployment list_ property. Similarly, all the property values displayed are editable here and the description of the selected property appears at the bottom of the property grid.
 

@@ -150,6 +150,6 @@ This configuration will resolve a connection string with the name TestConnection
 
 All the code and documentation for this implementation is in my [Toolkit project][2] on CodePlex.
 
-[0]: /post/2010/01/28/Injecting-AppSetting-values-via-Unity.aspx
-[1]: /post/2010/04/23/AppSetting-parameter-injection-in-Unity-2.aspx
+[0]: /2010/01/28/injecting-appsetting-values-via-unity/
+[1]: /2010/04/23/appsetting-parameter-injection-in-unity-2/
 [2]: http://neovolve.codeplex.com/SourceControl/changeset/view/61829#1279353

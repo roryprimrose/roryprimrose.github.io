@@ -17,25 +17,25 @@ Neovolve.Toolkit.CommunicationName
 
 Description 
 
-ChannelProxyHandler<T&gt; 
+ChannelProxyHandler&lt;T&gt; 
 
-The ChannelProxyHandler<T&gt; class is used to provide a proxy implementation for a WCF service channel. 
+The ChannelProxyHandler&lt;T&gt; class is used to provide a proxy implementation for a WCF service channel. 
 
-DefaultProxyHandler<T&gt; 
+DefaultProxyHandler&lt;T&gt; 
 
-The DefaultProxyHandler<T&gt; class is used to provide a default handler for invoking methods on a type. 
+The DefaultProxyHandler&lt;T&gt; class is used to provide a default handler for invoking methods on a type. 
 
 ErrorHandlerAttribute 
 
 The ErrorHandlerAttribute class is used to decorate WCF service implementations with a IServiceBehavior that identifies IErrorHandler references to invoke when the service encounters errors. 
 
-ProxyHandler<T&gt; 
+ProxyHandler&lt;T&gt; 
 
-The ProxyHandler<T&gt; class is used to provide the base logic for managing the execution of methods on a proxy. 
+The ProxyHandler&lt;T&gt; class is used to provide the base logic for managing the execution of methods on a proxy. 
 
-ProxyManager<T&gt; 
+ProxyManager&lt;T&gt; 
 
-The ProxyManager<T&gt; class is used to manage invocations of proxy objects. 
+The ProxyManager&lt;T&gt; class is used to manage invocations of proxy objects. 
 
 Neovolve.Toolkit.Communication.SecurityName 
 
@@ -147,7 +147,7 @@ The ConfigurationStoreFactory class is used to create IConfigurationStore instan
 
 DictionaryCacheStore 
 
-The DictionaryCacheStore class is used to provide a ICacheStore implementation that leverages a Dictionary<TKey, TValue&gt; instance. 
+The DictionaryCacheStore class is used to provide a ICacheStore implementation that leverages a Dictionary&lt;TKey, TValue&gt; instance. 
 
 ExpirationCacheStoreBase 
 
@@ -203,7 +203,7 @@ The ProxyInjectionParameterValue class is used to provide the parameter value in
 
 ProxyParameterValueElement 
 
-The ProxyParameterValueElement class is used to configure a Unity parameter value to be determined from a proxy value created by ProxyManager<T&gt;. 
+The ProxyParameterValueElement class is used to configure a Unity parameter value to be determined from a proxy value created by ProxyManager&lt;T&gt;. 
 
 SectionExtensionInitiator 
 
@@ -255,17 +255,17 @@ ActivityStore
 
 The ActivityStore class is used to cache activity instances for reuse. 
 
-InstanceHandler<T&gt; 
+InstanceHandler&lt;T&gt; 
 
-The InstanceHandler<T&gt; class is used to provide instance handling logic for a InstanceResolver<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16&gt; instance. 
+The InstanceHandler&lt;T&gt; class is used to provide instance handling logic for a InstanceResolver&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16&gt; instance. 
 
 ResumeBookmarkContext 
 
 The ResumeBookmarkContext class is used to resume a workflow from a bookmark. 
 
-ResumeBookmarkContext<T&gt; 
+ResumeBookmarkContext&lt;T&gt; 
 
-The ResumeBookmarkContext<T&gt; class is used to define the information required to resume a workflow bookmark. 
+The ResumeBookmarkContext&lt;T&gt; class is used to define the information required to resume a workflow bookmark. 
 
 GenericArgumentCount 
 
@@ -279,9 +279,9 @@ ExecuteBookmark
 
 The ExecuteBookmark class is a workflow activity that is used to process bookmarks. 
 
-ExecuteBookmark<T&gt; 
+ExecuteBookmark&lt;T&gt; 
 
-The ExecuteBookmark<T&gt; class is a workflow activity that is used to process bookmarks. 
+The ExecuteBookmark&lt;T&gt; class is a workflow activity that is used to process bookmarks. 
 
 GetWorkflowInstanceId 
 
@@ -291,9 +291,9 @@ InstanceResolver
 
 The InstanceResolver class is used to provide a resolved instance for a child activity. 
 
-InstanceResolver<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16 &gt; 
+InstanceResolver&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16 &gt; 
 
-The InstanceResolver<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16 &gt; class is used to provide resolution of instances for workflow activities. 
+The InstanceResolver&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16 &gt; class is used to provide resolution of instances for workflow activities. 
 
 SystemFailureEvaluator 
 

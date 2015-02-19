@@ -24,8 +24,7 @@ Take the following xml for example.
         This is a remark with text and <b>xml elements</b>.
     </Remark>
     </Remarks>
-</CommonDocumentation>
-    
+</CommonDocumentation>    
 {% endhighlight %}
 
 This xml is referenced by the include statements in the code below.
@@ -50,12 +49,11 @@ namespace ClassLibrary1
             Debug.WriteLine("Do something.");    
         }
     }
-}
-    
+}    
 {% endhighlight %}
 
 The code indicates the way in which the xpath queries will be able to correctly get the inner xml of the common documentation. Using a /* query against the SecondRemark or ThirdRemark nodes will produce incorrect results as the text will be ignored because /* only select element nodes. Using /text() against the FirstRemark and ThirdRemark nodes will also produce incorrect values as it will only select text nodes and ignore the element nodes.
 
 The best solution is to use xpath queries that end in /node(). This will successfully select the inner xml of the target node regardless of the makeup of that xml. The xml can contain text, element nodes or a mixture.
 
-[0]: post/2008/03/26/xml-comments-and-the-include-element.aspx
+[0]: /2008/03/26/xml-comments-and-the-include-element/

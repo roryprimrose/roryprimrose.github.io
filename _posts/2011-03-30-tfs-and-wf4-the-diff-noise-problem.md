@@ -14,16 +14,18 @@ For example, I have collapsed lots of activities on one of my workflows. The res
 There is a lot of noise here. It is all designer state information rather than actual changes to the workflow definition. There are several culprits in WF4 that cause this noise.
 
 * sap:VirtualizedContainerService.HintSize
-* <x:Boolean x:Key="IsExpanded"&gt;
-* <x:Boolean x:Key="IsPinned"&gt;
+* &lt;x:Boolean x:Key="IsExpanded"&gt;
+* &lt;x:Boolean x:Key="IsPinned"&gt;
 
 Thankfully WinMerge has a great feature for applying a line filter expression (Tools &ndash;&gt; Filters &ndash;&gt; Linefilters). These can help to reduce a lot of this noise.![image][2]
 
 I have put together three expressions to cover WF4.
 
 * _^.*sap:VirtualizedContainerService\.HintSize="\d+,\d+".*$_ filters sap:VirtualizedContainerService.HintSize when it is defined in an attribute
-* _^.*<sap:VirtualizedContainerService.HintSize&gt;\d+,\d+</sap:VirtualizedContainerService.HintSize&gt;.*$_ filters sap:VirtualizedContainerService.HintSize when it is defined in an element
-* _^.*<x:Boolean x:Key="(IsExpanded|IsPinned)"&gt;.+</x:Boolean&gt;.*$_ filters <x:Boolean x:Key="IsExpanded"&gt; and <x:Boolean x:Key="IsPinned"&gt; elements
+* _^.*&lt;sap:VirtualizedContainerService.HintSize&gt;\d+,\d+&lt;/sap:VirtualizedContainerService.HintSize&gt;.*$_ filters 
+      &lt;sap:VirtualizedContainerService.HintSize when it is defined in an element
+* _^.*&lt;x:Boolean x:Key="(IsExpanded|IsPinned)"&gt;.+&lt;/x:Boolean&gt;.*$_ filters &lt;x:Boolean x:Key="IsExpanded"&gt; and &lt;x:Boolean 
+      &lt;x:Key="IsPinned"&gt; elements
 
 The above diff of workflow xaml with these filters applied now looks like the following.![image][3]
 
@@ -33,7 +35,7 @@ WinMerge stores the line filters in the registry. The easiest way to install the
 
 [WinMerge Line Filters.reg (978.00 bytes)][4]
 
-[0]: /post/2007/06/19/using-winmerge-with-tfs.aspx
+[0]: /2007/06/19/using-winmerge-with-tfs/
 [1]: /files/image_93.png
 [2]: /files/image_94.png
 [3]: /files/image_95.png

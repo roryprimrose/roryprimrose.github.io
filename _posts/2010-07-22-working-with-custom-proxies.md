@@ -240,6 +240,6 @@ namespace ConsoleApplication1
 
 The code for these classes can be found in my [Neovolve.Toolkit][2] project out on Codeplex.
 
-[0]: /post/2010/07/17/Creating-proxies-with-RealProxy.aspx
+[0]: /2010/07/17/creating-proxies-with-realproxy/
 [1]: http://neovolve.codeplex.com/SourceControl/changeset/view/62725#443620
 [2]: http://neovolve.codeplex.com/SourceControl/changeset/view/62725#1151241

@@ -26,8 +26,7 @@ namespace ConsoleApplication1
             Console.WriteLine("Running the test method");
         }
     }
-}
-    
+}    
 {% endhighlight %}
 
 **Project references required**
@@ -81,8 +80,7 @@ namespace ConsoleApplication1
             }
         }
     }
-}
-    
+}    
 {% endhighlight %}
 
 PostSharp will find the MethodTraceAspect attribute on the RunTest method and change the IL so that the OnInvocation method of the attribute is invoked instead of the RunTest method. The context.Proceed() method in the attribute then invokes the RunTest method.
@@ -174,21 +172,22 @@ internal sealed class ~PostSharp~Laos~Implementation
     [Serializable]
     public delegate void ~delegate~0();
 }
-     
-    
 {% endhighlight %}
 
 The important part to note is that the contents of RunTest() have been moved into ~RunTest() and have been replaced with a call to MethodTraceAspectAttribute.OnInvocation. A delegate to ~RunTest() is passed in the arguments to OnInvocation so that the aspect can then invoke the original method.
 
 **Compiled assembly references**
 
-After PostSharp has finished weaving the aspect into the IL, the assembly still has a reference to PostSharp.Laos.dll and PostSharp.Public.dll.![][1]
+After PostSharp has finished weaving the aspect into the IL, the assembly still has a reference to PostSharp.Laos.dll and PostSharp.Public.dll.  
+![][1]
 
 **Debugging support**
 
 Debugging the assembly after it has been aspected is seamless. When the Main method invokes RunTest(), the debugger steps into the MethodTraceAspectAttribute.OnInvocation method. Stepping into context.Proceed() takes you into the RunTest() method in the source code (which is actually ~RunTest in the compiled assembly). Stepping out of RunTest takes you back into the MethodTraceAspectAttribute.OnInvocation method.
 
-**Runtime result**![Result][2]
+**Runtime result**
+
+![Result][2]
 
 **License implications**
 

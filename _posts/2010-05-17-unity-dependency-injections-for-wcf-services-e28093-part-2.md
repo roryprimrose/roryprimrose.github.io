@@ -171,7 +171,7 @@ Using the ServiceHostFactory is the preferred option as it will result in a slig
 
 The code with xml comments can be found in my [Toolkit project][3] on CodePlex.
 
-[0]: /post/2010/05/15/Unity-dependency-injection-for-WCF-services-e28093-Part-1.aspx
+[0]: /2010/05/15/unity-dependency-injection-for-wcf-services-e28093-part-1/
 [1]: http://neovolve.codeplex.com/SourceControl/changeset/view/58851#1195163
 [2]: http://msdn.microsoft.com/en-us/library/microsoft.identitymodel.protocols.wstrust.wstrustservicehostfactory.aspx
 [3]: http://neovolve.codeplex.com/SourceControl/changeset/view/58851#1216930

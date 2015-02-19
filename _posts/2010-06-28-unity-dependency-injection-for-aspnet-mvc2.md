@@ -307,8 +307,8 @@ namespace Neovolve.Toolkit.Unity.MvcWebIntegrationTests.Controllers
 
 All the code for this solution (including full xml documentation) can be found in my [Toolkit][4] project on CodePlex.
 
-[0]: /post/2010/05/19/Unity-dependency-injection-for-ASPNet.aspx
-[1]: /post/2010/05/17/Unity-dependency-injections-for-WCF-services-e28093-Part-2.aspx
-[2]: /post/2010/06/18/Unity-Extension-For-Disposing-Build-Trees-On-TearDown.aspx
+[0]: /2010/05/19/unity-dependency-injection-for-aspnet/
+[1]: /2010/05/17/unity-dependency-injections-for-wcf-services-e28093-part-2/
+[2]: /2010/06/18/unity-extension-for-disposing-build-trees-on-teardown/
 [3]: http://neovolve.codeplex.com/SourceControl/changeset/view/58851#1195163
 [4]: http://neovolve.codeplex.com/SourceControl/changeset/view/60707#1233389

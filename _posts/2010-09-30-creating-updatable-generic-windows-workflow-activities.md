@@ -6,15 +6,15 @@ date: 2010-09-30 14:17:00 +10:00
 
 This post is a segue from the current series on building a custom activity for supporting dependency resolution in Windows Workflow ([here][0], [here][1], [here][2] and [here][3] so far). This post will outline how to support updating generic type arguments of generic activities in the designer. This technique is used in the designer support for the InstanceResolver activity that has been discussed throughout the series.
 
-The implementation of this is modelled from the support for this functionality in the generic WF4 activities such as ForEach<T> and ParallelForEach<T>. Unfortunately the logic that drives this is marked as internal and is therefore not available to developers who create custom generic activities.
+The implementation of this is modelled from the support for this functionality in the generic WF4 activities such as ForEach&lt;T&gt; and ParallelForEach&lt;T&gt;. Unfortunately the logic that drives this is marked as internal and is therefore not available to developers who create custom generic activities.
 
-In the case of the ForEach<T> activity, the default generic type value used is int. ![image][4]
+In the case of the ForEach&lt;T&gt; activity, the default generic type value used is int. ![image][4]
 
 This can be changed in the property grid of the activity using the TypeArgument property. ![image][5]
 
 Changing this value will update the definition of the activity with the new type argument. For example, the type could be change to Boolean.![image][6]
 
-This post will use my ExecuteBookmark<T> activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.
+This post will use my ExecuteBookmark&lt;T&gt; activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.
 
 {% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
@@ -71,7 +71,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
 
 This activity defines the default type of String. Designer support for changing this type is required after dropping the activity on the designer because the DefaultArgumentTypeAttribute avoids the developer having to define the generic type up front. It has the additional benefit of allowing the developer to change the activity type once it is is already on the designer as the workflow is developed and refactored.
 
-The ArgumentType property does not exist on the ExecuteBookmark<T> class. It is an AttachedProperty<Type> instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.
+The ArgumentType property does not exist on the ExecuteBookmark&lt;T&gt; class. It is an AttachedProperty&lt;Type&gt; instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.
 
 {% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
@@ -239,15 +239,15 @@ namespace Neovolve.Toolkit.Workflow.Design
 
 The class determines how many generic type arguments on the activity will be updatable. It then loops through this number and creates an attached property on the ModelItem for each of these. The AttachedProperty is marked as IsBrowsable = true so that it is displayed in the property grid.
 
-The getter Func<T> of the attached property simply returns the generic type argument of the current activity type for the index related to the attached property. The setter is where all the action happens. It is the logic behind the attached property that was copied from Microsoft internal implementation.
+The getter Func&lt;T&gt; of the attached property simply returns the generic type argument of the current activity type for the index related to the attached property. The setter is where all the action happens. It is the logic behind the attached property that was copied from Microsoft internal implementation.
 
-Updating the type involves calculating what the new type will be. For example, SomeActivity<String, Boolean> could be updated to SomeActivity<String, Int32>. This new type is determined and an instance of it is created. The instance of the new type is used to create a new ModelItem for the designer.
+Updating the type involves calculating what the new type will be. For example, SomeActivity&lt;String, Boolean&gt; could be updated to SomeActivity&lt;String, Int32&gt;. This new type is determined and an instance of it is created. The instance of the new type is used to create a new ModelItem for the designer.
 
 An ModelEditingScope is used at this point in order to group a set of designer changes into one unit. This means that there will be one Undo/Redo command in Visual Studio rather than one for each individual designer change detected in this process. 
 
 The editing scope uses a MorphHelper to create the new type from the old type. This process will copy across all the supported changes from the old type to the new type (properties, child activities etc). 
 
-The next job is to detect if the activity has the default display name value. If this is the case, then the display name will be updated to the default display name of the new activity type. This is done because the display name of generic activities is normally calculated as TypeName<TypeName, TypeName, etc, etc>.
+The next job is to detect if the activity has the default display name value. If this is the case, then the display name will be updated to the default display name of the new activity type. This is done because the display name of generic activities is normally calculated as TypeName&lt;TypeName, TypeName, etc, etc&gt;.
 
 Lastly, the class makes a call into a DesignerUpdater helper class that is used to ensure that the updated activity is selected.
 
@@ -297,7 +297,9 @@ namespace Neovolve.Toolkit.Workflow.Design
 }
 {% endhighlight %}
 
-The final piece of the puzzle is support for changing the type within the designer surface itself. This is modelled from the InvokeMethod activity that allows for custom types to be defined in the designer.![image][7]
+The final piece of the puzzle is support for changing the type within the designer surface itself. This is modelled from the InvokeMethod activity that allows for custom types to be defined in the designer.
+
+![image][7]
 
 The way to get this to work is to add the following into the XAML of the activity designer.
 

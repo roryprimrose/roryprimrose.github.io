@@ -111,5 +111,5 @@ This class has been added into the next beta of my Toolkit. You can get it from 
 
 [0]: /2008/04/07/implementing-ierrorhandler/
 [1]: http://neovolve.codeplex.com
-[2]: /post/2008/11/07/Strict-IErrorHandler-usage.aspx
+[2]: /2008/11/07/strict-ierrorhandler-usage/
 [3]: http://neovolve.codeplex.com/releases/view/53499

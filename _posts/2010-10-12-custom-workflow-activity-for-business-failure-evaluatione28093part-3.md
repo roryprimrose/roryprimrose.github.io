@@ -30,11 +30,11 @@ namespace Neovolve.Toolkit.Workflow.Extensions
     
     public class BusinessFailureExtension<T> : PersistenceParticipant, IDisposable where T : struct
     {
-        private static readonly XNamespace _persistenceNamespace = XNamespace.Get(&quot;http://www.neovolve.com/toolkit/workflow/properties&quot;);
+        private static readonly XNamespace _persistenceNamespace = XNamespace.Get("http://www.neovolve.com/toolkit/workflow/properties");
     
-        private static readonly XName _scopeEvaluatorsName = _persistenceNamespace.GetName(&quot;ScopeEvaluators&quot;);
+        private static readonly XName _scopeEvaluatorsName = _persistenceNamespace.GetName("ScopeEvaluators");
     
-        private static readonly XName _scopeFailuresName = _persistenceNamespace.GetName(&quot;ScopeFailures&quot;);
+        private static readonly XName _scopeFailuresName = _persistenceNamespace.GetName("ScopeFailures");
     
         private readonly ReaderWriterLockSlim _scopeEvaluatorsLock = new ReaderWriterLockSlim();
     
@@ -213,7 +213,7 @@ namespace Neovolve.Toolkit.Workflow.Extensions
     
         private String GetOwningScopeId(String activityId)
         {
-            Debug.Assert(String.IsNullOrEmpty(activityId) == false, &quot;No activity id provided&quot;);
+            Debug.Assert(String.IsNullOrEmpty(activityId) == false, "No activity id provided");
     
             using (new LockReader(_scopeEvaluatorsLock))
             {
@@ -253,13 +253,15 @@ namespace Neovolve.Toolkit.Workflow.Extensions
 }
 {% endhighlight %}
 
-The BusinessFailureExtension exposes a LinkActivityToScope method that creates the link between a scope and child activity. Child activities can check if they are linked to a scope by calling the IsLinkedToScope method. The link between these activities uses a Dictionary<String, String> instance to store the associations. The key of the dictionary is the ActivityId of the linked activity and the value is the ActivityId of the scope activity. This design allows for multiple activities to be linked to a scope while enforcing that an activity is only linked to a single scope activity.
+The BusinessFailureExtension exposes a LinkActivityToScope method that creates the link between a scope and child activity. Child activities can check if they are linked to a scope by calling the IsLinkedToScope method. The link between these activities uses a Dictionary&lt;String, String&gt; instance to store the associations. The key of the dictionary is the ActivityId of the linked activity and the value is the ActivityId of the scope activity. This design allows for multiple activities to be linked to a scope while enforcing that an activity is only linked to a single scope activity.
 
-The extension defines a ProcessFailure method for processing failures provided by an activity. The extension will throw a BusinessFailureException<T> straight away if the method does not find a link between the failure activity and a scope activity. The failure is stored in a failure list associated with the scope activity if there is a link found with a scope activity.
+The extension defines a ProcessFailure method for processing failures provided by an activity. The extension will throw a BusinessFailureException&lt;T&gt; straight away if the method does not find a link between the failure activity and a scope activity. The failure is stored in a failure list associated with the scope activity if there is a link found with a scope activity.
 
 The GetFailuresForScope method returns any failures stored against a scope activity. This method returns the collection of failures that have been stored against a scope activity when a linked activity has invoked ProcessFailure. This method also cleans up stored information for the scope by removing any links to other activities and removing the failures stored for it.
 
-The extension must support workflow persistence. This caters for the scenario where a linked activity has stored a failure against a scope activity and the workflow is persisted before the scope activity invokes GetFailuresForScope. ![image][2]
+The extension must support workflow persistence. This caters for the scenario where a linked activity has stored a failure against a scope activity and the workflow is persisted before the scope activity invokes GetFailuresForScope.
+
+![image][2]
 
 Persistence is supported by inheriting from PersistenceParticipant and overriding CollectValues and PublishValues. The CollectValues method provides the activity links and stored failures to the persistence process. The PublishValues method then restores these values again when the workflow is rehydrated from the persistence store.
 

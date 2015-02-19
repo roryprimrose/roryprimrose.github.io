@@ -1,5 +1,5 @@
 ---
-title: Guidance on use of <include /> in XML documentation comments
+title: Guidance on use of include in XML documentation comments
 categories : .Net, Applications
 tags : ReSharper, StyleCop
 date: 2009-01-12 13:32:00 +10:00
@@ -14,7 +14,7 @@ As a quick overview, the include element in XML documentation tells the compiler
 * Documentation reuse
 * Removes noise in a code file if the bulk of the documentation points to an included reference
 
-**Disadvantages**&#160;
+**Disadvantages**
 
 * Hard to read the documentation when looking at the source
 * [Current ReSharper 4.1 doesn't correctly walk the include path references to validate using directives][2]
@@ -39,7 +39,7 @@ The include element is very useful for moving remarks and code examples out of t
 
 **Note:** The SC issues should be fixed in the next version. There is no indication about intellisense fixes to Visual Studio or R#. The use of the include element may change as these issues are fixed.
 
-[0]: /post/2008/03/26/xml-comments-and-the-include-element.aspx
+[0]: /2008/03/26/xml-comments-and-the-include-element/
 [1]: http://msdn.microsoft.com/en-us/library/9h8dy30z.aspx
 [2]: http://www.jetbrains.net/jira/browse/RSRP-62567
 [3]: http://www.jetbrains.net/jira/browse/RSRP-90953

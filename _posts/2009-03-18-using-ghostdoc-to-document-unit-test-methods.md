@@ -19,8 +19,7 @@ public void CreateReturnsCacheStoreInstanceTest()
     ICacheStore actual = CacheStoreFactory.Create();
      
     Assert.IsNotNull(actual, "Create failed to return an instance");
-}
-    
+}    
 {% endhighlight %}
 
 Creating a custom GhostDoc rule for unit test methods can assist in cleaning the documentation up a little.
@@ -47,7 +46,6 @@ public void CreateReturnsCacheStoreInstanceTest()
      
     Assert.IsNotNull(actual, "Create failed to return an instance");
 }
-    
 {% endhighlight %}
 
 It's not perfect, but its a lot better.

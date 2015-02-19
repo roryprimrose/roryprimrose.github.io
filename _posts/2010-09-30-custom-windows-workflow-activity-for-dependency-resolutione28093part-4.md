@@ -164,8 +164,8 @@ With this method registered in MorphHelper via the above RegisterMetadata class,
 
 This post has covered support for IRegisterMetadata and MorphHelper. The next post will look at specialised implementation for updatable generic type support for the InstanceResolver activity.
 
-[0]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-3.aspx
+[0]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-3/
 [1]: http://neovolve.codeplex.com/SourceControl/changeset/view/67193#1413007
 [2]: http://msdn.microsoft.com/en-us/library/microsoft.windows.design.metadata.iregistermetadata(VS.90).aspx
 [3]: http://social.msdn.microsoft.com/Forums/en/wfprerelease/thread/43424aaf-1e35-4629-9b98-de1fb80079b7
-[4]: /post/2010/09/30/Creating-updatable-generic-Windows-Workflow-activities.aspx
+[4]: /2010/09/30/creating-updatable-generic-windows-workflow-activities/
