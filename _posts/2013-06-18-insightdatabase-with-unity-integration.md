@@ -219,6 +219,6 @@ And we are done.
 
 [0]: https://github.com/jonwagner/Insight.Database
 [1]: http://code.jonwagner.com/
-[2]: /post/2010/07/05/ConnectionStringSettings-parameter-injection-in-Unity.aspx
-[3]: /post/2010/04/23/AppSetting-parameter-injection-in-Unity-2.aspx
+[2]: /2010/07/05/connectionstringsettings-parameter-injection-in-unity/
+[3]: /2010/04/23/appsetting-parameter-injection-in-unity-2/
 [4]: http://neovolve.codeplex.com/SourceControl/latest#1420795

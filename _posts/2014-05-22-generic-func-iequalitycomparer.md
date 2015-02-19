@@ -29,8 +29,7 @@ public class PredicateComparer<T> : IEqualityComparer<T>
         // Return zero to force usage of Equals
         return 0;
     }
-}
-    
+}    
 {% endhighlight %}
 
 This little helper doesn’t totally fix the syntax problem, but does limit how big your coding speed bumps are. For example:
@@ -39,7 +38,6 @@ This little helper doesn’t totally fix the syntax problem, but does limit how 
 var matchingEntities = allEntities.Intersect(
     subsetOfEntities,
     new PredicateComparer<MyEntityType>((x, y) => x.Id == y.Id));
-    
 {% endhighlight %}
 
 Easy.

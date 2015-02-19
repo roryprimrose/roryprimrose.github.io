@@ -301,4 +301,4 @@ namespace MySystem.DataAccess.Azure
 }
 {% endhighlight %}
 
-[0]: /post/2013/11/18/Entity-Adapter-for-Azure-Table-Storage.aspx
+[0]: /2013/11/18/entity-adapter-for-azure-table-storage/

@@ -50,5 +50,5 @@ Here are the ServiceDefinition.csdef configurations for the two types of roles. 
 </WorkerRole>
 {% endhighlight %}
 
-[0]: /post/2013/02/07/Fixing-New-Relic-Nuget-package-for-Azure.aspx
-[1]: /post/2013/04/03/NewRelic-Azure-NuGet-package-update-pain-again.aspx
+[0]: /2013/02/07/fixing-new-relic-nuget-package-for-azure/
+[1]: /2013/04/03/newrelic-azure-nuget-package-update-pain-again/

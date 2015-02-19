@@ -137,4 +137,4 @@ public async Task WritePersonAsync(Person person)
 
 Hope this helps.
 
-[0]: /post/2014/01/07/Azure-EntityAdapter-with-unsupported-table-types.aspx
+[0]: /2014/01/07/azure-entityadapter-with-unsupported-table-types/

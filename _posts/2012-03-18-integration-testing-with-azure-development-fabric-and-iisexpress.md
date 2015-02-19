@@ -88,5 +88,5 @@ namespace MySystem.Server.Web.IntegrationTests
 
 Enjoy
 
-[0]: /post/2012/03/18/Boosting-integration-testing-with-Azure-development-fabric.aspx
-[1]: /post/2012/03/18/Spinning-up-IISExpress-for-integration-testing.aspx
+[0]: /2012/03/18/boosting-integration-testing-with-azure-development-fabric/
+[1]: /2012/03/18/spinning-up-iisexpress-for-integration-testing/

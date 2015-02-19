@@ -385,4 +385,4 @@ namespace Neovolve.Toolkit.Azure
 
 Next up, how to provide a similar implementation for IISExpress.
 
-[0]: /post/2012/01/12/Integration-testing-with-Azure-development-storage.aspx
+[0]: /2012/01/12/integration-testing-with-azure-development-storage/

@@ -450,8 +450,8 @@ namespace MySystem.Server.DataAccess.Azure
 }
 {% endhighlight %}
 
-[0]: http://www.neovolve.com/post/2013/11/18/Entity-Adapter-for-Azure-Table-Storage.aspx
-[1]: http://www.neovolve.com/post/2014/01/07/Azure-EntityAdapter-with-unsupported-table-types.aspx
-[2]: http://www.neovolve.com/post/2014/01/07/Using-the-EntityAdapter-for-Azure-Table-Storage.aspx
-[3]: http://www.neovolve.com/post/2014/04/10/Azure-Table-Storage-Adapter-Using-Reserved-Properties.aspx
-[4]: http://www.neovolve.com/post/2014/01/07/Azure-EntityAdapter-with-unsupported-table-types.aspx#comment-1370371154
+[0]: /2013/11/18/entity-adapter-for-azure-table-storage/
+[1]: /2014/01/07/azure-entityadapter-with-unsupported-table-types/
+[2]: /2014/01/07/using-the-entityadapter-for-azure-table-storage/
+[3]: /2014/04/10/azure-table-storage-adapter-using-reserved-properties/
+[4]: /2014/01/07/azure-entityadapter-with-unsupported-table-types/#comment-1370371154

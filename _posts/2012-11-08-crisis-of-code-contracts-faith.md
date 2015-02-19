@@ -32,5 +32,5 @@ So things are not looking good for code contracts. I think I'm at the tipping po
 
 Thoughts?
 
-[0]: /post/2012/03/20/Should-code-contracts-be-tested.aspx
+[0]: /2012/03/20/should-code-contracts-be-tested/
 [1]: http://neovolve.codeplex.com/releases/view/53499

@@ -78,4 +78,4 @@ This will replace any content in the bundle that has a relative reference to fon
 Easy done.
 
 [0]: http://fortawesome.github.com/Font-Awesome/
-[1]: /post/2013/03/12/MVC-bundling-and-line-comments-at-the-end-of-files.aspx
+[1]: /2013/03/11/mvc-bundling-and-line-comments-at-the-end-of-files/

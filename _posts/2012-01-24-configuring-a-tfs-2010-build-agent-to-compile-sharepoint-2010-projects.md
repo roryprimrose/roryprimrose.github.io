@@ -5,8 +5,6 @@ tags : TeamBuild, TFS, WiX
 date: 2012-01-24 12:09:40 +10:00
 ---
 
-
-
 I’ve been doing several TFS consulting gigs over the last couple of years. The one thing that keeps popping up is the requirement to build several types of platforms using TeamBuild/TFSBuild. My preference is to isolate build agents and their customisations. This means for example that I have a mix of build agents like the following:
 
 * Standard (full VS install + any common additions - WiX for example)

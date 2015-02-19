@@ -24,70 +24,70 @@ namespace MyProject.Server.DataAccess.Azure
     using Seterlund.CodeGuard;
     using MyProject.Server.DataAccess.Azure.Properties;
     
-    /// <summary&gt;
-    ///     The <see cref=&quot;TableBatchWriter&quot; /&gt;
-    ///     class manages the process of writing a batch of entitites to a <see cref=&quot;TableBatchOperation&quot; /&gt; instance.
-    /// </summary&gt;
+    /// <summary>
+    ///     The <see cref=&quot;TableBatchWriter&quot; />
+    ///     class manages the process of writing a batch of entitites to a <see cref=&quot;TableBatchOperation&quot; /> instance.
+    /// </summary>
     [CLSCompliant(false)]
     public class TableBatchWriter
     {
-        /// <summary&gt;
+        /// <summary>
         ///     The maximum ats table batch size.
-        /// </summary&gt;
+        /// </summary>
         private const int MaxAtsTableBatchSize = 100;
     
-        /// <summary&gt;
+        /// <summary>
         ///     The batch tasks.
-        /// </summary&gt;
-        private readonly List<Task&gt; _batchTasks;
+        /// </summary>
+        private readonly List<Task> _batchTasks;
     
-        /// <summary&gt;
+        /// <summary>
         ///     The table to write the batch to.
-        /// </summary&gt;
+        /// </summary>
         private readonly CloudTable _table;
     
-        /// <summary&gt;
+        /// <summary>
         ///     The current operation.
-        /// </summary&gt;
+        /// </summary>
         private TableBatchOperation _currentOperation;
     
-        /// <summary&gt;
+        /// <summary>
         ///     The partition key for the current batch.
-        /// </summary&gt;
+        /// </summary>
         private string _currentPartitionKey;
     
-        /// <summary&gt;
+        /// <summary>
         ///     The row keys for the current partition key.
-        /// </summary&gt;
-        private List<string&gt; _partitionRowKeys;
+        /// </summary>
+        private List<string> _partitionRowKeys;
     
-        /// <summary&gt;
+        /// <summary>
         ///     The total items written to the table.
-        /// </summary&gt;
+        /// </summary>
         private int _totalItems;
     
-        /// <summary&gt;
-        ///     Initializes a new instance of the <see cref=&quot;TableBatchWriter&quot; /&gt; class.
-        /// </summary&gt;
+        /// <summary>
+        ///     Initializes a new instance of the <see cref=&quot;TableBatchWriter&quot; /> class.
+        /// </summary>
         public TableBatchWriter(CloudTable table)
         {
-            Guard.That(() =&gt; table).IsNotNull();
+            Guard.That(() => table).IsNotNull();
     
             _table = table;
     
-            _batchTasks = new List<Task&gt;();
-            _partitionRowKeys = new List<string&gt;();
+            _batchTasks = new List<Task>();
+            _partitionRowKeys = new List<string>();
             _currentOperation = new TableBatchOperation();
         }
     
-        /// <summary&gt;
+        /// <summary>
         ///     Adds the specified entity.
-        /// </summary&gt;
-        /// <param name=&quot;entity&quot;&gt;The entity.</param&gt;
-        /// <exception cref=&quot;System.InvalidOperationException&quot;&gt;The entity has a row key conflict in the current batch.</exception&gt;
+        /// </summary>
+        /// <param name=&quot;entity&quot;>The entity.</param>
+        /// <exception cref=&quot;System.InvalidOperationException&quot;>The entity has a row key conflict in the current batch.</exception>
         public void Add(ITableEntity entity)
         {
-            Guard.That(() =&gt; entity).IsNotNull();
+            Guard.That(() => entity).IsNotNull();
     
             if (Count == 0)
             {
@@ -105,7 +105,7 @@ namespace MyProject.Server.DataAccess.Azure
     
                 WriteBatch();
     
-                _partitionRowKeys = new List<string&gt;();
+                _partitionRowKeys = new List<string>();
                 _currentPartitionKey = entity.PartitionKey;
             }
             else if (_partitionRowKeys.Contains(entity.RowKey))
@@ -135,13 +135,13 @@ namespace MyProject.Server.DataAccess.Azure
             }
         }
     
-        /// <summary&gt;
+        /// <summary>
         ///     Adds the items.
-        /// </summary&gt;
-        /// <param name=&quot;items&quot;&gt;The items.</param&gt;
-        public void AddItems(IEnumerable<ITableEntity&gt; items)
+        /// </summary>
+        /// <param name=&quot;items&quot;>The items.</param>
+        public void AddItems(IEnumerable<ITableEntity> items)
         {
-            Guard.That(() =&gt; items).IsNotNull();
+            Guard.That(() => items).IsNotNull();
     
             foreach (var item in items)
             {
@@ -149,14 +149,14 @@ namespace MyProject.Server.DataAccess.Azure
             }
         }
     
-        /// <summary&gt;
+        /// <summary>
         ///     Executes the batch writing asynchronously.
-        /// </summary&gt;
-        /// <returns&gt;A <see cref=&quot;Task&quot; /&gt; value.</returns&gt;
+        /// </summary>
+        /// <returns>A <see cref=&quot;Task&quot; /> value.</returns>
         public async Task ExecuteAsync()
         {
             // Check if there is a final batch that has not been actioned yet
-            if (Count &gt; 0)
+            if (Count > 0)
             {
                 Debug.WriteLine(&quot;Writing final batch of {0} entries to table storage.&quot;, Count);
     
@@ -172,7 +172,7 @@ namespace MyProject.Server.DataAccess.Azure
     
             // Clean up resources
             _batchTasks.Clear();
-            _partitionRowKeys = new List<string&gt;();
+            _partitionRowKeys = new List<string>();
             _currentOperation = new TableBatchOperation();
         }
     
@@ -185,12 +185,12 @@ namespace MyProject.Server.DataAccess.Azure
             _currentOperation = new TableBatchOperation();
         }
     
-        /// <summary&gt;
+        /// <summary>
         ///     Gets the count.
-        /// </summary&gt;
-        /// <value&gt;
+        /// </summary>
+        /// <value>
         ///     The count.
-        /// </value&gt;
+        /// </value>
         public int Count
         {
             get
@@ -203,5 +203,3 @@ namespace MyProject.Server.DataAccess.Azure
 {% endhighlight %}
 
 With this class you can add as many entities as you like and then wait on ExecuteAsync to finish off the work. The only issue that this class doesn’t cover is where you have a RowKey conflict that happens to fall across batches. Not much you can do about that though.
-
-

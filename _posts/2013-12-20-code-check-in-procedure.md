@@ -45,4 +45,4 @@ The following set of actions must be taken in order to check in changes to sourc
   * Verify build successful or investigate any failures
 
 
-[0]: /post/2009/09/09/Quick-tip-for-undoing-unchanged-TFS-checkouts.aspx
+[0]: /2009/09/09/quick-tip-for-undoing-unchanged-tfs-checkouts/

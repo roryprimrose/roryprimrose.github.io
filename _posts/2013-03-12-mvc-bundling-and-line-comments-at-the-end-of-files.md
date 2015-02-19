@@ -83,6 +83,6 @@ namespace MyNamespace
 }
 {% endhighlight %}
 
-This custom bundle class reads the script files and separates them with a ; and a new line. This then allows the minification engine to correctly process the bundle because any line comment on the end of a file will no longer affect the script in the next file of the bundle. 
+This custom bundle class reads the script files and separates them with a ; and a new line. This then allows the minification engine to correctly process the bundle because any line comment on the end of a file will no longer affect the script in the next file of the bundle.
 
 [0]: http://stackoverflow.com/questions/14402741/jquery-1-9-0-and-modernizr-cannot-be-minified-with-the-asp-net-web-optimization

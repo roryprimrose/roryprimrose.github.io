@@ -27,7 +27,7 @@ The following links are some great articles to help developers up to speed on as
 
 [Documentation and examples][7]
 
-[0]: /post/2010/02/17/Recommended-reading-for-developers.aspx
+[0]: /2010/02/17/recommended-reading-for-developers/
 [1]: http://msdn.microsoft.com/en-us/library/vstudio/hh191443.aspx
 [2]: http://blog.stephencleary.com/2012/02/async-and-await.html
 [3]: http://code.jonwagner.com/2012/09/06/best-practices-for-c-asyncawait/

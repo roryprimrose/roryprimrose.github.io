@@ -43,4 +43,4 @@ protected override void ReadValues(IDictionary<string, EntityProperty> propertie
 
 Now we are up and running again.
 
-[0]: /post/2014/01/07/Using-the-EntityAdapter-for-Azure-Table-Storage.aspx
+[0]: /2014/01/07/using-the-entityadapter-for-azure-table-storage/

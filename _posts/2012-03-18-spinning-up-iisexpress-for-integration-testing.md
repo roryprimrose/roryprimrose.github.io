@@ -155,4 +155,4 @@ namespace Neovolve.Toolkit.TestSupport
 
 Unfortunately this implementation is not able to automatically resolve project information that the Azure implementation can. The code would have to make too many inappropriate assumptions in order to make this work. This implementation therefore requires the information about the site it will host to be provided to it.
 
-[0]: /post/2012/03/18/Boosting-integration-testing-with-Azure-development-fabric.aspx
+[0]: /2012/03/18/boosting-integration-testing-with-azure-development-fabric/
