@@ -18,8 +18,8 @@ date: 2009-01-12 12:18:00 +10:00
 
  On a side note, don't forget to [turn off code coverage for running load tests][4]. 
 
-[0]: /post/2008/12/22/The-evils-of-SystemDiagnosticsTrace.aspx
-[1]: /post/2009/01/08/Disable-Trace-UseGlobalLock-For-Better-Tracing-Performance.aspx
-[2]: /post/2009/01/08/Carrying-tracing-weight-you-didnt-know-you-had.aspx
-[3]: /post/2009/01/08/Dont-trace-the-callstack-if-you-dont-need-to.aspx
-[4]: /post/2008/06/02/load-tests-don-t-like-code-coverage.aspx
+[0]: /2008/12/22/the-evils-of-systemdiagnosticstrace/
+[1]: /2009/01/08/disable-trace-usegloballock-for-better-tracing-performance/
+[2]: /2009/01/08/carrying-tracing-weight-you-didnt-know-you-had/
+[3]: /2009/01/08/dont-trace-the-callstack-if-you-dont-need-to/
+[4]: /2008/06/02/load-tests-don-t-like-code-coverage/

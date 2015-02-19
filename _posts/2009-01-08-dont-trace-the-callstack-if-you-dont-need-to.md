@@ -39,7 +39,6 @@ Here is the configuration I used:
     </sources> 
   </system.diagnostics> 
 </configuration> 
-
 {% endhighlight %}
 
 And here are the unit tests: 

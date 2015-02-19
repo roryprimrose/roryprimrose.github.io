@@ -25,7 +25,8 @@ Next, we need to associate this single custom dictionary with all of the project
 
 This will then add this file as a link to the project. You will notice that the overlay of the icon in _Solution Explorer_ also indicates that this file is a shortcut to another location.![image][4]
 
-Open up the properties on this file, and select _CodeAnalysisDictionary_ as the _Build Action_ for this xml file.![image][1]
+Open up the properties on this file, and select _CodeAnalysisDictionary_ as the _Build Action_ for this xml file.  
+![image][1]
 
 As you compile the application and run code analysis, this custom dictionary will be referenced.
 

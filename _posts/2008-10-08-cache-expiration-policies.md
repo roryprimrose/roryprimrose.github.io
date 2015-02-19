@@ -25,26 +25,26 @@ Absolute expiration refers to a specific point in time when the cache entry will
 In the following example, an entry is added to the cache with a cache expiration policy that defines an absolute expiration of 25th December 2008 at 4:30pm. Once 4:30pm rolls around on that day, the entry will be expired. Assuming the item is added to the cache on 25th December 2008 at 4:00pm, this policy defines that the cache entry will only be alive for 15 minutes. 
 
 {% highlight csharp linenos %}
- using System; 
- using System.Web; 
- using System.Web.Caching; 
- namespace ConsoleApplication1 
- { 
-     internal  class  Program
-     { 
-         private  static  void Main( String [] args) 
-         { 
-             DateTime absoluteExpiration = new  DateTime (2008, 12, 25, 16, 15, 00); 
-             HttpRuntime.Cache.Add("AbsoluteCacheKey", 
-                 "This is the data to cache", 
-                 null, // No cache dependency defined
-                 absoluteExpiration, 
-                 Cache.NoSlidingExpiration, 
-                 CacheItemPriority.Normal, 
-                 null); // No callback defined
-         } 
-     } 
- } 
+using System; 
+using System.Web; 
+using System.Web.Caching; 
+namespace ConsoleApplication1 
+{ 
+    internal  class  Program
+    { 
+        private  static  void Main( String [] args) 
+        { 
+            DateTime absoluteExpiration = new  DateTime (2008, 12, 25, 16, 15, 00); 
+            HttpRuntime.Cache.Add("AbsoluteCacheKey", 
+                "This is the data to cache", 
+                null, // No cache dependency defined
+                absoluteExpiration, 
+                Cache.NoSlidingExpiration, 
+                CacheItemPriority.Normal, 
+                null); // No callback defined
+        } 
+    } 
+} 
 {% endhighlight %}
 
 **Sliding expiration**
@@ -166,17 +166,17 @@ namespace ConsoleApplication1
 
  What should you use for your policy? It typically depends on answers to the following questions: 
 
-1. How often is the data read?
+1\. How often is the data read?
  A cache entry that is read very often will suit a sliding expiration. This allows for fluctuations in the frequency of reads. If the frequency reduces (say overnight), then it will expire. 
 
  A cache entry that is not read very often will suit an absolute expiration. This allows the data to be around for a while, just in case it is referenced, but forces it to expire at some point. 
 
-1. How often is the data changed?
+2\. How often is the data changed?
  A cache entry that is changed often will suit a cache dependency if supported. A custom cache dependency may be required in this case. Without a cache dependency, a short absolute expiration would be appropriate. 
 
  A cache entry that is not changed often will suit either a sliding or absolute expiration depending on the answers to the other questions. Ideally, both a sliding and absolute expiration would be used. 
 
-1. How large is the data?
+3\. How large is the data?
  A cache entry that is a large amount of data will suit a low priority. This will allow the system to expire the cache entry when it has scarce resources, namely RAM. A sliding expiration would also be a good combination with large data. If it is not referenced for a while, it is good to release this memory. 
 
  A cache entry that is not a large amount of data may use a high priority if it is read more often than other entries. It is best to leave the cache priority as the default value unless the entry has different characteristics compared to other entries based on answers to the above questions. 

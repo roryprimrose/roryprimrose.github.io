@@ -7,7 +7,7 @@ date: 2008-08-28 12:40:41 +10:00
 
 I have done it again. In order to work on a particular project, I have been sidetracked into writing a utility to help me continue with what I am actually trying to do. In my defense, I did look around the net for an application that would do what I needed so I didn't have to write it, but no application seemed appropriate.
 
-In essence, I need an application to resolve all the links internal to a website and check their status. This will give me an initial view of the state of the site. I then want to take all of those links and replay the analysis of those resolved links using a different base address. The reason I am doing this is because I am looking at migrating my Community Server based blog to use [BE] instead. As part of that migration, I want to maintain as much of the Community Server url formats as possible so I don't lose my existing audience.
+In essence, I need an application to resolve all the links internal to a website and check their status. This will give me an initial view of the state of the site. I then want to take all of those links and replay the analysis of those resolved links using a different base address. The reason I am doing this is because I am looking at migrating my Community Server based blog to use BlogEngine.Net instead. As part of that migration, I want to maintain as much of the Community Server url formats as possible so I don't lose my existing audience.
 
 Given that this application is going to chew a lot of bandwidth (my entire site) along with the need for accurate results, I want to make sure that this utility is doing the right thing. Unit testing is critical for this to be successful. I quickly found however that my initial cut is not very testable.
 
@@ -139,7 +139,7 @@ namespace ConsoleApplication1
 }
 {% endhighlight %}
 
-By abstracting an implementation that actually gets the resource contents (with a bit of [DI] thrown in), we now have a ResourceResolver.GetResourceContents method that can be unit tested. The unit testing involved now needs to pass in either a stub or a mocked instance of IResourceLoader and we can safely test the logic of this method without requiring http requests.
+By abstracting an implementation that actually gets the resource contents (with a bit of dependency injection thrown in), we now have a ResourceResolver.GetResourceContents method that can be unit tested. The unit testing involved now needs to pass in either a stub or a mocked instance of IResourceLoader and we can safely test the logic of this method without requiring http requests.
 
 When you develop code, please think about how it is going to be tested. Even better, write unit tests when you develop the code. You will quickly find out how flexible your code is for unit testing.
 

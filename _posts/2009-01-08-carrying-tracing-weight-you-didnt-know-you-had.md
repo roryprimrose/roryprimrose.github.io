@@ -54,5 +54,5 @@ This is extra baggage that you probably didn't know you had. If you want lean tr
     
 {% endhighlight %}
 
-[0]: /post/2009/01/08/Disable-Trace-UseGlobalLock-For-Better-Tracing-Performance.aspx
+[0]: /2009/01/08/disable-trace-usegloballock-for-better-tracing-performance/
 [1]: http://msdn.microsoft.com/en-us/library/system.diagnostics.defaulttracelistener.aspx
