@@ -8,4 +8,4 @@ date: 2008-10-17 10:30:00 +10:00
 
  It's a war between my automated single F1 press for help vs my misfiring over from the ESC key. I will keep the setting how it is though. Forgetting the second F1 press isn't as bad as accidentally hitting F1 instead of ESC. 
 
-[0]: /post/2008/08/27/visual-studio-tip-escape-without-fear.aspx
+[0]: /2008/08/27/visual-studio-tip-escape-without-fear/

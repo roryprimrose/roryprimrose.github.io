@@ -160,13 +160,13 @@ This implementation is different to the GenericTypeUpdater in that it provides s
 
 Firstly it only attaches updatable generic type properties for as many generic types as is defined by ArgumentCount. If ArgumentCount = One, only one AttachedProperty<Type> is attached to the ModelItem in the designer. If ArgumentCount = Two, then the activity has two AttachedProperty<Type> attached to the ModelItem. As so it goes on.![image[10]][4]
 
-Secondly the support limits updating the default display name of the activity to the number of types defined by ArgumentCount even though the InstanceResolver class defines 16 generic arguments. This means that the display name is for example InstanceResolver<String, ITestInstance> where ArgumentCount = Two rather than InstanceResolver<String, ITestInstance, Object, Object, Object……T16>.![image[12]][5]
+Secondly the support limits updating the default display name of the activity to the number of types defined by ArgumentCount even though the InstanceResolver class defines 16 generic arguments. This means that the display name is for example InstanceResolver&lt;String, ITestInstance&gt; where ArgumentCount = Two rather than InstanceResolver&lt;String, ITestInstance, Object, Object, Object……T16&gt;.![image[12]][5]
 
 This post has provided a custom updatable generic type support specific to the InstanceResolver activity. The next post will look at the XAML designer support for the InstanceResolver activity and further uses of attached properties.
 
-[0]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-4.aspx
-[1]: /post/2010/09/30/Creating-updatable-generic-Windows-Workflow-activities.aspx
-[2]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
-[3]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-3.aspx
-[4]: //files/image%5B10%5D.png
-[5]: //files/image%5B12%5D.png
+[0]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-4/
+[1]: /2010/09/30/creating-updatable-generic-windows-workflow-activities/
+[2]: /2010/09/16/custom-windows-workflow-activity-for-dependency-resolutione28093part-1/
+[3]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-3/
+[4]: /files/image%5B10%5D.png
+[5]: /files/image%5B12%5D.png

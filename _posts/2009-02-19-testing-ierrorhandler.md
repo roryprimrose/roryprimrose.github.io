@@ -49,7 +49,7 @@ private static T ReadFaultDetail<T>(Message reply) where T : class
 }
 {% endhighlight %}
 
-[0]: /page/WCF-service-contract-design.aspx
-[1]: /post/2008/04/07/implementing-ierrorhandler.aspx
-[2]: /post/2008/11/07/Strict-IErrorHandler-usage.aspx
+[0]: /2008/10/08/wcf-service-contract-design/
+[1]: /2008/04/07/implementing-ierrorhandler/
+[2]: /2008/11/07/strict-ierrorhandler-usage/
 [3]: http://www.olegsych.com/2008/07/simplifying-wcf-using-exceptions-as-faults/

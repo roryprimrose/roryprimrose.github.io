@@ -17,6 +17,7 @@ Here is the easiest way to renew the certificate.
 1. Add a new STS project to that solution using the Tools -&gt; Add STS Reference… menu item
 1. Continue through the wizard
 1. Refresh the MMC console and you should now have a fresh STSTestCert
+
 ![image][0]
 
-[0]: //files/image_134.png
+[0]: /files/image_134.png

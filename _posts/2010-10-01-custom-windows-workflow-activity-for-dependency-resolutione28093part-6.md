@@ -711,6 +711,6 @@ The designer support using this implementation is usable but far from perfect. T
 
 This post has covered the designer support for the InstanceResolver activity and provided information on some gotchas for working with activity designers. The posts in this series have covered all aspects of implementing a custom activity for resolving dependencies within WF4 workflows.
 
-[0]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-5.aspx
-[1]: //files/image_36.png
-[2]: //files/image_37.png
+[0]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-5/
+[1]: /files/image_36.png
+[2]: /files/image_37.png

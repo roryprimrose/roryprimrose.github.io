@@ -15,6 +15,7 @@ The way to set this up is as follows:
 1. Set the command line arguments to _/testcontainer:**YourLoadTest.loadtest** /noisolation /noresults_(replacing the filename in red with your loadtest file name)
 1. Set the working directory to the $(TargetDir) of the project that contains the load test
 1. Ensure you that you have compiled the project
+
 ![image][0]
 
 The /noisolation switch is critical otherwise the profiler is going to profile mstest.exe as it manages the execution of the load test using different process. This means you won’t be profiling the load test, just the harness.
@@ -23,8 +24,10 @@ The /noresults switch just makes it easy to work with because otherwise you need
 
 When you start the profiler, it will then kick of mstest which in turn will run your load test.![image][1]
 
-At the end of it, you then have your data.![image][2]
+At the end of it, you then have your data.
 
-[0]: //files/image_131.png
-[1]: //files/image_132.png
-[2]: //files/image_133.png
+![image][2]
+
+[0]: /files/image_131.png
+[1]: /files/image_132.png
+[2]: /files/image_133.png

@@ -61,13 +61,13 @@ The designer will look at the design assembly and extract the image from the res
 
 The only other thing to keep in mind is that the design assembly must be co-located with the activity assembly in order to leverage the design-time experience provided by the custom activity designers.
 
-[0]: /post/2010/10/01/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Wrap-up.aspx
+[0]: /2010/10/01/custom-windows-workflow-activity-for-dependency-resolutione28093wrap-up/
 [1]: http://www.famfamfam.com/lab/icons/silk/
 [2]: http://msdn.microsoft.com/en-us/library/system.drawing.toolboxbitmapattribute.aspx
-[3]: //files/image_39.png
-[4]: //files/image_40.png
-[5]: //files/image_41.png
-[6]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-4.aspx
-[7]: //files/image_42.png
-[8]: //files/image_43.png
-[9]: //files/image_44.png
+[3]: /files/image_39.png
+[4]: /files/image_40.png
+[5]: /files/image_41.png
+[6]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-4/
+[7]: /files/image_42.png
+[8]: /files/image_43.png
+[9]: /files/image_44.png

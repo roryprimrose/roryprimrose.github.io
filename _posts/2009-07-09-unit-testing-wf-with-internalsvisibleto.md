@@ -27,4 +27,4 @@ Problem solved.
 
 [0]: /post/2006/12/13/adding-workflows-to-a-non-wf-project.aspx
 [1]: https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=338293
-[2]: //files/image_1.png
+[2]: /files/image_1.png

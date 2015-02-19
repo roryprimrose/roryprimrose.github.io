@@ -51,7 +51,7 @@ The answer to this problem is to persist the details of the resolution rather th
 
 The next post will go through the implementation of the handler and the extension classes.
 
-[0]: /post/2010/09/15/Dependency-injection-options-for-Windows-Workflow-4.aspx
-[1]: //files/image_26.png
-[2]: //files/image_27.png
-[3]: //files/image_28.png
+[0]: /2010/09/15/dependency-injection-options-for-windows-workflow-4/
+[1]: /files/image_26.png
+[2]: /files/image_27.png
+[3]: /files/image_28.png

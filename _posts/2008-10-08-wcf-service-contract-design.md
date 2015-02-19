@@ -25,7 +25,7 @@ The alternative is to break up data contracts so that they only describe a singu
 
 If a data contract contains a property that returns an array based type, the service design doesn't constrain how many items will be returned. Applications don't often have business rules that say you can only have a maximum of [insert number here] related records. These relationships are normally defined as a foreign key relationship in a relational database without business rules or constraints that limit the relationships. Taking the house example, the service design doesn't define the maximum number of house images can be stored for a house and business rules are most likely not going to address this either. The result is that it would be easy to have a record that has too many other related records such that we run into the default WCF size limits. 
 
-The exception to this rule is where there are clear business rules and/or data store constraints that define how much data is in the array. For example, an array of bytes that define a SHA1 hash value. These are always going to be 20 bytes. This is both a rule and a known maximum size limit. Knowing this helps to determine whether the data contract will break the default WCF size limits. **&#160;**
+The exception to this rule is where there are clear business rules and/or data store constraints that define how much data is in the array. For example, an array of bytes that define a SHA1 hash value. These are always going to be 20 bytes. This is both a rule and a known maximum size limit. Knowing this helps to determine whether the data contract will break the default WCF size limits.
 
 **Always support paging for operations that return array types**
 
@@ -55,14 +55,12 @@ See [this post][4] for more information about wiring up IErrorHandler implementa
 
 These are just a few ideas. Another way of checking for appropriate service contract design is to calculate the maximum amount of bytes that a message will contain as defined by the data contract passed to or returned from a service operation. If the answer is that the amount can't be determined, then that should raise red flags. This will be a risk that needs to be managed, such as paging of array based types. If it is determined that the message is too large for WCF default limits, then the granularity of the data contracts needs to be reviewed (chatty vs chunky data contracts and operations). If it can be determined that some information is used more often that other information for an entity, then consider implementing summary data contracts. 
 
-&#160;
-
 **Updated**
 
 Formatting and information about IErrorHandler has been updated.
 
 [0]: http://www.idesign.net/
 [1]: http://www.idesign.net/idesign/download/IDesign%20WCF%20Coding%20Standard.zip
-[2]: /post/2008/04/07/wcf-security-getting-the-password-of-the-user.aspx
-[3]: /post/2008/04/07/implementing-ierrorhandler.aspx
-[4]: /post/2008/11/07/Strict-IErrorHandler-usage.aspx
+[2]: /2008/04/07/wcf-security-getting-the-password-of-the-user/
+[3]: /2008/04/07/implementing-ierrorhandler/
+[4]: /2008/11/07/strict-ierrorhandler-usage/

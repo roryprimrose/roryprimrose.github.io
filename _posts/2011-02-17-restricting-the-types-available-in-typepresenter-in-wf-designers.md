@@ -100,9 +100,9 @@ The workflow runtime will throw an InvalidWorkflowException if the activity is e
 
 We have seen here that we can restrict the types presented by TypePresenter and back this up with some activity validation.
 
-[0]: //files/image_66.png
-[1]: //files/image_67.png
-[2]: //files/image_68.png
-[3]: //files/image_69.png
-[4]: //files/image_70.png
-[5]: //files/image_71.png
+[0]: /files/image_66.png
+[1]: /files/image_67.png
+[2]: /files/image_68.png
+[3]: /files/image_69.png
+[4]: /files/image_70.png
+[5]: /files/image_71.png

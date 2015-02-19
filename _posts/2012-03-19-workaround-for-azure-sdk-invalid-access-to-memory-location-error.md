@@ -52,12 +52,11 @@ This workaround only spins up the compute emulator or the storage emulator. It d
 * Request shutdowns of the emulators
 * Attach a debugger
 
-
-[0]: //files/image_135.png
+[0]: /files/image_135.png
 [1]: http://social.msdn.microsoft.com/Forums/en-US/windowsazuredevelopment/thread/d152fe9c-5f44-4776-bf18-ede89d871904
-[2]: /post/2012/03/18/Integration-testing-with-Azure-development-fabric-and-IISExpress.aspx
-[3]: //files/image_136.png
-[4]: //files/image_137.png
-[5]: //files/image_138.png
-[6]: //files/image_139.png
-[7]: //files/image_140.png
+[2]: /2012/03/18/integration-testing-with-azure-development-fabric-and-iisexpress/
+[3]: /files/image_136.png
+[4]: /files/image_137.png
+[5]: /files/image_138.png
+[6]: /files/image_139.png
+[7]: /files/image_140.png

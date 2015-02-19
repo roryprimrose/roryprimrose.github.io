@@ -267,6 +267,6 @@ Lastly, the extension implements IDisposable to ensure that ReaderWriterLock ins
 
 This post has demonstrated how a custom extension can be used by any activity to work with business failures. The next post will look at the custom activity for evaluating a business failure.
 
-[0]: /post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-2.aspx
-[1]: /post/2010/08/18/Getting-meaningful-exceptions-from-WF.aspx
-[2]: //files/image_45.png
+[0]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-2/
+[1]: /2010/08/18/getting-meaningful-exceptions-from-wf/
+[2]: /files/image_45.png

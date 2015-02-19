@@ -17,98 +17,87 @@ If using [TextWriterTraceListener][1] (or [XmlWriterTraceListener][2] that deriv
 
  The following code is the code in TextWriterTraceListener that causes the issues.   
   
-    {% highlight csharp linenos %}
-    public override void WriteLine(String message)
+{% highlight csharp linenos %}
+public override void WriteLine(String message)
+{
+    if (EnsureWriter())
     {
-        if (EnsureWriter())
+        if (base.NeedIndent)
         {
-            if (base.NeedIndent)
-            {
-                WriteIndent();
-            }
-    
-            writer.WriteLine(message);
-    
-            base.NeedIndent = true;
+            WriteIndent();
         }
+    
+        writer.WriteLine(message);
+    
+        base.NeedIndent = true;
     }
+}
     
-    internal Boolean EnsureWriter()
+internal Boolean EnsureWriter()
+{
+    Boolean flag = true;
+    
+    if (writer == null)
     {
-        Boolean flag = true;
+        flag = false;
     
-        if (writer == null)
+        if (this.fileName == null)
         {
-            flag = false;
+            return flag;
+        }
     
-            if (this.fileName == null)
+        Encoding encodingWithFallback = GetEncodingWithFallback(new UTF8Encoding(false));
+        String fullPath = Path.GetFullPath(this.fileName);
+        String directoryName = Path.GetDirectoryName(fullPath);
+        String fileName = Path.GetFileName(fullPath);
+    
+        for (Int32 i = 0; i < 2; i++)
+        {
+            try
             {
-                return flag;
+                writer = new StreamWriter(fullPath, true, encodingWithFallback, 0x1000);
+                flag = true;
+                break;
             }
-    
-            Encoding encodingWithFallback = GetEncodingWithFallback(new UTF8Encoding(false));
-            String fullPath = Path.GetFullPath(this.fileName);
-            String directoryName = Path.GetDirectoryName(fullPath);
-            String fileName = Path.GetFileName(fullPath);
-    
-            for (Int32 i = 0; i < 2; i++)
+            catch (IOException)
             {
-                try
-                {
-                    writer = new StreamWriter(fullPath, true, encodingWithFallback, 0x1000);
-                    flag = true;
-                    break;
-                }
-                catch (IOException)
-                {
-                    fileName = Guid.NewGuid() + fileName;
-                    fullPath = Path.Combine(directoryName, fileName);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    break;
-                }
-                catch (Exception)
-                {
-                    break;
-                }
+                fileName = Guid.NewGuid() + fileName;
+                fullPath = Path.Combine(directoryName, fileName);
             }
-    
-            if (!flag)
+            catch (UnauthorizedAccessException)
             {
-                this.fileName = null;
+                break;
+            }
+            catch (Exception)
+            {
+                break;
             }
         }
     
-        return flag;
+        if (!flag)
+        {
+            this.fileName = null;
+        }
     }
-    {% endhighlight %}
+    
+    return flag;
+}
+{% endhighlight %}
 
 When writing a record, it ensures that the writer is ready. The biggest problem with this implementation is that the logic in EnsureWriter() swallows any exception. If an exception is encountered, a second attempt is made which is likely to fail for the same reason as the first attempt. This causes WriteLine() to skip out without throwing an exception.
-        
-
-    
-        
+       
 I find this code very poor. If there is a problem with using the configuration values, the developer (or operations staff) need to know what the problem is so they can fix it. This implementation simply just ignores the request to write the trace record when an exception is encountered. This is the primary reason that troubleshooting tracing problems is so difficult.
 
 Some of the problems that can be encountered with the TextWriterTraceListener and derived classes are:
 
-
-      * The configured directory doesn't exist. I would have expected that this code would ensure that the directory is created, but unfortunately it doesn't.
-
-    
-      * Lack of permissions. If the identity running the trace methods doesn't have permissions to write to the configured location, this will obviously fail.
-
-    
-      * The path is too long. The .Net framework doesn't support paths more than 260 characters. See [here][3].
-
-    
-      * The drive specified in the path doesn't exist
-
+* The configured directory doesn't exist. I would have expected that this code would ensure that the directory is created, but unfortunately it doesn't.
+* Lack of permissions. If the identity running the trace methods doesn't have permissions to write to the configured location, this will obviously fail.
+* The path is too long. The .Net framework doesn't support paths more than 260 characters. See [here][3].
+* The drive specified in the path doesn't exist
     
 Hope this helps.
 
 [0]: http://msdn.microsoft.com/en-us/library/system.diagnostics.tracesource.aspx
 [1]: http://msdn.microsoft.com/en-us/library/system.diagnostics.textwritertracelistener.aspx
 [2]: http://msdn.microsoft.com/en-us/library/system.diagnostics.xmlwritertracelistener.aspx
-[3]: /archive/2006/11/09/So-you-still-can_2700_t-have-a-path-more-than-260-characters_3F003F003F00_.aspx
+[3]: /2006/11/09/so-you-still-can-t-have-a-path-more-than-260-characters-/

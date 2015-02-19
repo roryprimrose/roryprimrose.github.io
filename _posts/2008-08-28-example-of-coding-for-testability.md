@@ -15,52 +15,52 @@ Here is a simple example of how to take untestable code and make it testable. In
 
 **The untestable example**
 
-    {% highlight csharp linenos %}
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Net;
+{% highlight csharp linenos %}
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
      
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    internal class Program
     {
-        internal class Program
+        private static void Main(String[] args)
         {
-            private static void Main(String[] args)
-            {
-                ResourceResolver resolver = new ResourceResolver();
-                Uri location = new Uri("http://localhost");
-                String content = resolver.GetResourceContents(location);
+            ResourceResolver resolver = new ResourceResolver();
+            Uri location = new Uri("http://localhost");
+            String content = resolver.GetResourceContents(location);
      
-                Debug.WriteLine(content);
-            }
+            Debug.WriteLine(content);
         }
+    }
      
-        internal class ResourceResolver
+    internal class ResourceResolver
+    {
+        public String GetResourceContents(Uri location)
         {
-            public String GetResourceContents(Uri location)
+            HttpWebRequest request = HttpWebRequest.Create(location) as HttpWebRequest;
+     
+            request.Credentials = CredentialCache.DefaultCredentials;
+     
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+     
+            using (Stream contentStream = response.GetResponseStream())
             {
-                HttpWebRequest request = HttpWebRequest.Create(location) as HttpWebRequest;
-     
-                request.Credentials = CredentialCache.DefaultCredentials;
-     
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-     
-                using (Stream contentStream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(contentStream))
                 {
-                    using (StreamReader reader = new StreamReader(contentStream))
-                    {
-                        String content = reader.ReadToEnd();
+                    String content = reader.ReadToEnd();
      
-                        // Do something with this value 
+                    // Do something with this value 
      
      
-                        return content;
-                    }
+                    return content;
                 }
             }
         }
     }
-    {% endhighlight %}
+}
+{% endhighlight %}
 
 This is untestable as a unit test. To write a test for this code will require an integration test as requests are being made to an external resource (http in this case). What if that resource is not available or produces unknown or unmanageable results? Unit testing normally requires more flexibility as the same code paths need different data thrown at them.
 
@@ -68,76 +68,76 @@ This code is a classic example. The HttpWebRequest class is not easily testable.
 
 **The testable example**
 
-    {% highlight csharp linenos %}
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Net;
+{% highlight csharp linenos %}
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
      
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    internal class Program
     {
-        internal class Program
+        private static void Main(String[] args)
         {
-            private static void Main(String[] args)
-            {
-                HttpResourceLoader loader = new HttpResourceLoader();
-                ResourceResolver resolver = new ResourceResolver(loader);
-                Uri location = new Uri("http://localhost");
-                String resourceContent = resolver.GetResourceContents(location);
+            HttpResourceLoader loader = new HttpResourceLoader();
+            ResourceResolver resolver = new ResourceResolver(loader);
+            Uri location = new Uri("http://localhost");
+            String resourceContent = resolver.GetResourceContents(location);
      
-                Debug.WriteLine(resourceContent);
-            }
+            Debug.WriteLine(resourceContent);
         }
+    }
      
-        public interface IResourceLoader
-        {
-            String GetResourceContents(Uri location);
-        }
+    public interface IResourceLoader
+    {
+        String GetResourceContents(Uri location);
+    }
      
-        public class HttpResourceLoader : IResourceLoader
+    public class HttpResourceLoader : IResourceLoader
+    {
+        public String GetResourceContents(Uri location)
         {
-            public String GetResourceContents(Uri location)
+            HttpWebRequest request = WebRequest.Create(location) as HttpWebRequest;
+     
+            request.Credentials = CredentialCache.DefaultCredentials;
+     
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+     
+            using (Stream contentStream = response.GetResponseStream())
             {
-                HttpWebRequest request = WebRequest.Create(location) as HttpWebRequest;
-     
-                request.Credentials = CredentialCache.DefaultCredentials;
-     
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-     
-                using (Stream contentStream = response.GetResponseStream())
+                using (StreamReader reader = new StreamReader(contentStream))
                 {
-                    using (StreamReader reader = new StreamReader(contentStream))
-                    {
-                        return reader.ReadToEnd();
-                    }
+                    return reader.ReadToEnd();
                 }
             }
         }
+    }
      
-        internal class ResourceResolver
+    internal class ResourceResolver
+    {
+        public ResourceResolver(IResourceLoader loader)
         {
-            public ResourceResolver(IResourceLoader loader)
-            {
-                Loader = loader;
-            }
+            Loader = loader;
+        }
      
-            public String GetResourceContents(Uri location)
-            {
-                String content = Loader.GetResourceContents(location);
+        public String GetResourceContents(Uri location)
+        {
+            String content = Loader.GetResourceContents(location);
      
-                // Do something with this value
+            // Do something with this value
      
-                return content;
-            }
+            return content;
+        }
      
-            private IResourceLoader Loader
-            {
-                get;
-                set;
-            }
+        private IResourceLoader Loader
+        {
+            get;
+            set;
         }
     }
-    {% endhighlight %}
+}
+{% endhighlight %}
 
 By abstracting an implementation that actually gets the resource contents (with a bit of [DI] thrown in), we now have a ResourceResolver.GetResourceContents method that can be unit tested. The unit testing involved now needs to pass in either a stub or a mocked instance of IResourceLoader and we can safely test the logic of this method without requiring http requests.
 

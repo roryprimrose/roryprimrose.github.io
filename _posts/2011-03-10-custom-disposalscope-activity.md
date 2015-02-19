@@ -300,9 +300,9 @@ This is now a much cleaner solution as far as a design time experience goes and 
 
 You can download this activity in my latest [Neovolve.Toolkit 1.1 Beta][5] on the CodePlex site.
 
-[0]: /post/2011/03/09/Working-with-unmanaged-and-IDisposable-resources-in-WF.aspx
+[0]: /2011/03/09/working-with-unmanaged-and-idisposable-resources-in-wf/
 [1]: http://msmvps.com/blogs/theproblemsolver/archive/2010/08/22/workflows-and-no-persist-zones.aspx
-[2]: /post/2011/02/17/Restricting-the-types-available-in-TypePresenter-in-WF-designers.aspx
-[3]: /post/2010/09/30/Creating-updatable-generic-Windows-Workflow-activities.aspx
-[4]: //files/image_84.png
+[2]: /2011/02/17/restricting-the-types-available-in-typepresenter-in-wf-designers/
+[3]: /2010/09/30/creating-updatable-generic-windows-workflow-activities/
+[4]: /files/image_84.png
 [5]: http://neovolve.codeplex.com/releases/view/53499

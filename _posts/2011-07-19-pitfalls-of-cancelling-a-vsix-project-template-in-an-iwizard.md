@@ -61,4 +61,4 @@ The replacementsDictionary parameter contains the path of the new project. The w
 
 [0]: http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.templatewizard.wizardcancelledexception.aspx
 [1]: http://msdn.microsoft.com/en-us/library/microsoft.visualstudio.templatewizard.wizardbackoutexception.aspx
-[2]: //files/image_122.png
+[2]: /files/image_122.png

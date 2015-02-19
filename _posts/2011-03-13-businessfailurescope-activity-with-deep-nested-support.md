@@ -97,12 +97,12 @@ Overall, the complexity of the code has been significantly reduced by this this 
 
 You can download the updated version of BusinessFailureScope in the latest beta of my [Neovolve.Toolkit][9] project out on CodePlex.
 
-[0]: /post/2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Wrap-up.aspx
-[1]: /post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-3.aspx
-[2]: //files/image_45.png
+[0]: /2010/10/13/custom-workflow-activity-for-business-failure-evaluatione28093wrap-up/
+[1]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-3/
+[2]: /files/image_45.png
 [3]: http://msdn.microsoft.com/en-us/library/ee358743.aspx
 [4]: http://blogs.msdn.com/b/tilovell/archive/2009/12/20/workflow-scopes-and-execution-properties.aspx?wa=wsignin1.0
-[5]: //files/image_92.png
+[5]: /files/image_92.png
 [6]: http://neovolve.codeplex.com/SourceControl/changeset/view/74306#1422353
 [7]: http://neovolve.codeplex.com/SourceControl/diff/file/view/74545?fileId=1422354
 [8]: http://neovolve.codeplex.com/SourceControl/diff/file/view/74545?fileId=1422366

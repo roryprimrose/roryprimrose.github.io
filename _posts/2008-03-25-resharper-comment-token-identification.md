@@ -11,11 +11,15 @@ My issue with the ReSharper implementation is that it will identify these tokens
 
 The patterns defined are Todo, Note and Bug (I added Hack as a duplicate of Bug to support the default Visual Studio HACK token). I modified these regular expressions to ignore words beginning before the token. Instead, I just look for the beginning of the line. For example, the Note pattern was:
 
-(\W|^)(?<TAG&gt;NOTE)(\W|$)(.*)
+{% highlight text linenos %}
+(\W|^)(?<TAG>NOTE)(\W|$)(.*)
+{% endhighlight %}
 
 I have modified this to:
 
-^(?<TAG&gt;NOTE)(\W|$)(.*)
+{% highlight text linenos %}
+^(?<TAG>NOTE)(\W|$)(.*)
+{% endhighlight %}
 
 This will now only identify note comments if the NOTE token exists at the beginning of the comment only.
 

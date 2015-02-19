@@ -85,4 +85,4 @@ In its basic form, this proof of concept project was a success. The bootstrapper
 
 There were some limitations to the project as it was. It was not easily portable or repeatable between Visual Studio solutions. It also was not flexible enough to support multiple build configurations. The next post will look at how these obstacles were overcome by using a VSIX project template.
 
-[0]: /post/2011/07/19/Creating-a-simple-bootstrapper-Introduction.aspx
+[0]: /2011/07/19/creating-a-simple-bootstrapper-introduction/

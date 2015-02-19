@@ -98,8 +98,7 @@ namespace Neovolve.NAnt.Tasks
      
         #endregion
     }
-}
-    
+}    
 {% endhighlight %}
 
 To change the logging level, add the loglevel task around other tasks and set the level value. For example:

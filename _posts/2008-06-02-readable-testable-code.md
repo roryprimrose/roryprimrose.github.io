@@ -99,7 +99,6 @@ namespace ConsoleApplication1
         }
     }
 }
-    
 {% endhighlight %}
 
 MethodA contains the combined if tests while MethodB separates them out into individual tests. While I'm not sure about the nesting depth argument due to compiler optimizations, I totally agree about the increase in testability. I also think that such a coding style is much more readable. The risk of combined if tests is that they quickly become complex and difficult to understand.

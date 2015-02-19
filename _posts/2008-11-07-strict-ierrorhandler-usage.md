@@ -253,6 +253,6 @@ namespace Neovolve.Toolkit.Communication
 
 This attribute can be found in the Neovolve.Toolkit project in the [Neovolve][2] project on CodePlex. The Toolkit binary in the project downloads will include this attribute in the near future. Until then, you can access the code either here or from the CodePlex site. 
 
-[0]: /post/2008/04/07/implementing-ierrorhandler.aspx
+[0]: /2008/04/07/implementing-ierrorhandler/
 [1]: http://dansen.wordpress.com/
 [2]: http://www.codeplex.com/neovolve

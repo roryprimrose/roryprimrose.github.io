@@ -24,7 +24,7 @@ A SecurityException is thrown if this condition is evaluated as True. An authent
 
 Another security measure to protect the content correlation value (and all the data of the service) to use ensure that SSL is used to encrypt the traffic for the service. This should not however remove the requirement for the above security check. Additionally, you should also write integration tests that verify that this potential security hole is successfully managed by your service application.
 
-[0]: /post/2010/11/08/Hosted-workflow-service-with-content-correlation.aspx
-[1]: //files/image_90.png
-[2]: /post/2011/02/21/Extract-WCF-identity-into-a-WorkflowServiceHost-activity.aspx
-[3]: //files/image_91.png
+[0]: /2010/11/08/hosted-workflow-service-with-content-correlation/
+[1]: /files/image_90.png
+[2]: /2011/02/21/extract-wcf-identity-into-a-workflowservicehost-activity/
+[3]: /files/image_91.png

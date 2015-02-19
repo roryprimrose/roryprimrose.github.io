@@ -16,4 +16,4 @@ What you need to do is change the account to Local System, then click Apply and 
 
 [0]: http://www.google.com/search?q=Error+3(error+not+found)+occurred+while+opening+file+'C:\Program+Files\Microsoft+SQL+Server\MSSQL.1\MSSQL\DATA\master.mdf'+to+obtain+configuration+information+at+startup.+An+invalid+startup+option+might+have+caused+the+error.+Verify+your+startup+options,+and+correct+or+remove+them+if+necessary.&amp;rls=com.microsoft:en-au&amp;ie=UTF-8&amp;oe=UTF-8&amp;startIndex=&amp;startPage=1
 [1]: http://social.msdn.microsoft.com/forums/en-US/sqldataaccess/thread/cd4cbc1d-3e0e-4a54-9e8f-f9df5b669992/
-[2]: //files/WindowsLiveWriter/SQLEXPRESSfailstostart_83E6/image_7.png
+[2]: /files/WindowsLiveWriter/SQLEXPRESSfailstostart_83E6/image_7.png

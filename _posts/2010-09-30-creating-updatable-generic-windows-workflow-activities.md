@@ -320,11 +320,11 @@ This will provide the dropdown list of types for the designer. The first importa
 
 Using these techniques will allow a custom activity to provide updatable generic type support as part of its design time experience.
 
-[0]: /post/2010/09/15/Dependency-injection-options-for-Windows-Workflow-4.aspx
-[1]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
-[2]: /post/2010/09/29/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-2.aspx
-[3]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-3.aspx
-[4]: //files/image_32.png
-[5]: //files/image_33.png
-[6]: //files/image_34.png
-[7]: //files/image_35.png
+[0]: /2010/09/15/dependency-injection-options-for-windows-workflow-4/
+[1]: /2010/09/16/custom-windows-workflow-activity-for-dependency-resolutione28093part-1/
+[2]: /2010/09/29/custom-windows-workflow-activity-for-dependency-resolutione28093part-2/
+[3]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-3/
+[4]: /files/image_32.png
+[5]: /files/image_33.png
+[6]: /files/image_34.png
+[7]: /files/image_35.png

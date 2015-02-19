@@ -18,135 +18,134 @@ The MSDN documentation (see [here][0]) provides examples about how to to create 
 
 The error handler implements IErrorHandler, but also implements IServiceBehavior. This interface allows the error handler to be hooked up by configuration.
 
-    {% highlight csharp linenos %}
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
-    using System.ServiceModel;
-    using System.ServiceModel.Channels;
-    using System.ServiceModel.Description;
-    using System.ServiceModel.Dispatcher;
+{% highlight csharp linenos %}
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
+using System.ServiceModel.Dispatcher;
      
-    namespace WcfServiceLibrary1
+namespace WcfServiceLibrary1
+{
+    public class ErrorHandler : IErrorHandler, IServiceBehavior
     {
-        public class ErrorHandler : IErrorHandler, IServiceBehavior
+        public void AddBindingParameters(
+            ServiceDescription serviceDescription,
+            ServiceHostBase serviceHostBase,
+            Collection<ServiceEndpoint> endpoints,
+            BindingParameterCollection bindingParameters)
         {
-            public void AddBindingParameters(
-                ServiceDescription serviceDescription,
-                ServiceHostBase serviceHostBase,
-                Collection<ServiceEndpoint&gt; endpoints,
-                BindingParameterCollection bindingParameters)
-            {
-            }
+        }
      
-            public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-            {
-                IErrorHandler errorHandler = new ErrorHandler();
+        public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
+        {
+            IErrorHandler errorHandler = new ErrorHandler();
      
-                foreach (ChannelDispatcherBase channelDispatcherBase in serviceHostBase.ChannelDispatchers)
+            foreach (ChannelDispatcherBase channelDispatcherBase in serviceHostBase.ChannelDispatchers)
+            {
+                ChannelDispatcher channelDispatcher = channelDispatcherBase as ChannelDispatcher;
+     
+                if (channelDispatcher != null)
                 {
-                    ChannelDispatcher channelDispatcher = channelDispatcherBase as ChannelDispatcher;
-     
-                    if (channelDispatcher != null)
-                    {
-                        channelDispatcher.ErrorHandlers.Add(errorHandler);
-                    }
+                    channelDispatcher.ErrorHandlers.Add(errorHandler);
                 }
             }
+        }
      
-            public bool HandleError(Exception error)
-            {
-                Trace.TraceError(error.ToString());
+        public bool HandleError(Exception error)
+        {
+            Trace.TraceError(error.ToString());
      
-                // Returning true indicates you performed your behavior.
-                return true;
-            }
+            // Returning true indicates you performed your behavior.
+            return true;
+        }
      
-            public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
-            {
-            }
+        public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
+        {
+        }
      
-            public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
-            {
-                // Shield the unknown exception
-                FaultException faultException = new FaultException(
-                    "Server error encountered. All details have been logged.");
-                MessageFault messageFault = faultException.CreateMessageFault();
+        public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
+        {
+            // Shield the unknown exception
+            FaultException faultException = new FaultException(
+                "Server error encountered. All details have been logged.");
+            MessageFault messageFault = faultException.CreateMessageFault();
      
-                fault = Message.CreateMessage(version, messageFault, faultException.Action);
-            }
+            fault = Message.CreateMessage(version, messageFault, faultException.Action);
         }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 **ErrorHandlerElement**
 
 The error handler element defines the extension behavior such that ErrorHandler can be defined against a service behavior.
 
-    {% highlight csharp linenos %}
-    using System;
-    using System.ServiceModel.Configuration;
+{% highlight csharp linenos %}
+using System;
+using System.ServiceModel.Configuration;
      
-    namespace WcfServiceLibrary1
+namespace WcfServiceLibrary1
+{
+    public class ErrorHandlerElement : BehaviorExtensionElement
     {
-        public class ErrorHandlerElement : BehaviorExtensionElement
+        protected override object CreateBehavior()
         {
-            protected override object CreateBehavior()
-            {
-                return new ErrorHandler();
-            }
+            return new ErrorHandler();
+        }
      
-            public override Type BehaviorType
+        public override Type BehaviorType
+        {
+            get
             {
-                get
-                {
-                    return typeof(ErrorHandler);
-                }
+                return typeof(ErrorHandler);
             }
         }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 **Configuration**
 
 This configuration identifies the ErrorHandlerElement as a behavior extension, which then allows errorHandler (the name of the configured extension) to be defined against the service behavior. This is how the error handler gets hooked up for the service.
 
-    {% highlight xml linenos %}
-    <?xml version="1.0" encoding="utf-8" ?&gt;
-    <configuration&gt;
+{% highlight xml linenos %}
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
      
-      <system.web&gt;
-        <compilation debug="true" /&gt;
-      </system.web&gt;
+    <system.web>
+    <compilation debug="true" />
+    </system.web>
      
-      <system.serviceModel&gt;
-        <behaviors&gt;
-          <serviceBehaviors&gt;
-            <behavior name="MyServiceBehavior"&gt;
-              <serviceDebug includeExceptionDetailInFaults="true" /&gt;
-              <errorHandler /&gt;
-            </behavior&gt;
-          </serviceBehaviors&gt;
-        </behaviors&gt;
-        <extensions&gt;
-          <behaviorExtensions&gt;
-            <add name="errorHandler"
-                type="WcfServiceLibrary1.ErrorHandlerElement, WcfServiceLibrary1" /&gt;
-          </behaviorExtensions&gt;
-        </extensions&gt;
-        <services&gt;
-          <service behaviorConfiguration="MyServiceBehavior"
-                  name="WcfServiceLibrary1.Service1"&gt;
-            <endpoint binding="wsHttpBinding"
-                      contract="WcfServiceLibrary1.IService1" /&gt;
-          </service&gt;
-        </services&gt;
-      </system.serviceModel&gt;
-    </configuration&gt;
-    
-    {% endhighlight %}
+    <system.serviceModel>
+    <behaviors>
+        <serviceBehaviors>
+        <behavior name="MyServiceBehavior">
+            <serviceDebug includeExceptionDetailInFaults="true" />
+            <errorHandler />
+        </behavior>
+        </serviceBehaviors>
+    </behaviors>
+    <extensions>
+        <behaviorExtensions>
+        <add name="errorHandler"
+            type="WcfServiceLibrary1.ErrorHandlerElement, WcfServiceLibrary1" />
+        </behaviorExtensions>
+    </extensions>
+    <services>
+        <service behaviorConfiguration="MyServiceBehavior"
+                name="WcfServiceLibrary1.Service1">
+        <endpoint binding="wsHttpBinding"
+                    contract="WcfServiceLibrary1.IService1" />
+        </service>
+    </services>
+    </system.serviceModel>
+</configuration>    
+{% endhighlight %}
 
 This will hook up the error handler to cover any exceptions thrown by the service. Error handlers can also be debugged via the IDE.
 

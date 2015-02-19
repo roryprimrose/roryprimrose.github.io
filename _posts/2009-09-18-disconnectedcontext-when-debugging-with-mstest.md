@@ -11,4 +11,4 @@ The debugging on the thread of the executing test appears to be stopped when thi
 
 Searching the net hasn’t yielded any pointers. Anyone out there have some information about this?
 
-[0]: //files/image_7.png
+[0]: /files/image_7.png

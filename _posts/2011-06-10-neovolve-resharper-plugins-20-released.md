@@ -31,10 +31,10 @@ This version adds better support for type identification in xmldoc comments. Cod
 
 You can grab this release from the CodePlex project [here][6].
 
-[0]: /post/2008/07/06/neovolve-resharper-plugins-1-0-released.aspx
-[1]: //files/image_102.png
-[2]: //files/image_103.png
-[3]: //files/image_104.png
-[4]: //files/image_105.png
-[5]: //files/image_106.png
+[0]: /2008/07/06/neovolve-resharper-plugins-1-0-released/
+[1]: /files/image_102.png
+[2]: /files/image_103.png
+[3]: /files/image_104.png
+[4]: /files/image_105.png
+[5]: /files/image_106.png
 [6]: http://neovolvex.codeplex.com/releases/view/45597

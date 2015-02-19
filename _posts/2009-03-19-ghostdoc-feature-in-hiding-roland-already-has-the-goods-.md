@@ -12,7 +12,7 @@ date: 2009-03-19 09:44:00 +10:00
 
  I have assigned the RebuildDocumentation to a Ctrl+Shift+D, Ctrl+Shift+R combination and changed DocumentThis to Ctrl+Shift+D, Ctrl+Shift+D combination. Roland said to make sure that the new keyboard binding is only used in Text Editor (as highlighted above). 
 
-[0]: /post/2009/03/18/Using-GhostDoc-to-document-unit-test-methods.aspx
-[1]: /post/2009/03/18/Using-GhostDoc-to-document-unit-test-classes.aspx
+[0]: /2009/03/18/using-ghostdoc-to-document-unit-test-methods/
+[1]: /2009/03/18/using-ghostdoc-to-document-unit-test-classes/
 [2]: http://ghostdoc.12.forumer.com/
-[3]: //files/WindowsLiveWriter/Rolandalreadyhasthegoods_825C/image_3.png
+[3]: /files/WindowsLiveWriter/Rolandalreadyhasthegoods_825C/image_3.png

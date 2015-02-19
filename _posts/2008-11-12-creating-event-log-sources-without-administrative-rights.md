@@ -32,10 +32,11 @@ The general logic to achieve this is:
 
 To set up the permissions to achieve this, the installation package needs to assign permissions to the registry key for the event log for the account used to run the application. The location of the event log in the registry is indicated in the first two points above. 
 
-The permissions should look something like this:![image][0]
+The permissions should look something like this:  
+![image][0]
 
 **Update:**
 
 After further testing, the only permissions required for the event log are _Set Value_ and _Create Subkey_. The above settings for _Query Value_ and _Enumerate Subkeys_ are not required. This is because when you run the above logic, querying for the existence of a key (by simply calling OpenSubKey) is not querying a value and isn't enumerating the keys. Once the source is created, no further registry permissions are required to write to the event log.
 
-[0]: //files/WindowsLiveWriter/Creatingeventlogsourceswithoutadministra_DCD9/image_3.png
+[0]: /files/WindowsLiveWriter/Creatingeventlogsourceswithoutadministra_DCD9/image_3.png

@@ -31,9 +31,9 @@ Using expandable object converters and type descriptors makes the property grid 
 
 Kudos to [Jim Lamb][4] and [Ewald Hofman][5] for their excellent posts on TFS Build 2010 customisation.
 
-[0]: //files/image_19.png
-[1]: //files/image_20.png
+[0]: /files/image_19.png
+[1]: /files/image_20.png
 [2]: http://social.msdn.microsoft.com/Forums/en-US/tfsbuild/thread/624bbb4b-9996-4945-bb82-56e72a718b9f
-[3]: //files/image_21.png
+[3]: /files/image_21.png
 [4]: http://blogs.msdn.com/b/jimlamb/archive/2010/02/12/how-to-create-a-custom-workflow-activity-for-tfs-build-2010.aspx
 [5]: http://www.ewaldhofman.nl/?tag=/build+2010+customization

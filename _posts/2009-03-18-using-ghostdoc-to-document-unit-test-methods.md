@@ -8,20 +8,20 @@ GhostDoc is one of the coolest tools around for Visual Studio. Sometimes it need
 
 For example,
 
-    {% highlight csharp linenos %}
-    /// <summary&gt;
-    /// Creates the returns cache store instance test.
-    /// </summary&gt;
-    [TestMethod] 
-    [Description("Black box tests")]
-    public void CreateReturnsCacheStoreInstanceTest()
-    {
-        ICacheStore actual = CacheStoreFactory.Create();
+{% highlight csharp linenos %}
+/// <summary>
+/// Creates the returns cache store instance test.
+/// </summary>
+[TestMethod] 
+[Description("Black box tests")]
+public void CreateReturnsCacheStoreInstanceTest()
+{
+    ICacheStore actual = CacheStoreFactory.Create();
      
-        Assert.IsNotNull(actual, "Create failed to return an instance");
-    }
+    Assert.IsNotNull(actual, "Create failed to return an instance");
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 Creating a custom GhostDoc rule for unit test methods can assist in cleaning the documentation up a little.
 
@@ -35,24 +35,24 @@ Enter the new rule name, identify that the method name must end in "_Test_" and 
 
 Using this new rule, the example above now gets the following documentation generated.
 
-    {% highlight csharp linenos %}
-    /// <summary&gt;
-    /// Runs test for create returns cache store instance.
-    /// </summary&gt;
-    [TestMethod]
-    [Description("Black box tests")]
-    public void CreateReturnsCacheStoreInstanceTest()
-    {
-        ICacheStore actual = CacheStoreFactory.Create();
+{% highlight csharp linenos %}
+/// <summary>
+/// Runs test for create returns cache store instance.
+/// </summary>
+[TestMethod]
+[Description("Black box tests")]
+public void CreateReturnsCacheStoreInstanceTest()
+{
+    ICacheStore actual = CacheStoreFactory.Create();
      
-        Assert.IsNotNull(actual, "Create failed to return an instance");
-    }
+    Assert.IsNotNull(actual, "Create failed to return an instance");
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 It's not perfect, but its a lot better.
 
-[0]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_9.png
-[1]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_12.png
-[2]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_8.png
-[3]: //files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_15.png
+[0]: /files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_9.png
+[1]: /files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_12.png
+[2]: /files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_8.png
+[3]: /files/WindowsLiveWriter/UsingGhostDoctodocumentUnitTestmethods_992E/image_15.png

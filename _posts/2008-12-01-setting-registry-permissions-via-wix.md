@@ -23,4 +23,4 @@ Unfortunately it still didn't work. Setting permissions using the alternative el
 <util:PermissionEx Domain="[APP_POOL_USER_DOMAIN]" User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes" /&gt;
 {% endhighlight %}
 
-[0]: /post/2008/11/12/Creating-event-log-sources-without-administrative-rights.aspx
+[0]: /2008/11/12/creating-event-log-sources-without-administrative-rights/

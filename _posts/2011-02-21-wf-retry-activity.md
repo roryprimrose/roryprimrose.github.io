@@ -297,5 +297,5 @@ The designer supports the common expand/collapse style behaviour and allows for 
 
 The Retry activity will make as many attempts as it can to successfully execute the child activity. One thing to note about this however is that there is no concept of transactional support within the activity. Any workflow variables that have changed or any other side affects from the child activity will remain when it fails and is retried. For example, if the child activity increments a workflow variable or makes a change to the file system then these changes will remain in that state when the child activity is executed again. This must be taken into consideration when using this activity. The number of tasks actioned within the Retry should be as few as possible and should not alter any in-memory or persisted state.
 
-[0]: /post/2011/02/17/Restricting-the-types-available-in-TypePresenter-in-WF-designers.aspx
-[1]: //files/image_78.png
+[0]: /2011/02/17/restricting-the-types-available-in-typepresenter-in-wf-designers/
+[1]: /files/image_78.png

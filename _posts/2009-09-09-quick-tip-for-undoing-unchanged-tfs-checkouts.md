@@ -23,6 +23,6 @@ Update: Set initial directory to $(SolutionDir) as sometimes the workspace canâ€
 
 Update #2: Add /noget to the end of the arguments to prevent the local workspace being updated with the latest version before checking for null changes.
 
-[0]: //files/image_3.png
-[1]: //files/image_6.png
-[2]: //files/image_5.png
+[0]: /files/image_3.png
+[1]: /files/image_6.png
+[2]: /files/image_5.png

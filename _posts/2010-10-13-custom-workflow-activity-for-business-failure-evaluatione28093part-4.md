@@ -150,8 +150,8 @@ The activity will resolve a BusinessFailure<T> instance once the Execute method 
 
 This post has shown how to create a simple business failure evaluation activity with validation support. The next post will look at how to provide the ability to group a set of failures using a composite activity.
 
-[0]: /post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-3.aspx
-[1]: //files/image_46.png
-[2]: //files/image_47.png
-[3]: //files/image_48.png
-[4]: //files/image_49.png
+[0]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-3/
+[1]: /files/image_46.png
+[2]: /files/image_47.png
+[3]: /files/image_48.png
+[4]: /files/image_49.png

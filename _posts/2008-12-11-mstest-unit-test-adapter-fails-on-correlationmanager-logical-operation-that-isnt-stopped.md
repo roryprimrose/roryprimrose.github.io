@@ -28,8 +28,7 @@ namespace TestProject2
     internal class TestObject 
     { 
     } 
-} 
-    
+}     
 {% endhighlight %}
 
 This fails with the message: 

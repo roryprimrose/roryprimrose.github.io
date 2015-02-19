@@ -34,11 +34,11 @@ To create this certificate, open up the Visual Studio command prompt (elevated p
 
 The 'Neovolve.Toolkit' is the subject name I have used in this case. You will probably want to use your own identifier.
 
-Open up _MMC_ and add the _Certificates -&gt; Computer account -&gt; Local computer_ snap in.
+Open up _MMC_ and add the _Certificates -> Computer account -> Local computer_ snap in.
 
 [![ComputerCertificates][7]][6]
 
-Go to _Personal Certificates_ and locate the certificate that you created with makecert.exe. Right click this certificate and select _All tasks -&gt; Export_. Continue through the wizard to export the pfx file with its private key.
+Go to _Personal Certificates_ and locate the certificate that you created with makecert.exe. Right click this certificate and select _All tasks -> Export_. Continue through the wizard to export the pfx file with its private key.
 
 I used the subject name as the password and the export file name so that it is easy to remember.
 
@@ -335,7 +335,7 @@ ServiceHost host = new ServiceHost(typeof(PasswordService));
 ServiceDebugBehavior debugBehaviour = new ServiceDebugBehavior();
 
 debugBehaviour.IncludeExceptionDetailInFaults = true;
-host.Description.Behaviors.Remove&lt;ServiceDebugBehavior&gt;();
+host.Description.Behaviors.Remove<ServiceDebugBehavior>();
 host.Description.Behaviors.Add(debugBehaviour);
 
 // Create the service credentials
@@ -347,13 +347,13 @@ credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePass
 credentials.ServiceCertificate.SetCertificate(
     StoreLocation.CurrentUser, StoreName.My, X509FindType.FindBySubjectName, "Neovolve.Toolkit");
 
-host.Description.Behaviors.Remove&lt;ServiceCredentials&gt;();
+host.Description.Behaviors.Remove<ServiceCredentials>();
 host.Description.Behaviors.Add(credentials);
 
 ServiceAuthorizationBehavior authorization = new ServiceAuthorizationBehavior();
 
 authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
-host.Description.Behaviors.Remove&lt;ServiceAuthorizationBehavior&gt;();
+host.Description.Behaviors.Remove<ServiceAuthorizationBehavior>();
 host.Description.Behaviors.Add(authorization);
 
 host.AddServiceEndpoint(typeof(IPasswordService), binding, address);
@@ -366,7 +366,7 @@ try
     EndpointAddress endpointAddress = new EndpointAddress(
         address, EndpointIdentity.CreateDnsIdentity("Neovolve.Toolkit"));
 
-    ChannelFactory&lt;IPasswordService&gt; factory = new ChannelFactory&lt;IPasswordService&gt;(
+    ChannelFactory<IPasswordService> factory = new ChannelFactory<IPasswordService>(
         binding, endpointAddress);
 
     try

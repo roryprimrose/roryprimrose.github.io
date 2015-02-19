@@ -22,7 +22,7 @@ date: 2008-02-29 00:16:00 +10:00
 
  On a side note, static analysis rules are great if you use CodePlex. They will allow you to do some of the things that a checkin policy might do. Given that CodePlex doesn't support checkin policies, this is a great alternative as static analysis rules are just dll's on the client machine (no registration or server configuration!). 
 
-[0]: /archive/2008/02/25/writing-your-own-fxcop-rules.aspx
+[0]: /2008/02/25/writing-your-own-fxcop-rules/
 [1]: http://blogs.msdn.com/fxcop/archive/2008/01/18/tutorial-on-writing-your-own-code-analysis-rule.aspx
 [2]: http://blogs.msdn.com/fxcop/archive/2006/05/31/faq-can-i-create-custom-rules-that-target-both-visual-studio-and-fxcop-david-kean.aspx
 [3]: http://www.codeplex.com/CSAR

@@ -22,15 +22,15 @@ The following is a list of all the posts in this series.
 
 This workflow activity and several others can be found in my [Neovolve.Toolkit project][10] which can be found [here][11] on Codeplex.
 
-[0]: //files/image_36.png
-[1]: //files/image_37.png
-[2]: /post/2010/09/15/Dependency-injection-options-for-Windows-Workflow-4.aspx
-[3]: /post/2010/09/16/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-1.aspx
-[4]: /post/2010/09/29/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-2.aspx
-[5]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-3.aspx
-[6]: /post/2010/09/30/Creating-updatable-generic-Windows-Workflow-activities.aspx
-[7]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-4.aspx
-[8]: /post/2010/09/30/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-5.aspx
-[9]: /post/2010/10/01/Custom-Windows-Workflow-activity-for-dependency-resolutione28093Part-6.aspx
-[10]: /post/2010/10/01/NeovolveToolkit-10-RTW.aspx
+[0]: /files/image_36.png
+[1]: /files/image_37.png
+[2]: /2010/09/15/dependency-injection-options-for-windows-workflow-4/
+[3]: /2010/09/16/custom-windows-workflow-activity-for-dependency-resolutione28093part-1/
+[4]: /2010/09/29/custom-windows-workflow-activity-for-dependency-resolutione28093part-2/
+[5]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-3/
+[6]: /2010/09/30/creating-updatable-generic-windows-workflow-activities/
+[7]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-4/
+[8]: /2010/09/30/custom-windows-workflow-activity-for-dependency-resolutione28093part-5/
+[9]: /2010/10/01/custom-windows-workflow-activity-for-dependency-resolutione28093part-6/
+[10]: /2010/10/01/neovolvetoolkit-10-rtw/
 [11]: http://neovolve.codeplex.com/releases/view/19004

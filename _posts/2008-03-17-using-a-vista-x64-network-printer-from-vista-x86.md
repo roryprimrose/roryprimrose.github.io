@@ -15,6 +15,7 @@ The rough steps are:
 1. Select Create a new port and select Local Port
 1. Enter the address of the printer ([\\servername\printername][0])
 1. Select the printer make and model
+
 Easy
 
 [0]: file://\\servername\printername

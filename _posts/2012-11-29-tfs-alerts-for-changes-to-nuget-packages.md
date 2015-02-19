@@ -13,14 +13,17 @@ I’ve been a little late to the NuGet bandwagon. Overall I am really happy with
 
 I did have an idea about how to at least raise the awareness of new and updated NuGet packages in a solution to a team that uses TFS. Using the new Team Alerts feature in TFS 2012 will do the job. A custom TFS alert can notify the developers of a check in to the packages directory. The setup looks something like this:
 
-Ensure that you have a Developers TFS team in the project.![image][0]
+Ensure that you have a Developers TFS team in the project.  
+![image][0]
 
-Add a new Checkin alert that watches a specific path.![image][1]
+Add a new Checkin alert that watches a specific path.  
+![image][1]
 
-Configure the path as contains packages.![image][2]
+Configure the path as contains packages.  
+![image][2]
 
 All done.
 
-[0]: //files/image_144.png
-[1]: //files/image_145.png
-[2]: //files/image_146.png
+[0]: /files/image_144.png
+[1]: /files/image_145.png
+[2]: /files/image_146.png

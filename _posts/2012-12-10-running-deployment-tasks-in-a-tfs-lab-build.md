@@ -14,6 +14,6 @@ The deployment step now identifies that it is executing under the correct creden
 
 I still get a deployment step failure, but weirdly the deployment and the build were both successful.
 
-[0]: //files/image_147.png
-[1]: //files/image_148.png
-[2]: //files/image_149.png
+[0]: /files/image_147.png
+[1]: /files/image_148.png
+[2]: /files/image_149.png

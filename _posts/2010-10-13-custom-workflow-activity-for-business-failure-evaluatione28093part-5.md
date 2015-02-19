@@ -7,7 +7,7 @@ date: 2010-10-13 12:47:00 +10:00
 
 The [previous post][0] in this series provided the custom activity that evaluates a single business failure in WF. One of the [design goals][1] of this series is to support the evaluation and notification of multiple failures. This post will provide a custom activity that supports this design goal.
 
-At the very least, this activity needs to be able to contain multiple BusinessFailureEvaluator<T> activities. The design of this control will be like the Sequence activity where it can define and execute a collection of child activities. ![][2]
+At the very least, this activity needs to be able to contain multiple BusinessFailureEvaluator&lt;T&gt; activities. The design of this control will be like the Sequence activity where it can define and execute a collection of child activities. ![][2]
 
 There is no reason to restrict the child activities to the BusinessFailureEvaluator activity type so it will allow any child activity type. The screenshot above demonstrates this by adding an ExecuteBookmark activity in the middle of the business evaluators within the scope. ![image][3]
 
@@ -137,8 +137,8 @@ On a side note, the next version of this activity will refactor this last step s
 
 This post has provided the implementation for handling multiple business failures in a set. The next post will provide the designer implementation for these two activities.
 
-[0]: /post/2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-4.aspx
-[1]: /post/2010/10/11/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-1.aspx
+[0]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-4/
+[1]: /2010/10/11/custom-workflow-activity-for-business-failure-evaluatione28093part-1/
 [2]: /files/image_45.png
-[3]: //files/image_50.png
-[4]: /post/2010/10/12/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-3.aspx
+[3]: /files/image_50.png
+[4]: /2010/10/12/custom-workflow-activity-for-business-failure-evaluatione28093part-3/

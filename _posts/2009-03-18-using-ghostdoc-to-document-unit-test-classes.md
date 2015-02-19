@@ -17,5 +17,5 @@ I have used the name "_Matches unit test class_" and identified type names that 
 
 This produces much nicer documentation that the default documentation provided by Visual Studio.
 
-[0]: /post/2009/03/18/Using-GhostDoc-to-document-unit-test-methods.aspx
-[1]: //files/WindowsLiveWriter/UsingGhostDoctodocumentunittestclasses_A4F9/image_3.png
+[0]: /2009/03/18/using-ghostdoc-to-document-unit-test-methods/
+[1]: /files/WindowsLiveWriter/UsingGhostDoctodocumentunittestclasses_A4F9/image_3.png
