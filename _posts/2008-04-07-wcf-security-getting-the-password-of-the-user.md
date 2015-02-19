@@ -283,4 +283,4 @@ Download: [Neovolve.Framework.Communication.Security.zip (78.91 kb)][4]
 [1]: http://msdn2.microsoft.com/en-us/library/system.identitymodel.selectors.customusernamesecuritytokenauthenticator.validateusernamepasswordcore.aspx
 [2]: http://msdn2.microsoft.com/en-us/library/system.servicemodel.description.servicecredentials.aspx
 [3]: http://msdn2.microsoft.com/en-us/library/system.servicemodel.servicesecuritycontext.primaryidentity.aspx
-[4]: /files/2008%2f9%2fNeovolve.Framework.Communication.Security.zip
+[4]: /files/2008/9/Neovolve.Framework.Communication.Security.zip

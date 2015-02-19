@@ -27,6 +27,6 @@ I'm almost ashamed to post this addin because it is such a hack in its implement
 <a href="//files/WindowsLiveWriter/SortingWindowsWorkflowrules_B664/CompareAfter_2.jpg"><img style="border: 0px" src="//files/WindowsLiveWriter/SortingWindowsWorkflowrules_B664/CompareAfter_thumb.jpg" border="0" alt="CompareAfter" width="606" height="484" /></a> 
 </p>
 <p>
-Download: <a href="/files/2008%2f9%2fWorkflowRulesSorter.zip">WorkflowRulesSorter.zip (10.60 kb)</a>
+Download: <a href="/files/2008/9/WorkflowRulesSorter.zip">WorkflowRulesSorter.zip (10.60 kb)</a>
 </p>
 

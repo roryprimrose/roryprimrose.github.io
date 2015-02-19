@@ -29,4 +29,4 @@ date: 2005-10-18 23:18:00 +10:00
 
  Another thing to note about editable regions is that the only controls that are selectable and can be modified or deleted are the immediate children that are placed into the editable region. If the control hierarchy went Panel -&gt; Placeholder -&gt; Label, then the Placeholder would be selectable in the editable region of the Panel, but the Label would not be. To achieve that, the Placeholder's designer would also need to support an editable region. 
 
-[0]: /archive/2005/10/10/576.aspx
+[0]: /2005/10/10/nested-whidbey-asp-net-control-designers/

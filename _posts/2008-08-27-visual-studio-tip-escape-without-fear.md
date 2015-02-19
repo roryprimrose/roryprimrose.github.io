@@ -14,5 +14,5 @@ date: 2008-08-27 13:07:00 +10:00
  Kudos to [Andrew Stevenson][2] who inadvertently provided the title to this blog in his comment in the above mentioned post. 
 
 [0]: http://weblogs.asp.net/infinitiesloop/archive/2008/07/18/visual-studio-tip-disable-f1.aspx
-[1]: //files/2008%2f9%2fEscapeWithoutFear.jpg
+[1]: //files/2008/9/EscapeWithoutFear.jpg
 [2]: http://weblogs.asp.net/andrewseven

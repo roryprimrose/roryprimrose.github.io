@@ -154,10 +154,10 @@ Added reg files for VS2013 x86 and x64
 [5]: http://www.holliday.com.au/
 [6]: http://www.winmerge.org/2.6/manual/CommandLine.html
 [7]: http://developers.de/blogs/scott_munro/archive/2007/08/09/update-to-winmerge-with-tfs.aspx
-[8]: /files/2009%2f6%2fWinMerge+for+TFS.reg
-[9]: /files/2010%2f5%2fWinMerge_for_TFS_VS2010_x86.reg
-[10]: /files/2010%2f5%2fWinMerge_for_TFS_VS2010_x64.reg
-[11]: /files/2012%2f11%2fWinMerge_for_TFS_VS2012_x64.reg
-[12]: /files/2012%2f11%2fWinMerge_for_TFS_VS2012_x86.reg
-[13]: /files/2013%2f11%2fWinMerge_for_TFS_VS2013_x64.reg
-[14]: /files/2013%2f11%2fWinMerge_for_TFS_VS2013_x86.reg
+[8]: /files/2009/6/WinMerge+for+TFS.reg
+[9]: /files/2010/5/WinMerge_for_TFS_VS2010_x86.reg
+[10]: /files/2010/5/WinMerge_for_TFS_VS2010_x64.reg
+[11]: /files/2012/11/WinMerge_for_TFS_VS2012_x64.reg
+[12]: /files/2012/11/WinMerge_for_TFS_VS2012_x86.reg
+[13]: /files/2013/11/WinMerge_for_TFS_VS2013_x64.reg
+[14]: /files/2013/11/WinMerge_for_TFS_VS2013_x86.reg

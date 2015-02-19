@@ -11,5 +11,5 @@ date: 2005-12-13 21:58:00 +10:00
 
  Waiting for the next 'wow'... 
 
-[0]: /archive/2005/11/08/597.aspx
+[0]: /2005/11/08/it-s-all-about-customer-service/
 [1]: http://www.engadget.com/entry/1234000623072156/

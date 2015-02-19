@@ -37,4 +37,4 @@ WinMerge stores the line filters in the registry. The easiest way to install the
 [1]: //files/image_93.png
 [2]: //files/image_94.png
 [3]: //files/image_95.png
-[4]: /files/2011%2f3%2fWinMerge+Line+Filters.reg
+[4]: /files/2011/3/WinMerge+Line+Filters.reg

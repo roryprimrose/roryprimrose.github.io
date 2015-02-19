@@ -46,4 +46,4 @@ date: 2008-11-18 11:45:00 +10:00
 [2]: //files/WindowsLiveWriter/UsingStyleCop_A0CF/image_3.png
 [3]: //files/WindowsLiveWriter/UsingStyleCop_A0CF/image_6.png
 [4]: //files/WindowsLiveWriter/UsingStyleCop_A0CF/image_9.png
-[5]: /files/2008%2f11%2fSettings.StyleCop
+[5]: /files/2008/11/Settings.StyleCop

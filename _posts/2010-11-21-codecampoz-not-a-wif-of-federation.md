@@ -54,4 +54,4 @@ You can download the source code for the demos and the PowerPoint deck from the 
 
 [0]: /post/2010/07/18/Speaking-at-CodeCampOz.aspx
 [1]: http://www.codecampoz.com
-[2]: /files/2010%2f11%2fCCOZ2010-NotAWIFOfFederation.zip
+[2]: /files/2010/11/CCOZ2010-NotAWIFOfFederation.zip
