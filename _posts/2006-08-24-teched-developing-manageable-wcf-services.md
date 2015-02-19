@@ -5,7 +5,7 @@ tags : TechEd, WCF
 date: 2006-08-24 10:10:46 +10:00
 ---
 
-[![][1]][0]  
+![][0]  
 Chris and I got to the presentation room early in the morning so we could setup and make sure everything was sorted. We then went out to have a relaxed breakfast at a cafe on Darling Harbour before the session started at 8:30.
 
 I really enjoyed the experience of presenting and just had a blast. There were 135 people registered for the session, but it is hard to know exactly how many came through the door, but we had a full room with some people having to stand. Ashman (Ashley), the technical guy for the room, was really helpful and all the gear in the room as well as the VPC server worked perfectly.

@@ -14,18 +14,15 @@ After the last session was the Locknote address. This was a great presentation w
 So that is TechEd Australia 2006 over. Here are a few more photos.
 
 Franks TechEd stats from the locknote address.  
-[![][3]][2]
+![][1]
 
-My pass.   
-[![][5]][4]
+My pass.     
+![][2]
 
-Can anyone find my name in their photos of these banners? I don't think it is in this one.  
-[![][7]][6]
+Can anyone find my name in their photos of these banners? I don't think it is in this one.    
+![][3]
 
 [0]: http://www.youtube.com/watch?v=fx5Jlap6uZY
 [1]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060825-161644_2.jpg
-[2]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060825-161644_thumb.jpg
-[3]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060826-094900_2.jpg
-[4]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060826-094900_thumb.jpg
-[5]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060825-152308_2.jpg
-[6]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060825-152308_thumb.jpg
+[2]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060826-094900_2.jpg
+[3]: /files/WindowsLiveWriter/TechEdAfternoonofDay3_CBAB/20060825-152308_2.jpg

@@ -5,7 +5,7 @@ tags : TechEd, WF
 date: 2006-08-23 18:44:20 +10:00
 ---
 
-[![][1]][0]
+![][0]
 
 This afternoon I was going to go to a WF session, but I bailed so that I could spend some time on my session, making sure that the demos were going to behave themselves.
 

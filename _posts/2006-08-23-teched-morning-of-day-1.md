@@ -5,7 +5,7 @@ tags : TechEd, WCF, WF, WPF
 date: 2006-08-23 15:12:48 +10:00
 ---
 
-[![][1]][0]
+![][0]
 
 I had a early start this morning, leaving Canberra at 4:30am in the vain hope of making it to the keynote address at TechEd in Sydney this year. My perfect plan was foiled by traffic on the M5 making me get to the conference at 9:30 rather than the intended 8:30.
 
