@@ -299,4 +299,4 @@ namespace Neovolve.BuildTaskExecutor
 
 This post has outlined the core implementation of BTE. The core of BTE and the tasks already in the application satisfy all the design requirements from the previous post. The next post will look at how the application looks when it is invoked on the command line.
 
-[0]: /post/2011/07/01/Executing-build-tasks-without-a-build-server-%E2%80%93-Design.aspx
+[0]: /2011/07/01/executing-build-tasks-without-a-build-server-design/

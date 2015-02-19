@@ -20,8 +20,8 @@ You can download Neovolve.BuildTaskExecutor from [here][0].
 Enjoy.
 
 [0]: http://neovolve.codeplex.com/releases/view/68714
-[1]: /post/2011/07/01/Executing-build-tasks-without-a-build-server-%E2%80%93-Design.aspx
-[2]: /post/2011/07/03/Executing-build-tasks-without-a-build-server-%E2%80%93-Implementation.aspx
-[3]: /post/2011/07/06/Executing-build-tasks-without-a-build-server-%E2%80%93-In-action.aspx
-[4]: /post/2011/07/06/Executing-build-tasks-without-a-build-server-%E2%80%93-Example-scenario.aspx
-[5]: /post/2011/07/07/Executing-build-tasks-without-a-build-server-%E2%80%93-Creating-a-custom-ITask.aspx
+[1]: /2011/07/01/executing-build-tasks-without-a-build-server-design/
+[2]: /2011/07/03/executing-build-tasks-without-a-build-server-implementation/
+[3]: /2011/07/06/executing-build-tasks-without-a-build-server-in-action/
+[4]: /2011/07/06/executing-build-tasks-without-a-build-server-example-scenario/
+[5]: /2011/07/07/executing-build-tasks-without-a-build-server-creating-a-custom-itask/

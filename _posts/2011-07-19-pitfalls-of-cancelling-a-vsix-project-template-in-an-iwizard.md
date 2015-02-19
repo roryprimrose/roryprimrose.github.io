@@ -11,7 +11,9 @@ I have noticed one weird quirk when it comes to cancelling the wizard. The proje
 
 **How to cancel the wizard**
 
-Basically any exception thrown from IWizard.RunStarted will cause the wizard process to be cancelled. To be a good citizen in VSIX however, you should throw either the [WizardCancelledException][0] or [WizardBackoutException][1]. The only difference between these exceptions seems to be that the WizardBackoutException takes the user back to the Add New Project dialog whereas the WizardCancelledException shows the IDE like it was before the Add New Project dialog was displayed.![image][2]
+Basically any exception thrown from IWizard.RunStarted will cause the wizard process to be cancelled. To be a good citizen in VSIX however, you should throw either the [WizardCancelledException][0] or [WizardBackoutException][1]. The only difference between these exceptions seems to be that the WizardBackoutException takes the user back to the Add New Project dialog whereas the WizardCancelledException shows the IDE like it was before the Add New Project dialog was displayed.
+
+![image][2]
 
 Once the exception has been thrown however, the project template still exists on disk. It is up to the VSIX developer to manually clean up the new project folder under the solution to make the disk look like it did before attempting to add the project. 
 
