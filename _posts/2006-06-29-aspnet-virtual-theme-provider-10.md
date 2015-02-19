@@ -4,7 +4,6 @@ date: 2006-06-29 14:40:00 +10:00
 ---
 
  ASP.Net 2.0 is bundled with some great technology, especially what is available through the provider model. One of the new providers in 2.0 is the [VirtualPathProvider][0]. [Scott Guthrie][1] put out [some information][2] about this provider, as has [David Ebbo][3] in [this post][4]. 
-
  My VirtualThemeProvider uses the ASP.Net VirtualPathProvider to provide flexible theme support for ASP.Net projects. There were two primary objectives for this provider. Firstly, I wanted to support the ability to filter directories and files that are available in a theme directory for a given named value. Secondly, I wanted to support a global theme concept that included the ability to merge the theme directory with the global directory. 
 
  Take the example of a web project that has mutliple themes that are assigned depending on the type of user. Each theme has a subset of styles that display that theme according to different accessibility requirements (such as vision impared users). 
@@ -34,4 +33,4 @@ date: 2006-06-29 14:40:00 +10:00
 [2]: http://weblogs.asp.net/scottgu/archive/2005/11/27/431650.aspx
 [3]: http://blogs.msdn.com/davidebb
 [4]: http://blogs.msdn.com/davidebb/archive/2005/11/27/497339.aspx
-[5]: /files/2008/9/Neovolve.VirtualThemeProvider+1.0.zip
+[5]: /files/2008/9/Neovolve.VirtualThemeProvider%201.0.zip

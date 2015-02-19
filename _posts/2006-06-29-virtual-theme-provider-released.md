@@ -17,5 +17,5 @@ date: 2006-06-29 15:06:00 +10:00
 
  Download [Neovolve.VirtualThemeProvider 1.0.zip (275.96 kb)][1]
 
-[0]: /page/ASPNet-Virtual-Theme-Provider-10.aspx
-[1]: /files/2008/9/Neovolve.VirtualThemeProvider+1.0.zip
+[0]: /2006/06/29/aspnet-virtual-theme-provider-10/
+[1]: /files/2008/9/Neovolve.VirtualThemeProvider%201.0.zip
