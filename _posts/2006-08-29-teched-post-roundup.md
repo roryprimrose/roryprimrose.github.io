@@ -23,11 +23,11 @@ I have finally put my posts together for my TechEd experience for this year. The
 
 [TechEd - Afternoon of Day 3][7]
 
-[0]: /archive/2006/08/23/TechEd-_2D00_-Morning-of-Day-1.aspx
-[1]: /archive/2006/08/23/TechEd-_2D00_-Afternoon-of-Day-1.aspx
-[2]: /archive/2006/08/24/TechEd-_2D00_-Developing-Manageable-WCF-Services.aspx
-[3]: /archive/2006/08/24/Tech.Coffee.aspx
-[4]: /archive/2006/08/24/TechEd-_2D00_-Morning-of-Day-2.aspx
-[5]: /archive/2006/08/24/TechEd-_2D00_-Afternoon-of-Day-2.aspx
-[6]: /archive/2006/08/25/TechEd-_2D00_-Morning-of-Day-3.aspx
-[7]: /archive/2006/08/29/TechEd-_2D00_-Afternoon-of-Day-3.aspx
+[0]: /2006/08/23/teched-morning-of-day-1/
+[1]: /2006/08/23/teched-afternoon-of-day-1/
+[2]: /2006/08/24/teched-developing-manageable-wcf-services/
+[3]: /2006/08/24/tech-coffee/
+[4]: /2006/08/24/teched-morning-of-day-2/
+[5]: /2006/08/24/teched-afternoon-of-day-2/
+[6]: /2006/08/25/teched-morning-of-day-3/
+[7]: /2006/08/25/teched-afternoon-of-day-3/
