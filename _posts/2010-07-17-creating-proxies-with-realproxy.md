@@ -5,7 +5,7 @@ tags : WCF, WCF
 date: 2010-07-17 19:53:24 +10:00
 ---
 
-I first came across the RealProxy class three years ago when trying to figure out better ways of handling WCF client proxies (correct connection disposal, reusing faulted channels etc). I was intrigued about how ChannelFactory<T> could return an instance of a service contract that had the implementation of a WCF client for an interface definition it knows nothing about.   
+I first came across the RealProxy class three years ago when trying to figure out better ways of handling WCF client proxies (correct connection disposal, reusing faulted channels etc). I was intrigued about how ChannelFactory&lt;T&gt; could return an instance of a service contract that had the implementation of a WCF client for an interface definition it knows nothing about.   
 
 With a decent amount of Reflector surfing I followed the rabbit hole down to the usage of RealProxy. In my opinion this has to be one of the most interesting classes in the CLR. I finally founds some time to post some information about this amazing class.   
 
@@ -108,7 +108,7 @@ public interface ITester
 }
 {% endhighlight %}
 
-This console application uses the TestProxy<T> class to create a proxy for the ITester interface. Invocations of the proxy instance then cause TestProxy<T>.Invoke to process the invocation. TestProxy in this case will output information about the method invocation to the console. The output for this example is something like the following.
+This console application uses the TestProxy&lt;T&gt; class to create a proxy for the ITester interface. Invocations of the proxy instance then cause TestProxy&lt;T&gt;.Invoke to process the invocation. TestProxy in this case will output information about the method invocation to the console. The output for this example is something like the following.
     
 {% highlight text linenos %}
 Invoking RunTest with the following parameters:

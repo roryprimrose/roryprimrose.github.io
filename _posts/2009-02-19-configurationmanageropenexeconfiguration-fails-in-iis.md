@@ -18,7 +18,7 @@ This works fine while the application is an exe. Unfortunately it fails when the
 
 > A Webhost unhandled exception occurred. 
             
-> Exception: System.ServiceModel.Diagnostics.CallbackException: A user callback threw an exception.  Check the exception stack and inner exception to determine the callback that failed. ---> System.ArgumentException: exePath must be specified when not running inside a stand alone exe. 
+> Exception: System.ServiceModel.Diagnostics.CallbackException: A user callback threw an exception.  Check the exception stack and inner exception to determine the callback that failed. ---&gt; System.ArgumentException: exePath must be specified when not running inside a stand alone exe. 
     
             
 >    at System.Configuration.ConfigurationManager.OpenExeConfigurationImpl(ConfigurationFileMap fileMap, Boolean isMachine, ConfigurationUserLevel userLevel, String exePath) 

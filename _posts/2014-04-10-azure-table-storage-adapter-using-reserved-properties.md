@@ -8,7 +8,7 @@ I posted earlier this year about [an adapter class][0] to be the bridge between 
 
 While the adapter class is intended to encapsulate ITableEntity to prevent it leaking from the data layer, this particular model actually wanted to expose the Timestamp value from ITableEntity. This didn’t go down too well.
 
-> Microsoft.WindowsAzure.Storage.StorageException: An incompatible primitive type 'Edm.String[Nullable=True]' was found for an item that was expected to be of type 'Edm.DateTime[Nullable=False]'. ---> Microsoft.Data.OData.ODataException: An incompatible primitive type 'Edm.String[Nullable=True]' was found for an item that was expected to be of type 'Edm.DateTime[Nullable=False]'
+> Microsoft.WindowsAzure.Storage.StorageException: An incompatible primitive type 'Edm.String[Nullable=True]' was found for an item that was expected to be of type 'Edm.DateTime[Nullable=False]'. ---&gt; Microsoft.Data.OData.ODataException: An incompatible primitive type 'Edm.String[Nullable=True]' was found for an item that was expected to be of type 'Edm.DateTime[Nullable=False]'
 
 The simple fix to the adapter class is to filter out ITableEntity properties from the custom property mapping.
 

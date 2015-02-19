@@ -29,7 +29,7 @@ private void internalWrite(string message)
 }    
 {% endhighlight %}
 
-This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _<clear />_ element as the first item in the listeners element for each source you have defined in your configuration. 
+This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _&lt;clear /&gt;_ element as the first item in the listeners element for each source you have defined in your configuration. 
 
 {% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8" ?> 

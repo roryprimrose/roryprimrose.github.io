@@ -90,7 +90,7 @@ namespace Neovolve.Toolkit.Communication
 }
 {% endhighlight %}
 
-The ProxyManager class below encapsulates the creation and lifetime management of a ProxyHandler instance. It creates a proxy instance from the ProxyHandler when the Proxy property is referenced and disposes the proxy when the ProxyManager is disposed. It has some logic for attempted to resolve a ProxyHandler<T> or then falling back on a default proxy or a proxy to a WCF channel if no ProxyHandler is provided in its constructor.
+The ProxyManager class below encapsulates the creation and lifetime management of a ProxyHandler instance. It creates a proxy instance from the ProxyHandler when the Proxy property is referenced and disposes the proxy when the ProxyManager is disposed. It has some logic for attempted to resolve a ProxyHandler&lt;T&gt; or then falling back on a default proxy or a proxy to a WCF channel if no ProxyHandler is provided in its constructor.
 
 {% highlight csharp linenos %}
 using System;

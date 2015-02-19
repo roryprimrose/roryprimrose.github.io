@@ -9,7 +9,7 @@ I have been using nDumbster on a project to unit test sending emails. It has bee
 
 The more I started using nDumbster in test runs, the more I was finding that it wasn’t working so well. I was consistently getting the following exception:
 
-> _Test method [TestName] threw exception:&#160; System.Net.Mail.SmtpException: Failure sending mail. --->&#160; System.IO.IOException: Unable to read data from the transport connection: net_io_connectionclosed.._
+> _Test method [TestName] threw exception:&#160; System.Net.Mail.SmtpException: Failure sending mail. ---&gt;&#160; System.IO.IOException: Unable to read data from the transport connection: net_io_connectionclosed.._
 > _System.Net.Mail.SmtpReplyReaderFactory.ProcessRead(Byte[] buffer, Int32 offset, Int32 read, Boolean readLine)_
 > _System.Net.Mail.SmtpReplyReaderFactory.ReadLines(SmtpReplyReader caller, Boolean oneLine)_
 > _System.Net.Mail.SmtpReplyReaderFactory.ReadLine(SmtpReplyReader caller)_

@@ -7,7 +7,7 @@ date: 2010-11-03 11:38:37 +10:00
 
 The preparations for my [CodeCampOz][0] presentation have come a long way as has my understanding of the subject matter. I have tweaked [my presentation abstract][1] as a result. The new abstract is the following:
 
-**> Not a WIF of federation**
+> **Not a WIF of federation**
 
 > The Windows Identify Foundation (WIF) provides the latest Microsoft implementation for working in the claims-based identity space. WIF has particular strengths in providing federated security for systems that target users across multiple security domains, multiple credential types and multiple credential stores.
 

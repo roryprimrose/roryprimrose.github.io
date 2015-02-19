@@ -11,7 +11,7 @@ We are getting the msbuild script to execute psexec to invoke msiexec on a host 
 
 In modifying the build script, it seems like I have accidentally changed the psexec arguments which has caused psexec to hang on the build agent. In this case, it is happening when -accepteula is not passed to psexec.
 
-The build script should look like this for executing psexec -> msiexec.
+The build script should look like this for executing psexec -&gt; msiexec.
 
 {% highlight csharp linenos %}
 <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"

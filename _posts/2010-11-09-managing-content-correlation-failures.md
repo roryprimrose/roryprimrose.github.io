@@ -82,7 +82,7 @@ public void ProvideFault(Exception error, MessageVersion version, ref Message fa
 }
 {% endhighlight %}
 
-The existing code already managed a BusinessFailureException<T> and converted it to a BusinessFault that is a known fault contract for the service. The method now makes a call out to AttemptBusinessFailureExceptionConversion as an initial step.
+The existing code already managed a BusinessFailureException&lt;T&gt; and converted it to a BusinessFault that is a known fault contract for the service. The method now makes a call out to AttemptBusinessFailureExceptionConversion as an initial step.
 
 {% highlight csharp linenos %}
 private static Exception AttemptBusinessFailureExceptionConversion(Exception errorToProcess)

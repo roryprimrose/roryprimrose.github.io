@@ -9,7 +9,7 @@ The TypePresenter control is the UI that the WF designer displays for selecting 
 
 This drop down list provides some common types and includes some of the types already found in the current activity context. Selecting “Browse for Types …” allows for all referenced types to be searched in a dialog.![image][1]
 
-Sometimes you don’t want the TypePresenter to provide every available type. The TypePresenter has a great feature that allows you to restrict the types it displays in this list and the associated “Browse for Types …” dialog. This is done by providing a Func<Type, Boolean> reference on the TypePresenter’s Filter property. 
+Sometimes you don’t want the TypePresenter to provide every available type. The TypePresenter has a great feature that allows you to restrict the types it displays in this list and the associated “Browse for Types …” dialog. This is done by providing a Func&lt;Type, Boolean&gt; reference on the TypePresenter’s Filter property. 
 
 In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.
 
@@ -27,7 +27,7 @@ In my scenario, I want to restrict the types available to those that derive from
     Context="{Binding Context}" />
 {% endhighlight %}
 
-The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func<Type, Boolean> signature. The filter method related to the xaml above is the following.
+The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func&lt;Type, Boolean&gt; signature. The filter method related to the xaml above is the following.
 
 {% highlight csharp linenos %}
 public Boolean ExceptionTypeFilter(Type typeToValidate)

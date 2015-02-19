@@ -64,7 +64,7 @@ The following are the type mappings that are supported for converting types betw
 
 > sbyte &gt; SByte 
   
-**> Code examples**
+**Code examples**
 
 >  Code formatted to use alias types  
 ![AliasCode.jpg][5]

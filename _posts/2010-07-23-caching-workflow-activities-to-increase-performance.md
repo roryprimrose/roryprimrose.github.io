@@ -55,7 +55,7 @@ namespace Neovolve.ActivityTesting
 }
 {% endhighlight %}
 
-This class will hold on to activity instances in a dictionary using the activity type as the key. To use this class you simply need to make a call out to ActivityStore.Resolve<T>() rather than new T() where T is your activity type.
+This class will hold on to activity instances in a dictionary using the activity type as the key. To use this class you simply need to make a call out to ActivityStore.Resolve&lt;T&gt;() rather than new T() where T is your activity type.
 
 [0]: http://geekswithblogs.net/DavidPaquette
 [1]: http://geekswithblogs.net/DavidPaquette/archive/2009/10/26/wf4-performance.aspx

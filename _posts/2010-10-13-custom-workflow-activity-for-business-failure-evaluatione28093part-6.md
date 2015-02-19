@@ -5,11 +5,11 @@ tags : WF
 date: 2010-10-13 13:34:00 +10:00
 ---
 
-The [previous post][0] in this series provided the custom activity that manages multiple business failures in WF. Providing adequate designer support was one of the [design goals][1] of this series. This post will outline the designer support for the BusinessFailureEvaluator<T> and BusinessFailureScope<T> activities.  
+The [previous post][0] in this series provided the custom activity that manages multiple business failures in WF. Providing adequate designer support was one of the [design goals][1] of this series. This post will outline the designer support for the BusinessFailureEvaluator&lt;T&gt; and BusinessFailureScope&lt;T&gt; activities.  
 
-**BusinessFailureEvaluator<T>**
+**BusinessFailureEvaluator&lt;T&gt;**
 
-The BusinessFailureEvaluator<T> evaluates a single business failure. There is no support for child activities which makes the designer very simple.  
+The BusinessFailureEvaluator&lt;T&gt; evaluates a single business failure. There is no support for child activities which makes the designer very simple.  
 
 {% highlight xml linenos %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureEvaluatorDesigner"
@@ -71,9 +71,9 @@ The code behind the designer supports this by [attaching an ArgumentType propert
 
 This attached property allows the generic type of the activity to be changed to another type.
 
-**BusinessFailureScope<T>**
+**BusinessFailureScope&lt;T&gt;**
 
-The BusinessFailureScope<T> allows for multiple business failures to be stored against the scope so that they can be thrown together rather than one at a time.
+The BusinessFailureScope&lt;T&gt; allows for multiple business failures to be stored against the scope so that they can be thrown together rather than one at a time.
 
 {% highlight xml linenos %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureScopeDesigner"
@@ -104,7 +104,7 @@ The XAML for the designer does two things. Firstly it identifies the icon the ac
 
 ![image][5]
 
-Like the BusinessFailureEvalator<T> activity, the BusinessFailureScope has a generic type argument that defaults to Int32 when the activity is dropped onto the designer. The code behind the designer makes this type updatable in the same way.
+Like the BusinessFailureEvalator&lt;T&gt; activity, the BusinessFailureScope has a generic type argument that defaults to Int32 when the activity is dropped onto the designer. The code behind the designer makes this type updatable in the same way.
 
 {% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
@@ -135,7 +135,7 @@ The property attached by GenericArgumentTypeUpdater allows generic type to be ch
     
 ![image][6]
 
-This post has demonstrated the designer support for the BusinessFailureEvaluator<T> and BusinessFailureScope<T> activities. Workflows can now use these two activities to manage business failures.
+This post has demonstrated the designer support for the BusinessFailureEvaluator&lt;T&gt; and BusinessFailureScope&lt;T&gt; activities. Workflows can now use these two activities to manage business failures.
 
 [0]: /2010/10/13/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-5/
 [1]: /2010/10/11/Custom-Workflow-activity-for-business-failure-evaluatione28093Part-1/

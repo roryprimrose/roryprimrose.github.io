@@ -219,7 +219,7 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
 }
 {% endhighlight %}
 
-The designer looks like the following. The ReceiveIdentityInspector<IIdentity> seen below contains a Receive activity as its only child activity.
+The designer looks like the following. The ReceiveIdentityInspector&lt;IIdentity&gt; seen below contains a Receive activity as its only child activity.
 
 ![image][6]
 

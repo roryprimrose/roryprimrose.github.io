@@ -85,7 +85,7 @@ This example resolves an instance of Root that has a dependency of type ITester.
     
 Tester exposes a property that indicates whether the instance has been disposed. The disposal extension will ensure that all items in the build tree are disposed when the container is told to tear down the root instance. The Tester.IsDisposed property returns True when this console code is run.
 
-Lazy loading dependencies is achieved by changing the injection type from T to Func<T>. This can be done in the above example by changing the Root constructor from public Root(ITester tester) to public Root(Func<ITester> tester). The example above now looks like the following. This delegate then needs to be invoked to get Unity to resolve the dependency instance.
+Lazy loading dependencies is achieved by changing the injection type from T to Func&lt;T&gt;. This can be done in the above example by changing the Root constructor from public Root(ITester tester) to public Root(Func&lt;ITester&gt; tester). The example above now looks like the following. This delegate then needs to be invoked to get Unity to resolve the dependency instance.
 
 {% highlight csharp linenos %}
 using System;
@@ -157,7 +157,7 @@ namespace Neovolve.LazyInjectionTesting
 }
 {% endhighlight %}
 
-Unity will create a delegate for Func<ITester> in order to call the constructor on Root. The delegate is a function that will resolve ITester from the container when the delegate is invoked. This means that the resolution of Root occurs at a different time to the resolution of ITester. The DisposableStrategyExtension is now tracking two build trees rather than one. The build tree that contains Root does not contain ITester and therefore the disposal strategy can’t dispose the dependency when container.TearDown(root) is invoked. The console application now returns False because the DisposalStrategyExtension does not understand that the two build trees are related.
+Unity will create a delegate for Func&lt;ITester&gt; in order to call the constructor on Root. The delegate is a function that will resolve ITester from the container when the delegate is invoked. This means that the resolution of Root occurs at a different time to the resolution of ITester. The DisposableStrategyExtension is now tracking two build trees rather than one. The build tree that contains Root does not contain ITester and therefore the disposal strategy can’t dispose the dependency when container.TearDown(root) is invoked. The console application now returns False because the DisposalStrategyExtension does not understand that the two build trees are related.
 
 I have updated the DisposableStrategyExtension to correctly track build trees of these lazy loaded dependencies. 
 
@@ -196,7 +196,7 @@ public override void PostBuildUp(IBuilderContext context)
 }
 {% endhighlight %}
 
-The wrapper delegate will now be injected as the dependency rather than the Unity delegate. The wrapper delegate is created using the CreateTrackedDeferredResolution method. This method has some defensive coding to ensure that we are actually dealing with a Func<T> delegate. The wrapper delegate it creates is a function call out to a Resolve method on a custom DeferredResolutionTracker<T> class.
+The wrapper delegate will now be injected as the dependency rather than the Unity delegate. The wrapper delegate is created using the CreateTrackedDeferredResolution method. This method has some defensive coding to ensure that we are actually dealing with a Func&lt;T&gt; delegate. The wrapper delegate it creates is a function call out to a Resolve method on a custom DeferredResolutionTracker&lt;T&gt; class.
 
 {% highlight csharp linenos %}
 public Delegate CreateTrackedDeferredResolution(Delegate originalDeferredFunction)

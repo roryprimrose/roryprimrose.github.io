@@ -129,11 +129,11 @@ namespace Neovolve.Toolkit.Workflow.Activities
 }
 {% endhighlight %}
 
-The activity uses the CacheMetadata method to identify that it requires a BusinessFailureExtension<T> extension and provides the method to create one if it does not already exist. This method also configures the activity to support child activities and variable definitions.
+The activity uses the CacheMetadata method to identify that it requires a BusinessFailureExtension&lt;T&gt; extension and provides the method to create one if it does not already exist. This method also configures the activity to support child activities and variable definitions.
 
-The activity execution will resolve the extension instance before executing a child activity. It notifies the extension about the link between the scope and the child activity. The child activity can then use the extension to [add a failure][0] which the extension will [store on behalf of the scope][4]. The activity then gets the failures for the scope from the extension when it has executed all child activities. It then throws a BusinessFailureException<T> if there are any failures reported. 
+The activity execution will resolve the extension instance before executing a child activity. It notifies the extension about the link between the scope and the child activity. The child activity can then use the extension to [add a failure][0] which the extension will [store on behalf of the scope][4]. The activity then gets the failures for the scope from the extension when it has executed all child activities. It then throws a BusinessFailureException&lt;T&gt; if there are any failures reported. 
 
-On a side note, the next version of this activity will refactor this last step so that the extension manages the exception throwing process as it does for BusinessFailureEvaluator<T>. This will align the code with the Single Responsibility Pattern so that only the extension understands how to handle failures and how to throw the BusinessFailureException<T>.
+On a side note, the next version of this activity will refactor this last step so that the extension manages the exception throwing process as it does for BusinessFailureEvaluator&lt;T&gt;. This will align the code with the Single Responsibility Pattern so that only the extension understands how to handle failures and how to throw the BusinessFailureException&lt;T&gt;.
 
 This post has provided the implementation for handling multiple business failures in a set. The next post will provide the designer implementation for these two activities.
 

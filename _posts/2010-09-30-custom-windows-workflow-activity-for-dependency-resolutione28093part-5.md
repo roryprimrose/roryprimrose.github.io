@@ -158,7 +158,7 @@ namespace Neovolve.Toolkit.Workflow.Design
 
 This implementation is different to the GenericTypeUpdater in that it provides some specialised support regarding the ArgumentCount property of the ModelItem. The ArgumentCount property affects this updatable generic type support in two ways. 
 
-Firstly it only attaches updatable generic type properties for as many generic types as is defined by ArgumentCount. If ArgumentCount = One, only one AttachedProperty<Type> is attached to the ModelItem in the designer. If ArgumentCount = Two, then the activity has two AttachedProperty<Type> attached to the ModelItem. As so it goes on.![image[10]][4]
+Firstly it only attaches updatable generic type properties for as many generic types as is defined by ArgumentCount. If ArgumentCount = One, only one AttachedProperty&lt;Type&gt; is attached to the ModelItem in the designer. If ArgumentCount = Two, then the activity has two AttachedProperty&lt;Type&gt; attached to the ModelItem. As so it goes on.![image[10]][4]
 
 Secondly the support limits updating the default display name of the activity to the number of types defined by ArgumentCount even though the InstanceResolver class defines 16 generic arguments. This means that the display name is for example InstanceResolver&lt;String, ITestInstance&gt; where ArgumentCount = Two rather than InstanceResolver&lt;String, ITestInstance, Object, Object, Object……T16&gt;.![image[12]][5]
 

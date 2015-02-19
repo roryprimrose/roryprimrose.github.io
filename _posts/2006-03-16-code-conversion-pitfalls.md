@@ -16,7 +16,7 @@ If sSomeValue = String.Empty Then
 End If
 {% endhighlight %}
 
-VB is very forgiving with its string comparisons and it attempts to cover all the possibilities. If a straight language conversion is done, the same result does not occur in C#. To test this, I came up with a program in VB and in C#.>
+VB is very forgiving with its string comparisons and it attempts to cover all the possibilities. If a straight language conversion is done, the same result does not occur in C#. To test this, I came up with a program in VB and in C#.
 
 Here is the VB version of the program:
 
@@ -102,9 +102,9 @@ When this program is run, these are the results:
   Failed: IsNullOrEmpty returns false for ThisValue 
 {% endhighlight %}
 
-<p>VB has successfully evaluated whether a string has a value or not, regardless of whether the empty value is defined as a literal empty string, String.Empty or Nothing/vbNullString. </p>
+VB has successfully evaluated whether a string has a value or not, regardless of whether the empty value is defined as a literal empty string, String.Empty or Nothing/vbNullString.
 
-<p>Here is the C# version of the program:</p>
+Here is the C# version of the program:
 
 {% highlight csharp linenos %}
 using System; 
@@ -213,9 +213,9 @@ When this program is run, these are the results:
   Failed: IsNullOrEmpty returns false for ThisValue 
 {% endhighlight %}
 
-<p>Definately a different result. The reason for the difference is how the VB and C# code has been compiled down to IL. </p>
+Definately a different result. The reason for the difference is how the VB and C# code has been compiled down to IL.
 
-<p>Reflector shows the following for the VB program:</p>
+Reflector shows the following for the VB program:
 
 {% highlight vbnet linenos %}
 Private Sub RunTests(ByVal sTestName As String, ByVal sTest As String)

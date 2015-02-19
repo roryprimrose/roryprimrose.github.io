@@ -340,7 +340,7 @@ The next time you compile you will get an error saying
 
 > Unresolved reference to symbol 'Directory:BINLOCATION' in section 'Fragment’
 
-So now the automatically generated wxs file for the web project points binaries and satellite files to the BINLOCATION directory. This now needs to be defined by adding a <Directory Id=”BINLOCATION” Name=”bin” /> under the INSTALLLOCATION Directory in Product.wxs. This defines the directory location for the website binaries to be written to.
+So now the automatically generated wxs file for the web project points binaries and satellite files to the BINLOCATION directory. This now needs to be defined by adding a &lt;Directory Id=”BINLOCATION” Name=”bin” /&gt; under the INSTALLLOCATION Directory in Product.wxs. This defines the directory location for the website binaries to be written to.
 
 The Product.wxs now looks like the following:
 

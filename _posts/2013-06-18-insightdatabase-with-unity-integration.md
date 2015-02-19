@@ -161,7 +161,7 @@ namespace MyApplication.Server.Unity
 }
 {% endhighlight %}
 
-This class will either create a connection or a reliable connection using the extension methods available in Insight.Database. It then gets a reflected reference to the As<T> extension method that converts that connection into an auto-implemented interface. This is the instance that gets returned.
+This class will either create a connection or a reliable connection using the extension methods available in Insight.Database. It then gets a reflected reference to the As&lt;T&gt; extension method that converts that connection into an auto-implemented interface. This is the instance that gets returned.
 
 Unity needs to know about the custom extension so that it can support it in configuration. The element class needs to be registered with Unity via a SectionExtension.
 

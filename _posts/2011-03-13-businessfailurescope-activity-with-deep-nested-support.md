@@ -47,7 +47,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
 }
 {% endhighlight %}
 
-An instance of the BusinessFailureInjector<T> class is the value that is added to the parent scope’s execution context as an execution property. This class simply holds the failures that child evaluator activities find. One thing to notice about BusinessFailureInjector is the usage of DataContract and DataMember attributes. WF does all the heavy lifting for us with regard to persistence. The data held in the execution property automatically gets persisted and then restored for us. This was done manually in the [old extension version][6] as well as manually tracking the links between scopes and evaluators. 
+An instance of the BusinessFailureInjector&lt;T&gt; class is the value that is added to the parent scope’s execution context as an execution property. This class simply holds the failures that child evaluator activities find. One thing to notice about BusinessFailureInjector is the usage of DataContract and DataMember attributes. WF does all the heavy lifting for us with regard to persistence. The data held in the execution property automatically gets persisted and then restored for us. This was done manually in the [old extension version][6] as well as manually tracking the links between scopes and evaluators. 
 
 There are some minor changes to the code in the [BusinessFailureScope][7] and [BusinessFailureEvaluator][8] activities to work with the execution property rather than the extension. 
 

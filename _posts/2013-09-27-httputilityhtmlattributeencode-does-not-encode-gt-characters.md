@@ -1,5 +1,5 @@
 ---
-title: HttpUtility.HtmlAttributeEncode does not encode > characters
+title: HttpUtility.HtmlAttributeEncode does not encode &gt; characters
 categories : .Net
 tags : ASP.Net, WIF
 date: 2013-09-27 12:35:33 +10:00
@@ -27,9 +27,9 @@ namespace ConsoleApplication1
 }
 {% endhighlight %}
 
-The call to HttpUtility.HtmlAttributeEncode produces the result <p/> instead of <p/>. This is a problem in terms of putting encoded XML in a HTML attribute. It is up to the HTML parser to determine how to fix up the corrupted HTML.
+The call to HttpUtility.HtmlAttributeEncode produces the result &lt;p/&gt; instead of &lt;p/&gt;. This is a problem in terms of putting encoded XML in a HTML attribute. It is up to the HTML parser to determine how to fix up the corrupted HTML.
 
-For example, encode "<p/>" and put it into a hidden field and you then get HTML like the following:
+For example, encode "&lt;p/&gt;" and put it into a hidden field and you then get HTML like the following:
 
 {% highlight xml linenos %}
 <form>
@@ -38,9 +38,9 @@ For example, encode "<p/>" and put it into a hidden field and you then get HTML 
 </form>
 {% endhighlight %}
 
-The interpretation of this HTML could either implicitly consider the > in the attribute as > or add in an implicit " before the literal > to close out the attribute. The first outcome would be correct HTML and the second would continue to produce incorrect HTML. The big problem here is an assumption that all interpreters of HTML are going to make the same decision.
+The interpretation of this HTML could either implicitly consider the &gt; in the attribute as &gt; or add in an implicit " before the literal &gt; to close out the attribute. The first outcome would be correct HTML and the second would continue to produce incorrect HTML. The big problem here is an assumption that all interpreters of HTML are going to make the same decision.
 
-The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the > character.
+The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the &gt; character.
 
 {% highlight csharp linenos %}
 public class TagHttpEncoder : HttpEncoder

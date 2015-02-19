@@ -9,7 +9,7 @@ Mitch has just posted the [agenda][0] for CodeCampOz that is running in November
 
 I’ll be running a session on Windows Identity Framework and how to use it without federation. Here is the abstract for my session.
 
-#### **> Not a WIF of federation**
+> **Not a WIF of federation**
 
 > The Windows Identify Framework (WIF) provides the latest Microsoft implementation for working in the claims-based identity space. WIF has particular strengths in providing federated security for systems that target users across multiple security domains, multiple credential types and multiple credential stores. 
 

@@ -115,7 +115,7 @@ namespace ClassLibrary1
 }
 {% endhighlight %}
 
-There is some duplication here that we can take care of with <include />.
+There is some duplication here that we can take care of with &lt;include /&gt;.
 
 **Reason 1: You can include the entire xml comment for an item**
 
@@ -177,7 +177,7 @@ We can now update each of those properties to something like this:
 
  **Reason 2: You can include part of the xml comment for an item**
 
-You can mix <include /> elements with other xml comments on the same item. This means you are not constrained to having the entire xml comment pushed out to an external file. If there is partial content being duplicated, this works too. Let's update the common documentation file to include the common remarks.
+You can mix &lt;include /&gt; elements with other xml comments on the same item. This means you are not constrained to having the entire xml comment pushed out to an external file. If there is partial content being duplicated, this works too. Let's update the common documentation file to include the common remarks.
 
 {% highlight xml linenos %}
 <?xml version="1.0" encoding="utf-8" ?>
@@ -229,7 +229,7 @@ public void SomeRandomMethod()
 
 **Reason 3: You can include include elements and they will be recursively resolved**
 
-This is where things get really useful. Now that we have pushed out common documentation to an external file, what if there is duplication within that file. No problem. The compiler will recursively resolve all <include /> elements, even if the xml comment itself is in the external file.
+This is where things get really useful. Now that we have pushed out common documentation to an external file, what if there is duplication within that file. No problem. The compiler will recursively resolve all &lt;include /&gt; elements, even if the xml comment itself is in the external file.
 
 In the examples so far, there is an extensive amount of comments in the remarks section of several properties and methods. We have already moved the Checksum comments out to the external file, but we can also remove duplication in the remarks of the GenerateChecksum method which is also common to the Checksum properties. We can update the external xml file to include the duplicate remarks about the checksum and use the same include element against the GenerateChecksum method.
 
@@ -332,7 +332,7 @@ namespace ClassLibrary1
 
 Now, there are some hazards with this. 
 
-The first mistake I made was not putting /* at the end of the xpath queries of the <include /> element. When the compiler runs, it processes the include elements by running the xpath query against the file specified and replaces the include element with the xml elements found. If you don't include /*, the only element found is the container of the external comments, not the comments themselves. This is guaranteed to break your compiled xml file.
+The first mistake I made was not putting /* at the end of the xpath queries of the &lt;include /&gt; element. When the compiler runs, it processes the include elements by running the xpath query against the file specified and replaces the include element with the xml elements found. If you don't include /*, the only element found is the container of the external comments, not the comments themselves. This is guaranteed to break your compiled xml file.
 
 The second issue is that because the external xml data is being injected into your file, if the external xml comments refer to a type that exists in a namespace that is not referenced in the class, then the compiler will throw errors. For example, I added the comment _&lt;see cref=&quot;SHA1CryptoServiceProvider&quot;/&gt;_ into the external file. When I recompiled, I got the following error (BTW, I treat warnings as errors):
 

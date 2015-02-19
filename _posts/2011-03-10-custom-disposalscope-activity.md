@@ -22,7 +22,7 @@ The design goals of this activity are:
 * dispose the resource on a faulted child activity
 * as always, provide adequate designer support
 
-The code implementation of the custom DisposalScope<T> activity handles these goals.
+The code implementation of the custom DisposalScope&lt;T&gt; activity handles these goals.
 
 {% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Activities
@@ -161,7 +161,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
 }
 {% endhighlight %}
 
-The DisposalScope<T> activity enforces a no persist zone. Attempts at persistence by a child activity will result in throwing an exception. The resource is released on either a successful or fault outcome. There is some validation in the activity that ensures that a Body activity has been defined. The activity also uses the IActivityTemplateFactory to create the activity with a Sequence activity for its Body property when it is created on the WF designer.
+The DisposalScope&lt;T&gt; activity enforces a no persist zone. Attempts at persistence by a child activity will result in throwing an exception. The resource is released on either a successful or fault outcome. There is some validation in the activity that ensures that a Body activity has been defined. The activity also uses the IActivityTemplateFactory to create the activity with a Sequence activity for its Body property when it is created on the WF designer.
 
 The designer of the activity handles most of the design time experience.
 

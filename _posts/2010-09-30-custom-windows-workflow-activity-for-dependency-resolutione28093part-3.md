@@ -8,7 +8,7 @@ My [previous post][0] provided the base framework for resolving dependencies, ha
 
 The original implementation of this activity supported resolving a single dependency. It has slowly evolved into one that can support up to 16 dependencies. The reason for this specific number is that the activity leverages the ScheduleAction method on the NativeActivityContext class. This method has overloads that support up to 16 generic arguments. This avoids the developer needing to use nested activities to achieve the same result if only one dependency was supported.
 
-The ScheduleAction method provides the ability for a child activity to be scheduled for execution with one or more delegate arguments. This is the way that ForEach<T> and ParallelForEach<T> activities work. In these cases the argument defines the item being provided in the iterator of the loop behind the activity. This is seen below being defined as the variable “item”.![image][1]
+The ScheduleAction method provides the ability for a child activity to be scheduled for execution with one or more delegate arguments. This is the way that ForEach&lt;T&gt; and ParallelForEach&lt;T&gt; activities work. In these cases the argument defines the item being provided in the iterator of the loop behind the activity. This is seen below being defined as the variable “item”.![image][1]
 
 The custom activity defined here has a concept of the number of arguments that it supports at runtime. This is defined at design time using a GenericArgumentCount enum definition. In part this enum is used to support the design-time experience. The activity also uses this value to ensure that only the intended number of generic arguments are provided to the child activity.
 
@@ -350,7 +350,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
 
 The bulk of the code in this class is the definition of the resolution name properties. There is a resolution name property for each of the possible 16 instance resolutions. It defines the ArgumentCount property that determines how many instance resolutions are going to be processed by the activity. The class also defines a Body property holds a reference to the child activity that will be executed with the InstanceHandler references.
 
-The class also maintains a List<Guid> variable that keep track of the all the InstanceHandlerId values created for the activity. This list of values is used to destroy resolved instances using the InstanceManagerExtension when the activity completes, is aborted or is cancelled. Persistence is managed by the InstanceManagerExtension as outlined in the previous post.
+The class also maintains a List&lt;Guid&gt; variable that keep track of the all the InstanceHandlerId values created for the activity. This list of values is used to destroy resolved instances using the InstanceManagerExtension when the activity completes, is aborted or is cancelled. Persistence is managed by the InstanceManagerExtension as outlined in the previous post.
 
 The InstanceResolver also implements the IActivityTemplateFactory interface. This interface defines the Create method that allows the activity to provide an activity definition when it is dragged from the toolbox to the designer. This is used to preconfigure an InstanceResolver instance with default values.
 
@@ -358,7 +358,7 @@ One of the issues with the support for generic activities that define more than 
 
 This is a usability issue for the InstanceResolver class as the developer using it will not often need all 16 arguments for their workflow. Unfortunately this implementation forces them to identify a type definition for all 16 arguments as this is what defines the InstanceResolve activity being used.
 
-On a side note, there is a way around this for activity types that define one generic argument. Decorating the activity with the DefaultTypeArgumentAttribute allows you to specify the default type. ForEach<T> and ParallelForEach<T> use this to define the type of int. This is why the developer does not see the above prompt when dropping these activities onto the design surface. Unfortunately this attribute was only designed to support a single generic argument.
+On a side note, there is a way around this for activity types that define one generic argument. Decorating the activity with the DefaultTypeArgumentAttribute allows you to specify the default type. ForEach&lt;T&gt; and ParallelForEach&lt;T&gt; use this to define the type of int. This is why the developer does not see the above prompt when dropping these activities onto the design surface. Unfortunately this attribute was only designed to support a single generic argument.
 
 The workaround for this usability issue is to use some indirection. Another activity that implements IActivityTemplateFactory can be used to produce this result. This is where the non-generic InstanceResolver class comes into play.
 

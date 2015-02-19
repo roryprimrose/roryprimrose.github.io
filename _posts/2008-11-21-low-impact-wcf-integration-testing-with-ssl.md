@@ -34,11 +34,11 @@ To create this certificate, open up the Visual Studio command prompt (elevated p
 
 The 'Neovolve.Toolkit' is the subject name I have used in this case. You will probably want to use your own identifier.
 
-Open up _MMC_ and add the _Certificates -> Computer account -> Local computer_ snap in.
+Open up _MMC_ and add the _Certificates -&gt; Computer account -&gt; Local computer_ snap in.
 
 [![ComputerCertificates][7]][6]
 
-Go to _Personal Certificates_ and locate the certificate that you created with makecert.exe. Right click this certificate and select _All tasks -> Export_. Continue through the wizard to export the pfx file with its private key.
+Go to _Personal Certificates_ and locate the certificate that you created with makecert.exe. Right click this certificate and select _All tasks -&gt; Export_. Continue through the wizard to export the pfx file with its private key.
 
 I used the subject name as the password and the export file name so that it is easy to remember.
 

@@ -88,7 +88,7 @@ The [previous post][4] provided the implementation for supporting updatable gene
 
 MorphHelper is used to copy information between ModelItems that are used to describe an activity in the designer. It is used by updatable generic activity types to copy properties and child activity information (among other things) from the original activity type to the new activity type.
 
-Consider what happens when you change ParallelForEach<String> to ParallelForEach<Boolean>. Any property information assigned to the activity (like the enumerable reference and child activity definition) is copied between the activity definitions even though the two activity types are not the same. This is the power of MorphHelper.
+Consider what happens when you change ParallelForEach&lt;String&gt; to ParallelForEach&lt;Boolean&gt;. Any property information assigned to the activity (like the enumerable reference and child activity definition) is copied between the activity definitions even though the two activity types are not the same. This is the power of MorphHelper.
 
 Understandably MorphHelper will not know how to transform any possible data/type structure between ModelItem instances. Thankfully the helper class is extensible as it allows custom morph actions to be added via the AddPropertyValueMorphHelper method. Reflector shows that this is how WF4 configures MorphHelper for the morph actions that come out of the box. These are wired up in the WF4 IRegisterMetadata implementation defined in the System.Activities.Core.Presentation.DesignerMetadata class.
 
@@ -101,11 +101,11 @@ MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<>), new PropertyVal
 MorphHelper.AddPropertyValueMorphHelper(typeof(ActivityAction<>), new PropertyValueMorphHelper(MorphHelpers.ActivityActionMorphHelper));
 {% endhighlight %}
 
-There is support for morphing InArgument<>, OutArgument<>, InOutArgument<> and ActivityAction<> properties between ModelItem types.
+There is support for morphing InArgument&lt;&gt;, OutArgument&lt;&gt;, InOutArgument&lt;&gt; and ActivityAction&lt;&gt; properties between ModelItem types.
 
-The issue I had with creating the updatable type support for InstanceResolver was that the 16 handlers defined against ActivityAction<T1…T1> for the activity were not copied from the old ModelItem to the new ModelItem. The reason for this turned about to be that the morph action for ActivityAction<> only supports a single generic argument whereas the InstanceResolver activity has 16. This is another scenario where the Microsoft implementation is limited to a single generic argument like the limitations of the DefaultTypeArgumentAttribute (as indicated in [this post][0]).
+The issue I had with creating the updatable type support for InstanceResolver was that the 16 handlers defined against ActivityAction&lt;T1…T1&gt; for the activity were not copied from the old ModelItem to the new ModelItem. The reason for this turned about to be that the morph action for ActivityAction&lt;&gt; only supports a single generic argument whereas the InstanceResolver activity has 16. This is another scenario where the Microsoft implementation is limited to a single generic argument like the limitations of the DefaultTypeArgumentAttribute (as indicated in [this post][0]).
 
-The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction<T1…T16>.
+The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction&lt;T1…T16&gt;.
 
 {% highlight csharp linenos %}
 namespace Neovolve.Toolkit.Workflow.Design
@@ -158,7 +158,7 @@ namespace Neovolve.Toolkit.Workflow.Design
 }
 {% endhighlight %}
 
-This code is modelled from the Microsoft implementation of ActivityAction<> morphing. This implementation however has full support for multiple generic types. 
+This code is modelled from the Microsoft implementation of ActivityAction&lt;&gt; morphing. This implementation however has full support for multiple generic types. 
 
 With this method registered in MorphHelper via the above RegisterMetadata class, changing a generic type in my InstanceResolver class now correctly morphs the internals of the activity from the old type to the new type.
 
