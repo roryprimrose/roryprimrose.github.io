@@ -11,70 +11,70 @@ Lets look at a simple solution that contains ProjectA, ProjectB and ProjectC. Pr
 
 ProjectA contains a form that references ClassB in ProjectB like this:
 
-    {% highlight csharp linenos %}
-    using System;
-    using System.Diagnostics;
-    using System.Windows.Forms;
-    using ProjectB;
+{% highlight csharp linenos %}
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
+using ProjectB;
      
-    namespace ProjectA
+namespace ProjectA
+{
+    public partial class FormA : Form
     {
-        public partial class FormA : Form
+        public FormA()
         {
-            public FormA()
-            {
-                InitializeComponent();
-            }
+            InitializeComponent();
+        }
      
-            private void button1_Click(object sender, EventArgs e)
-            {
-                ClassB TestB = new ClassB();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClassB TestB = new ClassB();
      
-                Debug.WriteLine(TestB.CreateValue());
-            }
+            Debug.WriteLine(TestB.CreateValue());
         }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 ProjectB contains ClassB that references ClassC in ProjectC like this:
 
-    {% highlight csharp linenos %}
-    using System;
-    using ProjectC;
+{% highlight csharp linenos %}
+using System;
+using ProjectC;
      
-    namespace ProjectB
+namespace ProjectB
+{
+    public class ClassB
     {
-        public class ClassB
+        public String CreateValue()
         {
-            public String CreateValue()
-            {
-                ClassC TestC = new ClassC();
+            ClassC TestC = new ClassC();
      
-                return TestC.RunTest();
-            }
+            return TestC.RunTest();
         }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 ClassC in ProjectC looks like this:
 
-    {% highlight csharp linenos %}
-    using System;
+{% highlight csharp linenos %}
+using System;
      
-    namespace ProjectC
+namespace ProjectC
+{
+    public class ClassC
     {
-        public class ClassC
+        public String RunTest()
         {
-            public String RunTest()
-            {
-                return Guid.NewGuid() + " - " + DateTime.Now;
-            }
+            return Guid.NewGuid() + " - " + DateTime.Now;
         }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 When ProjectA compiles, the build output in bin\Debug is the following:
 
@@ -86,26 +86,26 @@ Everything is good here and ProjectA will execute successfully.
 
 Now lets simulate a scenario that WF can bring into the mix. Lets say that ProjectB contains a workflow. This workflow ends up executing a rule set, probably through a PolicyActivity. A rule in the rule set makes a reference to ClassC in ProjectC. Nowhere else in ProjectB references any type defined in ProjectC. What happens? The result can be simulated by making ClassB in ProjectB look like this:
 
-    {% highlight csharp linenos %}
-    using System;
-    using ProjectC;
+{% highlight csharp linenos %}
+using System;
+using ProjectC;
      
-    namespace ProjectB
+namespace ProjectB
+{
+    public class ClassB
     {
-        public class ClassB
+        public String CreateValue()
         {
-            public String CreateValue()
-            {
-                //ClassC TestC = new ClassC();
+            //ClassC TestC = new ClassC();
      
-                //return TestC.RunTest();
+            //return TestC.RunTest();
      
-                return "Break me";
-            }
+            return "Break me";
         }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 When ProjectA compiles, the build output in bin\Debug is the following:
 

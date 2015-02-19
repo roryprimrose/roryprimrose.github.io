@@ -27,9 +27,9 @@ MSDN Library - [Bindings and Security][3]:
 
 > _BasicHttp_
 
-> _In code, use [BasicHttpBinding][4]; in configuration, use the [basicHttpBinding Element][5]. This binding is designed to be used with a range of existing technologies, such as the following: 
+> In code, use [BasicHttpBinding][4]; in configuration, use the [basicHttpBinding Element][5]. This binding is designed to be used with a range of existing technologies, such as the following: 
 
-* ASMX (version 1) Web services._
+* _ASMX (version 1) Web services._
 * _Web Service Enhancements (WSE) applications._
 * _Basic Profile as defined in the WS-I specification (http://www.ws-i.org)._
 * _Basic security profile as defined in WS-I. By default, this binding is not secure. It is designed to interoperate with ASMX services. When security is enabled, the binding is designed for seamless interoperation with IIS security mechanisms, such as Basic authentication, Digest, and Integrated Windows security. For more information, see [Transport Security Overview][6]. This binding supports the following: 

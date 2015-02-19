@@ -41,21 +41,23 @@ Note: You need to click on the **Save** button on the tool bar within WinMerge m
 
 **Merge Error Workaround**
 
-If you encounter an error that says "The manual merge for <filename&gt; has been canceled", the fix is to use a batch file to redirect the call to WinMerge to ensure a 0 return code.
+If you encounter an error that says "The manual merge for &lt;filename&gt; has been canceled", the fix is to use a batch file to redirect the call to WinMerge to ensure a 0 return code.
 
 This problem and workaround was originally found [here][3] by a colleague. He tested WinMerge and found that it does correctly return 0. Regardless of this, this batch workaround seems to work well. I have modified the original version to include my switches.
 
 Create a batch file with the following content:
 
-> @rem winmergeFromTFS.bat  
-> @rem 2007-08-01  
-> @rem File created by Paul Oliver to get Winmerge to play nicely with TFS  
-> @rem  
-> @rem To use, tell TFS to use this command as the merge command  
-> @rem And then set this as your arguments:  
-> @rem %6 %7 %1 %2 %4  
-> "C:\Program Files\WinMerge\WinMerge.exe" /x /e /ub /wl /dl %1 /dr %2 %3 %4 %5  
-> exit 0
+{% highlight text linenos %}
+@rem winmergeFromTFS.bat  
+@rem 2007-08-01  
+@rem File created by Paul Oliver to get Winmerge to play nicely with TFS  
+@rem  
+@rem To use, tell TFS to use this command as the merge command  
+@rem And then set this as your arguments:  
+@rem %6 %7 %1 %2 %4  
+"C:\Program Files\WinMerge\WinMerge.exe" /x /e /ub /wl /dl %1 /dr %2 %3 %4 %5  
+exit 0
+{% endhighlight %}
 
 The merge instructions above will then be changed to:
 
@@ -70,37 +72,39 @@ The merge instructions above will then be changed to:
 
 WinMerge uses filter files to filter the entries found when comparing folders. The latest version of WinMerge bundles a C# filter file. I have updated it to include additional entries. Copy the content below into C:\Program Files\WinMerge\Filters\CSharp_loose.flt.
 
-> ## This is a directory/file filter for WinMerge  
-> ## This filter suppresses various binaries found in Visual C# source trees  
-> name: Visual C# loose  
-> desc: Suppresses various binaries found in Visual C# source trees
+{% highlight text linenos %}
+## This is a directory/file filter for WinMerge  
+## This filter suppresses various binaries found in Visual C# source trees  
+name: Visual C# loose  
+desc: Suppresses various binaries found in Visual C# source trees
 
-> ## This is an inclusive (loose) filter  
-> ## (it lets through everything not specified)def: include  
-> ## Filters for filenames begin with f:  
-> ## Filters for directories begin with d:  
-> ## (Inline comments begin with " ##" and extend to the end of the line)  
-> f: \.aps$ ## VC Binary version of resource file, for quick loading  
-> f: \.bsc$ ## VC Browser database  
-> f: \.dll$ ## Windows DLL  
-> f: \.exe$ ## Windows executable  
-> f: \.obj$ ## VC object module file  
-> f: \.pdb$ ## VC program database file (debugging symbolic information)  
-> f: \.res$ ## VC compiled resources file (output of RC [resource compiler])  
-> f: \.suo$ ## VC options file (binary)  
-> f: \.cache$ ## jQuery1520454518222482875_1352953951247  
-> f: \.resource$ ## Compiled resource file.  
-> f: \.xfrm ## jQuery15208427655482664704_1386642834837  
-> f: \.bak$ ## backup  
-> f: \.vssscc$ ## Source control metadata  
-> f: \.vspscc$ ## Project source control metadata  
-> f: \.user$ ## User settings  
-> f: \.resharper$ ## Resharper data  
-  
-> d: \\bin$ ## Build directory  
-> d: \\obj$ ## Object directory  
-> d: \\cvs$ ## CVS control directory  
-> d: \\.svn$ ## Subversion control directory
+## This is an inclusive (loose) filter  
+## (it lets through everything not specified)def: include  
+## Filters for filenames begin with f:  
+## Filters for directories begin with d:  
+## (Inline comments begin with " ##" and extend to the end of the line)  
+f: \.aps$ ## VC Binary version of resource file, for quick loading  
+f: \.bsc$ ## VC Browser database  
+f: \.dll$ ## Windows DLL  
+f: \.exe$ ## Windows executable  
+f: \.obj$ ## VC object module file  
+f: \.pdb$ ## VC program database file (debugging symbolic information)  
+f: \.res$ ## VC compiled resources file (output of RC [resource compiler])  
+f: \.suo$ ## VC options file (binary)  
+f: \.cache$ ## jQuery1520454518222482875_1352953951247  
+f: \.resource$ ## Compiled resource file.  
+f: \.xfrm ## jQuery15208427655482664704_1386642834837  
+f: \.bak$ ## backup  
+f: \.vssscc$ ## Source control metadata  
+f: \.vspscc$ ## Project source control metadata  
+f: \.user$ ## User settings  
+f: \.resharper$ ## Resharper data  
+
+d: \\bin$ ## Build directory  
+d: \\obj$ ## Object directory  
+d: \\cvs$ ## CVS control directory  
+d: \\.svn$ ## Subversion control directory
+{% endhighlight %}
 
 Updated:
 

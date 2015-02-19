@@ -14,21 +14,21 @@ This does highlight an issue though. How can you implement read-only automatic p
 
 So the code will look something like this:
 
-    {% highlight csharp linenos %}
-    public class SomeClass
+{% highlight csharp linenos %}
+public class SomeClass
+{
+    public SomeClass()
     {
-        public SomeClass()
-        {
-            SomeProperty = new Collection<SomeOtherClass&gt;();
-        }
-    
-        public Collection<SomeOtherClass&gt; SomeProperty
-        {
-            get;
-            private set;
-        }
+        SomeProperty = new Collection<SomeOtherClass>();
     }
-    {% endhighlight %}
+    
+    public Collection<SomeOtherClass&gt; SomeProperty
+    {
+        get;
+        private set;
+    }
+}
+{% endhighlight %}
 
 That is very neat.
 
