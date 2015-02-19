@@ -12,4 +12,4 @@ There are a couple of things to note about getting this to work:
 1. Line 18 in ResTest\ResTestLib\My Project\AssemblyInfo.vb must include the full namespace of the assembly, not just the filename of the embedded resource
 1. As above, Line 21 in ResTest\ResTestLib\ResTestControl.vb must also include the full namespace of the assemlby, not just the filename of the embedded resource
 
-[0]: /archive/2005/08/15/519.aspx
+[0]: {% post_url 2005-08-15-when-a-bug-isn-t-a-bug-but-still-requires-a-workaround %}

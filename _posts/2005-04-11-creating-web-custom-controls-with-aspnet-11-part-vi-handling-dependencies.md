@@ -36,7 +36,7 @@ I created a class that implements IHttpHandler and added as many helpful feature
 Here are the goods:
 
 {% highlight vb.net linenos %}
-# Region "; Imports ";
+# Region " Imports "
 
  Imports System
  Imports System.Web
@@ -45,7 +45,7 @@ Here are the goods:
 
 Public  Class ResHandler
 
-# Region "; Declarations ";
+# Region " Declarations "
 
 Implements IHttpHandler
 
@@ -63,13 +63,13 @@ Private m_sAssemblyName As  String
 
 # End  Region
 
-# Region "; Sub Procedures ";
+# Region " Sub Procedures "
 
 Private  Sub LoadTypeFromRegistry( _
     ByVal sFileExt As  String , _
     ByRef objType As TResType)
 
-    Dim objKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(";."; & sFileExt, False )
+    Dim objKey As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey("." & sFileExt, False )
 
     ' Check if the Content Type exists
     If  Not objKey.GetValue("Content Type") Is  Nothing  Then
