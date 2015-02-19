@@ -19,7 +19,7 @@ date: 2007-12-06 12:50:00 +10:00
 
  Download: [GetPublicKey.exe (127.50 kb)][3]
 
-[0]: /archive/2007/10/04/getting-the-publickey-for-internalsvisibleto.aspx
+[0]: /2007/10/04/getting-the-publickey-for-internalsvisibleto/
 [1]: http://davidkean.net/
 [2]: http://davidkean.net/archive/2005/10/06/1183.aspx
 [3]: /files/2008/9/GetPublicKey.exe

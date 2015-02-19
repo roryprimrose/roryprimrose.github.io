@@ -17,4 +17,4 @@ date: 2007-08-03 11:09:00 +10:00
 
  Any thoughts? 
 
-[0]: /archive/2007/07/11/coding-standards-member-level-variables.aspx
+[0]: /2007/07/11/coding-standards-member-level-variables/

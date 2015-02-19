@@ -22,15 +22,14 @@ A few configuration changes were required in the host web.config. Because I want
 
 Next I added the net.tcp binding to the site in IIS. This is done through the "Site Bindings" dialog of the site. So what is the format of the "Binding Information" field? I had no idea off the top of my head and unfortunately the help documentation only describes http/https binding configurations. After a quick web search, [Nicholas Allen][1] to the rescue:
 
-> _The format for TCP was picked to be as similar as possible to what already existed for HTTP. We have two parts to configure, again separated by colons. There is no equivalent for the list of addresses. The two parts are _
+> _The format for TCP was picked to be as similar as possible to what already existed for HTTP. We have two parts to configure, again separated by colons. There is no equivalent for the list of addresses. The two parts are_
 
-1. _Port number _
-1. [_Host name comparison mode][2] (blank or a wildcard symbol)_
+> 1. _Port number_
+> 1. _[Host name comparison mode][2] (blank or a wildcard symbol)_
 
 I chose a port number and entered 8081:* as my binding information.
 
 Running my remote client using the new address and binding didn't work. No connection. Windows Firewall gets me every time. To test if the firewall is the issue, I usually turn off the firewall temporarily and run the client. In this case, the connection was successful. I turned the firewall back on (very important!) and added the TCP port 8081 as an exception in the firewall rules. I also added 8080 as I moved away from the default port 80 for my http binding.
-
 
 Now I have a connection, but I get an error saying that the protocol net.tcp is not supported. After a quick web search, I found this [MSDN article][3] (same as above). It indicates some commands that need to be run. The one that stood out to me is:
 
