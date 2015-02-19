@@ -5,15 +5,15 @@ tags : Extensibility, ReSharper
 date: 2008-07-06 15:42:00 +10:00
 ---
 
-I have just released the [ReSharper Plugins 1.0][0] in my [NeovolveX][1] extensibility project on [CodePlex]. This plugin formats code as part of the ReSharper code format profiles.
+I have just released the [ReSharper Plugins 1.0][0] in my [NeovolveX][1] extensibility project on CodePlex. This plugin formats code as part of the ReSharper code format profiles.
 
 The following is a copy of the [Using ReSharper Plugins 1.0][2] documentation on the [project site][1]
 
-**> Value Type Alias Formatter**
+**Value Type Alias Formatter**
 
 >  The ReSharper Plugins project currently contains a single plugin that provides C# code formatting functionality. This formatting function allows for type declarations to be formatted between their alias type and their CLR type. For example, depending of the format settings defined in a code cleanup profile, bool can be converted to Boolean or Boolean converted to bool.  
   
-**> Configuration**
+**Configuration**
 
 > The following displays the normal code format profile dialog.  
 ![ProfileSettings.jpg][3]
@@ -28,71 +28,41 @@ The following is a copy of the [Using ReSharper Plugins 1.0][2] documentation on
 
 >  The _Do not change_ setting is the default value.  
   
-**> Type mappings**
+**Type mappings**
 
 > The following are the type mappings that are supported for converting types between alias types and their CLR types.  
   
 > Alias type &gt; CLR type 
 
-> object 
+> object &gt; Object 
 
-> Object 
+> char &gt; Char 
 
-> char 
+> string&gt; String 
 
-> Char 
+> bool&gt; Boolean 
 
-> string 
+> byte &gt; Byte 
 
-> String 
+> short &gt; Int16 
 
-> bool 
+> int &gt; Int32 
 
-> Boolean 
+> long &gt; Int64 
 
-> byte 
+> ushort &gt; UInt16 
 
-> Byte 
+> uint &gt; UInt32 
 
-> short 
+> ulong &gt; UInt64 
 
-> Int16 
+> double &gt; Double 
 
-> int 
+> decimal &gt; Decimal 
 
-> Int32 
+> float &gt; Single 
 
-> long 
-
-> Int64 
-
-> ushort 
-
-> UInt16 
-
-> uint 
-
-> UInt32 
-
-> ulong 
-
-> UInt64 
-
-> double 
-
-> Double 
-
-> decimal 
-
-> Decimal 
-
-> float 
-
-> Single 
-
-> sbyte 
-
-> SByte 
+> sbyte &gt; SByte 
   
 **> Code examples**
 

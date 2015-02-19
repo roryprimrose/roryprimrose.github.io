@@ -5,102 +5,102 @@ tags : Performance
 date: 2008-06-02 13:14:26 +10:00
 ---
 
-I read [Patrick Smacchia's][0] post this morning about [a simple trick to code better and to increase testability][1] and found it to be a great argument. These are the kinds of posts that I really enjoy reading and thinking about. They often have me hacking up test projects to flesh out ideas or kicking off [Reflector] to see what the BCL is doing.
+I read [Patrick Smacchia's][0] post this morning about [a simple trick to code better and to increase testability][1] and found it to be a great argument. These are the kinds of posts that I really enjoy reading and thinking about. They often have me hacking up test projects to flesh out ideas or kicking off Reflector to see what the BCL is doing.
 
 This was a good post because it got me to challenge why I am coding in the particular style that I have. I have always been a fan of combining if tests when it doesn't result in overly complex logic. In this case, Patrick is arguing that such a style of coding increases nesting depth and makes testing harder.
 
 Take this test case based on his post:
 
-    {% highlight csharp linenos %}
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
+{% highlight csharp linenos %}
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
      
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    internal class Program
     {
-        internal class Program
+        public static void MethodA(List<string> list)
         {
-            public static void MethodA(List<String&gt; list)
+            foreach (String item in list)
             {
-                foreach (String item in list)
+                if (item == null || item.Length == 0
+                    || item.Contains("a"))
                 {
-                    if (item == null || item.Length == 0
-                        || item.Contains("a"))
-                    {
-                        continue;
-                    }
-     
-                    Console.Write(String.Empty);
-                }
-            }
-     
-            public static void MethodB(List<String&gt; list)
-            {
-                foreach (String item in list)
-                {
-                    if (item == null)
-                    {
-                        continue;
-                    }
-     
-                    if (item.Length == 0)
-                    {
-                        continue;
-                    }
-     
-                    if (item.Contains("a"))
-                    {
-                        continue;
-                    }
-     
-                    Console.Write(String.Empty);
-                }
-            }
-     
-            private static void Main(String[] args)
-            {
-                List<String&gt; items = new List<String&gt;(100);
-     
-                for (Int32 index = 0; index < 100; index++)
-                {
-                    items.Add(index.ToString());
+                    continue;
                 }
      
-                Stopwatch watch = new Stopwatch();
-     
-                watch.Start();
-     
-                for (Int32 firstLoop = 0; firstLoop < 100000; firstLoop ++)
-                {
-                    MethodA(items);
-                }
-     
-                watch.Stop();
-     
-                Int64 firstTickCount = watch.ElapsedTicks;
-     
-                watch.Reset();
-     
-                watch.Start();
-     
-                for (Int32 secondLoop = 0; secondLoop < 100000; secondLoop++)
-                {
-                    MethodB(items);
-                }
-     
-                watch.Stop();
-     
-                Int64 secondTickCount = watch.ElapsedTicks;
-     
-                Console.WriteLine(firstTickCount);
-                Console.WriteLine(secondTickCount);
-                Console.WriteLine(secondTickCount - firstTickCount);
-                Console.ReadKey();
+                Console.Write(String.Empty);
             }
         }
+     
+        public static void MethodB(List<string> list)
+        {
+            foreach (String item in list)
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+     
+                if (item.Length == 0)
+                {
+                    continue;
+                }
+     
+                if (item.Contains("a"))
+                {
+                    continue;
+                }
+     
+                Console.Write(String.Empty);
+            }
+        }
+     
+        private static void Main(String[] args)
+        {
+            List<String> items = new List<string>(100);
+     
+            for (Int32 index = 0; index < 100; index++)
+            {
+                items.Add(index.ToString());
+            }
+     
+            Stopwatch watch = new Stopwatch();
+     
+            watch.Start();
+     
+            for (Int32 firstLoop = 0; firstLoop < 100000; firstLoop ++)
+            {
+                MethodA(items);
+            }
+     
+            watch.Stop();
+     
+            Int64 firstTickCount = watch.ElapsedTicks;
+     
+            watch.Reset();
+     
+            watch.Start();
+     
+            for (Int32 secondLoop = 0; secondLoop < 100000; secondLoop++)
+            {
+                MethodB(items);
+            }
+     
+            watch.Stop();
+     
+            Int64 secondTickCount = watch.ElapsedTicks;
+     
+            Console.WriteLine(firstTickCount);
+            Console.WriteLine(secondTickCount);
+            Console.WriteLine(secondTickCount - firstTickCount);
+            Console.ReadKey();
+        }
     }
+}
     
-    {% endhighlight %}
+{% endhighlight %}
 
 MethodA contains the combined if tests while MethodB separates them out into individual tests. While I'm not sure about the nesting depth argument due to compiler optimizations, I totally agree about the increase in testability. I also think that such a coding style is much more readable. The risk of combined if tests is that they quickly become complex and difficult to understand.
 
@@ -110,18 +110,18 @@ So performance isn't a problem as the compiler optimizes the code. The code is m
 
 I'm no IL expert, but it is interesting that the compiler seems to choose the more complex version (at least to Reflectors interpretation). The following is Reflectors decompilation of the release build interpreted in C#.
 
-    {% highlight csharp linenos %}
-    public static void MethodB(List<string&gt; list)
+{% highlight csharp linenos %}
+public static void MethodB(List<string> list)
+{
+    foreach (string item in list)
     {
-        foreach (string item in list)
+        if (((item != null) && (item.Length != 0)) && !item.Contains("a"))
         {
-            if (((item != null) && (item.Length != 0)) && !item.Contains("a"))
-            {
-                Console.Write(string.Empty);
-            }
+            Console.Write(string.Empty);
         }
     }
-    {% endhighlight %}
+}
+{% endhighlight %}
 
 I think I have a new change to my coding style.
 

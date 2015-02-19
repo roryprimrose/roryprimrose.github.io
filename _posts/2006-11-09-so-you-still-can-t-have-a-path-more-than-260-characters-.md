@@ -20,7 +20,7 @@ Path.MaxPath references a constant that has a value of 260. The exception return
 
 > _The specified path, file name, or both are too long. The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters._
 
-[Wikipedia][0] has some interesting [comparisons of file systems][1] and [Microsoft] also have some [file naming information][2] on MSDN. Being a developer for the [Microsoft] platform, the main file system of concern to me is NTFS. Under NTFS, the maximum file name length of 254 characters + &quot;.&quot; and a maximum pathname length of 32,767 Unicode characters with each path component (directory or filename) up to 255 characters long. Just for interest, FAT32 is 255 bytes for the maximum filename length and apparently unlimited for the maximum pathname length.
+[Wikipedia][0] has some interesting [comparisons of file systems][1] and Microsoft also have some [file naming information][2] on MSDN. Being a developer for the Microsoft platform, the main file system of concern to me is NTFS. Under NTFS, the maximum file name length of 254 characters + &quot;.&quot; and a maximum pathname length of 32,767 Unicode characters with each path component (directory or filename) up to 255 characters long. Just for interest, FAT32 is 255 bytes for the maximum filename length and apparently unlimited for the maximum pathname length.
 
 So the file systems we typically use with .Net and Windows support long paths. Why is it that the .Net framework and TFS won't allow them? Being limited to 260 characters for the entire path seems ludicrous when the limitation seems to be each part of the path has to be a maximum of 255 characters.
 

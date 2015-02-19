@@ -16,7 +16,7 @@ date: 2008-02-29 00:16:00 +10:00
 * ND1003 - Scope properties marked with a DataMember attribute as public
 * ND1004 - Scope classes marked with a DataContract attribute as public
 
- See [this post][1] and [this post][2] for some pointers about writing your own rules. Given the changes to the Visual Studio 2008 for Static Analysis Rules, some of the information around is not completely correct. I found that using [Reflector] on the files in _C:\Program Files\Microsoft Visual Studio 9.0\Team Tools\Static Analysis Tools\FxCop\Rules_ gave a great insight about how to achieve some things. 
+ See [this post][1] and [this post][2] for some pointers about writing your own rules. Given the changes to the Visual Studio 2008 for Static Analysis Rules, some of the information around is not completely correct. I found that using Reflector on the files in _C:\Program Files\Microsoft Visual Studio 9.0\Team Tools\Static Analysis Tools\FxCop\Rules_ gave a great insight about how to achieve some things. 
 
  You can download the code for the above rules and included Release build from [here][3]. If you want to use these rules, just drop the _Neovolve.StaticAnalysis.Rules.dll_ into _C:\Program Files\Microsoft Visual Studio 9.0\Team Tools\Static Analysis Tools\FxCop\Rules_, start up Visual Studio and run Code Analysis on a WCF service contract project. 
 

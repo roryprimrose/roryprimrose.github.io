@@ -9,7 +9,7 @@ An ongoing issue that I am having with NAnt scripts is bloat in the log records 
 
 After doing some searching, I came across [this post][2] from [Jay Flowers][3]. Will Buttitta posted another version of the same idea in a comment against that post. Using tasks to change the logging threshold at runtime for a particular part of the script is a great idea. Unfortunately, I have found that neither of these implementations work.
 
-After going through [Reflector], I have found that classes that are derived from Task and call the Log method end up invoking Element.Log() which calls straight down to Project.Log(). The Project.Log method does not check the logging threshold before writing the log entry. What I haven't been able to figure out is why Task.Log is not invoked. If it was, then I think the two solutions in Jay's post would probably work as Task.Log() checks the current logging threshold before calling down to the base class.
+After going through Reflector, I have found that classes that are derived from Task and call the Log method end up invoking Element.Log() which calls straight down to Project.Log(). The Project.Log method does not check the logging threshold before writing the log entry. What I haven't been able to figure out is why Task.Log is not invoked. If it was, then I think the two solutions in Jay's post would probably work as Task.Log() checks the current logging threshold before calling down to the base class.
 
 There is however another way that will correctly modify the logging threshold at a much lower level. 
 

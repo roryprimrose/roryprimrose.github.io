@@ -5,7 +5,7 @@ date: 2006-09-24 23:11:00 +10:00
 
 I am working on a personal project that I have wanted to do for quite a while. The project requires a database and I have been putting this part of the system together tonight. I remembered reading about the new edition of [Visual Studio for Database Professionals][0] that was blogged about the other month. I have decided to give this a run because I would like a full Visual Studio development experience as much as possible.
 
-There are two major things that I would like to get out of this new project model. Firstly, version control for database objects. I will get the project onto [CodePlex] sometime soon so that should be a good test of its version control capabilities. Secondly, a good deployment (including upgrade) model. 
+There are two major things that I would like to get out of this new project model. Firstly, version control for database objects. I will get the project onto CodePlex sometime soon so that should be a good test of its version control capabilities. Secondly, a good deployment (including upgrade) model. 
 
 Deployment is going to be the really interesting thing for me. How is a database project going to be built/deployed and how will the new project model cater for updating a live database to a new version. 
 
