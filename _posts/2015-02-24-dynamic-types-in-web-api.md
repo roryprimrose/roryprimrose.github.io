@@ -44,7 +44,7 @@ namespace DynamicService.Controllers
 
 Web API renders the following data for this action.
 
-{% highlight plain linenos %}
+{% highlight text linenos %}
 [
   {
     "firstName": "Sam",

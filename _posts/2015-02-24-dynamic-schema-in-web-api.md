@@ -138,7 +138,7 @@ namespace DynamicService.Controllers
 
 Web API renders the following data for this action.
 
-{% highlight plain linenos %}
+{% highlight text linenos %}
 [
   {
     "stuff": "148504dc-c57c-4ef2-9497-d7585d2c4998",
