@@ -121,12 +121,6 @@ aside#sidebar nav a {
     background: transparent url(images/empty-button.png) 0 0 no-repeat;
 }
 
-aside a.github {
-    color: #2e7bcf;
-    background: transparent url(../images/github-blue-button.png) 0 0 no-repeat;
-    content: "";
-}
-
 aside#sidebar nav a:before {
     padding-right: 0.3em;
     margin-left: -1.3em;
@@ -168,6 +162,12 @@ aside a.button {
     margin-bottom: 20px;
     font-size: 21px;
     background: transparent url(../images/download-button.png) 0 0 no-repeat;
+}
+
+aside a.github {
+    color: #2e7bcf !important;
+    background: transparent url(../images/github-blue-button.png) 0 0 no-repeat !important;
+    content: "" !important;
 }
 
 code, pre {
