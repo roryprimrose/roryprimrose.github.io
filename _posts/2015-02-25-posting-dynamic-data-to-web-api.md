@@ -1,9 +1,8 @@
 ---
-published: false
 title: Posting dynamic data to Web API
 categories: .Net
 tags: ASP.Net
-date: {}
+date: 2015-02-25 11:17:57 +11:00
 ---
 
 The previous two posts ([here][0] and [here][1]) have looked at a POC for returning dynamic data from Web API and then adding a defined schema to a semi-dynamic object. This post is the next POC that looks at how to POST that data to the Web API.
