@@ -167,7 +167,10 @@ aside a.button {
 aside a.github {
     color: #2e7bcf;
     background: transparent url(../images/github-blue-button.png) 0 0 no-repeat;
-    content: ;
+}
+
+aside a.github:before {
+    content: "" !important;
 }
 
 code, pre {
