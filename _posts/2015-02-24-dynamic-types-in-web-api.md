@@ -11,6 +11,8 @@ Rather than store each data type in it's own data structure (such as a database 
 
 The first POC is to determine whether Web API will render dynamic types of differing structures. At the same time, can this be done with a Task based API. Here is the first test.
 
+<!--more-->
+
 {% highlight csharp %}
 using System.Threading.Tasks;
 using System.Web.Http;

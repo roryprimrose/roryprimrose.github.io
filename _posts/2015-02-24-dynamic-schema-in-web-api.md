@@ -11,6 +11,8 @@ For this POC, I will define the core type (DataEntry) and then dynamic metadata 
 
 This POC uses DynamicObject to be the bridge between the DataType, its metadata and its metadata schema. It provides the type information for Web API so that it can be correctly returned over the wire.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace DynamicService.Controllers
 {

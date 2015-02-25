@@ -8,6 +8,8 @@ I recently [posted][0] about an EntityAdapter class that can be the bridge betwe
 
 I hit this issue because I started working with a model class that exposes an enum property. The integration tests failed because the read of the entity using the adapter returned the default enum value for the property rather than the one I attempted to write to the table. I have updated the EntityAdapter class to cater for this by using reflection and type converters to fill in the gaps.
 
+<!--more-->
+
 The class now looks like the following:
 
 {% highlight csharp %}

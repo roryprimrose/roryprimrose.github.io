@@ -8,6 +8,8 @@ Developers generally like the LINQ syntax with all its lambda goodness. It is fl
 
 Signatures like the LINQ Intersect function seems to just get in the way of productive development. With so many things in a lambda syntax, we are now forced back into the world of IEqualityComparer. The easy fix is to drop in something like a generic equality comparer that will support a Func.
 
+<!--more-->
+
 {% highlight csharp %}
 public class PredicateComparer<T> : IEqualityComparer<T>
 {

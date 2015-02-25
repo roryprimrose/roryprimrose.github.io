@@ -9,9 +9,9 @@ The previous two posts ([here][0] and [here][1]) have looked at a POC for return
 
 The design goals are similar to the previous POCs. There is a type that has some known properties and then contains JSON serialized metadata for all the remaining dynamic properties. The storage and retrieval of the metadata should conform to some known schema for that metadata.
 
-<!--more-->
-
 The code here uses JObject from Newtonsoft.JSON as the mechanism of making the dynamic data available to the controller action. We then need to separate out the known properties from the metadata properties and convert all of them to the correct type.
+
+<!--more-->
 
 {% highlight csharp %}
 using System.Threading.Tasks;

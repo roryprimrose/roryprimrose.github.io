@@ -6,6 +6,8 @@ date: 2014-01-07 16:18:14 +10:00
 
 I got a request for an example of how to use the EntityAdapter class I [previously posted about][0]. Here is an example of a PersonAdapter.
 
+<!--more-->
+
 {% highlight csharp %}
 public enum Gender
 {

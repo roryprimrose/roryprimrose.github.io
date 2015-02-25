@@ -9,6 +9,8 @@ While this is stating the obvious, my JavaScript skills sometimes fail to apprec
 
 The primary issue here however is that scripts will still use the console but the script might not execute in a browser the supports it. This script might be something that you control, but could also be a third party script you import. In either case, there are two things that should happen here. Firstly and most importantly, the script shouldn't fail because the browser doesn't support console logging. Secondly, the console functionality should do its best attempt at getting console logging to work when at all possible. 
 
+<!--more-->
+
 A quick search pulled up [a StackOverflow article][0] which provides a very good workaround to prevent JavaScript errors being thrown. This script handles the first scenario by preventing errors if a function is undefined for a given browser. Unfortunately it completely hides information that could otherwise be logged. Here is my take on that script.
 
 {% highlight javascript %}
