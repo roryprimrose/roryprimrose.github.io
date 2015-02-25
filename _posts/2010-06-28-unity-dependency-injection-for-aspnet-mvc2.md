@@ -16,7 +16,7 @@ ASP.Net MVC uses a controller factory to create controller instances. Only the c
 
 The UnityControllerFactoryHttpModule creates a new UnityControllerFactory if the current factory has not already been configured for Unity injection. It resets the controller factory back to a default factory when the module is disposed.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
@@ -55,7 +55,7 @@ namespace Neovolve.Toolkit.Unity
 
 The UnityControllerFactoryHttpModule uses a base class refactored from the original [ASP.Net][0] implementation. This base class is responsible for resolving and disposing the Unity container for the module. The class calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][3].
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics.Contracts;
 using System.Web;
@@ -147,7 +147,7 @@ The UnityControllerFactory class is used to create and teardown controller insta
 
 The factory uses the container to tear down the controller instance when the application notifies the factory that it is finished with it. The base class method is also invoked to cover the case when the container isn’t configured for tear down operations. This ensures that at least the controller instance itself can be disposed if it implements IDisposable. I suggest you configure the container to teardown build trees with my [custom extension][2] as this will ensure that all disposable instances are correctly destroyed.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -223,7 +223,7 @@ namespace Neovolve.Toolkit.Unity
 
 Configuring this module is similar to the ASP.Net implementation. The following example hooks up the UnityControllerFactoryHttpModule and the DisposableStrategyExtension and configures injection support for the HashAlgorithm type.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>
@@ -262,7 +262,7 @@ Configuring this module is similar to the ASP.Net implementation. The following 
 
 This configuration can now be used to create any controller that has a HashAlgorithm type in its constructor.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Security.Cryptography;
 using System.Text;

@@ -13,7 +13,7 @@ The great feature that the yield statement brings is delayed execution in iterat
 
 Take the following code for example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.Generic;
      
@@ -84,7 +84,7 @@ This code iterates over a set of 10 items and outputs the details of each item e
 
 The output of this code is:
 
-{% highlight text linenos %}
+{% highlight text %}
 Starting the iterations
 Getting item 0 from the store
 Got item 0 - First0 - Second0

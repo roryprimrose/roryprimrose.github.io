@@ -11,7 +11,7 @@ I haven’t been able to play with this feature until the last week. One of the 
 
 I want to support Unity configuration so we need to start with a ParameterValueElement class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyApplication.Server.Unity
 {
     using System;
@@ -88,7 +88,7 @@ This class leverages a variant of the aforementioned ConnectionStringSettings Un
 
 Next we need an InjectionParameterValue class that will actual create the instance when the type is resolved in/by Unity.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyApplication.Server.Unity
 {
     using System;
@@ -165,7 +165,7 @@ This class will either create a connection or a reliable connection using the ex
 
 Unity needs to know about the custom extension so that it can support it in configuration. The element class needs to be registered with Unity via a SectionExtension.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyApplication.Server.Unity
 {
     using Microsoft.Practices.Unity.Configuration;
@@ -188,7 +188,7 @@ namespace MyApplication.Server.Unity
 
 Lastly the configuration in Unity needs a pointer to the SectionExtension.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0"?>
 <unity>
     
@@ -201,7 +201,7 @@ Lastly the configuration in Unity needs a pointer to the SectionExtension.
 
 The only thing left to do is use the Unity configuration to inject an auto-implemented interface instance.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <register type="MyApplication.Server.BusinessContracts.IAccountManager, MyApplication.Server.BusinessContracts"
             mapTo="MyApplication.Server.Business.AccountManager, MyApplication.Server.Business">
     <constructor>

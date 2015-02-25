@@ -21,7 +21,7 @@ In order to ensure thread safety of adding a new item to the dictionary, a lock 
 
 **#1 - This is what people would normally do**
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 lock (MyDictionary)
 {
     // Check if a value needs to be stored
@@ -35,7 +35,7 @@ lock (MyDictionary)
 
 **#2 - I think this would perform better**
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 // Check if a value needs to be stored
 if (MyDictionary.ContainsKey(myKey) == false)
 {

@@ -34,7 +34,7 @@ The solution to this issue is to extend the behaviour of an IErrorHandler implem
 
 The ProvideFault method in the IErrorHandler implementation in the service has been updated to manage this detection and conversion process.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
 {
     Exception errorToProcess = AttemptBusinessFailureExceptionConversion(error);
@@ -84,7 +84,7 @@ public void ProvideFault(Exception error, MessageVersion version, ref Message fa
 
 The existing code already managed a BusinessFailureException&lt;T&gt; and converted it to a BusinessFault that is a known fault contract for the service. The method now makes a call out to AttemptBusinessFailureExceptionConversion as an initial step.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private static Exception AttemptBusinessFailureExceptionConversion(Exception errorToProcess)
 {
     FaultException thrownFaultException = errorToProcess as FaultException;

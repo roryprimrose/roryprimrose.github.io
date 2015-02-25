@@ -19,7 +19,7 @@ Setting up the security context of the service is done using [IAuthorizationPoli
 
 The custom ServiceCredentials class implementation returns a custom SecurityTokenManager if custom username password validation is enabled. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class PasswordServiceCredentials : ServiceCredentials
 {
     public PasswordServiceCredentials()
@@ -55,7 +55,7 @@ public class PasswordServiceCredentials : ServiceCredentials
 
 The custom SecurityTokenManager returns a custom SecurityTokenAuthenticator when it finds a SecurityTokenRequirement for username security. It also ensures that a default validator is available if one is not configured. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 internal class PasswordSecurityTokenManager : ServiceCredentialsSecurityTokenManager
 {
     public PasswordSecurityTokenManager(PasswordServiceCredentials credentials)
@@ -92,7 +92,7 @@ internal class PasswordSecurityTokenManager : ServiceCredentialsSecurityTokenMan
 
 The custom SecurityTokenAuthenticator is where the half of the magic happens. Here there is the opportunity to return custom a IAuthorizationPolicy implementation that will allow us to inject a custom IPrincipal and IIdentity on the thread the executes the service code. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 internal class PasswordSecurityTokenAuthenticator : CustomUserNameSecurityTokenAuthenticator
 {
     public PasswordSecurityTokenAuthenticator(UserNamePasswordValidator validator)
@@ -117,7 +117,7 @@ internal class PasswordSecurityTokenAuthenticator : CustomUserNameSecurityTokenA
 
 The IAuthorizationPolicy implementation is where the other half of the magic happens. This policy gets passed the username and password so that it can store the password in the security context. The policy will return false until it finds a GenericIdentity in the evaluation context that has the same username as the one provided to the policy. It then creates a custom IIdentity that exposes both the username and password and stores it back into the collection of identities in the evaluation context and also stores it against the PrimaryIdentity property. PrimaryIdentity is then exposed through [ServiceSecurityContext.PrimaryIdentity][3] in the service implementation. A custom principal is then created (without roles) and stores it against the Principal property of the context. Principal is then injected into Thread.CurrentPrincipal by WCF (depending on configuration). 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Collections.Generic; 
 using System.IdentityModel.Claims; 
@@ -235,7 +235,7 @@ As mentioned above, the custom ServiceCredentials needs to be configured so that
 
 The other thing to note is that because username password credentials are being passed over to the wire to the service, transport security is required to protect the credentials. The security mode should be set to TransportWIthMessageCredentials with a message client credential type as UserName. 
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
     <system.web> 

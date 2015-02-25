@@ -17,7 +17,7 @@ For background, this is my current implementation. The web project structure loo
 
 The project was already bundling the zone files using the following logic.  
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private static void BundleTimeZoneData(BundleCollection bundles, HttpServerUtility server)
 {
     var directory = server.MapPath("~/Scripts/tz");
@@ -43,7 +43,7 @@ private static void BundleTimeZoneData(BundleCollection bundles, HttpServerUtili
 
 The timezoneJS package is configured so that it correctly references the bundle paths.
 
-{% highlight javascript linenos %}
+{% highlight javascript %}
 timezoneJS.timezone.zoneFileBasePath = "/script/tz";
 timezoneJS.timezone.defaultZoneFile = [];
 timezoneJS.timezone.init({ async: false });
@@ -53,7 +53,7 @@ timezoneJS.timezone.init({ async: false });
 
 Now comes the part were we strip out the unnecessary comments from the zone files. The TimeZoneBundleBuilder class simply strips out blank lines, lines that start with comments and the parts of lines that end in comments.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class TimeZoneBundleBuilder : IBundleBuilder
 {
     private readonly IBundleBuilder _builder;
@@ -117,7 +117,7 @@ public class TimeZoneBundleBuilder : IBundleBuilder
 
 This is then hooked up in the bundle configuration for the tz files.
     
-{% highlight csharp linenos %}
+{% highlight csharp %}
 bundles.Add(
     new Bundle("~/script/tz/" + fileName)
     {

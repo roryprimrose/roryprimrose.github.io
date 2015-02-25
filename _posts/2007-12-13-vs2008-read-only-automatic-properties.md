@@ -14,7 +14,7 @@ This does highlight an issue though. How can you implement read-only automatic p
 
 So the code will look something like this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class SomeClass
 {
     public SomeClass()

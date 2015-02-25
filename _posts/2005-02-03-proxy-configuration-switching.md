@@ -16,7 +16,7 @@ There are two problems with this idea. Firstly, when the IP address is determine
 
 Here is the code:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
 #Region " Imports "
      
 Imports System.Net

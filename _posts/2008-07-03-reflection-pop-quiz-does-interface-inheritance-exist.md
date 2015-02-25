@@ -8,7 +8,7 @@ I've written some code that reflections MethodInfo objects from a type using its
 
 Consider the following code:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 internal interface IBaseInterface
 {
     void GetSomething();
@@ -34,7 +34,7 @@ Now things get a little curly here. An interface that implements an interface do
 
 Here is the complete source:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Reflection;
      

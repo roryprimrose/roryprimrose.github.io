@@ -8,7 +8,7 @@ One of my most used feature in the 3.5 compiler for .Net is automatic properties
 
 Traditionally, properties work with a backing field. For example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private String _someValue;
     
 public String SomeValue
@@ -26,7 +26,7 @@ public String SomeValue
 
 Automatic properties under the 3.5 compiler allow this code to be represented as:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public String SomeValue
 {
     get;
@@ -42,7 +42,7 @@ The [documentation on MSDN][0] says:
 
 The implementation of automatic properties by the compiler define that readonly automatic properties are achieved by assigning a private scope to the set accessor. For example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public String SomeValue
 {
     get;
@@ -54,7 +54,7 @@ Unfortunately, I think this is a cheap bandaid hack. It doesn't make the propert
 
 I would like to see this changed. Without understanding the complexities of writing compilers, I would think that this change would not be too significant. The simple fix would be to enhance the syntax of the automatic property setter definition. If the private set statement could be enhanced to understand a [readonly keyword][3], then the compile could mark the backing field with the same readonly keyword. For example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public String SomeValue
 {
     get;
@@ -64,7 +64,7 @@ public String SomeValue
 
 This would then be interpreted by the compiler as something like this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private readonly String _someValue;
     
 public String SomeValue

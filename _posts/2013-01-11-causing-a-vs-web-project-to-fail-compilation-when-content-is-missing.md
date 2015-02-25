@@ -21,7 +21,7 @@ The project will now identify the missing file in Solution Explorer if you refre
 
 Ok, but what about a build.
 
-{% highlight text linenos %}
+{% highlight text %}
 1>------ Rebuild All started: Project: MvcApplication1, Configuration: Debug Any CPU ------
 1>  MvcApplication1 -> c:\Dev\MvcApplication1\bin\MvcApplication1.dll
 ========== Rebuild All: 1 succeeded, 0 failed, 0 skipped ==========
@@ -39,7 +39,7 @@ I see this as a problem. You can check this in and every other developer/machine
 
 The trick here is to modify the project file. Edit the project file and you will find the following at the bottom:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
      Other similar extension points exist, see Microsoft.Common.targets.
 <Target Name="BeforeBuild">
@@ -50,7 +50,7 @@ The trick here is to modify the project file. Edit the project file and you will
 
 We want to remove the comments surrounding BeforeBuild and change it to the following:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
      Other similar extension points exist, see Microsoft.Common.targets.
 <Target Name="AfterBuild">
@@ -68,7 +68,7 @@ We want to remove the comments surrounding BeforeBuild and change it to the foll
 
 This will output warnings for each file that is missing, then fail the compilation. This allows you to see multiple files that are missing before compilation is halted.
 
-{% highlight text linenos %}
+{% highlight text %}
 1>------ Build started: Project: MvcApplication1, Configuration: Debug Any CPU ------
 1>C:\Dev\MvcApplication1\MvcApplication1.csproj(329,5): warning : Content file 'C:\Dev\MvcApplication1\Scripts\jquery.validate.min.js' was not found.
 1>C:\Dev\MvcApplication1\MvcApplication1.csproj(329,5): warning : Content file 'C:\Dev\MvcApplication1\Content\Site.css' was not found.

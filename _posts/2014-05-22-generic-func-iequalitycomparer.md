@@ -8,7 +8,7 @@ Developers generally like the LINQ syntax with all its lambda goodness. It is fl
 
 Signatures like the LINQ Intersect function seems to just get in the way of productive development. With so many things in a lambda syntax, we are now forced back into the world of IEqualityComparer. The easy fix is to drop in something like a generic equality comparer that will support a Func.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class PredicateComparer<T> : IEqualityComparer<T>
 {
     private readonly Func<T, T, bool> _comparer;
@@ -34,7 +34,7 @@ public class PredicateComparer<T> : IEqualityComparer<T>
 
 This little helper doesn’t totally fix the syntax problem, but does limit how big your coding speed bumps are. For example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 var matchingEntities = allEntities.Intersect(
     subsetOfEntities,
     new PredicateComparer<MyEntityType>((x, y) => x.Id == y.Id));

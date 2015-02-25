@@ -11,7 +11,7 @@ I only know of [one solution][0] for identifying the real type behind the object
 
 By using this DebugHelper class in your addin solution, you will be able to figure out the object types. The Conditional attribute ensures that these methods (and calls to them) will not appear in your release build. The method takes a UIHierarchyItem and searches all the publicly available types of all the assemblies in the app domain for types that are implemented by the UIHierarchyItem.Object property.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.Reflection;

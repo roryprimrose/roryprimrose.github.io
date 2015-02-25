@@ -47,7 +47,7 @@ This problem and workaround was originally found [here][3] by a colleague. He te
 
 Create a batch file with the following content:
 
-{% highlight text linenos %}
+{% highlight text %}
 @rem winmergeFromTFS.bat  
 @rem 2007-08-01  
 @rem File created by Paul Oliver to get Winmerge to play nicely with TFS  
@@ -72,7 +72,7 @@ The merge instructions above will then be changed to:
 
 WinMerge uses filter files to filter the entries found when comparing folders. The latest version of WinMerge bundles a C# filter file. I have updated it to include additional entries. Copy the content below into C:\Program Files\WinMerge\Filters\CSharp_loose.flt.
 
-{% highlight text linenos %}
+{% highlight text %}
 ## This is a directory/file filter for WinMerge  
 ## This filter suppresses various binaries found in Visual C# source trees  
 name: Visual C# loose  

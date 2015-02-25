@@ -13,7 +13,7 @@ My version of the enum editor will auto-detect if the flags enum has been define
 
 Hope you find this helpful.
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
  Public  Class EnumEditor
 # Region " Declarations "
  Inherits System.Drawing.Design.UITypeEditor

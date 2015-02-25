@@ -8,7 +8,7 @@ GhostDoc is one of the coolest tools around for Visual Studio. Sometimes it need
 
 For example,
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 /// <summary>
 /// Creates the returns cache store instance test.
 /// </summary>
@@ -34,7 +34,7 @@ Enter the new rule name, identify that the method name must end in "_Test_" and 
 
 Using this new rule, the example above now gets the following documentation generated.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 /// <summary>
 /// Runs test for create returns cache store instance.
 /// </summary>

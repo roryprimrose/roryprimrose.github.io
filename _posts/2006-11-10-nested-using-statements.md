@@ -8,7 +8,7 @@ The using statement in the .Net framework is a really good way of neatly using a
 
 The following is an example taken from [John Papa's][0] latest [Data Points][1] [MSDN Magazine][2] article:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using (TransactionScope ts = new TransactionScope())    
 {
     using (SqlConnection cn2005 = new SqlConnection(cnString))
@@ -24,7 +24,7 @@ using (TransactionScope ts = new TransactionScope())
 
 As far as the messy look of it goes, I know that you can also do the following.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using (TransactionScope ts = new TransactionScope())
 using (SqlConnection cn2005 = new SqlConnection(cnString))
 {

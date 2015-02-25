@@ -14,7 +14,7 @@ The gap in functionality here is where I want to use NSubstitute to evaluate rec
 
 Getting this to work uses two key pieces, IArgumentMatcher from NSubstitute and AssertionScope from FluentAssertions.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public static class Verify
 {
     private static readonly ArgumentSpecificationQueue _queue;
@@ -67,7 +67,7 @@ A key outcome of this class is to report failures. This is simply done by tracin
 
 This can be used like the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 validationStore.Received()
     .AddOutstandingVerification(
         Verify.That<OutstandingVerification>(
@@ -76,7 +76,7 @@ validationStore.Received()
 
 The failure reporting of this test would then look like the following:
 
-{% highlight text linenos %}
+{% highlight text %}
 Debug Trace:
 Expected date and time to be within 2000 ms from <2015-10-09 22:18:00.911>, but found <2014-10-09 22:18:00.895>.
 Expected date and time to be within 2000 ms from <2015-10-09 22:18:00.930>, but found <2014-10-09 22:18:00.895>.

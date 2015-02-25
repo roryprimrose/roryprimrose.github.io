@@ -9,7 +9,7 @@ I have an interesting scenario that I have just come across in my code. I have a
 
 Here is the situation. I have a flush method that looks like this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public void Flush()
 {
     // Loop through each listener
@@ -25,7 +25,7 @@ Code coverage for this method says that 2 blocks not covered, 12.5% not covered,
 
 The IL for this method is:
 
-{% highlight text linenos %}
+{% highlight text %}
 .method public hidebysig instance void Flush() cil managed
 {
     .maxstack 2
@@ -80,7 +80,7 @@ The UI for code coverage indicates that each line of code is hit. My guess is th
 
 I changed the code to this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public void Flush()
 {
     // Loop through each listener
@@ -98,7 +98,7 @@ Code coverage now says that 0 blocks not covered, 0% not covered, 11 blocks cove
 
 The IL for this method is now:
 
-{% highlight text linenos %}
+{% highlight text %}
 .method public hidebysig instance void Flush() cil managed
 {
     .maxstack 2

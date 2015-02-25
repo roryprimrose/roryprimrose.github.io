@@ -15,7 +15,7 @@ I guess the argument is that INT IDENTITY fields are not modifiable (without int
 
 Here is a test script to illustrate what I mean.
 
-{% highlight sql linenos %}
+{% highlight sql %}
 DECLARE @sXML NVARCHAR(4000)
 DECLARE @hDoc INT
 
@@ -71,7 +71,7 @@ The way I write these procedures is to define a temporary table (like the above 
 
 The way I would use the above code would be something like this:
 
-{% highlight sql linenos %}
+{% highlight sql %}
 DECLARE @sXML NVARCHAR(4000)
 DECLARE @hDoc INT
 

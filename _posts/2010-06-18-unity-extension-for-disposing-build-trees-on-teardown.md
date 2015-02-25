@@ -19,7 +19,7 @@ This can be addressed by creating a builder strategy that is hooked up via a Uni
 
 My initial version of this implementation was very simple.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
@@ -91,7 +91,7 @@ The benefit of tracking and storing a build tree means that if dependencies are 
 
 Build trees are made up build tree nodes which may have 0-many children and a reference back to their parent.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
@@ -158,7 +158,7 @@ namespace Neovolve.Toolkit.Unity
 
 The DisposableStrategyExtension is responsible for attaching the build tree tracker strategy and for disposing all the build trees when the owning container is disposed.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics.Contracts;
 using Microsoft.Practices.ObjectBuilder2;
@@ -218,7 +218,7 @@ The tracker will find a build tree for an instance provided to TearDown and run 
 
 The tracker uses a ThreadStatic to track the current node being built in a build tree as the container may be creating multiple build trees over several threads at the same time. Similarly the tracker needs to protect the list of build trees with suitable locking. The locking in this case uses my [LockReader][9] and [LockWriter][10] classes.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -390,7 +390,7 @@ namespace Neovolve.Toolkit.Unity
 
 The BuildTreeTracker calls out to a helper class that is used to dispose build trees.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -486,7 +486,7 @@ namespace Neovolve.Toolkit.Unity
 
 Lastly there is the code to hook up the extension.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public void ExampleExtensionUsage()
 {
     IDisposableType actual;
@@ -508,7 +508,7 @@ public void ExampleExtensionUsage()
 
 This can also be done via configuration.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>

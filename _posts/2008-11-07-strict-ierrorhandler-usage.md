@@ -15,7 +15,7 @@ Failure to configure the service correctly for IErrorHandler implementations may
 
 An alternative to configuration is to use an attribute implementation to compile IErrorHandler implementations to the service implementation. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 [ErrorHandler(typeof(KnownErrorHandler), typeof(UnknownErrorHandler))]
 public class TestService : ITestService
 {
@@ -26,7 +26,7 @@ In this example, there is a TestService implementation that uses the ITestServic
 
 Here is the attribute code. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Collections.ObjectModel; 
 using System.Diagnostics; 

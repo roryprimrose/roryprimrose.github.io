@@ -9,7 +9,7 @@ This post puts together the code posted in the previous two posts ([here][0] and
 
 The following code is what I am using the spin up the Azure storage emulator, Azure compute emulator and IISExpress so that I can run my system through its integration tests.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MySystem.Server.Web.IntegrationTests
 {
     using System;

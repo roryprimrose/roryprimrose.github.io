@@ -11,7 +11,7 @@ To achieve this, I generate a cache key that identifies the manager (constant st
 
 When I was unit testing this behaviour, I found that Rhino mock is reusing mocked types. This means that the following code failed: 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 MockRepository mock = new MockRepository();
 ITraceSourceResolver firstResolver = mock.CreateMock<ITraceSourceResolver>();
 ITraceSourceResolver secondResolver = mock.CreateMock<ITraceSourceResolver>();
@@ -26,7 +26,7 @@ The easiest way around this was to get Rhino mock to see the mock definitions as
 
 The following now succeeds and I have two unique mocked types of the same interface to use in my unit tests. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 MockRepository mock = new MockRepository();
 ITraceSourceResolver firstResolver = mock.CreateMock<ITraceSourceResolver>();
 ITraceSourceResolver secondResolver = mock.CreateMultiMock<ITraceSourceResolver>(typeof(ICloneable));

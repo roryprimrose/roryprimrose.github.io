@@ -11,7 +11,7 @@ The primary issue here however is that scripts will still use the console but th
 
 A quick search pulled up [a StackOverflow article][0] which provides a very good workaround to prevent JavaScript errors being thrown. This script handles the first scenario by preventing errors if a function is undefined for a given browser. Unfortunately it completely hides information that could otherwise be logged. Here is my take on that script.
 
-{% highlight javascript linenos %}
+{% highlight javascript %}
 (function () {
     if (!window.console) {
         window.console = {};

@@ -17,7 +17,7 @@ Using IHttpHandler is perfect for covering our dependency deployment problems, b
 
 This is what is required in the web.config file:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <configuration >
     <system.web >
         <httpHandlers >
@@ -35,7 +35,7 @@ I created a class that implements IHttpHandler and added as many helpful feature
 
 Here are the goods:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
 # Region " Imports "
 
  Imports System

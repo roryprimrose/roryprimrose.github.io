@@ -13,7 +13,7 @@ The biggest limitation with the proof of concept project was that the resource f
 
 The answer to this was to change the proj file in the template to provide some custom MSBuild logic to move the MSI package from the WiX target directory to a known location for the resource file. The resource xml file in the project template was updated to point to the obj directory as the static source.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <data name="Package" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\obj\Package;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 </data>
@@ -21,7 +21,7 @@ The answer to this was to change the proj file in the template to provide some c
 
 The project file in the template then had its BeforeBuild target changed to ensure that the package is copied to the resource xml static file location before the bootstrapper project is compiled.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Target Name="BeforeBuild">
     <PropertyGroup>
     <PackagePath>$packagePath$</PackagePath>

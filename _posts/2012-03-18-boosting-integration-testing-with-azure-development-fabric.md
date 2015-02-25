@@ -9,7 +9,7 @@ I [posted previously][0] about manually spinning up Azure storage emulator in th
 
 This updated one might be helpful for others to leverage as well. This version allows for starting and stopping both the storage emulator and the compute emulator. It makes its best attempt at automatically finding the Azure project service directory and the service configuration for the current build configuration. If this does not work for your scenario, then you can also manually provide this information.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Azure
 {
     using System;
@@ -307,7 +307,7 @@ namespace Neovolve.Toolkit.Azure
 
 This makes use of an extension method on the TestContext class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Azure
 {
     using System;

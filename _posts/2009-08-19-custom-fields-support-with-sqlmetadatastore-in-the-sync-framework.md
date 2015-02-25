@@ -8,7 +8,7 @@ I am putting together a sync framework provider and have come across some issues
 
 I have the following initialization code.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {
                                             new FieldSchema("IsContainer", typeof(Boolean)),
@@ -39,7 +39,7 @@ There must be something wrong with the implementation of this constructor as thi
 
 The code now looks like the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {
                                             new FieldSchema("IsContainer", typeof(Boolean)),
@@ -74,7 +74,7 @@ With a stack trace that looks like the following:
   
 If you follow down the rabbit hole using Reflector, Microsoft.Synchronization.MetadataStorage.Utility.ConvertDataTypeToSyncMetadataFieldType has the following code:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 internal static SYNC_METADATA_FIELD_TYPE ConvertDataTypeToSyncMetadataFieldType(Type dataType)
 {
     if (dataType == typeof(byte[]))
@@ -113,7 +113,7 @@ The answer to this issue is that the Boolean data type is not supported. Unfortu
 
 Code that successfully executes now looks like this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {
                                             new FieldSchema("IsContainer", typeof(Byte)),

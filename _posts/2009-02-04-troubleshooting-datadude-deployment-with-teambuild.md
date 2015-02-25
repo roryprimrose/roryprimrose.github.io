@@ -7,7 +7,7 @@ date: 2009-02-04 11:28:10 +10:00
 
 I'm working through the best way of getting DataDude to build and deploy a database using TeamBuild. When I kicked off a build, the build script failed with the following error:
 
-{% highlight text linenos %}
+{% highlight text %}
 Task "SqlBuildTask"   
   Building deployment script for [DatabaseName] : AlwaysCreateNewDatabase, EnableFullTextSearch, BlockIncrementalDeploymentIfDataLoss   
 MSBUILD : Build error TSD158: Cannot open user default database. Login failed.   
@@ -23,7 +23,7 @@ Open the DataDude build target file on the build server (found at _C:\Program Fi
 
 Find the SqlBuild target. It looks like the following
 
-{% highlight text linenos %}
+{% highlight text %}
 > <Target Name="SqlBuild"   
 >         DependsOnTargets="$(SqlBuildDependsOn)"   
 >         Inputs="@(SqlBuildInputItems)"   
@@ -44,7 +44,7 @@ Find the SqlBuild target. It looks like the following
 
 Add a message task to the start of the target so it looks like the following
     
-{% highlight text linenos %}
+{% highlight text %}
 > <Target Name="SqlBuild"   
 >         DependsOnTargets="$(SqlBuildDependsOn)"   
 >         Inputs="@(SqlBuildInputItems)"   

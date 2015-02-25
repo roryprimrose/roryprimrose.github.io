@@ -9,7 +9,7 @@ This has been a curly one for a few months and I’ve finally had some time to r
 
 All of a sudden the builds started failing with no indication as to why. The build activity log just stops and does not contain errors. The MS build log file also does not contain any errors. The event log on the build server does shed some light on the situation however.  
 
-{% highlight text linenos %}
+{% highlight text %}
 (MSTest.exe, PID 1868, Thread 1) Exception thrown when enumerating assembly: System.IO.FileLoadException: Could not load file or assembly 'MyProject.Services.Business.UnitTests.Contracts, Version=1.0.449.0, Culture=neutral, PublicKeyToken=0e60eebea588ffe8' or one of its dependencies. Strong name validation failed. (Exception from HRESULT: 0x8013141A)
 File name: 'MyProject.Services.Business.UnitTests.Contracts, Version=1.0.449.0, Culture=neutral, PublicKeyToken=0e60eebea588ffe8' ---> System.Security.SecurityException: Strong name validation failed. (Exception from HRESULT: 0x8013141A)
 

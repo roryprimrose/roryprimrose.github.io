@@ -10,7 +10,7 @@ To avoid reinventing the wheel, I took his code and ran. What I found though, is
 
 The function now looks like this: 
 
- {% highlight vbnet linenos %}
+ {% highlight vbnet %}
 'given the passed in enum, convert to a string,
 'but inject spaces in font of all capital letters.
 'a regex might work best here, but for now, let's do it the long way

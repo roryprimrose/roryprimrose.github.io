@@ -8,7 +8,7 @@ After doing four days of training and meetings in Brisbane, I am now back in the
 
 Doing a code review of C# that is based on my VB code has put me in a new situation. Not having done this before, I am trying to think of scenarios that look safe, but are trouble under the surface. Turns out I found one very quickly. In this case, string comparisons are the danger. The VB code often had statements like this: 
 
-{% highlight vbnet linenos %}
+{% highlight vbnet %}
 If sSomeValue = String.Empty Then
 
 ' Do something here
@@ -20,7 +20,7 @@ VB is very forgiving with its string comparisons and it attempts to cover all th
 
 Here is the VB version of the program:
 
-{% highlight vbnet linenos %}
+{% highlight vbnet %}
 Public Class Form1 
   
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click 
@@ -72,7 +72,7 @@ I have missed out a test using vbNullString because it gets compiled as Nothing 
 
 When this program is run, these are the results:
 
-{% highlight text linenos %}
+{% highlight text %}
   Testing string value ""
 
   Success: "" is equal to "" 
@@ -106,7 +106,7 @@ VB has successfully evaluated whether a string has a value or not, regardless of
 
 Here is the C# version of the program:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Collections.Generic; 
 using System.ComponentModel; 
@@ -182,7 +182,7 @@ namespace WindowsApplication1
 
 When this program is run, these are the results:
 
-{% highlight text linenos %}
+{% highlight text %}
 
   Testing string value "" 
 
@@ -217,7 +217,7 @@ Definately a different result. The reason for the difference is how the VB and C
 
 Reflector shows the following for the VB program:
 
-{% highlight vbnet linenos %}
+{% highlight vbnet %}
 Private Sub RunTests(ByVal sTestName As String, ByVal sTest As String)
 
     Debug.WriteLine(New String("_"c, 50))
@@ -254,7 +254,7 @@ End Sub
 
 Reflector shows the following for the C# program:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private void RunTests(string sTestName, string sTest)
 {
     Debug.WriteLine(new string('_', 50));

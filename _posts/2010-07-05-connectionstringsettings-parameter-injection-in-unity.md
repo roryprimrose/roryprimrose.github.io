@@ -8,7 +8,7 @@ I have previously posted about supporting AppSetting value resolution for Unity 
 
 This implementation leverages the AppSettingParameterValueExtension class from the prior examples and renames it to SectionExtensionInitiator. This class now configures a Unity section for multiple element extensions rather than a single specific implementation.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using Microsoft.Practices.Unity.Configuration;
     
 namespace Neovolve.Toolkit.Unity
@@ -31,7 +31,7 @@ namespace Neovolve.Toolkit.Unity
 
 The ConnectionStringParameterValueElement is responsible for creating an injection value for a parameter. It can be used to create a parameter for either the String or ConnectionStringSettings types.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Configuration;
 using System.Globalization;
@@ -116,7 +116,7 @@ Usually a string parameter would be used as the injection type. This will then d
 
 The Unity configuration needs to be set up with the SectionExtensionInitiator class to support connection string injection. A connectionString element can then be used to define a connection string injection value.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0"
         encoding="utf-8" ?>
 <configuration>

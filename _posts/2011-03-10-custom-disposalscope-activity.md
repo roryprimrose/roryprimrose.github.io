@@ -24,7 +24,7 @@ The design goals of this activity are:
 
 The code implementation of the custom DisposalScope&lt;T&gt; activity handles these goals.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -165,7 +165,7 @@ The DisposalScope&lt;T&gt; activity enforces a no persist zone. Attempts at pers
 
 The designer of the activity handles most of the design time experience.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.DisposalScopeDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -250,7 +250,7 @@ The designer of the activity handles most of the design time experience.
 
 The designer uses a TypePresenter to allow modification of the generic type of the activity. The configuration of the TypePresenter uses the [Filter property][2] to restrict the types available to those that implement IDisposable. The designer users an ExpressionTextBox to provide the disposable resource to the activity. The expression can either instantiate the resource directly or provide it by referencing a variable in the parent workflow. Finally, the designer provides a WorkflowItemPresenter that allows designer interaction with the Body activity that gets executed by the activity.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;

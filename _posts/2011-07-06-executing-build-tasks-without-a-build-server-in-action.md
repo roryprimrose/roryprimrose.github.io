@@ -20,7 +20,7 @@ The following are some examples of BTE running on the command line. I am using a
 
 The first version of BTE provides the following tasks built into the application (as defined by the help output):
 
-{% highlight text linenos %}
+{% highlight text %}
 BuildTaskExecutor BinaryOutputVersion|bov
 Renames the project output to include the product version of the project output.
 

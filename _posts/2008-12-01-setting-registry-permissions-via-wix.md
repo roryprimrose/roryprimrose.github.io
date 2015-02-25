@@ -7,7 +7,7 @@ date: 2008-12-01 16:33:00 +10:00
 
 I [posted previously][0] about creating EventLog sources without administrative rights. Part of this solution requires that account running the application has rights to create subkeys and write values to the EventLog in the registry. WiX is being used as the installation product so the answer is something like this for the registry key:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Permission User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes"/> 
 {% endhighlight %}
 
@@ -19,7 +19,7 @@ The answer to this was that I was not defining the domain for the account. By de
 
 Unfortunately it still didn't work. Setting permissions using the alternative element did seem to work successfully.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <util:PermissionEx Domain="[APP_POOL_USER_DOMAIN]" User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes" />
 {% endhighlight %}
 

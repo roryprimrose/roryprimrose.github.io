@@ -9,7 +9,7 @@ I have an ASP.Net MVC4 website that is running passive federation to Azure ACS. 
 
 I have secured my api action using the following.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 [Authorize(Roles = Role.Administrator)]
 public class AdminReportController : ApiController
 {
@@ -20,7 +20,7 @@ This achieves the objective but the acceptance test that verifies the security o
 
 The only way to get around this seems to be to hijack the WSFederationAuthenticationModule to tell it not to run passive redirection if the request is for the web api.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class WebApiSafeFederationAuthenticationModule : WSFederationAuthenticationModule
 {
     protected override void OnAuthorizationFailed(AuthorizationFailedEventArgs e)

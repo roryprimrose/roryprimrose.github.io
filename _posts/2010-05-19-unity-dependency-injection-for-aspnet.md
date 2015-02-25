@@ -11,7 +11,7 @@ My version uses a single IHttpModule without any other dependencies. The only im
 
 My UnityHttpModule looks like the following. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics.Contracts;
 using System.Web;
@@ -143,7 +143,7 @@ Once created, this module builds up pages with injection values and then tears t
 
 The following is an example ASP.Net page that uses property injection.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Configuration;
 using System.Security.Cryptography;
@@ -182,7 +182,7 @@ namespace Neovolve.Toolkit.Unity.WebIntegrationTests
 
 The property injection for this page is configured via the web.config. The following example also includes the configuration for the module for both classic and integrated IIS pipeline modes.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>

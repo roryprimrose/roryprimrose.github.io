@@ -13,7 +13,7 @@ There is no reason to restrict the child activities to the BusinessFailureEvalua
 
 The activity has the same behaviour as BusinessFailureEvaluator for managing the generic type on the activity. It defaults to using Int32 and exposes an ArgumentType property to change the type after the activity is on the designer.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 { 
     using System;

@@ -17,7 +17,7 @@ The AssemblyVersionAttribute appears to have the following rules:
 
 The following is the regular expression that covers all these rules.
 
-{% highlight text linenos %}
+{% highlight text %}
 ^
 # Major version must exist
 (?<VersionPart>\d+)
@@ -44,7 +44,7 @@ The following is the regular expression that covers all these rules.
 
 The following is the same expression without the comments and whitespace.
 
-{% highlight text linenos %}
+{% highlight text %}
 ^(?<VersionPart>\d+)(\.(?<VersionPart>\d+)(\.((?<VersionPart>\*)|((?<VersionPart>\d+)(\.(?<VersionPart>\*|\d+))?)))?)?$
 {% endhighlight %}
 

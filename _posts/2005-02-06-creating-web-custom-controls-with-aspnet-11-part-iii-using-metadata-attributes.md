@@ -7,7 +7,7 @@ date: 2005-02-06 19:03:00 +10:00
 
 Metadata attributes are defined on items with an &lt; &gt; combination before the declaration of the Item. For example, defining Category and Description attributes to a Text property would look like this:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
  < _
  Category("Appearance"), _
  Description("The value rendered for the control.") _
@@ -37,13 +37,13 @@ I have noticed a few interesting things about the DefaultValue metadata attribut
 
  Boolean properties also have interesting behavior. If an empty string is specified in the xml data for a Boolean property (such as &lt;CC1:ImageButton Selected=""&gt;) then the value stored in ViewState is a Boolean with the value of True. If the property attribute isn't defined at all in the xml, then the ViewState value is Nothing, in which case my code will return the default value, usually being False. This is different to normal Boolean behavior. For example, if you run code like this:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
  Dim bTest As  Boolean = System.Boolean.Parse(vbNullString)
 {% endhighlight %}
 
 or this:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
  Dim bTest As  Boolean = System.Boolean.Parse("")
 {% endhighlight %}
 
@@ -64,7 +64,7 @@ The Description attribute is also useful for people in the VB.Net world who use 
 
 My ToolboxData attribute values normally follow this format:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
 ToolboxData("<{0}:ImageButton runat=server></{0}:ImageButton>")
 {% endhighlight %}
 
@@ -82,7 +82,7 @@ I will provide an example of Designer support in a later article.
 **ControlBuilder Attribute**  
  The ControlBuilder attribute is assigned to a class and is used to help the IDE understand how to interpret xml in an aspx file into control object types. For example, I may have a toolbar control that can hold one or more of my ImageButton controls. When the xml of the aspx file is read, the IDE doesn't establish a relationship of child control definitions and the actual class type of the child control. If my toolbar is defined as this:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
  <CC1:Toolbar id="tbrTest" runat="server"> 
 
  <CC1:ImageButton id="btnTest1" runat="server">
@@ -105,7 +105,7 @@ I will provide an example of ControlBuilder support in a later article.
 
 A value of Attribute will result in:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
  <CC1:MyControl id="tbrTest" runat="server" text="my&value"> 
 
 </CC1:MyControl>
@@ -113,7 +113,7 @@ A value of Attribute will result in:
 
 A value of InnerProperty will result in:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
  <CC1:MyControl id="tbrTest" runat="server"> 
 
  <Text>my&value</Text> 
@@ -123,13 +123,13 @@ A value of InnerProperty will result in:
 
 A value of InnerDefaultProperty will result in:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
  <CC1:MyControl id="tbrTest" runat="server">my&value</CC1:MyControl> 
 {% endhighlight %}
 
 A value of EncodedInnerDefaultProperty will result in:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
  <CC1:MyControl id="tbrTest" runat= "server">my&amp;value</CC1:MyControl> 
 {% endhighlight %}
 

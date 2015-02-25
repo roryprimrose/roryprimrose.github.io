@@ -20,7 +20,7 @@ The radio button control inherits from the checkbox control and the only major d
 
 This inconsistency will become a problem especially when classes are used in tags above the control in the HTML hierarchy and selectors are used to style the input fields. Take the following ASPX declaration for example:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
 <%@ Page Language="VB" AutoEventWireup="false" CodeFile="Default.aspx.vb" Inherits="_Default" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 
@@ -62,7 +62,7 @@ The intention behind this example is that the INPUT tags will be styled with a b
 
 When this is run, the HTML output is this:
 
- {% highlight aspx-vb linenos %}
+ {% highlight aspx-vb %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 

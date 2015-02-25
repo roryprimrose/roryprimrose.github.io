@@ -13,7 +13,7 @@ Sometimes you don’t want the TypePresenter to provide every available type. Th
 
 In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sapv:TypePresenter HorizontalAlignment="Left"
     VerticalAlignment="Center"
     Margin="6"
@@ -29,7 +29,7 @@ In my scenario, I want to restrict the types available to those that derive from
 
 The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func&lt;Type, Boolean&gt; signature. The filter method related to the xaml above is the following.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public Boolean ExceptionTypeFilter(Type typeToValidate)
 {
     if (typeToValidate == null)
@@ -56,7 +56,7 @@ I haven’t figured out a way to change this behaviour and I suspect that it is 
 
 The final piece of the puzzle is to address what happens when the developer selects an inappropriate type using the property grid. This is where activity validation using CacheMetadata comes into play.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 protected override void CacheMetadata(NativeActivityMetadata metadata)
 {
     metadata.AddDelegate(Body);

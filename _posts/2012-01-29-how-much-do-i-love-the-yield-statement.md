@@ -8,7 +8,7 @@ Quite simply, a lot. The yield statement seems to be such a simple part of C# ye
 
 Take the following abstract class for example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyApplication.Diagnostics
 {
     using System;
@@ -56,7 +56,7 @@ namespace MyApplication.Diagnostics
 
 The design of this abstract class allows for a diagnostic task to have multiple steps. My first implementation of this class however is one that only had a single hard-coded step. Enter the wonderful yield return statement.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public override IEnumerable<DiagnosticTaskStep> Steps
 {
     get

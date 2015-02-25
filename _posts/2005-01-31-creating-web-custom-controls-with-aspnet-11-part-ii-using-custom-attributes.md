@@ -17,7 +17,7 @@ As we don't want to override MyBase.RenderBeginTag, a better place to put this c
 
 So far, the control has properties defined like this:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
  < _
      Description("The Key value to identify the purpose of the button."), _
      Category("Client") _
@@ -173,7 +173,7 @@ So far, the control has properties defined like this:
 
 Ok, now lets render these property values to the control HTML tag as custom attributes. This is all that needs to be done:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
  Protected  Overrides  Sub OnPreRender( ByVal e As System.EventArgs)
 
      With Attributes
@@ -209,7 +209,7 @@ As a side note on custom attributes, if you want to add specific inline styles t
 
 I set up a test example with some dummy property values for the code so far and the rendered output is this:
 
-{% highlight aspx-vb linenos %}
+{% highlight aspx-vb %}
 <input type="image" name="ImageButton3" id="ImageButton3" Key="Test" ImageDownUrl="images/down.gif" ImageHoverUrl="images/hover.gif" ClientClickHandler="Image_OnClick" Selected="false" IsToggle="false" src="images/up.gif" alt="" border="0" style="Z-INDEX: 103; LEFT: 395px; POSITION: absolute; TOP: 122px" />
 {% endhighlight %}
 
@@ -217,7 +217,7 @@ I set up a test example with some dummy property values for the code so far and 
 
 My wrapper function looks like this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 function AttributeValue(Item, Name, Default)
 {
     // Set Default to "" if not provided

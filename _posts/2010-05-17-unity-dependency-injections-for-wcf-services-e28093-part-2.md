@@ -11,7 +11,7 @@ Using a configuration based service behavior is the answer to situations where t
 
 The UnityServiceElement class looks like the following. The UnityServiceElement calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][1].
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Configuration;
 using System.Diagnostics.Contracts;
@@ -111,7 +111,7 @@ namespace Neovolve.Toolkit.Unity
 
 The configuration to hook this behavior up to a service looks like this.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" ?>
 <configuration>
     <configSections>

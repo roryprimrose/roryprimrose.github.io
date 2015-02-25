@@ -13,7 +13,7 @@ To demonstrate the difference, I created two load tests that each ran a unit tes
 
 Here is the configuration I used:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
   <system.diagnostics> 
@@ -43,7 +43,7 @@ Here is the configuration I used:
 
 And here are the unit tests: 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 

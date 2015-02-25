@@ -17,7 +17,7 @@ Project.Log() invokes OnMessageLogged(). After searching for what is hooked up t
 
 This opens up a very simple solution. Regardless of how logging is invoked higher up the call chain, this implementation will always correctly define the log threshold at runtime because it is done directly on the loggers. This is of course assuming the logger implementation checks the threshold assigned to it.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using NAnt.Core;
 using NAnt.Core.Attributes;
      
@@ -103,7 +103,7 @@ namespace Neovolve.NAnt.Tasks
 
 To change the logging level, add the loglevel task around other tasks and set the level value. For example:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <loglevel level="None">
      
     <!-- Determine whether the template is a project or item related template -->

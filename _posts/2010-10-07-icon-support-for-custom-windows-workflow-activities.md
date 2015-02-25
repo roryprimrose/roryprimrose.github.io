@@ -13,7 +13,7 @@ There are two places that provide this icon support. The first is in the Visual 
 
 Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 [ToolboxBitmap(typeof(ExecuteBookmark), "book_open.png")]
 public sealed class ExecuteBookmark : NativeActivity
 {% endhighlight %}
@@ -32,7 +32,7 @@ The reason for the separate file is that the Build Action for the designer image
 
 The XAML in the designer for the activity then references this image file.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.ExecuteBookmarkDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

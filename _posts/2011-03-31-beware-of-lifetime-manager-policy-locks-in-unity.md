@@ -15,7 +15,7 @@ The GetValue method obtains a lock for the current thread and only releases it i
 
 This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private static Object GetLifetimePolicyValue(ILifetimePolicy lifetimeManager)
 {
     if (lifetimeManager is IRequiresRecovery)
@@ -48,7 +48,7 @@ This workaround will consume threads that will be held on a lock and potentially
 
 The next solution is to use a lifetime manager that gets around this issue by never allowing the lifetime manager to be assigned a null value.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Jabiru.Server.Services
 {
     using System;
@@ -72,7 +72,7 @@ namespace Neovolve.Jabiru.Server.Services
 
 This idea fails to get around the locking issue when the lifetime manager is created but never has a value assigned. The next version of this SafeSingletonLifetimeManager solves this by managing its own locking logic around whether a non-null value has been assigned to the policy.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Jabiru.Server.Services
 {
     using System;

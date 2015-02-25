@@ -24,7 +24,7 @@ Another thing also comes to mind. What about performance? By using the array, I 
 
 A quick test gave me a suitable answer.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;

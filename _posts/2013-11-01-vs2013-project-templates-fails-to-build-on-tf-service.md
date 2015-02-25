@@ -7,7 +7,7 @@ date: 2013-11-01 16:16:09 +10:00
 
 My upgrade pain with VS2013 and the Azure SDK 2.2 continues. Hosted build now fails with the following error:
 
-{% highlight text linenos %}
+{% highlight text %}
 The task factory "CodeTaskFactory" could not be loaded from the assembly "C:\Program Files (x86)\MSBuild\12.0\bin\amd64\Microsoft.Build.Tasks.v4.0.dll". Could not load file or assembly 'file:///C:\Program Files (x86)\MSBuild\12.0\bin\amd64\Microsoft.Build.Tasks.v4.0.dll' or one of its dependencies. The system cannot find the file specified.
 {% endhighlight %}
 

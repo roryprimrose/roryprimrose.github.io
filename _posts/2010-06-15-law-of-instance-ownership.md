@@ -15,7 +15,7 @@ A common misconception is that the member that creates an instance is responsibl
 
 Take System.IO.File.Open() method for example.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
 {
     return new FileStream(path, mode, access, share);

@@ -21,7 +21,7 @@ Each of the services use domain accounts that are unique to each service.
 
 The primary problem was that the 2 hourly job to reprocess the Tfs_Analysis SSAS cube from the Tfs_Warehouse database failed because SSAS could not connect to the SQL Server data engine. The following is most of the exception detail of the failure.  
 
-{% highlight text linenos %}
+{% highlight text %}
 [Full Analysis Database Sync]: 
 AnalysisDatabaseProcessingType=Full, needCubeSchemaUpdate=True. 
 Microsoft.TeamFoundation.Server.WarehouseException: TF221122: An error occurred running job Full Analysis Database Sync for team project collection or Team Foundation server TEAM FOUNDATION. 
@@ -68,7 +68,7 @@ Some search results were indicating that it might be a problem with a loopback a
 
 The configuration of the data source in SSAS uses impersonation to connect to SQL Server rather than the service account of SSAS. Just for kicks, we added the SSAS service account as a local admin on the VM. We then got a different error. Processing the cube then failed because of a login timeout rather than a connectivity problem.
 
-{% highlight text linenos %}
+{% highlight text %}
 [Full Analysis Database Sync]: 
 ---> AnalysisDatabaseProcessingType=Full, needCubeSchemaUpdate=False. ---> Microsoft.TeamFoundation.Server.WarehouseException: TF221122: An error occurred running job Full Analysis Database Sync for team project collection or Team Foundation server TEAM FOUNDATION. 
 ---> Microsoft.TeamFoundation.Server.WarehouseException: Failed to Process Analysis Database 'Tfs_Analysis'. 

@@ -11,7 +11,7 @@ When the TraceSource.Listeners property is referenced, the collection is initial
 
 All the tracing methods of this listener implementation call down to an internalWrite method that has the following implementation: 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 private void internalWrite(string message)
 {
     if (Debugger.IsLogging())
@@ -31,7 +31,7 @@ private void internalWrite(string message)
 
 This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _&lt;clear /&gt;_ element as the first item in the listeners element for each source you have defined in your configuration. 
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
     <system.diagnostics>

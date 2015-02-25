@@ -8,7 +8,7 @@ I’m writing a system that exposes several services. Each service is created us
 
 As I was writing the exception management slice, the code started to get incredibly duplicated. Each method in the class began to look like this:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public String DoSomething(String withSomeValue, Boolean andAnotherValue)
 {
     try
@@ -45,7 +45,7 @@ When there are several methods on the interface/class, this ends up being a main
 
 It then occurred to me that I could use lambda expressions and pass the functions around as Func&lt;T&gt; and Action parameters. This resulted in code that looked like the following.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public String DoSomething(String withSomeValue, Boolean andAnotherValue)
 {
     return InvokeWithLogging(() => Dependency.DoSomething(withSomeValue, andAnotherValue), "Failed to do something");
@@ -89,7 +89,7 @@ The next bit of duplication was that I have void methods and methods that return
 
 So the big question is how do you pass an Action as a Func&lt;T&gt;. This is really easy. Here is the final code.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public void DoSomethingElse(String withThisValue)
 {
     InvokeWithLogging(() => Dependency.DoSomethingElse(withThisValue), "Failed to do something");

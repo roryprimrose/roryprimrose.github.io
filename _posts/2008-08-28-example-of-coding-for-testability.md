@@ -15,7 +15,7 @@ Here is a simple example of how to take untestable code and make it testable. In
 
 **The untestable example**
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -68,7 +68,7 @@ This code is a classic example. The HttpWebRequest class is not easily testable.
 
 **The testable example**
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.IO;

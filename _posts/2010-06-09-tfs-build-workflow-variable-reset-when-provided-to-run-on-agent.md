@@ -15,7 +15,7 @@ What I was finding was that the build version was being reset when the Run On Ag
 
 This resulted in the following output in the build log.
 
-{% highlight text linenos %}
+{% highlight text %}
 If DropBuild And Build Reason is ValidateShelveset
 Initial Property Values
 Condition = False
@@ -42,7 +42,7 @@ I did some browsing of the Run On Agent (AgentScope) activity using Reflector. I
 
 The build log now contains the following.
 
-{% highlight text linenos %}
+{% highlight text %}
 If DropBuild And Build Reason is ValidateShelveset
 Initial Property Values
 Condition = False

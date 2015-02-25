@@ -12,7 +12,7 @@ The [implementation][3] of the InstanceResolver activity avoids this scenario by
 
 The InstanceResolverTypeUpdater class shown below is very similar to the GenericTypeUpdater provided in [this post][1]. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;

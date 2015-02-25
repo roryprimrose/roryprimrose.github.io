@@ -27,7 +27,7 @@ It is important to note that the activity assembly should never reference the de
 
 An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -94,7 +94,7 @@ Understandably MorphHelper will not know how to transform any possible data/type
 
 The DesignerMetadata class contains the following default morph actions.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 MorphHelper.AddPropertyValueMorphHelper(typeof(InArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(OutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
@@ -107,7 +107,7 @@ The issue I had with creating the updatable type support for InstanceResolver wa
 
 The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction&lt;T1…T16&gt;.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;

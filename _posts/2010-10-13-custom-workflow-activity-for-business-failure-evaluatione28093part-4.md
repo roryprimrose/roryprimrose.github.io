@@ -13,7 +13,7 @@ The BusinessFailureEvaluator&lt;T&gt; activity is a generic activity type in ord
 
 The activity defines a Nullable&lt;Boolean&gt; Condition property that drives whether the activity results in a failure at runtime. It also supports two methods of defining the failure details. These are to provide a BusinessFailure&lt;T&gt; instance in the Failure property or to define values for the Code and Description properties.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;

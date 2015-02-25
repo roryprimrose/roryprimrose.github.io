@@ -13,7 +13,7 @@ Given these constraints, I have a working solution after several hours of surfin
 
 Firstly, the configuration for Unity 2 is much neater and removes redundant configuration. The feature I like the most is that type information is now interpreted where previously it needed to be specified.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
      
@@ -60,7 +60,7 @@ The big change for supporting custom parameter injection is that the InjectionPa
 
 A Unity SectionExtension is used to achieve this. The configuration for the extension is shown as the first line in the unity configuration above.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using Microsoft.Practices.Unity.Configuration;
     
 namespace Neovolve.Toolkit.Unity
@@ -77,7 +77,7 @@ namespace Neovolve.Toolkit.Unity
 
 This extension simply tells the Unity configuration system how to understand a custom parameter injection handler. The context.AddElement method tells Unity which type to use when processing a particular configuration element name. The appSetting configuration element is now hooked up to use the AppSettingParameterValueElement which looks like the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.ComponentModel;
 using System.Configuration;

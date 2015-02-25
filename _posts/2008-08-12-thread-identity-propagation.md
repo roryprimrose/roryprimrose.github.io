@@ -16,7 +16,7 @@ So my assumption was correct. Identities on threads do get propagated to their c
 
 Here is an example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Security.Principal;
 using System.Threading;
@@ -120,7 +120,7 @@ namespace ConsoleApplication1
 
 The results in the following output (with the windows account removed):
 
-{% highlight text linenos %}
+{% highlight text %}
 Default AppDomain - empty 
 
 AppDomain NoPrincipal - null

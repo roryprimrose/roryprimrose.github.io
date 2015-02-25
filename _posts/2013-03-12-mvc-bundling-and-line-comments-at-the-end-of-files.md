@@ -7,7 +7,7 @@ date: 2013-03-12 07:51:08 +10:00
 
 Recently the bundling and minification support in ASP.Net MVC4 have been causing grief with JavaScript's having unexpected tokens. The minification process is failing to process the bundle of scripts correctly, although it does kindly add a failure message to the top of the bundle output.
 
-{% highlight javascript linenos %}
+{% highlight javascript %}
 /* Minification failed. Returning unminified contents.
 (5,2-3): run-time warning JS1195: Expected expression: *
 (11,60-61): run-time warning JS1004: Expected ';': {
@@ -29,7 +29,7 @@ The issues have been found when bundling the jQuery set of files that end with a
 
 The post suggests that you can either remove the line comment from all of the js files or change the line comment to a block comment. I don’t like either of these solutions because many of the scripts are sourced from Nuget and these solutions would cause upgrade pain. We can solve this problem by using some custom bundling logic.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyNamespace
 {
     using System.Web.Optimization;
@@ -49,7 +49,7 @@ namespace MyNamespace
 
 This is the class that you should use instead of ScriptBundle. It simply uses a custom bundle builder.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyNamespace
 {
     using System.Collections.Generic;

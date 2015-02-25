@@ -12,7 +12,7 @@ I quickly realised that the current working directory of a Windows service is pr
 
 The simple fix for my service is to set the current directory for the process to the directory containing the executing assembly when the service is started.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.IO;
 using System.Reflection;

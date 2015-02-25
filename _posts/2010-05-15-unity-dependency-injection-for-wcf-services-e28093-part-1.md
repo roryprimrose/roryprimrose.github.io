@@ -13,7 +13,7 @@ The second option is to create a custom service host factory. This option allows
 
 The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -60,7 +60,7 @@ namespace Neovolve.Toolkit.Unity
 
 The configuration for the factory via svc mark-up is the following.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <%@ ServiceHost 
     Language="C#" 
     Debug="true" 
@@ -70,7 +70,7 @@ The configuration for the factory via svc mark-up is the following.
 
 The configuration via web.config (.net 4.0 only) is like this. This configuration also includes an example Unity container configuration.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <configuration>
     <configSections>
         <section name="unity"
@@ -103,7 +103,7 @@ The configuration via web.config (.net 4.0 only) is like this. This configuratio
 
 The UnityServiceHost class is used to configure the host for a behaviour that is used to create the service instances.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.ServiceModel;
 using Microsoft.Practices.Unity;
@@ -144,7 +144,7 @@ namespace Neovolve.Toolkit.Unity
 
 The UnityServiceBehavior is used assign a new instance provider to each endpoint in the service host.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
@@ -216,7 +216,7 @@ namespace Neovolve.Toolkit.Unity
 
 The UnityInstanceProvider is used to resolve an instance from a Unity container using the service type defined for an endpoint. This is where the real work happens to create a service instance with injected dependencies. This implementation also calls the Unity container to destroy the service instance according to its configuration.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Configuration;
 using System.Globalization;

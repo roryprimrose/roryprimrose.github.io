@@ -10,7 +10,7 @@ The fix for this is to use the Jasmine beforeEach function with the done paramet
 
 The syntax looks something like this:
 
-{% highlight javascript linenos %}
+{% highlight javascript %}
 /// <reference path='/../../MyWebsite/Scripts/require.js'/>
 /// <reference path='/../../MyWebsite/Scripts/Custom/ResponseParser.js'/>
 

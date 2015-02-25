@@ -10,7 +10,7 @@ I hit this issue because I started working with a model class that exposes an en
 
 The class now looks like the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MySystem.DataAccess.Azure
 {
     using System;

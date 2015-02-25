@@ -25,7 +25,7 @@ The PreBuildUp method in BuildTreeTracker gets invoked before each tree node is 
 
 Enter the IRequiresRecovery interface. This interface allows for some recovery operation to be invoked when a build context has failed to create an instance.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -94,7 +94,7 @@ The BuildTreeRecovery class allows for a custom action to be invoked. It then cl
 
 The final piece missing here is that the BuildTreeTracker class will still have a reference to ChildA being the current node instead of Root when PreBuildUp is invoked for ChildB. This is where the custom action of the recovery class comes in. The BuildTreeTracker.PreBuildUp method has been updated to create the BuildTreeRecovery class and use it in a recovery stack. The action passed to its constructor is a lambda expression that repairs the assignment of the current node in the build tree to be the parent of the failed node.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public override void PreBuildUp(IBuilderContext context)
 {
     base.PreBuildUp(context);

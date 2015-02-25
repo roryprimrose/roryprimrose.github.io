@@ -9,7 +9,7 @@ I've been working with Unity a bit in an enterprise level system and I have been
 
 To demonstrate this scenario, consider the following example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
     
 namespace Neovolve.UnityTesting
@@ -61,7 +61,7 @@ I spent a bit of time cruising around the EntLib source with Reflector to see wh
 
 The DeserializePolymorphicElement method is the key. It uses an elementType attribute that gets resolved as InjectionParameterValueElement. This is the point at which Unity can be extended to provide a custom injection implementation. I created an AppSettingsParameterInjectionElement class that is mostly a copy of InstanceValueElement which is the unity definition for injection configuration of literal values. The class looks like the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -184,7 +184,7 @@ namespace Neovolve.UnityTesting
 
 The configuration for this looks like the following:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     
@@ -236,7 +236,7 @@ The configuration for this looks like the following:
 
 The test application to tie all this together is the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Configuration;
 using Microsoft.Practices.Unity;

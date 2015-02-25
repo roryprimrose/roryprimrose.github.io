@@ -11,7 +11,7 @@ The main issue with dependency resolution/injection in WF is supporting persiste
 
 The way this is done is via an InstanceHandler&lt;T&gt; class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -78,7 +78,7 @@ The first reason is merely a beneficial side effect. The second reason listed is
 
 This class makes a static call out to an InstanceManagerExtension to resolve the instance. The InstanceManagerExtension class is used to abstract the resolution, management and clean up logic for instances requested by the handler class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Extensions
 {
     using System;

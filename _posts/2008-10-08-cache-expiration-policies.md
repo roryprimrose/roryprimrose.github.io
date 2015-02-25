@@ -24,7 +24,7 @@ Absolute expiration refers to a specific point in time when the cache entry will
 
 In the following example, an entry is added to the cache with a cache expiration policy that defines an absolute expiration of 25th December 2008 at 4:30pm. Once 4:30pm rolls around on that day, the entry will be expired. Assuming the item is added to the cache on 25th December 2008 at 4:00pm, this policy defines that the cache entry will only be alive for 15 minutes. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Web; 
 using System.Web.Caching; 
@@ -53,7 +53,7 @@ namespace ConsoleApplication1
 
  In the following example, an entry is added to the cache with a cache expiration policy that defines a sliding expiration of 5 minutes. The entry will stay in the cache as long as it is read within 5 minutes of the previous read. As soon as 5 minutes elapse without a read of that item from the cache, the entry will be expired. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Web; 
 using System.Web.Caching; 
@@ -83,7 +83,7 @@ namespace ConsoleApplication1
 
  In the following example, file data is read from disk and added to the cache with a cache expiration policy that defines a dependency on the file path. When the file is updated (usually out of process), the file change event detected by the cache dependency will cause the entry to be expired. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.IO; 
 using System.Web; 
@@ -116,7 +116,7 @@ namespace ConsoleApplication1
 
  In the following example, a low cache priority is defined. This cache entry will be expired before other entries that have a higher priority. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.IO; 
 using System.Web; 

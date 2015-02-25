@@ -12,7 +12,7 @@ The ScheduleAction method provides the ability for a child activity to be schedu
 
 The custom activity defined here has a concept of the number of arguments that it supports at runtime. This is defined at design time using a GenericArgumentCount enum definition. In part this enum is used to support the design-time experience. The activity also uses this value to ensure that only the intended number of generic arguments are provided to the child activity.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow
 { 
     public enum GenericArgumentCount
@@ -39,7 +39,7 @@ namespace Neovolve.Toolkit.Workflow
 
 The custom activity for providing dependency resolution is a generic InstanceResolver class. It defines the 16 generic arguments for the type definitions of the 16 possible dependencies to resolve. It inherits from NativeActivity in order to get access to the NativeActivityContext for scheduling child activity execution and for hooking into activity lifecycle events.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -362,7 +362,7 @@ On a side note, there is a way around this for activity types that define one ge
 
 The workaround for this usability issue is to use some indirection. Another activity that implements IActivityTemplateFactory can be used to produce this result. This is where the non-generic InstanceResolver class comes into play.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;

@@ -11,7 +11,7 @@ My preference has always been to hook up IErrorHandler using an attribute to avo
 
 I have added configuration support for IErrorHandler to my Toolkit project based on the original posts above to assist with this process.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Communication
 {
     using System;
@@ -75,7 +75,7 @@ namespace Neovolve.Toolkit.Communication
 
 The ErrorHandlerElement class allows for WCF configuration to configure an IErrorHandler for a service. This class provides the configuration support to define the type of error handler to use. The CreateBehavior method simply forwards the configured IErrorHandler type to the ErrorHandlerAttribute class that is already in the toolkit.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version=&quot;1.0&quot; ?>
 <configuration>
     <system.serviceModel>

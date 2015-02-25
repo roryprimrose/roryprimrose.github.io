@@ -9,7 +9,7 @@ The system I am currently working uses the development fabric in the Azure SDK f
 
 The local STS is running on IISExpress. Like the [previous post][0] about running the Azure emulator for integration testing, the STS also needs to be spun up to run the system. The following class provides the wrapper logic for spinning up IISExpress.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.TestSupport
 {
     using System;

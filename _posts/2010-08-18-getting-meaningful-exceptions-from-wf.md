@@ -11,7 +11,7 @@ Consider the following simple workflow example.
 
 ![image][0]
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -36,7 +36,7 @@ namespace WorkflowConsoleApplication1
 
 This example provides the following output.
 
-{% highlight text linenos %}
+{% highlight text %}
 System.InvalidOperationException: Something went wrong
    at System.Activities.WorkflowApplication.Invoke(Activity activity, IDictionar
 y`2 inputs, WorkflowInstanceExtensionManager extensions, TimeSpan timeout)
@@ -62,7 +62,7 @@ The trick here is to get the exception to preserve the original stack trace when
 
 The first thing to change is that we need to use WorkflowApplication directly rather than WorkflowInvoker. WorkflowInvoker is great for simplicity but does not provide direct access to the thrown exception before it is re-thrown. Using WorkflowApplication provides the ability to hook the OnUnhandledException action where the exception is available. The reflected InternalPreserveStackTrace method can then be invoked on the exception instance before it is re-thrown.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -123,7 +123,7 @@ namespace WorkflowConsoleApplication1
 
 Changing the example program code to use this ActivityInvoker class rather than WorkflowInvoker now provides some more detailed stack trace information.
 
-{% highlight text linenos %}
+{% highlight text %}
 System.InvalidOperationException: Something went wrong
    at System.Activities.Statements.Throw.Execute(CodeActivityContext context)
    at System.Activities.CodeActivity.InternalExecute(ActivityInstance instance,
@@ -150,7 +150,7 @@ Identifying the hierarchy of activities being executed will add further debuggin
     
 A tweak to the exception logic in the ActivityInvoker class will hook into the Activity.Parent property to calculate the activity hierarchy.
     
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -233,7 +233,7 @@ The change here calculates the activity hierarchy and appends it to the exceptio
 
 The output of the program now provides the extended stack trace and the activity hierarchy.
 
-{% highlight text linenos %}
+{% highlight text %}
 WorkflowConsoleApplication1.ActivityFailureException: Something went wrong
 Workflow exception thrown from the following activity stack:
 1.5: Throw - System.Activities.Statements.Throw

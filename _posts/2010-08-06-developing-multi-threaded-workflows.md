@@ -15,7 +15,7 @@ activity. Consider the following workflow.
 
 Each parallel branch writes the start time to the console, runs a Thread.Sleep for 2, 4 or 6 seconds and writes the end time. The following is written to the console if each InvokeMethod activity has RunAsynchronously set to False.
 
-{% highlight text linenos %}
+{% highlight text %}
 Starting - 6/08/2010 10:41:38 AM
 Starting First - 6/08/2010 10:41:38 AM
 Finishing First - 6/08/2010 10:41:40 AM
@@ -28,7 +28,7 @@ Completed - 6/08/2010 10:41:51 AM
 
 Each branch in the parallel is waiting until the previous branch has completed. The following is written to the console if each InvokeMethod activity has RunAsynchronously set to True.
 
-{% highlight text linenos %}
+{% highlight text %}
 Starting - 6/08/2010 10:47:35 AM
 Starting First - 6/08/2010 10:47:35 AM
 Starting Second - 6/08/2010 10:47:35 AM
@@ -47,7 +47,7 @@ ParallelForEach&lt;t&gt; works in the same manner. This workflow can be refactor
 
 The result without asynchronous processing is:
 
-{% highlight text linenos %}
+{% highlight text %}
 Starting - 6/08/2010 11:55:09 AM
 Starting 1 - 6/08/2010 11:55:09 AM
 Finishing 1 - 6/08/2010 11:55:11 AM
@@ -60,7 +60,7 @@ Completed - 6/08/2010 11:55:22 AM
     
 The result with asynchronous processing is:
 
-{% highlight text linenos %}
+{% highlight text %}
 Starting - 6/08/2010 11:56:02 AM
 Starting 1 - 6/08/2010 11:56:02 AM
 Starting 2 - 6/08/2010 11:56:02 AM

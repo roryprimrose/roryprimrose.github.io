@@ -11,7 +11,7 @@ The difficulty with this scenario is that Type.GetType (using the configuration 
 
 Here is a slimmed down example.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

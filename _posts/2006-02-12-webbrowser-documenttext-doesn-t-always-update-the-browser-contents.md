@@ -16,7 +16,7 @@ For my application, I have set up the WebBrowser control to be as restricted as 
 
 If you fire up reflector and find the WebBrowser.DocumentText property you will see that internally, setting the WebBrowser.DocumentText property will create a MemoryStream with the new text value and then the stream is assigned to the WebBrowser.DocumentStream property. Reflector shows the DocumentStream property code to be this:
 
- {% highlight csharp linenos %}
+ {% highlight csharp %}
 public Stream DocumentStream
 {
     get

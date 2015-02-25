@@ -15,7 +15,7 @@ I am not a huge fan of composite controls, so I normally create Rendered Control
 
 My lightweight Label control looks like this:
 
-{% highlight vb.net linenos %}
+{% highlight vb.net %}
 # Region " Imports "
 
  Imports System.ComponentModel

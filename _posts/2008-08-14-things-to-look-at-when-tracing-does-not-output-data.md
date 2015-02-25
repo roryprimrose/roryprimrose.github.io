@@ -17,7 +17,7 @@ If using [TextWriterTraceListener][1] (or [XmlWriterTraceListener][2] that deriv
 
  The following code is the code in TextWriterTraceListener that causes the issues.   
   
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public override void WriteLine(String message)
 {
     if (EnsureWriter())

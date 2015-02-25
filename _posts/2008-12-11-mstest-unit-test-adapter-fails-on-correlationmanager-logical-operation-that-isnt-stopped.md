@@ -9,7 +9,7 @@ I have been writing lots of unit tests for my [Toolkit][0] project on CodePlex. 
 
 This is easily reproduced with the following code: 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 
       
@@ -41,7 +41,7 @@ The workaround is to ensure that your test stops the logical operation that it s
 
 For example, the following code passes: 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 
       

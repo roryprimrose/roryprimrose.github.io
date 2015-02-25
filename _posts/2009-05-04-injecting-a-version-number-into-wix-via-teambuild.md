@@ -9,7 +9,7 @@ This has been an interesting nut to crack. There are several published ways to i
 
 The following target overrides the ResolveSolutionPathsForEndToEndIteration MSBuild target to inject a $(VersionNumber) value if a custom version number has been defined or calculated in the build script. The default implementation of ResolveSolutionPathsForEndToEndIteration is called if no version number has been defined or calculated.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
      
@@ -119,7 +119,7 @@ The following target overrides the ResolveSolutionPathsForEndToEndIteration MSBu
 
 The only disadvantage of this solution is that the WiX project needs to be manually updated to include the VersionNumber property. Once this is done, the VersionNumber needs to be defined in the DefineConstants property which is available in the project properties GUI. For example:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Project DefaultTargets="Build"
             xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
@@ -187,7 +187,7 @@ The only disadvantage of this solution is that the WiX project needs to be manua
 
 This solution makes the version number available to the WiX script.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <?define COMPANY = "MyCompany" ?>
 <?define PRODUCTNAME = "MyProject" ?>

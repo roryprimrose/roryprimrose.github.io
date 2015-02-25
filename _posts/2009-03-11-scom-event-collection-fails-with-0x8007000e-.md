@@ -15,19 +15,19 @@ The definition of a collection event record includes a description field. The de
 
 My management pack originally contained the following: 
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Description>%16</Description> 
 {% endhighlight %}
 
 In the case of my second management pack, the index is incorrect. There were field differences in the database output between the two management packs such that the param index was pointing to a different field from the database. I fixed this up so that it was pointing to a "Message" property bag value populated from the database. 
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Description>$Data/Property[@Name='Message']$</Description> 
 {% endhighlight %}
 
 Now the management pack works. The difference between the two fields was that the original field (identified by index 16) had a null value whereas the "Message" field did have a value. My scripts deal with null values by ensuring they are always converted to empty strings using the following old VBA trick: 
 
-{% highlight vbnet linenos %}
+{% highlight vbnet %}
 Call propertyBag.AddValue("Message", rs.Fields("Message").Value & "") 
 {% endhighlight %}
 

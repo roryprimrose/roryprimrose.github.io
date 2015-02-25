@@ -21,7 +21,7 @@ I have created a custom WF activity that will make the calling identity availabl
 
 The ReceiveIdentityInspector activity below hooks into the WCF pipeline using a private inspector class that implements [IReceiveMessageCallback][4]. This interface allows the inspector class to look at the client identity of the WCF service that has executed the Receive activity in the workflow service. The inspector instance is added as a property on the WF context so that it gets executed. The activity can then get the identity from the inspector and make it available to the parent workflow. The Body property of the activity is of type Receive as it only supports a Receive activity as its single child activity. This helps to make a nice drag\drop experience on the designer and prevent the user dragging inappropriate activities on to it.  
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -139,7 +139,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
 
 The designer of the activity allows for a child activity to be dragged and dropped onto it by using a WorkflowItemPresenter. It also supports the normal collapse/expand style behaviour.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.ReceiveIdentityInspectorDesigner"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -194,7 +194,7 @@ The designer of the activity allows for a child activity to be dragged and dropp
 
 The code behind the designer adds support for the generic IIdentity type of the activity to be modified using a [previously posted][5] helper class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;

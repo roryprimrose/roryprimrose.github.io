@@ -19,7 +19,7 @@ Once the exception has been thrown however, the project template still exists on
 
 My project uses the following logic to achieve this.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public void RunStarted(
     Object automationObject, Dictionary<String, String> replacementsDictionary, WizardRunKind runKind, Object[] customParams)
 {

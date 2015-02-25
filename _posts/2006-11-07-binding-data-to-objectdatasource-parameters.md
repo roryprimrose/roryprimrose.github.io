@@ -9,7 +9,7 @@ Have you ever needed to have nested databound controls using multiple ObjectData
 
 You have no doubt tried the following:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL">
     <SelectParameters>
         <asp:Parameter Name="countryCode" DefaultValue='<%# Eval("CountryCode") %>' />
@@ -23,7 +23,7 @@ If you try this, you will get an error that says:
 
 So you can't bind to your value to the parameter. There is a really simple way around this. Redirect the bound value through a control that does support databinding.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <asp:TextBox runat="server" ID="txtCountryCode" Visible="false" Text='<%# Eval("CountryCode") %>' />
 <asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL">
     <SelectParameters>

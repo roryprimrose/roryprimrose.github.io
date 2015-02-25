@@ -9,7 +9,7 @@ Automatically generating technical documentation from code comments is really ea
 
 Dynamically creating documentation is an easy solution that essentially documents all dll files found in the build directory with some known exclusions. This has the advantage that you don’t need to manage the documentation configuration as assemblies are added and removed from the solution. The disadvantages is that it potentially generates documentation for more assemblies than intended, namely the dependencies for the solution. The dynamic documentation generation is really good for framework/toolkit type solutions that don’t have external dependencies. The dynamic solution tells SHFB the information that it requires that would otherwise be defined via a project file. The MSBuild script looks something like the following.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Target Name="BuildSandcastleWithDynamicProjectDefinition">
     
     <!-- Uses Sandcastle Help File Builder to build a CHM documentation for all assemblies in the output directory. -->
@@ -68,7 +68,7 @@ Dynamically creating documentation is an easy solution that essentially document
 
 Dynamically creating documentation is easy, but the resultant documentation can become dirty as external dependencies appear in the build directory. This is when using a SHFB project file becomes an advantage. This allows the solution to contain the specific definition of what gets included in the Sandcastle generated documentation. The best option for managing the SHFB project file is to add it as a solution item in Visual Studio. The MSBuild script for using the SHFB project file looks like the following.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <Target Name="BuildSandcastleProjectFile">
      
     <Message Text="Building Sandcastle documentation using the project '$(SandcastleProjectFilePath)'" />
@@ -95,7 +95,7 @@ Dynamically creating documentation is easy, but the resultant documentation can 
 
 These targets run the implementation for generating the documentation. The following targets are used to orchestrate this work.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <PropertyGroup>
      
     <ProductName></ProductName>

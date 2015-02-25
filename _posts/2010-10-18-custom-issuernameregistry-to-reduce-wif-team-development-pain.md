@@ -11,7 +11,7 @@ The WIF SDK makes it easy to get up and running with an STS. The wizard applicat
 
 The WIF configuration usually refers to these certificates using the subject distinguished name of the certificate. This will work where multiple development machines use certificates with the same subject where those certificates where created on each machine. Unfortunately the configuration for the Relying Party application identifies the trusted issuer certificate using a thumbprint. This thumbprint will be different across each machine.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <service name=&quot;Neovolve.Jabiru.Server.Service.ExchangeSession&quot;>
     <audienceUris>
         <add value=&quot;https://localhost/Jabiru/DataExchange.svc&quot; />
@@ -32,7 +32,7 @@ One solution to this issue is to copy the certificates around each development m
 
 There is an alternative solution however as WIF provides an extensibility point that allows for a different implementation. The type attribute of the issuerNameRegistry node in the above configuration above identifies the type that provides the IssuerNameRegistry class for the service. There is only one implementation provided with WIF which is ConfigurationBasedIssuerNameRegistry. This class is hard-coded to only deal with certificate thumbprints. Creating a type that can handle more certificate matching options using [X509FindType][1] will be the answer to this restriction.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Jabiru.Server.Security
 {
     using System;
@@ -51,7 +51,7 @@ namespace Neovolve.Jabiru.Server.Security
 
 The IssuerCertificateMapping struct will define the relationship between an issuer name and the certificate matching criteria. The ConfiguredCertificateIssuerNameRegistry class will read the issuer configuration and provide the logic for matching against the security token certificate when the GetIssuerName is invoked.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Jabiru.Server.Security
 {
     using System;
@@ -320,7 +320,7 @@ The ConfiguredCertificateIssuerNameRegistry parses the RP configuration to searc
 
 This class allows for a more flexible mapping between issuer names and certificates. The example configuration above can then be modified to use the subject name instead of thumbprint.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <service name=&quot;Neovolve.Jabiru.Server.Service.ExchangeSession&quot;>
     <audienceUris>
         <add value=&quot;https://localhost/Jabiru/DataExchange.svc&quot; />

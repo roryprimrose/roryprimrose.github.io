@@ -11,7 +11,7 @@ The designer support for the InstanceResolver intends to display only the number
 
 The XAML for the designer defines the activity icon, display for each argument and the child activity to execute. Each of the arguments is bound to an attached property that defines whether that argument is visible to the designer.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.InstanceResolverDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -506,7 +506,7 @@ There is a lot of duplication in this XAML for each of the argument definitions 
 
 The code behind this designer detects a new ModelItem being assigned and then attaches properties to it that are bound to in the XAML.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -533,7 +533,7 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
 
 The InstanceResolverDesignerExtension class creates attached properties to manage the InstanceResolver.ArgumentCount property and the set of properties that control the argument visibility state. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;

@@ -9,7 +9,7 @@ I am working on a project where I have multiple hosted WF services. All the serv
 
 The WCF configuration for the hosted services looked a little like this before the anonymous service was added.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <system.serviceModel>
     <protocolMapping>
         <add scheme=&quot;http&quot;
@@ -73,7 +73,7 @@ This configuration name needs to match to a WCF service configuration name. This
 
 The relevant change to the above configuration is to add the following.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <services>
     <service name=&quot;Neovolve.Jabiru.Server.Services.Registration&quot;>
         <endpoint binding=&quot;basicHttpBinding&quot;

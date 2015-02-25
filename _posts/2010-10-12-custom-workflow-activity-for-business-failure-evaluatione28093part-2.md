@@ -9,7 +9,7 @@ The [previous post][0] provided the high level design requirements for a custom 
 
 The first issue to work on is how to express a business failure. The design requirements indicated that a business failure needs to identify a code and a description. The design also defined that the code value must be generic in order to avoid placing an implementation constraint on the consuming application.  
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -54,7 +54,7 @@ The BusinessFailure&lt;T&gt; class supports these design goals. There is a const
 
 The next part of the design to address is how a business failure gets processed. The design describes that this will be done using a custom exception. The exception allows calling applications have access to all the failures related to an exception and enforces applications to leverage structured error handling practises to process business failures.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow
 {
     using System;

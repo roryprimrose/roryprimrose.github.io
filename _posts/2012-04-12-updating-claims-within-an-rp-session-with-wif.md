@@ -9,7 +9,7 @@ I have a scenario where a web application is using WIF to manage federated secur
 
 The application will store the first name, last name and email address of the user. These values will be populated into the IClaimsPrincipal for an existing account using a custom ClaimsAuthenticationManager implementation.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public override IClaimsPrincipal Authenticate(String resourceName, IClaimsPrincipal incomingPrincipal)
 {
     IClaimsPrincipal principal = base.Authenticate(resourceName, incomingPrincipal);
@@ -83,7 +83,7 @@ This leaves me with having to update the FedAuth cookie mid-session from within 
 
 The next issue is that there is no clean API to use to write a new FedAuth cookie to the HttpResponse using the available FederatedAuthentication information. I came up with this extension method with the help of Reflector.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics.Contracts;
 using Microsoft.IdentityModel.Claims;

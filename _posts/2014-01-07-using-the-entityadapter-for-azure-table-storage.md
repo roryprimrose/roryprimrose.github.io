@@ -6,7 +6,7 @@ date: 2014-01-07 16:18:14 +10:00
 
 I got a request for an example of how to use the EntityAdapter class I [previously posted about][0]. Here is an example of a PersonAdapter.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public enum Gender
 {
     Unspecified = 0,
@@ -81,7 +81,7 @@ public class PersonAdapter : EntityAdapter<Person>
 
 This adapter can be used to read and write entities to ATS like the following.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public async Task<IEnumerable<Person>> ReadDomainUsersAsync(string domain)
 {
     var storageAccount = CloudStorageAccount.Parse("YourConnectionString");

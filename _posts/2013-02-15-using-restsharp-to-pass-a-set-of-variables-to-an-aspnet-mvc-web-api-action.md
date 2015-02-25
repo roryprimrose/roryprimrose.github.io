@@ -9,7 +9,7 @@ Looks like a lot of people hit this issue and come up with lots of “interestin
 
 Assume that the controller action is like the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 [HttpGet]
 public HttpResponseMessage MyAction(
     [ModelBinder]List<string> referenceNames, DateTime startDate, DateTime endDate)
@@ -19,7 +19,7 @@ public HttpResponseMessage MyAction(
 
 How do you get RestSharp to send the set of strings to the action so that they are deserialized correctly? The answer is like this.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 var client = new RestClient(Config.ServiceAddress);
 var request = new RestRequest(ActionLocation, Method.GET);
     

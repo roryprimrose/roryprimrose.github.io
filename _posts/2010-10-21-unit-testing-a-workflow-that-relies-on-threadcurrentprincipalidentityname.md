@@ -13,7 +13,7 @@ Fortunately there are two easy workarounds for this problem. Both workarounds ma
 
 These workarounds leverage the logic that Reflector shows in AppDomain.GetThreadPrincipal. This method gets called by Thread.CurrentPrincipal when the current principal is null. Fortunately this isn't a problem for executing a workflow as the workflow engine does not assign a principal for the new workflow thread.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 internal IPrincipal GetThreadPrincipal()
 {
     IPrincipal principal = null;
@@ -51,7 +51,7 @@ internal IPrincipal GetThreadPrincipal()
 
 **1. Change the AppDomain PrincipalPolicy**
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 // Configure the app domain to put the current windows credential into the thread when Thread.CurrentPrincipal is invoked
 AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
 {% endhighlight %}
@@ -68,7 +68,7 @@ There are a few caveats for this workaround to be aware of:
 
 Changing the AppDomain PrincipalPolicy will work however the outcome locks you into testing against the current WindowsIdentity which is not ideal. The AppDomain class also has the ability to define a default principal. This overrides the PrincipalPolicy as seen in the above GetThreadPrincipal method. Assigning the principal in this way provides a lot more control over the principal that is used in the workflow thread.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 AppDomain.CurrentDomain.SetThreadPrincipal(newPrincipal);
 {% endhighlight %}
 
@@ -78,7 +78,7 @@ There is a caveat for this workaround as well. The default principal for the app
 
 It is important to clean up any changes made when the test either completes or fails. This is where a handle context/scope style class comes into play.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Jabiru.Server.TestSupport
 {
     using System;
@@ -140,7 +140,7 @@ namespace Neovolve.Jabiru.Server.TestSupport
 
 This class will configure the AppDomain to use a provided principal. It will also attempt to detect if the app domain is already configured with a different default principal. The Dispose method will then restore the original principal back onto the thread.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using (TestUsers.DefaultUser.CreateContext())
 {
     IDictionary<String, Object> outputParameters = ActivityInvoker.Invoke(target, inputParameters);

@@ -19,7 +19,7 @@ The MultiTask class will take the EventWriter service from BTE as a constructor 
 
 MultiTask defines the structure for the command line arguments so that the user can define multiple tasks and their arguments.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.Generic;
 using System.Linq;

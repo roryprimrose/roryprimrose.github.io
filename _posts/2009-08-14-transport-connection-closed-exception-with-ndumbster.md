@@ -23,7 +23,7 @@ I worked on this one for a while. Without wanting to get my fingers into the nDu
 
 The unit test code looks like the following.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 /// <summary>
 /// Stores the random generator.
 /// </summary>

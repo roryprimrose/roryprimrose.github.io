@@ -10,7 +10,7 @@ The problem here is that ITableEntity is still leaking outside of the Azure DAL 
 
 Using an entity adapter is a really clean way to get your cake and eat it. The original code of this concept was posted by the Windows Azure Storage Team (you can read it [here][0]). I’ve taken that code and tweaked it slightly to make it a little more reusable.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyProject.DataAccess.Azure
 {
     using System;

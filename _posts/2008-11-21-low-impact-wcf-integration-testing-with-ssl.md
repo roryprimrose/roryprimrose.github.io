@@ -58,7 +58,7 @@ The best way to do this is to add a DeploymentItem attribute to the test method 
 
 For example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 [TestMethod]
 [DeploymentItem(@"Communication\Security\Neovolve.Toolkit.pfx")]
 public void PasswordSecurityOnThreadTest()
@@ -75,7 +75,7 @@ In order for this certificate to be used in a test that requires SSL, it must be
 
 The CertificateDetails struct below contains the information required to install and uninstall the certificate.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Security.Cryptography.X509Certificates;
  
@@ -135,7 +135,7 @@ namespace Neovolve.Toolkit.UnitTests.Communication.Security
 
 Certificates can be installed and uninstalled using the following CertificateManager class. As Mark mentions in his post, keep in mind that if there is collision of subject names with existing certificates, those certificates will also be uninstalled. To avoid this, use a subject name that is unique enough to identify the purpose of the certificate without colliding with existing certificates in the store.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -254,7 +254,7 @@ namespace Neovolve.Toolkit.UnitTests.Communication.Security
 
 The next part of the process is to configure the certificates so they can be installed at the beginning of the tests and uninstalled at the end. For example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
@@ -320,7 +320,7 @@ This code identifies the pfx certificate using a relative path, the subject name
     
 My unit test is written with a self-hosted service and client that are both configured at runtime to avoid a reliance on IIS or Cassini. The following code is the initial code fragment of the unit test that sets up the host and client channel.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 const String ServiceAddress = "net.tcp://localhost/PasswordServiceCredentialsTests";
 
 Uri address = new Uri(ServiceAddress);

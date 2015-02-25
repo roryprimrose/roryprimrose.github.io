@@ -19,7 +19,7 @@ The race condition that Andy found is one of the production issues I have seen o
 
 This latest version of the EntityAdapter class fixes the two above issues.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MySystem.Server.DataAccess.Azure
 {
     using System;

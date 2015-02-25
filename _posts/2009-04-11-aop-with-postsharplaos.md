@@ -7,7 +7,7 @@ date: 2009-04-11 15:17:00 +10:00
 
 PostSharp.Laos is a Lightweight Aspect-Orientated System for PostSharp that makes it really easy to include AOP in your code. In this demo, PostSharp will be used to aspect the RunTest() method in the following application. The aspect will output console messages before and after the aspected method is executed.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
      
 namespace ConsoleApplication1
@@ -41,7 +41,7 @@ I know that PostSharp.Laos is easy to use in comparison to PostSharp.Core, but I
 
 In order to aspect the RunTest method in the code defined above, an OnMethodInvocationAspect derived attribute was created for the aspect and declared against the RunTest method.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using PostSharp.Laos;
      
@@ -89,7 +89,7 @@ PostSharp will find the MethodTraceAspect attribute on the RunTest method and ch
 
 PostSharp kicks in after the original code has been compiled and changes the IL to include the aspect. Reflector shows the following outcome as the combination of the compiler and PostSharp doing their work.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using PostSharp.Laos;

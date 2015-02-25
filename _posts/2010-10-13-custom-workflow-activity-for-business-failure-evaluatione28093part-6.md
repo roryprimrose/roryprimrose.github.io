@@ -11,7 +11,7 @@ The [previous post][0] in this series provided the custom activity that manages 
 
 The BusinessFailureEvaluator&lt;T&gt; evaluates a single business failure. There is no support for child activities which makes the designer very simple.  
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureEvaluatorDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -40,7 +40,7 @@ The XAML for the designer simply identifies the image to use for the activity on
     
 The activity has a generic type argument that defaults to Int32 when the activity is dropped onto the designer. This type is not always suitable for the purposes of the application so the generic type argument needs to be updatable.
     
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -75,7 +75,7 @@ This attached property allows the generic type of the activity to be changed to 
 
 The BusinessFailureScope&lt;T&gt; allows for multiple business failures to be stored against the scope so that they can be thrown together rather than one at a time.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureScopeDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -106,7 +106,7 @@ The XAML for the designer does two things. Firstly it identifies the icon the ac
 
 Like the BusinessFailureEvalator&lt;T&gt; activity, the BusinessFailureScope has a generic type argument that defaults to Int32 when the activity is dropped onto the designer. The code behind the designer makes this type updatable in the same way.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;

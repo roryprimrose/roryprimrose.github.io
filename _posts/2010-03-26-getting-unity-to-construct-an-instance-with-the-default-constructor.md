@@ -9,7 +9,7 @@ I wasted a lot of time this afternoon trying to get some Unity configuration to 
 
 One of the issues I had was that I wanted to inject a concrete type that didn’t have an interface. This turned about to be simple as Unity natively supports it. You just don’t need to define a mapTo attribute on the type element. The issue that hit me was that Unity was not invoking the constructor that I was expecting. My type that has the following constructors:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class Settings
 {
     public Settings()
@@ -25,7 +25,7 @@ public class Settings
 
 In my attempt to wire this up, my Unity configuration contained the following definition:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <type type="Neovolve.Jabiru.Server.Business.Settings, Neovolve.Jabiru.Server.Business">
 </type>
 {% endhighlight %}
@@ -34,7 +34,7 @@ Unity was not able to create an instance of Settings with this configuration. Th
 
 The following configuration must be used in order for Unity to invoke the default constructor.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <type type="Neovolve.Jabiru.Server.Business.Settings, Neovolve.Jabiru.Server.Business">
     <typeConfig extensionType="Microsoft.Practices.Unity.Configuration.TypeInjectionElement,
                             Microsoft.Practices.Unity.Configuration">

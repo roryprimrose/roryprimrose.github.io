@@ -8,7 +8,7 @@ There have been several times when I have needed to process a string that contai
 
 Just for kicks, I tried to come up with a regular expression that would do just that. Here is the result.
 
-{% highlight text linenos %}
+{% highlight text %}
 [^\s"]*"[^"]*"[^\s"]*|[^\s"]+
 {% endhighlight %}
 

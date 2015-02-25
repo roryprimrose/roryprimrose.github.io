@@ -9,7 +9,7 @@ I recently [posted a Unity extension][0] for disposing build trees created by Re
 
 Consider the following example.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using Microsoft.Practices.Unity;
 using Neovolve.Toolkit.Unity;
@@ -87,7 +87,7 @@ Tester exposes a property that indicates whether the instance has been disposed.
 
 Lazy loading dependencies is achieved by changing the injection type from T to Func&lt;T&gt;. This can be done in the above example by changing the Root constructor from public Root(ITester tester) to public Root(Func&lt;ITester&gt; tester). The example above now looks like the following. This delegate then needs to be invoked to get Unity to resolve the dependency instance.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using Microsoft.Practices.Unity;
 using Neovolve.Toolkit.Unity;
@@ -163,7 +163,7 @@ I have updated the DisposableStrategyExtension to correctly track build trees of
 
 The PostBuildUp method is the second half of the logic that creates a build tree for each Unity build operation in this extension. The update to track lazy loaded build trees is to detect that the dependency created (context.Existing) is a delegate. If this is the case then&#160; a wrapper delegate is created and returned instead.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public override void PostBuildUp(IBuilderContext context)
 {
     if (context != null)
@@ -198,7 +198,7 @@ public override void PostBuildUp(IBuilderContext context)
 
 The wrapper delegate will now be injected as the dependency rather than the Unity delegate. The wrapper delegate is created using the CreateTrackedDeferredResolution method. This method has some defensive coding to ensure that we are actually dealing with a Func&lt;T&gt; delegate. The wrapper delegate it creates is a function call out to a Resolve method on a custom DeferredResolutionTracker&lt;T&gt; class.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public Delegate CreateTrackedDeferredResolution(Delegate originalDeferredFunction)
 {
     Type delegateType = originalDeferredFunction.GetType();
@@ -245,7 +245,7 @@ public Delegate CreateTrackedDeferredResolution(Delegate originalDeferredFunctio
 
 The DeferredResolutionTracker class takes in the original delegate, the parent node in the original build tree (the instance that the delegate is injected into) and a reference to the collection of build trees. Its Resolve method then invokes the original delegate to lazy load the dependency instance from Unity. It then searches the collection of build trees to find the build tree of that resolution action. That build tree is then removed from the collection and added as a child of the original parent node from the original build tree. 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Diagnostics.Contracts;
 using System.Linq;

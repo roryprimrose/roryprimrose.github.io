@@ -11,7 +11,7 @@ The specific scenario I am addressing is a little different. I have created some
 
 The Retry activity shown below will execute its child activity and watch for a match on a nominated exception type or derivative. It will then determine whether it can make another attempt at the child activity by comparing the current number of attempts against a MaxAttempts property. If another attempt will be made then it will determine whether the child activity will be invoked immediately or whether a delay should occur first.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -201,7 +201,7 @@ The CacheMetadata method has some logic in it to validate the state of the activ
 
 The designer xaml of the Retry activity looks like the following.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.RetryDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

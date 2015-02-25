@@ -9,7 +9,7 @@ I have had a performance bottleneck in a load test that I have been running. The
 
 The methods on TraceSource check TraceInternal.UseGlobalLock (also referenced by Trace.UseGlobalLock) which is determined by the _system.diagnostics/trace/useGlobalLock_ configuration value: 
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
     <system.diagnostics> 
@@ -39,7 +39,7 @@ I find that [System.Diagnostics.XmlWriterTraceListener][3] is the best listener 
 
 On a side note, I created a custom listener to use in my load test because I wanted to be able to test the performance of my tracing components while minimizing the performance &quot;noise&quot; of the .Net framework part of the tracing execution. The listener looks something like this: 
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System; 
 using System.Diagnostics; 
     

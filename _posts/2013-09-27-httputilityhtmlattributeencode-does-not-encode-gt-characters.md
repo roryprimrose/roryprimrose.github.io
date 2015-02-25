@@ -11,7 +11,7 @@ So my debugging efforts seem to have uncovered an issue in HttpUtility.HtmlAttri
 
 The problem can be simply expressed by the following code.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System;
 using System.Web;
 namespace ConsoleApplication1
@@ -31,7 +31,7 @@ The call to HttpUtility.HtmlAttributeEncode produces the result &lt;p/&gt; inste
 
 For example, encode "&lt;p/&gt;" and put it into a hidden field and you then get HTML like the following:
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <form>
     <input type="hidden" name="DataSet" value="<p/>" />
     <input type="submit" name="Submit" />
@@ -42,7 +42,7 @@ The interpretation of this HTML could either implicitly consider the &gt; in the
 
 The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the &gt; character.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 public class TagHttpEncoder : HttpEncoder
 {
     /// <inheritdoc />
@@ -63,7 +63,7 @@ public class TagHttpEncoder : HttpEncoder
 
 This encoder can then be hooked up to ASP.Net in Global.asax.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 protected void Application_Start(object sender, EventArgs e)
 {
     HttpEncoder.Current = new TagHttpEncoder();

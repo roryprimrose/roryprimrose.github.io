@@ -32,7 +32,7 @@ Hopefully you will now have some information to work with.
 
 Double clicking on the binding failure gives you all the information about what .Net did to try to find the assembly. The entry in my scenario looks like this:
 
-{% highlight text linenos %}
+{% highlight text %}
 *** Assembly Binder Log Entry  (28/05/2010 @ 11:35:47 AM) ***
 The operation failed.
 Bind result: hr = 0x80070002. The system cannot find the file specified.

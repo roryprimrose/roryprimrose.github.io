@@ -8,7 +8,7 @@ I previously posted about [XML comments and the include element][0] for document
 
 Take the following xml for example.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <CommonDocumentation>
     <Remarks>
@@ -29,7 +29,7 @@ Take the following xml for example.
 
 This xml is referenced by the include statements in the code below.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 using System.Diagnostics;
      
 namespace ClassLibrary1

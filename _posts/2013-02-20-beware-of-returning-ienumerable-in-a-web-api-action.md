@@ -11,7 +11,7 @@ I have finally figured out that returning a lazy IEnumerable instance will also 
 
 Consider the following:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace MyService
 {
     using System;

@@ -8,7 +8,7 @@ Last night I was updating some integration tests for one of my projects. I have 
 
 Consider the scenario where you have a base path to which you want to add several other directory names.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace ConsoleApplication1
 {
     using System;
@@ -34,7 +34,7 @@ namespace ConsoleApplication1
 
 The statement with multiple Path.Combine evaluations is very difficult to read. A simple extension method can turn this into a fluent API design to achieve the same result and allow the intention of the code to be crystal clear.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 namespace ConsoleApplication1
 {
     using System;

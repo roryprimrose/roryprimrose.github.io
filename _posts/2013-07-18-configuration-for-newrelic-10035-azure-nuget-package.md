@@ -11,7 +11,7 @@ Here are the ServiceDefinition.csdef configurations for the two types of roles. 
 
 **Web Role**
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <WebRole>
     <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
@@ -28,7 +28,7 @@ Here are the ServiceDefinition.csdef configurations for the two types of roles. 
 
 **Worker Role**
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <WorkerRole>
     <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">

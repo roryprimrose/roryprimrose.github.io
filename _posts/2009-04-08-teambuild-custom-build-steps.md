@@ -9,7 +9,7 @@ I've been working with team build a fair bit over the last month. Yesterday I wa
 
 Take the following build target for example:
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 <Target Name="RunIntegrationTests">
 
   <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
