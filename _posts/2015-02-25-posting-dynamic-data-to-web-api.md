@@ -10,8 +10,8 @@ The previous two posts ([here][0] and [here][1]) have looked at a POC for return
 The design goals are similar to the previous POCs. There is a type that has some known properties and then contains JSON serialized metadata for all the remaining dynamic properties. The storage and retrieval of the metadata should conform to some known schema for that metadata.
 
 The code here uses JObject from Newtonsoft.JSON as the mechanism of making the dynamic data available to the controller action. We then need to separate out the known properties from the metadata properties and convert all of them to the correct type.
-
-{% highlight csharp linenos %}
+<!--more-->
+{% highlight csharp %}
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -108,7 +108,7 @@ namespace DynamicService.Controllers
 
 We can then send the following object to the Web API.
 
-{% highlight csharp linenos %}
+{% highlight csharp %}
 request.AddObject(new
 {
     id = Guid.NewGuid(),
@@ -122,7 +122,7 @@ request.AddObject(new
 
 The action then returns the following echo response.
 
-{% highlight text linenos %}
+{% highlight text %}
 {
   "name": "408e63cd-5b3f-46fc-9f15-77083922ace9",
   "id": "b9fccf1b-dc13-4432-8362-8009e659c489",
