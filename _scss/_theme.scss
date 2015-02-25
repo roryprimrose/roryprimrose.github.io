@@ -164,6 +164,11 @@ aside a.button {
     background: transparent url(../images/download-button.png) 0 0 no-repeat;
 }
 
+aside a.github {
+    color: #2e7bcf;
+    background: transparent url(../images/github-blue-button.png) 0 0 no-repeat;
+}
+
 code, pre {
     margin-bottom: 30px;
     font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
@@ -225,7 +230,7 @@ ul, ol, dl {
 /* Next/Previous links */
 
 .page-navigation {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #474747;
     width: 100%;
