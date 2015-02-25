@@ -222,6 +222,28 @@ ul, ol, dl {
     margin-right: -2em;
 }
 
+/* Next/Previous links */
+
+.page-navigation {
+    font-size: 18px;
+    font-weight: bold;
+    color: #474747;
+    width: 100%;
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+}
+
+.left {
+    float: left;
+}
+
+.right{
+    float: right;
+}
+
 /* COMMON STYLES */
 
 hr {
