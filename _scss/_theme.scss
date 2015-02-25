@@ -202,6 +202,8 @@ ul, ol, dl {
     font-size: 18px;
     font-weight: bold;
     color: #474747;
+    width: 100%;
+    text-align: center;
 }
 
 .pagination .previous {
@@ -215,7 +217,7 @@ ul, ol, dl {
 }
 
 .pagination .next:after{
-    content: "<";
+    content: ">";
     padding-left: 0.3em;
     margin-right: -2em;
 }
