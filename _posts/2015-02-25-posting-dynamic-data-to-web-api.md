@@ -1,13 +1,11 @@
 ---
 published: false
+title: Posting dynamic data to Web API
+categories: .Net
+tags: ASP.Net
+date: {}
 ---
 
----
-title: Posting dynamic data to Web API
-categories : .Net
-tags : ASP.Net
-date: 2015-02-25 11:17:57 +11:00
----
 The previous two posts ([here][0] and [here][1]) have looked at a POC for returning dynamic data from Web API and then adding a defined schema to a semi-dynamic object. This post is the next POC that looks at how to POST that data to the Web API.
 
 The design goals are similar to the previous POCs. There is a type that has some known properties and then contains JSON serialized metadata for all the remaining dynamic properties. The storage and retrieval of the metadata should conform to some known schema for that metadata.
