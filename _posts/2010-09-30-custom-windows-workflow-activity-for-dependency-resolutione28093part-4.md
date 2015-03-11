@@ -11,6 +11,8 @@ The [posts in this series][0] have looked at providing a custom activity for dep
 
 The first action to take when creating WF4 activity designer support is to create a new Visual Studio project. The name of this project should be prefixed with the name of the assembly that contains the activities related to the designers. The project should have the suffix of “Design”. In the case of my [Toolkit][1] project, the assembly that contains the custom activities is called Neovolve.Toolkit.Workflow.dll and the designer assembly is called Neovolve.Toolkit.Workflow.Design.dll.
 
+<!--more-->
+
 I’m not a fan of this restriction as my original intention was to group the designers in the same assembly as the activities. I wanted this for the purpose of portability so as to minimise the number of assemblies that developers needed to reference in order to leverage my toolkit. 
 
 The restriction of this project segregation and specific naming is because of the [IRegisterMetadata][2] implementation. In addition to the project segregation, these assemblies must be in the same directory for the IRegisterMetadata implementation to be picked up and executed. These restrictions are not part of the MSDN documentation but are provided in [this forum post][3]. I have found that adding the following post build script to the designer project is very useful to ensure that the assemblies are co-located.

@@ -11,6 +11,8 @@ DI is a pattern in which dependencies are calculated outside an entity and provi
 
 WF does not fully support this model. Any dependencies calculated outside a workflow must be provided to the workflow execution engine as a dictionary of input parameters. A DI container can be used resolve the dependencies, however providing them to the workflow via the workflow engine is a manual process. This means that constructor, property and method injection are not supported as you cannot use a container to resolve or build up a workflow instance.
 
+<!--more-->
+
 There are two ways that you can get dependencies to be available on a workflow. These are via arguments or via a custom extension/activity implementation. 
 
 There are a few considerations that dependency support in workflow should cater for. These are the amount of plumbing code required, validation of dependencies and support for persistence.

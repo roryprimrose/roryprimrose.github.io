@@ -9,6 +9,8 @@ I am using the [timezoneJS][0] to provide time zone support for JavaScript runni
 
 The library downloads zone files from the web server as it requires. The big thing to note about the zone files are that they are really heavily commented using a # character as the comment marker. The 38 zone files in the package amount to 673kb of data with the file “northamerica” being the largest at 137kb. This drops down to 232kb and 36kb respectively if comments and blank lines are striped. That’s a lot of unnecessary bandwidth being consumed. MVC4 does not understand these files so none of the OOTB bundling strip the comments. The bundling support in MVC4 (via the [Microsoft.Web.Optimization][1] package) will however allow us to strip this down to the bare data with a custom IBundleBuilder (my third custom bundler – see [here][2] and [here][3] for the others).  
 
+<!--more-->
+
 **Current Implementation**  
 
 For background, this is my current implementation. The web project structure looks like this.  

@@ -10,6 +10,8 @@ After I moved the feed reader to my laptop, it meant that I had to put the proxy
 
 Just before Christmas, I thought that if I could identify the domain that the computer was on, I would be able to automatically determine if I was plugged into work or not and change the proxy settings as appropriate. It turns out that I wasn't able to programmatically determine the current domain (anyone achieved this?), but at the start of January, I had another idea. I could get the IP address of a known computer name, in this case, my work computer.
 
+<!--more-->
+
 It goes like this, when the computer starts, I get it to run my little proxy switch application. It gets a computer name from the command-line parameters and attempts to find its IP address. If the IP address exists, it enables the proxy setting through the registry, otherwise, the setting is disabled. 
 
 There are two problems with this idea. Firstly, when the IP address is determined, that value is cached. This means that if the computer falls off the network, the IP address is still returned for the computer name specified. Secondly, if I don't have the network cable plugged in at work before I boot up, it will disable the proxy settings. As long as I turn the computer off when traveling between home and work, and I always ensure that the network cable is plugged in before boot-up at work, neither of these are an issue.

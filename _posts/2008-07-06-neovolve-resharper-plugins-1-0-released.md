@@ -13,6 +13,8 @@ The following is a copy of the [Using ReSharper Plugins 1.0][2] documentation on
 
 The ReSharper Plugins project currently contains a single plugin that provides C# code formatting functionality. This formatting function allows for type declarations to be formatted between their alias type and their CLR type. For example, depending of the format settings defined in a code cleanup profile, bool can be converted to Boolean or Boolean converted to bool.  
   
+<!--more-->
+
 **Configuration**
 
 The following displays the normal code format profile dialog.  

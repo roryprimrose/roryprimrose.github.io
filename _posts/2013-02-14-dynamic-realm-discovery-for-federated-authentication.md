@@ -6,6 +6,8 @@ date: 2013-02-14 22:39:08 +10:00
 
 I have a web role (RP) running in Windows Azure that uses ACS 2.0 as the identity provider (IP). The web role is configured with a certificate to work with the authentication negotiation and subsequent security session. The certificate supports both domain.com and www.domain.com. The issue is that the federation authentication configuration of the web role can only specify one realm and the realm attribute is a required value.
 
+<!--more-->
+
 {% highlight xml %}
 <wsFederation passiveRedirectEnabled="true" issuer="http://[addressOfAcs]" realm="http://www.domain.com" requireHttps="true" />
 {% endhighlight %}

@@ -7,6 +7,8 @@ date: 2009-08-07 13:30:00 +10:00
 
 There is an issue with mocking IUnityContainer from RhinoMocks. A BadImageFormatException is thrown when you attempt to create a mock or a stub of IUnityContainer. For example: 
 
+<!--more-->
+
 {% highlight csharp %}
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

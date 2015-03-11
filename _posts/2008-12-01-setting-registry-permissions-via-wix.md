@@ -7,6 +7,8 @@ date: 2008-12-01 16:33:00 +10:00
 
 I [posted previously][0] about creating EventLog sources without administrative rights. Part of this solution requires that account running the application has rights to create subkeys and write values to the EventLog in the registry. WiX is being used as the installation product so the answer is something like this for the registry key:
 
+<!--more-->
+
 {% highlight xml %}
 <Permission User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes"/> 
 {% endhighlight %}

@@ -9,6 +9,8 @@ I have a custom WF activity that uses a type converter to convert from a source 
 
 The code originally looked like the following.
 
+<!--more-->
+
 {% highlight csharp %}
 if (converterActivity.TypeConverterType != null) 
 { 

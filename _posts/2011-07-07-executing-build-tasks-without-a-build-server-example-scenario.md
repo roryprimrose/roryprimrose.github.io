@@ -15,6 +15,8 @@ The build tasks I want to execute when this solution compiles are:
 * Check out from TFS as required
 * Rename wix output to include the product version
 
+<!--more-->
+
 The solution for Switch has several projects. These are:
 
 * Neovolve.Switch.Extensibility

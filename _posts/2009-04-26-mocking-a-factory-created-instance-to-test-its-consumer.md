@@ -9,6 +9,8 @@ I have faced a bit of a curly one tonight with a class that I want to unit test.
 
 The difficulty with this scenario is that Type.GetType (using the configuration value) isn’t able to load the mock type directly. The solution to this problem is to use a wrapper around the mock. In doing this, the type loaded by Type.GetType is a statically defined type that happens to hold a reference to the mocked object to which it simply forwards on the required calls.
 
+<!--more-->
+
 Here is a slimmed down example.
 
 {% highlight csharp %}

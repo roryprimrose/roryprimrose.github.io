@@ -10,6 +10,8 @@ If you look at the help for the _Identifiers should be spelled correctly_ rule, 
 
 > _Place the dictionary in the installation directory of the tool, the project directory, or in the directory associated with the tool under the user's profile (%USERPROFILE%\Application Data\...)._
 
+<!--more-->
+
 Which tool? I can only assume that it is referring to the Visual Studio IDE? Why is this not specific? The project directory reference is self explanatory, but the users profile directory is as useful as the first reference to 'the tool'.
 
 If you click the _How to: Customize the Code Analysis Dictionary_ link at the bottom of the help page, you get some mildly more helpful help information as it says:

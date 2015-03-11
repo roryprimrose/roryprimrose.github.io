@@ -10,6 +10,8 @@ The service in question logged errors indicating that there were insufficient pr
 
 I quickly realised that the current working directory of a Windows service is probably not the path of the service assembly. Most likely the current directory for a Windows service is C:\Windows\System32. This meant that any work with relative paths was likely to cause grief.
 
+<!--more-->
+
 The simple fix for my service is to set the current directory for the process to the directory containing the executing assembly when the service is started.
 
 {% highlight csharp %}

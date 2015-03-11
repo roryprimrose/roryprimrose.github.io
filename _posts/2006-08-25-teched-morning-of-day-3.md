@@ -9,6 +9,8 @@ I was quite surprised that most people were up and awake after the night before.
 
 My first session for the day was _ASP.NET 2.0 Tips and Tricks_ by Scott Guthrie. I had previously seen the PowerPoint deck and the code for this presentation from previous times Scott has presented it throughout the year. Even though I was reasonably familiar with the content, it was really good to listen to Scott as he discussed each of the items in the session. He was able to add a lot of information and background to the slides. He also answered a lot of really good questions from the audience.
 
+<!--more-->
+
 Session #2 was _Visual C#: Future Directions and Tips and Tricks_ that Dan Green presented. He was given the session without a whole lot of notice. I think he did a really good job and presented an amazing amount of really awesome IDE and 3rd part tools and features. The only issue I had from the session was that many of the items Dan presented were around the IDE and the framework rather than being C# specific. While this was still really good, I wanted to get deeper into more C# specific tips and tricks. I would like to get access to his presentation deck though.
 
 The last session for the morning was _A Developer's Overview of Windows Presentation Foundation_ by [Arik Cohen][0]. Of all the cool stuff that is coming out with [NetFX][1], WPF is the one I am most passionate about. I love what user interfaces can be, but am usually left disappointed by implementations that developers have come up with. The idea that there can be a tighter working relationship between designers and developers is a situation that I am very much looking forward to. This first WPF session from Arik was a great overview of the benefits of WPF and what you can achieve with WPF.

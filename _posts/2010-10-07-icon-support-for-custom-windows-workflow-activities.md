@@ -9,6 +9,8 @@ Creating a [custom dependency resolution activity][0] for WF gave me the opportu
 
 There are two places that provide this icon support. The first is in the Visual Studio toolbox and the second is on the activity design surface. I have been using images from the awesome [famfamfam Silk collection][1] for these activities.
 
+<!--more-->
+
 **Visual Studio toolbox**
 
 Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.

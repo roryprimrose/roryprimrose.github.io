@@ -9,6 +9,8 @@ The [previous post][0] provided the high level design requirements for a custom 
 
 The first issue to work on is how to express a business failure. The design requirements indicated that a business failure needs to identify a code and a description. The design also defined that the code value must be generic in order to avoid placing an implementation constraint on the consuming application.  
 
+<!--more-->
+
 {% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow
 {

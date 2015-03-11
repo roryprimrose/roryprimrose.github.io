@@ -11,6 +11,8 @@ I’ve been a little late to the NuGet bandwagon. Overall I am really happy with
 * The amount of binding redirects added to config files is not always desirable and don’t always work
 * TFS get latest on a solution does not bring down NuGet package changes
 
+<!--more-->
+
 I did have an idea about how to at least raise the awareness of new and updated NuGet packages in a solution to a team that uses TFS. Using the new Team Alerts feature in TFS 2012 will do the job. A custom TFS alert can notify the developers of a check in to the packages directory. The setup looks something like this:
 
 Ensure that you have a Developers TFS team in the project.  

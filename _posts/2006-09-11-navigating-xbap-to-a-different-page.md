@@ -11,6 +11,8 @@ Could it be this difficult? Should it be? The answer to these questions is no, b
 
 One of the bits of information I came across was from the [MSDN Magazine][1]. I found the following code sample a little suspect though:
 
+<!--more-->
+
 {% highlight csharp %}
 void viewHyperlink_Click(object sender, RoutedEventArgs e)
 {

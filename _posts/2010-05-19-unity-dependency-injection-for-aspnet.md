@@ -11,6 +11,8 @@ My version uses a single IHttpModule without any other dependencies. The only im
 
 My UnityHttpModule looks like the following. 
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Diagnostics.Contracts;

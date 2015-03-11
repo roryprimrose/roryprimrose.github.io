@@ -10,6 +10,8 @@ The requirement I had with my test labs was that I need to use domain controlled
 
 Having a test DC means that it needs to be isolated from the hosting network. This avoids AD, DNS and DHCP conflicts between the development and test networks. Lab management can be configured for network isolation to get around this problem. This means that the private DC will have a network connection that is private to the lab, while all the other machines in the lab will have one NIC for the private lab network and a second NIC for access out to the hosting environment. This setup can be seen in the SCVMM network diagram below with the machine at the top of the diagram being the private DC.   
 
+<!--more-->
+
 [![][1]][0]
 
 The problem I had for several weeks was that the private DC lost its Windows activation when it was stored into the VMM library for deployment out to a lab environment. You are restricted to phone activation in this case because once the stored VM is put into a lab with network isolation there is no internet support for automatic activation on the DC. This then needs to be done every time you deploy a lab environment.

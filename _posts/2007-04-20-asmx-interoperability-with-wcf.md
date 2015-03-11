@@ -13,6 +13,8 @@ I have encountered a problem under SSL though. I am wanting to use username/basi
 
 > _WCF has a standard binding called “&lt;basicHttpBinding&gt;” which derives its name from the Basic Profile specifications. There is a security mode within this binding called “TransportWithMessageCredential”. You can choose either a transport or a message credentials in this security mode. Setting it to &lt;message clientCredentialType="UserName"/&gt; uses Transport-Level Security (SSL / HTTPS) with SOAP-Level Username token security credentials. This is in accordance with the [WSS SOAP Message Security Username Token Profile 1.0][2]  and it implements WSS SOAP Message Security 1.0 specification for username/password (for client authentication) over HTTPS (for privacy)._
 
+<!--more-->
+
 My WCF client consumes the endpoint correctly as the authenticated user. However, when using an ASMX web reference, I end up with the following error:
 
 > _System.Web.Services.Protocols.SoapHeaderException: An error occurred when verifying security for the message._

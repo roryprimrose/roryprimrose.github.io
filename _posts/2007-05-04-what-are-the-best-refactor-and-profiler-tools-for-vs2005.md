@@ -8,6 +8,8 @@ If you have some experience with refactoring or profiling tools (preferably with
 
 For refactoring tools, the pick seem to be either [JetBRAINS ReSharper][0] or [DevExpress RefactorPro][1]. ReSharper is $250 and seems to have similar functions to RefactorPro which weighs in at $99 with free updates for a year, or $250 if bundled with [CodeRush][2]. There is also [JustCode][3] and [C# Refactory][4] but these both seem to be less mature compared to ReSharper and RefactorPro.
 
+<!--more-->
+
 As far as profiling tools go, I don't have much of an indication. There is the [CLR Profiler][5], [.Net Memory Profiler][6], [ANTS Profiler][7] and [JetBRAINS dotTrace][8].
 
 Are there any other contenders worthy of the calling that I have missed?

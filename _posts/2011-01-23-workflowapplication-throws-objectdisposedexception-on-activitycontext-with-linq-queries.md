@@ -11,6 +11,8 @@ I have written a simple WF4 activity that validates a WIF IClaimsIdentity has ce
 
 Almost all of the tests failed with the following error:  
 
+<!--more-->
+
 > _Test method Neovolve.Jabiru.Server.Business.UnitTests.Activities.DemandAnyDataChangeClaimTests.DemandAnyDataChangeClaimThrowsExceptionWithManageOnlyClaimTest threw exception System.ObjectDisposedException, but exception System.Security.SecurityException was expected. Exception message: System.ObjectDisposedException: An ActivityContext can only be accessed within the scope of the function it was passed into.  
 > Object name: 'System.Activities.ActivityContext'._
 

@@ -8,6 +8,8 @@ I’m writing a system that exposes several services. Each service is created us
 
 As I was writing the exception management slice, the code started to get incredibly duplicated. Each method in the class began to look like this:
 
+<!--more-->
+
 {% highlight csharp %}
 public String DoSomething(String withSomeValue, Boolean andAnotherValue)
 {

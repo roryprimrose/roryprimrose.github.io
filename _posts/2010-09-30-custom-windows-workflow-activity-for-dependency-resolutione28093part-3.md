@@ -10,6 +10,8 @@ The original implementation of this activity supported resolving a single depend
 
 The ScheduleAction method provides the ability for a child activity to be scheduled for execution with one or more delegate arguments. This is the way that ForEach&lt;T&gt; and ParallelForEach&lt;T&gt; activities work. In these cases the argument defines the item being provided in the iterator of the loop behind the activity. This is seen below being defined as the variable “item”.![image][1]
 
+<!--more-->
+
 The custom activity defined here has a concept of the number of arguments that it supports at runtime. This is defined at design time using a GenericArgumentCount enum definition. In part this enum is used to support the design-time experience. The activity also uses this value to ensure that only the intended number of generic arguments are provided to the child activity.
 
 {% highlight csharp %}

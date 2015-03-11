@@ -8,6 +8,8 @@ Quite simply, a lot. The yield statement seems to be such a simple part of C# ye
 
 Take the following abstract class for example:
 
+<!--more-->
+
 {% highlight csharp %}
 namespace MyApplication.Diagnostics
 {

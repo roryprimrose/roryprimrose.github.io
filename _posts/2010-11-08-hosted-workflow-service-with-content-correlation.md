@@ -9,6 +9,8 @@ Content correlation in hosted WF services seems daunting but is surprisingly sim
 
 I have an account registration scenario where the first service operation is to request a new account. The request needs to provide a first name, last name, email address and a password. The register account workflow will run some validation logic and then send an email to the email address with a link back to a website for confirmation. 
 
+<!--more-->
+
 The confirmation of a registration requires a TransactionId and ChallengeCode. The confirmation link in the email contains the TransactionId and registration request operation returns the ChallengeCode to the user. The service never returns the TransactionId and the email never contains the ChallengeCode. 
 
 The user must provide both the TransactionId and the ChallengeCode to the confirmation screen of the website to confirm the registration. This design provides registration security because it ensures that the registration belongs to a valid email address and that the person confirming the registration is the person who made the registration request because only they have both the TransactionId and the ChallengeCode combination. This is similar to how public/private keys work in cryptography.

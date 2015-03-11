@@ -9,6 +9,8 @@ I am working with a bit of code (Manager) that involves caching values based on 
 
 To achieve this, I generate a cache key that identifies the manager (constant string), the assembly qualified name of the resolver and then the name of the item, TraceSource instances in this case. This means that two resolvers injected into two different managers that are asked to return a TraceSource instance of the same name, will be stored in the managers internal cache as two entries. 
 
+<!--more-->
+
 When I was unit testing this behaviour, I found that Rhino mock is reusing mocked types. This means that the following code failed: 
 
 {% highlight csharp %}

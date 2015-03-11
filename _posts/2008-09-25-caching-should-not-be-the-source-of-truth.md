@@ -10,6 +10,8 @@ In the article, Peter addresses two of the common reasons that cause people to n
 
 The article then discusses issues about losing data. This is where I don't like the guidance provided. What I can't agree with in the article is the concept of having the cache as the source of truth of the application data. The article promotes the idea of keeping application data in the cache (usually in memory) when it is created or updated and only providing that information to the back-end data store when the item is removed from the cache.
 
+<!--more-->
+
 The first thing that comes to mind is that if there is a power failure, you lose your data. He mentions two things about this. Firstly, he doesn't have a solution for this (there isn't one for this design as a power failure is a power failure). Secondly, if you have a power failure, you have bigger problems. 
 
 Well, the later might be true, but that doesn't mean you should use a design that destroys data just because you do have bigger problems like a power failure. In today's world, data has an incredibly high value and needs to be treated with more respect than that. As he discusses, web farms are also difficult in scenarios where the cache is the source of truth.

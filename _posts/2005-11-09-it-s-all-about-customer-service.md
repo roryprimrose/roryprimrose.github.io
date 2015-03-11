@@ -9,6 +9,8 @@ Especially after there has been some history of customer interaction involved, i
 
 My wife bought me a pair of eye jacket Oakley's about seven years ago for my birthday (you get to choose which one). They cost about $160 at the time and have been worth every cent. They have however finally come to the end of their days. The frame must have just become too brittle in its long life and the frame broke above one of the lenses.
 
+<!--more-->
+
 My first port of call was Sunglass hut. What are my options? I know it isn't going to be a warranty thing and I am happy to pay to get them repaired. After being sent away twice because the salesperson was busy with a difficult sale (I don't actually have a problem with this bit), I was told that without a receipt they wouldn't be able to send it away for repairs. 
 
 First problem here is that it is for a repair job, not a warranty job, yet I still need the original receipt. The reasoning provided was that too many people have bought fake sunglasses and brought them in for repair. This, for some reason, resulted in cost to the business so a receipt policy was put in place. 

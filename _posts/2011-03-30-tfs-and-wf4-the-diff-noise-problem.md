@@ -9,6 +9,8 @@ For a long time the most popular post I have on this site is about how to config
 
 Unfortunately WF is one of the common offenders. I absolutely love WF, but am disappointed that designer state information is persisted with the workflow definition rather than in a user file that is merged in the IDE. The result of this is that the activity xaml file changes if you collapse a composite activity, such as the Sequence activity. The actual workflow definition has not changed, but it is a new version of the file as far as a diff tool and TFS goes.
 
+<!--more-->
+
 For example, I have collapsed lots of activities on one of my workflows. The resulting diff using WinMerge looks like the following:![image][1]
 
 There is a lot of noise here. It is all designer state information rather than actual changes to the workflow definition. There are several culprits in WF4 that cause this noise.

@@ -13,6 +13,8 @@ A Unity container is used to create objects for use by an application. There are
 
 Code outside the container should not be concerned with the lifetime management of instances created by the container for these reasons. 
 
+<!--more-->
+
 The [IUnityContainer][4] interface in Unity provides a [TearDown][5] method which can be used to clean up container instances. TearDown invokes the [IBuilderStrategy.PreTearDown][6] and [IBuilderStrategy.PostTearDown][7] methods on each builder strategy added to the container. Unfortunately the TearDown method has no affect by default as none of the “out of the box” strategies dispose created instances. 
 
 This can be addressed by creating a builder strategy that is hooked up via a Unity extension. This extension will allow for IDisposable instances to be disposed by the container when TearDown is invoked. 

@@ -13,6 +13,8 @@ I’ve been doing several TFS consulting gigs over the last couple of years. The
 
 Tagging the build agents and configuring the build definitions for those tags then allows the build to be directed to the correct build agent.
 
+<!--more-->
+
 The next consideration is that the customisations to the build agent will ideally contain just what is required to build solutions and run unit tests. A SharePoint build agent for example should not have a full SharePoint installed on it. Instead it can just have the required assembly dependencies registered on it to allow the build to succeed.
 
 There is a PowerShell script floating around that assists in harvesting SharePoint assemblies from a development server to then install and configure them on the SharePoint build agent. The original script was published by Microsoft (see [here][0]) and subsequently updated by the [SharePoint Developer Team][1] to include additional assemblies. The later post also provides a great walkthrough for creating SharePoint build definitions.

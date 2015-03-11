@@ -11,6 +11,8 @@ Lets look at a simple solution that contains ProjectA, ProjectB and ProjectC. Pr
 
 ProjectA contains a form that references ClassB in ProjectB like this:
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Diagnostics;

@@ -9,6 +9,8 @@ This has been an interesting nut to crack. There are several published ways to i
 
 The following target overrides the ResolveSolutionPathsForEndToEndIteration MSBuild target to inject a $(VersionNumber) value if a custom version number has been defined or calculated in the build script. The default implementation of ResolveSolutionPathsForEndToEndIteration is called if no version number has been defined or calculated.
 
+<!--more-->
+
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">

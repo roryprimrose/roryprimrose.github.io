@@ -6,6 +6,8 @@ date: 2012-11-08 15:31:00 +10:00
 
 I really like Microsoft's Code Contracts. The concept is absolutely great, but I'm starting to wonder if using them is worth it. Here are the pro's and con's as I see them.
 
+<!--more-->
+
 Pros
 
 * Contracts applied once for interfaces and abstract classes

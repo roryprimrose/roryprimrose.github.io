@@ -10,6 +10,8 @@ To avoid reinventing the wheel, I took his code and ran. What I found though, is
 
 The function now looks like this: 
 
+<!--more-->
+
  {% highlight vbnet %}
 'given the passed in enum, convert to a string,
 'but inject spaces in font of all capital letters.

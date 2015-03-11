@@ -9,6 +9,8 @@ I’ve been creating a VSIX project template for Visual Studio over the last wee
 
 I have noticed one weird quirk when it comes to cancelling the wizard. The project template is written to disk before the IWizard.RunStarted method is invoked. This raises some questions about how to cancel the wizard process and make the solution (and disk) look like nothing ever happened.
 
+<!--more-->
+
 **How to cancel the wizard**
 
 Basically any exception thrown from IWizard.RunStarted will cause the wizard process to be cancelled. To be a good citizen in VSIX however, you should throw either the [WizardCancelledException][0] or [WizardBackoutException][1]. The only difference between these exceptions seems to be that the WizardBackoutException takes the user back to the Add New Project dialog whereas the WizardCancelledException shows the IDE like it was before the Add New Project dialog was displayed.

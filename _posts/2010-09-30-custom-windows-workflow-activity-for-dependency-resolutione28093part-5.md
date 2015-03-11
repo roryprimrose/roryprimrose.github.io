@@ -10,6 +10,8 @@ One of my [original design goals][2] for this custom activity was to provide ade
 
 The [implementation][3] of the InstanceResolver activity avoids this scenario by supporting up to 16 dependency resolutions. This presents a usability issue with the designer support for the activity. The activity will provide 16 potential dependency resolutions even when just one or two are used. The activity designer addresses this by leveraging the ArgumentCount property of InstanceResolver that determines how many arguments are used by the activity. One area that this property value is used is in the behaviour of the updatable generic type support.
 
+<!--more-->
+
 The InstanceResolverTypeUpdater class shown below is very similar to the GenericTypeUpdater provided in [this post][1]. 
 
 {% highlight csharp %}

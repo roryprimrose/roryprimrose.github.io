@@ -19,6 +19,8 @@ Rough &quot;metrics&quot; will be:
 
 In order to ensure thread safety of adding a new item to the dictionary, a lock is required. Two options I see are as follows:
 
+<!--more-->
+
 **#1 - This is what people would normally do**
 
 {% highlight csharp %}

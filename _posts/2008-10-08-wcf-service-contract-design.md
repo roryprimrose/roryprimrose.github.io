@@ -9,6 +9,8 @@ These ideas have come about because of a desire to achieve service designs that 
 
 Here are some things to think of when designing service contracts: 
 
+<!--more-->
+
 **Prefer chatty service interfaces**
 
 Chatty services tend to be ones that return simplified information and use more fine-grained operations. Chunky services tend to return complex hierarchies of information and use coarse operations. In other words, the difference is that chatty services require more calls than chunky services to return the same information but allow more flexibility to return only the information that is actually required. 

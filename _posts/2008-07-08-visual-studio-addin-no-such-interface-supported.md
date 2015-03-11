@@ -9,6 +9,8 @@ I'm working on a new Visual Studio addin that launches a profiling application t
 
 After pulling my hair out for quite a while, the answer was that the AssemblyInfo.cs contained the following:
 
+<!--more-->
+
 {% highlight csharp %}
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

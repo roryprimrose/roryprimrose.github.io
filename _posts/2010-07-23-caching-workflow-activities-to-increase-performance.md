@@ -9,6 +9,8 @@ date: 2010-07-23 12:14:06 +10:00
 
 I’ve put together an ActivityStore class that handles this caching requirement.
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Activities;

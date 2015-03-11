@@ -13,6 +13,8 @@ Generally speaking you will want to steer clear of unmanaged or IDisposable reso
 
 A workflow may be persisted at any time (with the exception of a [No Persist Zone][0]). There are two problems for unmanaged or IDisposable resources with regard to persistence. Firstly, the resource may not be released when the workflow is persisted. Secondly the state of the resource when the workflow is restored is unlikely to be the same as when the workflow was persisted. There is no native support in WF for dealing with these two issues.
 
+<!--more-->
+
 A workflow may encounter an exception at any time. The workflow needs to handle this scenario at the appropriate scope to ensure that the resource is released correctly. There is an additional concern here in that disposing an IDisposable instance may throw an ObjectDisposedException. This should be caught and ignored as there is nothing that can be done in such a scenario and the desired outcome has been achieved anyway. While not a runtime concern, addressing the exception handling issue in the WF designer results in a very messy implementation.
 
 Consider the following example.![image][1]

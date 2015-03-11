@@ -8,6 +8,8 @@ I've written some code that reflections MethodInfo objects from a type using its
 
 Consider the following code:
 
+<!--more-->
+
 {% highlight csharp %}
 internal interface IBaseInterface
 {

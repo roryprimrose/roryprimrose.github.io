@@ -8,6 +8,8 @@ I’m super excited to announce the first release of Headless, a HTTP acceptance
 
 I have completed converting the acceptance test suite an enterprise web application from WatiN to Headless. The test suite has around 360 tests of which only about 6 could not be converted to Headless. The execution time of the test suite dropped from 1:04 hours down to just over 7 minutes. Yeah, it’s fast.
 
+<!--more-->
+
 The speed of Headless over WatiN or Microsoft’s CUIT is achieved because it doesn’t use an actual browser. It simulates the actions of a browser for elements like buttons and links. This also has a side benefit that you can execute the acceptance tests on a build server without requiring an interactive process and you can continue to work while your test suite is executing. This does however mean that it does not execute JavaScript or download other resources like CSS and images.
 
 Some of the features of Headless are:

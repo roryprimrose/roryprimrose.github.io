@@ -15,6 +15,8 @@ MSBUILD : Build error TSD158: Login failed for user '[TeamBuildUserName]'.
 Done executing task "SqlBuildTask" -- FAILED.
 {% endhighlight %}
 
+<!--more-->
+
 The problem here is that the logs don't contain the information about the target database or the connection string used to deploy the database. This means that I can't be certain that the properties defined for the project and build script are getting correctly propagated through the build process. 
 
 The solution is to modify the DataDude build script to include a log message that outputs the required property values. 

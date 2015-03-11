@@ -9,6 +9,8 @@ I got hit with an issue yesterday when the local path of a file in TFS had a len
 
 Using reflector, I can see the following code in quite a few places in the framework.
 
+<!--more-->
+
 {% highlight csharp %}
 if (num14 >= Path.MaxPath)
 {

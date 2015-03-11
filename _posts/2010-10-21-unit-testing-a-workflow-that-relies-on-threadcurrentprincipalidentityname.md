@@ -9,6 +9,8 @@ This is a bit of a curly one. I have a workflow that is mostly abstracted from s
 
 The reason for the workflow not having access to the current principal is that workflows are executed on a new thread. The principal associated with the workflow thread is determined according to the PrincipalPolicy assigned to the AppDomain. By default the AppDomain will return an unauthenticated GenericPrincipal. See my [Thread identity propagation][0] post from a few years ago for the background information.
 
+<!--more-->
+
 Fortunately there are two easy workarounds for this problem. Both workarounds make changes to the configuration of the AppDomain and how it manages the current principal. This will work because the workflow is executed within the same AppDomain as the unit test, just on a different thread.
 
 These workarounds leverage the logic that Reflector shows in AppDomain.GetThreadPrincipal. This method gets called by Thread.CurrentPrincipal when the current principal is null. Fortunately this isn't a problem for executing a workflow as the workflow engine does not assign a principal for the new workflow thread.

@@ -11,6 +11,8 @@ After doing some searching, I came across [this post][2] from [Jay Flowers][3]. 
 
 After going through Reflector, I have found that classes that are derived from Task and call the Log method end up invoking Element.Log() which calls straight down to Project.Log(). The Project.Log method does not check the logging threshold before writing the log entry. What I haven't been able to figure out is why Task.Log is not invoked. If it was, then I think the two solutions in Jay's post would probably work as Task.Log() checks the current logging threshold before calling down to the base class.
 
+<!--more-->
+
 There is however another way that will correctly modify the logging threshold at a much lower level. 
 
 Project.Log() invokes OnMessageLogged(). After searching for what is hooked up to the MessageLogged event, I found that a default listener is created and hooked up via Project.CreateDefaultLogger(). That pointed me to look at the Project.BuildListeners property and the IBuildLogger interface. The IBuildLogger has its own Threshold property.

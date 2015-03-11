@@ -9,6 +9,8 @@ The [previous post][0] provided the implementation of the BTE application. It de
 
 The following are some examples of BTE running on the command line. I am using a batch file in order to shorten BuildTaskExecutor.exe down to bte.
 
+<!--more-->
+
 1. Executing BTE without arguments
 [![image][3]][2]
 1. Executing the help task

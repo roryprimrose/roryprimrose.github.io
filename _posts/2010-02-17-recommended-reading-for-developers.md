@@ -11,6 +11,8 @@ I was reminded this morning of an email that I sent to the junior developers on 
 
 These are things that I often use and are still learning to use.
 
+<!--more-->
+
 * SOLID – Originally put together by Bob Martin ([http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod][0]). A good overview to read is at [http://www.davesquared.net/2009/01/introduction-to-solid-principles-of-oo.html][1].
 * LoD - Law of Demeter (or Principle of Least Knowledge) ([http://en.wikipedia.org/wiki/Law_of_Demeter)][2]. Often referred to as loose coupling.
 * DRY – Do not Repeat Yourself ([http://en.wikipedia.org/wiki/Don't_repeat_yourself][3]). Many say that this principle should not apply to unit testing.

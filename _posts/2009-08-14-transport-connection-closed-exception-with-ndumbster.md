@@ -19,6 +19,8 @@ The more I started using nDumbster in test runs, the more I was finding that it 
 > _System.Net.Mail.SmtpClient.Send(MailMessage message)_
 > _System.Net.Mail.SmtpClient.Send(MailMessage message)_
 
+<!--more-->
+
 I worked on this one for a while. Without wanting to get my fingers into the nDumbster code, I found a solution that works from within the unit testing code itself. The solution is to create a new instance of the nDumbster SMTP server using a unique port number for each test. This ensures that there is a fresh connection for each test in the test run.
 
 The unit test code looks like the following.

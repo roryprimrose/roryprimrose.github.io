@@ -9,6 +9,8 @@ I wasted a lot of time this afternoon trying to get some Unity configuration to 
 
 One of the issues I had was that I wanted to inject a concrete type that didn’t have an interface. This turned about to be simple as Unity natively supports it. You just don’t need to define a mapTo attribute on the type element. The issue that hit me was that Unity was not invoking the constructor that I was expecting. My type that has the following constructors:
 
+<!--more-->
+
 {% highlight csharp %}
 public class Settings
 {

@@ -9,6 +9,8 @@ I have [previously posted][0] about using the [include element][1] for my XML do
 
 As a quick overview, the include element in XML documentation tells the compiler to go to the specified XML file and run an XPath query (recursively). It pulls in the result of that XPath query and injects the content into the XML documentation being generated for a code element.
 
+<!--more-->
+
 **Advantages**
 
 * Documentation reuse

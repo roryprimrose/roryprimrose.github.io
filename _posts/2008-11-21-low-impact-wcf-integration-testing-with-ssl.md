@@ -10,6 +10,8 @@ I have been writing lots of tests for services and framework/toolkit type compon
 
 This scenario limits flexibility for two reasons. Firstly, another developer can't get the solution from source control and simply run the tests as they won't have the required certificate installed. Secondly, a continuous build process will not be able to build the solution on a build machine that hasn't already been configured.
 
+<!--more-->
+
 In trying to address this environment configuration issue, we did previously come up with [a solution][0] after discussions with some colleagues. Creating localhost certificates meant that developer and team build machines would be able to run unit tests without configuration changes to service addresses between those machines. It did however mean that each machine still needed manual configuration in order to install localhost certificates.
 
 Recently, I have been migrating my [custom username password service credential solution][1] into the [Neovolve.Toolkit][2] project on Codeplex. I want to create unit and integration tests that are portable to multiple machines without any prior configuration of those machines before running the tests or any assumptions about software installation beyond Visual Studio and the .Net framework. This means that I need a good certificate solution for SSL support. I also want to avoid IIS and Cassini hosting of the services and to support running the tests from both XP and Vista. XP is easy to please, but Vista comes with some security considerations. The intention is to have a solution with unit and integration tests that will work 'out of the box'.

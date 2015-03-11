@@ -8,6 +8,8 @@ I have been playing with Whidbey ASP.Net over the last week, developing some web
 
 I have previously written an article about how to publish resources from the controls assembly in 1.1. This works really well, but requires you to do the resource extraction and HTTP handling yourself. This isn't a huge problem as most of the code can be reused and is compiled into the resource, therefore very portable. The big problem with it is that after the assembly is referenced by the web project, there is a little bit more work to do to get it working. The developer has to add the httpHandler to the web.config so that the site knows how to intepret the request for the resource.
 
+<!--more-->
+
 Whidbey has some new tricks up its sleeve. On the surface, it looks like a great implementation, but I have found some problems with it. There is a [good article][0] on MSDN that gives a great overview of how it all works. It is a little out of date though as there have been some changes.
 
 One of the great changes in the new version is that the httphandler is inbuilt (for the webresource.axd url) as it is defined in the machine.config instead of being required in each web sites web.config. The url to hit the resource is found by calling Page.ClientScript.GetWebResourceURL to which you pass a Type (from which the assembly is obtained) and the name of the resource you want.

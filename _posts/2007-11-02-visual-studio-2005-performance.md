@@ -11,6 +11,8 @@ Anyway, I have seen this first set of content before (perhaps even blogged it), 
 
 [http://dotnettipoftheday.org/tips/speedup_visual_studio.aspx][0]
 
+<!--more-->
+
 **Speed up Visual Studio 2005**
 
 * Make sure Visual Studio 2005 SP1 is installed.

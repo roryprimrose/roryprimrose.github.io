@@ -16,6 +16,8 @@ To recap, my design requirements for a bootstrapper solution were:
 * Support change/repair/remove actions on the package
 * Flexible design to add/remove bootstrapper functionality
 
+<!--more-->
+
 I figured that I could achieve this by writing a simple project in C#. 
 
 **Seamless Visual Studio integration and compilation**

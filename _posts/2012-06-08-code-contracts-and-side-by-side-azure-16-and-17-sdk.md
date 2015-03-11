@@ -13,6 +13,8 @@ My solution is starting to get to be a decent size with many third party technol
 
 ![image][0]
 
+<!--more-->
+
 This appears to be a bit concerning because the project itself compiled fine, but the rewriter failed at the tail end of the project compilation. The output window does shed some light on the issue though. 
 
 {% highlight text %}

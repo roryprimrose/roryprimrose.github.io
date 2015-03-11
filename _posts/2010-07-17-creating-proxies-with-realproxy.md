@@ -11,6 +11,8 @@ With a decent amount of Reflector surfing I followed the rabbit hole down to the
 
 Imagine a scenario where you want to have an action that you want to take when a method on a type is invoked when you do not have any prior knowledge of the type definition. The RealProxy class is able to run some magic that will return you a proxy instance of that type and provide notification when method invocations occur on that proxy. The main downside with RealProxy is that the type to proxy must either be an interface or a class that inherits from MarshalByRefObject.  
 
+<!--more-->
+
 The following is an example of a RealProxy implementation that outputs method invocations to the console.  
 
 {% highlight csharp %}

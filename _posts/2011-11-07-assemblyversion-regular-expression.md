@@ -17,6 +17,8 @@ The AssemblyVersionAttribute appears to have the following rules:
 
 The following is the regular expression that covers all these rules.
 
+<!--more-->
+
 {% highlight text %}
 ^
 # Major version must exist

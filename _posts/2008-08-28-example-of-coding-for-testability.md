@@ -9,6 +9,8 @@ I have done it again. In order to work on a particular project, I have been side
 
 In essence, I need an application to resolve all the links internal to a website and check their status. This will give me an initial view of the state of the site. I then want to take all of those links and replay the analysis of those resolved links using a different base address. The reason I am doing this is because I am looking at migrating my Community Server based blog to use BlogEngine.Net instead. As part of that migration, I want to maintain as much of the Community Server url formats as possible so I don't lose my existing audience.
 
+<!--more-->
+
 Given that this application is going to chew a lot of bandwidth (my entire site) along with the need for accurate results, I want to make sure that this utility is doing the right thing. Unit testing is critical for this to be successful. I quickly found however that my initial cut is not very testable.
 
 Here is a simple example of how to take untestable code and make it testable. In the following examples, there is some logic in the ResourceResolver.GetResourceContents method that we want to test.

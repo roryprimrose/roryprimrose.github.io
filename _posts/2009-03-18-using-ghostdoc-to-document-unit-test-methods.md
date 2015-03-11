@@ -8,6 +8,8 @@ GhostDoc is one of the coolest tools around for Visual Studio. Sometimes it need
 
 For example,
 
+<!--more-->
+
 {% highlight csharp %}
 /// <summary>
 /// Creates the returns cache store instance test.

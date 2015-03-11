@@ -17,6 +17,8 @@ The topology of the TFS deployment is the following:
 * TFS Build Environment
 * CI Host Platform
 
+<!--more-->
+
 Each of the services use domain accounts that are unique to each service.   
 
 The primary problem was that the 2 hourly job to reprocess the Tfs_Analysis SSAS cube from the Tfs_Warehouse database failed because SSAS could not connect to the SQL Server data engine. The following is most of the exception detail of the failure.  

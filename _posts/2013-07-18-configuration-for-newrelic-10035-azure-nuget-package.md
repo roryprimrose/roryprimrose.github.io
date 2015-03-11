@@ -7,6 +7,8 @@ date: 2013-07-18 08:31:30 +10:00
 
 I’ve previously posted about Nuget package update pain with the NewRelic Azure package ([here][0] and [here][1]). I’ve had issues again when updating to the latest version. This time I’ve added in a Worker role and found that the PowerShell script that installs the package did not configure the Worker role. I have gone through the PowerShell scripts to manually ensure that the configuration files match what they should be. 
 
+<!--more-->
+
 Here are the ServiceDefinition.csdef configurations for the two types of roles. The setup of this configuration seems to be the most common point of failure in the installation scripts.
 
 **Web Role**

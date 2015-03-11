@@ -8,6 +8,8 @@ I have [posted previously][0] about using content correlation in WF services to 
 
 I am writing a workflow service that is a combination of IIS, WCF, WF, WIF and AppFabric. WIF is used to secure the WCF service to ensure that only authenticated users can hit the endpoint. WIF then handles claim demands raised depending on the actions taken within the service by the authenticated user. A session hijack can occur with content correlation where authenticated UserA starts the service and then authenticated UserB takes the content used for correlation and makes their own call against the service. In this case UserB is authenticated and passes through the initial WIF authentication. UserB could then potentially take actions or obtain data from the service related to UserA.
 
+<!--more-->
+
 The way to protect the service against this session hijack attack is to hold on to the identity of the user that started the session. Each service call within the session should then validate the identity of the caller against the original identity. The service execution can continue if the identities match, otherwise a SecurityException should be thrown.
 
 In my application, the StartSession service operation does this first part. ![image][1]

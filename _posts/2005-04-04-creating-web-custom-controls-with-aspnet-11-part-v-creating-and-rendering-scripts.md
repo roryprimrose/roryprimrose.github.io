@@ -9,6 +9,8 @@ I have seen scripts developed as hard-coded strings in a controls code too many 
 
 Regardless of whether a StringBuilder is used or not, building up a string is clumsy as it makes the script really difficult to develop and even harder to maintain. A better way of developing a script for a control is by adding a script file to the project and rendering the contents of the file to the browser. In doing this, developing and maintaining the script will be easier as you will be editing the code just like any other text based file.
 
+<!--more-->
+
 No matter how to choose to build your scripts for a control, you need to render them at some point. So where is the best place to render these scripts? 
 
 Most people will register their scripts with the Page object either by calling RegisterClientScriptBlock or RegisterStartUpScript which will get the page to render the script contents for the control. The RegisterClientScriptBlock method will cause the page to render the script just after the opening FORM tag while the RegisterStartUpScript method will cause the page to render the script just before the closing FORM tag. Without registering a script with the page, the only other way of rendering it is when the control itself renders. 

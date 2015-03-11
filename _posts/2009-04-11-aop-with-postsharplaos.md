@@ -7,6 +7,8 @@ date: 2009-04-11 15:17:00 +10:00
 
 PostSharp.Laos is a Lightweight Aspect-Orientated System for PostSharp that makes it really easy to include AOP in your code. In this demo, PostSharp will be used to aspect the RunTest() method in the following application. The aspect will output console messages before and after the aspected method is executed.
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
      

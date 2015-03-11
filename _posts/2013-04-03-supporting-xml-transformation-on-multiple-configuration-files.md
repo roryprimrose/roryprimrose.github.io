@@ -7,6 +7,8 @@ date: 2013-04-03 09:26:01 +10:00
 
 Visual Studio has a great feature for web.config files where XML transformations can be done based on the current configuration. This is typically actioned when the web application is published. Unfortunately the MSBuild scripts only cater for web.config. This is a problem when you start to break up your configuration into multiple files and link them back using the configSource attribute.
 
+<!--more-->
+
 {% highlight xml %}
 <system.diagnostics configSource="system.diagnostics.config" />
 {% endhighlight %}

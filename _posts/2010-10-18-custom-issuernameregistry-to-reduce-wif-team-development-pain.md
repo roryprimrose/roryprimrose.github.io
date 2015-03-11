@@ -9,6 +9,8 @@ I have been implementing WIF into my [hosted synchronization project][0] over re
 
 The WIF SDK makes it easy to get up and running with an STS. The wizard application creates an STS project and development certificates that are then integrated into your Visual Studio solution. The certificates are created on the local machine and are specific to that machine. One is the signing certificate with the default name of STSTestCert and the other is the encrypting certificate with the default name of DefaultApplicationCertificate.
 
+<!--more-->
+
 The WIF configuration usually refers to these certificates using the subject distinguished name of the certificate. This will work where multiple development machines use certificates with the same subject where those certificates where created on each machine. Unfortunately the configuration for the Relying Party application identifies the trusted issuer certificate using a thumbprint. This thumbprint will be different across each machine.
 
 {% highlight xml %}

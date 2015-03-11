@@ -9,6 +9,8 @@ I’ve been working on some classes that write data to Azure table storage. Thes
 
 Some quick searching brought up [this post][0] which provides 99% of the answer. The only hiccup with this solution is that it is targeting the 1.0 version of the Azure SDK. I have updated this code to work with the 1.6 version of the SDK.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace MyProduct.Server.DataAccess.Azure.IntegrationTests
 {

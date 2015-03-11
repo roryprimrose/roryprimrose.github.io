@@ -11,6 +11,8 @@ There are some issues with adopting Unity 2 in the short-term. Unity 2 isn’t a
 
 Given these constraints, I have a working solution after several hours of surfing Reflector.
 
+<!--more-->
+
 Firstly, the configuration for Unity 2 is much neater and removes redundant configuration. The feature I like the most is that type information is now interpreted where previously it needed to be specified.
 
 {% highlight xml %}

@@ -11,6 +11,8 @@ When the TraceSource.Listeners property is referenced, the collection is initial
 
 All the tracing methods of this listener implementation call down to an internalWrite method that has the following implementation: 
 
+<!--more-->
+
 {% highlight csharp %}
 private void internalWrite(string message)
 {

@@ -7,6 +7,8 @@ date: 2006-09-12 11:09:35 +10:00
 
 I have created some WPF UserControls, but referencing them in XAML is causing grief in the VS IDE. If I have a UserControl that is in the applications assembly, I set up the namespace mapping with something like the following:
 
+<!--more-->
+
 {% highlight xml %}
 <Page x:Class="XAMLBrowserApplication1.Page1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

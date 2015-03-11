@@ -10,6 +10,8 @@ The implementation of this is modelled from the support for this functionality i
 
 In the case of the ForEach&lt;T&gt; activity, the default generic type value used is int. ![image][4]
 
+<!--more-->
+
 This can be changed in the property grid of the activity using the TypeArgument property. ![image][5]
 
 Changing this value will update the definition of the activity with the new type argument. For example, the type could be change to Boolean.![image][6]

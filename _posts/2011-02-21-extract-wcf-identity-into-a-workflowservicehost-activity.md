@@ -13,6 +13,8 @@ The WIF documentation says the following:
 
 I had been developing my service application using Thread.CurrentPrincipal based on this information. Everything was fine until I started using WF persistence. Unfortunately enabling persistence (via AppFabric) had the affect of wiping out Thread.CurrentPrincipal.  
 
+<!--more-->
+
 The requirement for persistence is so that the service can throw a fault back to the client and allow the workflow instance to remain alive (persisted) so that it can be called again. An example of this scenario is where a validation fault is thrown in the middle of an existing service session. The service needs to be persisted so that it can be called again by the client otherwise the session will be lost. So the question is how do we get the identity of the user when we have both WIF and WF persistence running a WCF service?   
 
 I put the question out on the [MSDN forum][0] at emailed a few of the prominent WF guru’s for help. Both [Zulfiqar][1] and [Maurice][2] have the answer to this riddle. It turns out that the WIF documentation is not entirely correct as the security information about the client is still available via ServiceSecurityContext.   

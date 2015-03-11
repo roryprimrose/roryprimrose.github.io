@@ -7,6 +7,8 @@ I am working on a personal project that I have wanted to do for quite a while. T
 
 There are two major things that I would like to get out of this new project model. Firstly, version control for database objects. I will get the project onto CodePlex sometime soon so that should be a good test of its version control capabilities. Secondly, a good deployment (including upgrade) model. 
 
+<!--more-->
+
 Deployment is going to be the really interesting thing for me. How is a database project going to be built/deployed and how will the new project model cater for updating a live database to a new version. 
 
 Within a couple of minutes of creating my database project, I imported an existing script. I was really impressed with this. The script I had was a script that created tables, constraints, relationships and triggers. The import wizard did a really good job of splitting the single script into separate database objects for the project. All is not smooth sailing though. 

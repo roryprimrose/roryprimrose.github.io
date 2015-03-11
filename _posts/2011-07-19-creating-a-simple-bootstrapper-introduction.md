@@ -9,6 +9,8 @@ Last month I was creating a WiX setup package to deploy a new system. In the pas
 
 I am not a fan of either of these methods and want to push configuration options into the installer UI as a way of minimising user error while maintaining flexibility. I came across the excellent [MsiExt project][0] on CodePlex which provided a wide variety of customisations for WiX including custom actions and dialogs. One of the issues I hit was that several of the validation options in the custom dialogs required elevated privileges. Validating service credentials against the domain and verifying account rights is an example of this.![image][1]
 
+<!--more-->
+
 The UI sequence of an MSI executes with standard user rights when it is opened directly from Windows Explorer. The package fails on custom actions in the UI sequence that require elevated rights. There are a couple of options for elevating the MSI for the UI sequence. These are:
 
 * Execute the msi from an elevated command prompt using _msiexec /i “[PackagePath]”_

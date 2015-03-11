@@ -11,6 +11,8 @@ I can only guess what the design reason is behind this. The only thing the contr
 
 I have put together the following custom control for my project to suit my purposes.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace Neovolve.Switch.Controls
 {

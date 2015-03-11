@@ -13,6 +13,8 @@ To demonstrate the difference, I created two load tests that each ran a unit tes
 
 Here is the configuration I used:
 
+<!--more-->
+
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 

@@ -9,6 +9,8 @@ My post about [implementing IErrorHandler for WCF][0] a few years ago is my seco
 
 My preference has always been to hook up IErrorHandler using an attribute to avoid any potential security holes. This would be a scenario where the configuration for IErrorHandler is removed and exception shielding is no longer available to prevent potentially sensitive information from being displayed to clients. I am now playing with workflow services and am not able to use an attribute for this purpose. I no longer have a choice and must use a configuration based IErrorHandler implementation.
 
+<!--more-->
+
 I have added configuration support for IErrorHandler to my Toolkit project based on the original posts above to assist with this process.
 
 {% highlight csharp %}

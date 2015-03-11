@@ -8,6 +8,8 @@ I am putting together a sync framework provider and have come across some issues
 
 I have the following initialization code.
 
+<!--more-->
+
 {% highlight csharp %}
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {

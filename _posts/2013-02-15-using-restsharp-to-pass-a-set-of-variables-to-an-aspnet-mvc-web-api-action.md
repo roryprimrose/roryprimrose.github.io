@@ -5,9 +5,11 @@ tags : ASP.Net
 date: 2013-02-15 16:23:53 +10:00
 ---
 
-Looks like a lot of people hit this issue and come up with lots of “interesting” solutions to get this to work. The answer is surprisingly simple however.
+Looks like a lot of people hit this issue and come up with lots of "interesting" solutions to get this to work. The answer is surprisingly simple however.
 
 Assume that the controller action is like the following:
+
+<!--more-->
 
 {% highlight csharp %}
 [HttpGet]

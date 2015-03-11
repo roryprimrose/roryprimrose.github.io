@@ -14,8 +14,9 @@ If using [TraceSource][0], the name provided to the TraceSource constructor is c
 **TextWriterTraceListener**
 
 If using [TextWriterTraceListener][1] (or [XmlWriterTraceListener][2] that derives from it), there are several more issues that can occur. 
+<!--more-->
 
- The following code is the code in TextWriterTraceListener that causes the issues.   
+The following code is the code in TextWriterTraceListener that causes the issues.   
   
 {% highlight csharp %}
 public override void WriteLine(String message)

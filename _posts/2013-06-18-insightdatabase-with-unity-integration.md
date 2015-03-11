@@ -9,6 +9,8 @@ One of my favourite development packages to use over the last year has been a mi
 
 I haven’t been able to play with this feature until the last week. One of the roadblocks was that I use Unity as my IoC for dependency injection which does not natively support injecting these types of instances. What I need is to be able to configure a Unity container to return an auto-implemented interface in a constructor. I have created Unity extensions before for injecting [ConnectionStringSettings][2], [AppSettings][3] and [RealProxy implementations][4] so creating one for Insight.Database should be simple. The RealProxy Unity extension was very similar to what I need as the logic is just about the same.
 
+<!--more-->
+
 I want to support Unity configuration so we need to start with a ParameterValueElement class.
 
 {% highlight csharp %}

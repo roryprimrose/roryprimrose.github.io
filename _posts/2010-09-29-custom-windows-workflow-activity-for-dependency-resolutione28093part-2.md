@@ -11,6 +11,8 @@ The main issue with dependency resolution/injection in WF is supporting persiste
 
 The way this is done is via an InstanceHandler&lt;T&gt; class.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace Neovolve.Toolkit.Workflow
 {

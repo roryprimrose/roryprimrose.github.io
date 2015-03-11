@@ -13,6 +13,8 @@ This became a problem when I actually want a combination of synchronous and asyn
 
 My first solution was to host two runtimes, one using the ManualWorkflowSchedulerService for executing workflows synchronously, and one using the DefaultWorkflowSchedulerService for executing the asynchronous workflows. The hitch is that I also need impersonation, but this doesn't appear to be possible when executing workflows using the DefaultWorkflowSchedulerService as the impersonated credentials get lost.
 
+<!--more-->
+
 Second solution was to use just the one runtime that uses the ManualWorkflowSchedulerService, but execute the asynchronous workflow by calling the runtime from a new background thread. The problem here is that it doesn't appear to be possible to set up impersonation on the new thread.
 
 Third solution was to use a delegate by calling BeginInvoke. This worked, but then I realised that I can use a thread and manually call for impersonation from inside its execution. To do this, I need to pass the WindowsIdentity along with my other parameter to a thread wrapper. My solution now looks like this:

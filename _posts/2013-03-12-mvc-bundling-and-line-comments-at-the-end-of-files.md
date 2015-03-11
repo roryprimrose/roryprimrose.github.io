@@ -7,6 +7,8 @@ date: 2013-03-12 07:51:08 +10:00
 
 Recently the bundling and minification support in ASP.Net MVC4 have been causing grief with JavaScript's having unexpected tokens. The minification process is failing to process the bundle of scripts correctly, although it does kindly add a failure message to the top of the bundle output.
 
+<!--more-->
+
 {% highlight javascript %}
 /* Minification failed. Returning unminified contents.
 (5,2-3): run-time warning JS1195: Expected expression: *

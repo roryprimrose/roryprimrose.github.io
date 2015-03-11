@@ -8,6 +8,8 @@ I [posted back in 2010][0] about how to get WiX to correctly deploy a website us
 
 As a recap, harvesting pulls files from the project reference compilation into the MSI and puts them into a single output directory. This means that website content and the binaries will be in the root folder of the deployment. This is no good for websites that require binaries to be placed into a bin folder. 
 
+<!--more-->
+
 Here is how to fix it. Firstly, you need to add your web project as a project reference in your WiX project.![][1]
 
 You then need to enable harvesting on the properties of that project reference. Set the Directory Id to the Id in your file system that WiX will use for the website. The Project Output Groups is fine with the default of BinariesContentSatellites.![][2]

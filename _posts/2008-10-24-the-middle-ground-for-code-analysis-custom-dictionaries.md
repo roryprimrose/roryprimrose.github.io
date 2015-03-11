@@ -11,6 +11,8 @@ Having a custom dictionary in one spot on the machine is a good because any solu
 
 If you swing to the other extreme, suppressing spelling failures in code is messy, but is in source control for other developers and build servers to benefit from.
 
+<!--more-->
+
 I am working with a new model that is the middle ground of these two extremes.
 
 I noticed a while ago that Visual Studio now contains more build actions for files in a project. One of them is _CodeAnalysisDictionary_. This becomes very helpful.![image][1]

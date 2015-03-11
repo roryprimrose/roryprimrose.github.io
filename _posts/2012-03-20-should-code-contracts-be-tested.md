@@ -8,6 +8,8 @@ I have been writing unit tests for my classes that use code contracts (Contract.
 
 If a method that takes a reference type as a parameter and a value must be supplied, then the expectation is that the method will throw an exception if null is provided. I have always believed that this behaviour should be tested regardless of whether this is implemented as a traditional guard clause, a Contract.Requires on the method implementation or a Contract.Requires on the interface or base class.
 
+<!--more-->
+
 I saw someone mention recently that they didn’t think that code contracts should be tested. This has lead me to question the value of the practice. A crisis of testing faith perhaps. 
 
 My two thoughts about this so far are:

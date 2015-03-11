@@ -9,6 +9,8 @@ I [posted yesterday][0] about how to get content correlation of multiple WCF ser
 
 If the invalid data sent to the service operation participates in content correlation then the WorkflowServiceHost will not identify a WF instance. This unfortunately means that business validation of this data will not run in the workflow as no workflow instance is executing. The result is that the client will receive the following very unfriendly FaultException (assuming no exception shielding is in place).
 
+<!--more-->
+
 > _System.ServiceModel.FaultException: The execution of an InstancePersistenceCommand was interrupted because the instance key 'bea948ac-70fa-b125-91e6-f06752ce7671' was not associated to an instance. This can occur because the instance or key has been cleaned up, or because the key is invalid. The key may be invalid if the message it was generated from was sent at the wrong time or contained incorrect correlation data.   
 >    at System.ServiceModel.Activities.Dispatcher.ControlOperationInvoker.ControlOperationAsyncResult.Process()   
 >    at System.ServiceModel.Activities.Dispatcher.ControlOperationInvoker.ControlOperationAsyncResult..ctor(ControlOperationInvoker invoker, Object[] inputs, IInvokeReceivedNotification notification, TimeSpan timeout, AsyncCallback callback, Object state)   

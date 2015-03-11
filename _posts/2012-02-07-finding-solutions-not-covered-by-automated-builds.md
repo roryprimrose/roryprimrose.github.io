@@ -8,6 +8,8 @@ I am slowing building a set of automated tasks in my current role as a TFS admin
 
 It’s a fairly straight forward task that enumerates solution files and matches them to build definitions across all projects and collections in a TFS instance.
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Collections.Generic;

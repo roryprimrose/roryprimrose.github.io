@@ -8,6 +8,7 @@ date: 2010-09-10 17:02:08 +10:00
 This has been a curly one for a few months and I’ve finally had some time to resolve the issue. My team has been running TFS Build 2010 with gated check-ins where the build does MSI deploys then runs unit and integration tests.  
 
 All of a sudden the builds started failing with no indication as to why. The build activity log just stops and does not contain errors. The MS build log file also does not contain any errors. The event log on the build server does shed some light on the situation however.  
+<!--more-->
 
 {% highlight text %}
 (MSTest.exe, PID 1868, Thread 1) Exception thrown when enumerating assembly: System.IO.FileLoadException: Could not load file or assembly 'MyProject.Services.Business.UnitTests.Contracts, Version=1.0.449.0, Culture=neutral, PublicKeyToken=0e60eebea588ffe8' or one of its dependencies. Strong name validation failed. (Exception from HRESULT: 0x8013141A)

@@ -11,6 +11,8 @@ The problem encountered is that the web application project in Visual Studio sto
 
 There were two ideas that we quickly came up with:
 
+<!--more-->
+
 1. Modifying the host name file on the local machine (don't know where this one was going, but it was on the table)
 1. Adding a WCF hack that hooks into the [System.Net.ServicePointManager.ServerCertificateValidationCallback event][0] to ignore certificate errors when the certificate uses the machine name as the common name but the url is localhost
 The first solution if it was viable was an issue because it required customisation of every developers machine. Using localhost as a name is the best direction as all machines are already configured with that host name as a loopback. The second idea was probably more viable, but was considered a potential security risk if that code landed in production.

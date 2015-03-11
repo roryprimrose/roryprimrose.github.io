@@ -13,6 +13,8 @@ The great feature that the yield statement brings is delayed execution in iterat
 
 Take the following code for example:
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Collections.Generic;

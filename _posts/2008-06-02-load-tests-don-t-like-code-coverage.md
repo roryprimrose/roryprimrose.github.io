@@ -10,6 +10,8 @@ With code coverage turned on, the report looked like this.
  
 ![Load Test With Code Coverage][0]
  
+<!--more-->
+
 After I turned code coverage off, I was much happier. 
  
 ![Load Test Without Code Coverage][1]

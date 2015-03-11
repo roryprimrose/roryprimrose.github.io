@@ -9,6 +9,8 @@ I have had a performance bottleneck in a load test that I have been running. The
 
 The methods on TraceSource check TraceInternal.UseGlobalLock (also referenced by Trace.UseGlobalLock) which is determined by the _system.diagnostics/trace/useGlobalLock_ configuration value: 
 
+<!--more-->
+
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 

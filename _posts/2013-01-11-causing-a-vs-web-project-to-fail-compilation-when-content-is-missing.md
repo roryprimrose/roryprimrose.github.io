@@ -5,7 +5,10 @@ date: 2013-01-11 13:48:13 +10:00
 ---
 
 Sometimes things go wrong. For example, when files are not on your local disk when you expect them to be. I see this pop up every now and then when working in a team environment or even as a single develop across multiple machines. Usually it is because something has not be submitted into source control. Maybe the file was never bound to source control in the first place. I have seen Visual Studio simply miss files as well.
+
 Normally this is not a problem. The compiler will complain if a C# class file is missing because it can’t do its job. Unfortunately a Web project does not throw a compiler error when a content file is missing. Thankfully there is an easy fix.
+
+<!--more-->
 
 Take a new Web project for example.
 

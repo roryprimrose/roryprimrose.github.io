@@ -9,6 +9,8 @@ Following on from my [series][0] about custom WF support for dependency resoluti
 
 Every project I have worked on has some kind of requirement to execute data validation and/or business rules when running a business process. Data validation could be a test that a request message contains an email address whereas a business rule may be that the provided email address is unique. Providing a custom WF activity to facilitate validation allows for rapid development of business processes.
 
+<!--more-->
+
 The high-level designer requirements for the custom WF support are:
 
 * Failure identifies a code and a description

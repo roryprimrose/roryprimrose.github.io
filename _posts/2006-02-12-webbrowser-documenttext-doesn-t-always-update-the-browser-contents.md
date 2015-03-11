@@ -10,6 +10,8 @@ The problem I have encountered is that once the HTML has been determined, settin
 
 > _Use this property when you want to manipulate the contents of an HTML page displayed in the WebBrowser control using string processing tools. You can use this property, for example, to load pages from a database or to analyze pages using regular expressions. When you set this property, the WebBrowser control automatically navigates to the about:blank URL before loading the specified text. This means that the Navigating, Navigated, and DocumentCompleted events occur when you set this property, and the value of the Url property is no longer meaningful._
 
+<!--more-->
+
 For my application, I have set up the WebBrowser control to be as restricted as possible because I don't want my application to look like a browser. For example, I don't want the browsers context menu to be displayed when the user right-clicks on it. One of the properties I changed was to set AllowNavigation = false. The help description for the AllowNavigation property says this:
 
 > _Gets or sets a value indicating whether the control can navigate to another page after its initial page has been loaded._

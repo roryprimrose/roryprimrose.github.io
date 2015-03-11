@@ -10,6 +10,8 @@ I have posted over the last couple of months about an adapter class that I have 
 * [Using the EntityAdapter for Azure Table Storage][2]
 * [Azure Table Storage Adapter Using Reserved Properties][3]
 
+<!--more-->
+
 This class has evolved well although two issues have been identified. 
 
 1. The last post indicates a workaround where your domain model exposes a property from ITableEntity (namely the Timestamp property). While there is a workaround, it would be nice if the adapter just took care of this for you.

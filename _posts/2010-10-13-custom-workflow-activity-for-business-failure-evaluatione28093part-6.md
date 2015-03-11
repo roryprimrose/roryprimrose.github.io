@@ -11,6 +11,8 @@ The [previous post][0] in this series provided the custom activity that manages 
 
 The BusinessFailureEvaluator&lt;T&gt; evaluates a single business failure. There is no support for child activities which makes the designer very simple.  
 
+<!--more-->
+
 {% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureEvaluatorDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 

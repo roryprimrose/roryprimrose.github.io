@@ -9,6 +9,8 @@ My recent post about [creating proxies with RealProxy][0] provided an example fo
 
 The ProxyHandler class below is the first of these reusable classes. It helps with creating RealProxy types by providing the common logic of method identification, exception processing and method response management. It also provides the support for a derived proxy implementation to leverage some initialization logic provided by the calling application. It uses a MethodResolver class from my [Toolkit project][1] to identify the method to invoke on the proxy.
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Diagnostics;

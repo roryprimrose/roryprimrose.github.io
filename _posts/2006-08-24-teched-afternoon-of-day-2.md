@@ -9,6 +9,8 @@ The first session I went to this afternoon was _ASP.NET: End-to-End - Building a
 
 The second session I went to was _Visual Basic: Tips, Tricks and Futures_ by [Bill McCarthy][1] and [Geoff Appleby][2]. Bill and Geoff presented some interesting tips and tricks for VB.Net and the IDE (with several of plugs for Bill's projects :) ). I did get a chuckle out of their project working when it was supposed to break and breaking when it was supposed to work. I guess I got off light with only one demo glitch with my session. Hehe, bad luck boys :P.
 
+<!--more-->
+
 The last session of the day for me was _Developing Data-Driven Web Applications with .NET Language Integrated Query_ with Scott again. I have heard a lot about LINQ and its derivatives but haven't actually seen it in action. LINQ is some seriously cool stuff. This was obviously a subject that Scott was excited by and enjoyed presenting. I'm looking forward to playing with this in the coming months. 
 
 I did have one question in this session that I didn't get to ask. Scott mentioned that LINQ does delayed execution so that the query is called at the last moment. I was wondering what happens if you then reuse that query. Does it execute again, or is the result cached?

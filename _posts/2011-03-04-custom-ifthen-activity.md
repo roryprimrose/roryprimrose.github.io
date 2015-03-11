@@ -9,6 +9,8 @@ The two most common WF activities to use when implementing decision branching ar
 
 The solution is to author a custom activity that only executes an If-Then branch rather than an If-Then-Else branch and provide appropriate designer support for this. A simplistic example of such an activity was provided in the January MSDNMag by Leon Welicki in his [Authoring Control Flow Activities in WF 4][1] article.
 
+<!--more-->
+
 I have created an IfThen activity that addresses this designer concern. The IfThen activity below executes its Body activity if the Condition value is true. It also includes some validation logic and a default activity structure provided via IActivityTemplateFactory.
 
 {% highlight csharp %}

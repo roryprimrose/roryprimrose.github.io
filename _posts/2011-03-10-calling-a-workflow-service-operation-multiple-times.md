@@ -10,6 +10,8 @@ If we assume that the implementation of the service operation is the same (as it
 
 The answer is by using some kind of service session using WF correlation. Content correlation is my preferred option because it is independent of infrastructure concerns and does not restrict the WCF bindings available to you. I have [previously posted][1] about how to get a workflow service to create a session using content correlation.  
 
+<!--more-->
+
 With respect to the question put to Ron, you would not be able to achieve this result with just one service operation on the service. Correlation requires the client to provide the correlation value to the service operation. The correlation value must then map to an existing WF instance. This means that the first service operation cannot be the service operation invoked multiple times. You will need a service operation that creates the service session by returning a session identifier that can then be used for content correlation on subsequent service operations. This first operation has the CanCreateInstance set to true and will be the entry point into the service. A DoWhile activity can then allow a service operation to be invoked multiple times within that session. The WF instance will remain alive (or persisted) until the workflow exists. The DoWhile activity prevents this from happening until some kind of exit condition is met.  
 
 I have implemented this design in a DataExchange service in my [Jabiru project][2] on CodePlex. The StartSession operation generates a Guid and returns it with some other service context information. The DoWhile then has a check for whether the session is completed. The session will be completed by one of the following conditions:

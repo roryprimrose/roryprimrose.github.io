@@ -9,6 +9,8 @@ Well, we have reached the end of TechEd. The last session I went to was _Advance
 
 I asked Arik the question about what the implications are for WPF applications being used through a Remote Desktop session. My reasoning for the question is that remote desktop sessions normally pass bitmap images between the machines, but for WPF that renders in DirectX and often has animations, this isn't going to come across very well as a series of bitmaps, especially over a slow connection. Arik said that they are making changes to remote desktop so that WPF will send instructions rather than bitmaps so it will be the connecting client that will process the rendering and behaviours rather than send bitmaps. Very cool!
 
+<!--more-->
+
 After the last session was the Locknote address. This was a great presentation with an awesome soundtrack and video. I emailed Frank asking if the music or video was going to be released. He said that they are looking into it, but the music was actually [Technologic by Daft Punk][0] (the video of the original is freaky BTW). They had a guy from the Microsoft Research Center in China (I don't remember his name) to present a lot of the locknote content. It was really amazing to see what they are able to do with photo and video restoration, alterations etc. The results were absolutely astounding.
 
 So that is TechEd Australia 2006 over. Here are a few more photos.

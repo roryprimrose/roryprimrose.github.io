@@ -9,6 +9,8 @@ I have an interesting scenario that I have just come across in my code. I have a
 
 Here is the situation. I have a flush method that looks like this:
 
+<!--more-->
+
 {% highlight csharp %}
 public void Flush()
 {

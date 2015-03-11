@@ -11,6 +11,8 @@ This was a good post because it got me to challenge why I am coding in the parti
 
 Take this test case based on his post:
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using System.Collections.Generic;

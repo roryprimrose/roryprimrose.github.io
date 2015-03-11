@@ -11,6 +11,8 @@ The profiler results told me exactly where to look as soon as I hit the service 
 
 All the time is getting consumed in a single call to Microsoft.Practices.Unity.SynchronizedLifetimeManager.GetValue(). The first idea that comes to mind is that there is a lock on an object that is not being released. Reflector proves that this is exactly the case. ![image][1]
 
+<!--more-->
+
 The GetValue method obtains a lock for the current thread and only releases it if a non-null value is held by the lifetime manager. This logic becomes a big issue if the lifetime manager holds a null value and two different threads call GetValue. I would like to know why this behaviour is there as it is intentional according to the documentation of the function.
 
 This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.

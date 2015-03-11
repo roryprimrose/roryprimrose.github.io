@@ -9,6 +9,8 @@ This article aims to provide an overview about caching expiration policies and h
 
 A cache expiration policy is a combination of concepts which define when a cache entry expires. Once a cache entry has expired, it may be removed from a cache. The policy is typically assigned when data is added to the cache and is normally custom to a single cached entry based on characteristics of the entry. 
 
+<!--more-->
+
 The specific implementation of a cache expiration policy depends on the caching framework and the requirements of the cache data. Typically, a cache expiration policy is defined by using one or more of the following concepts: 
 
 * Absolute expiration

@@ -14,6 +14,8 @@ The [previous post][0] outlined the issues with working with unmanaged and IDisp
 
 A custom activity can handle these issues in a much more elegant way than the partially successful implementation in the previous post. 
 
+<!--more-->
+
 The design goals of this activity are:
 
 * take in a resource of a generic type (limited to IDisposable)

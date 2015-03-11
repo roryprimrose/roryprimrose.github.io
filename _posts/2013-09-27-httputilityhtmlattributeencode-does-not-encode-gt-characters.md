@@ -9,6 +9,8 @@ I’ve been working on a side project that works with HTML responses from websit
 
 So my debugging efforts seem to have uncovered an issue in HttpUtility.HtmlAttributeEncode (or more specifically the HttpEncoder class).
 
+<!--more-->
+
 The problem can be simply expressed by the following code.
 
 {% highlight csharp %}

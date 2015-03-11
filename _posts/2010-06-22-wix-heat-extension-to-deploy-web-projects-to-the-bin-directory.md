@@ -11,6 +11,8 @@ Take the following solution for example.![][0]
 
 Heat generates a wxs file at compile time for each harvested project (found in obj\Debug or obj\Release). ![][1]
 
+<!--more-->
+
 The wxs file for each project contains the harvested groups and all the items found for those groups. Each of these groups is then listed in the Product.Generated.wsx file. 
 
 {% highlight xml %}

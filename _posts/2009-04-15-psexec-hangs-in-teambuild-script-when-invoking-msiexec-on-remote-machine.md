@@ -13,6 +13,8 @@ In modifying the build script, it seems like I have accidentally changed the pse
 
 The build script should look like this for executing psexec -&gt; msiexec.
 
+<!--more-->
+
 {% highlight csharp %}
 <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
             BuildUri="$(BuildUri)"

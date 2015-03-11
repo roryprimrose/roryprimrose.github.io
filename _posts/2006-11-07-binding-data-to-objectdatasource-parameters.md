@@ -9,6 +9,8 @@ Have you ever needed to have nested databound controls using multiple ObjectData
 
 You have no doubt tried the following:
 
+<!--more-->
+
 {% highlight xml %}
 <asp:ObjectDataSource ID="odsCountry" runat="server" SelectMethod="GetCountry" TypeName="CountriesBLL">
     <SelectParameters>

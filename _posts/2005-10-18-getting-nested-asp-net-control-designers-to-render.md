@@ -11,6 +11,8 @@ date: 2005-10-18 23:18:00 +10:00
 
  The page for example is the classic editable region. You can drag and drop controls onto the page. You can select the control and change its properties through the property grid. Controls themselves may also have editable regions if their designer has been developed to support them. 
 
+<!--more-->
+
  There is an easy set of steps to demonstrate this. 
 
 1. Open a webform in the designer

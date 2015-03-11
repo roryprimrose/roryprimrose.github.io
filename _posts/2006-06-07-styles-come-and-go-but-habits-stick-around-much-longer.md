@@ -10,6 +10,8 @@ This has all come about because I was using [GhostDoc][0] today to quickly put i
 
 I read [Microsoft's naming guidelines][1], but it seemed to not address the naming standards of member level variables. The closest discussion it seemed to get on the issue was [guidelines for static fields][2]. What standards are people using for member level variables? I read a [recent post][3] where it seems that everyone has a different opinion.
 
+<!--more-->
+
 I have come from a VB5/6 background (Hungarian notation) with some m_ C++ style thrown into the mix. I already follow Microsoft's naming guidelines for namespaces, classes, methods and properties, so it seems that it is just parameter and variable naming that has to change.
 
 It seems like the common standard these days is to PascalCase everything apart from parameters and variables which should be camelCase. No Hungarian notation anywhere, although I think I will continue Hungarian for local variables. As for member level variables, the best standard seems to be camelCase prefixed with _ instead of m_, but no Hungarian prefix.

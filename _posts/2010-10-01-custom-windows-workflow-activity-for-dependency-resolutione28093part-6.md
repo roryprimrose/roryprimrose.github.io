@@ -11,6 +11,8 @@ The designer support for the InstanceResolver intends to display only the number
 
 The XAML for the designer defines the activity icon, display for each argument and the child activity to execute. Each of the arguments is bound to an attached property that defines whether that argument is visible to the designer.
 
+<!--more-->
+
 {% highlight xml %}
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.InstanceResolverDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

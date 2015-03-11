@@ -9,6 +9,8 @@ I [posted recently][0] about my Unity extension that disposes build trees when a
 
 I am writing another Unity extension that adds support for injecting proxy instances as dependencies. Part of this design allows for custom proxy handlers to be injected. Defining a custom proxy handler is optional and can either be specifically defined in configuration at the injection definition or be automatically resolved by the Unity container from contextual information. If a custom proxy isn’t defined or can’t be automatically resolved then the injection will fall back to a default proxy handler type. 
 
+<!--more-->
+
 This new extension creates a child build context within the build context of the proxy dependency being created by the Unity container. The child build context will attempt to create the proxy handler just in case the container is configured for it. Unity will throw an exception if the proxy handler isn’t defined. In this case however, the build operation needs to continue rather than failing like you would normally expect. 
 
 This becomes a problem for the DisposableStrategyExtension. It tracks build trees as they are created using the BuildTreeTracker class mentioned in the [previous post][0]. It tracks when a new build context is started and when it is finished. Each iteration of this process tracks the current tree node being built by the context. Each child build context encountered results in a new child node that is simply added to the current node. The child node then becomes tracked as the current node being built. Unfortunately there is no fault tolerance for when an item fails to be built when the overall build operation can continue. 

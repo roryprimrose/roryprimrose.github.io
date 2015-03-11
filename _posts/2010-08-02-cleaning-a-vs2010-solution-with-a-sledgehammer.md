@@ -8,6 +8,8 @@ My workplace has been having issues with VS2010 picking up old assemblies since 
 
 Enter the sledgehammer. I wrote a little utility that will recursively go through each bin, obj and TestResults folder under the solution path and delete everything it can (including read-only files). Any exceptions encountered will be output to the console. The code itself is really simple.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace Neovolve.SolutionCleaner
 {

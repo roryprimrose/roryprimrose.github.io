@@ -8,6 +8,8 @@ Last night I was updating some integration tests for one of my projects. I have 
 
 Consider the scenario where you have a base path to which you want to add several other directory names.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace ConsoleApplication1
 {

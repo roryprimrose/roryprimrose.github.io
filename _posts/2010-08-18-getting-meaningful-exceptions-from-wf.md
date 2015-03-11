@@ -9,6 +9,8 @@ Overall I love the changes made to WF4. The latest workflow support is a huge le
 
 Consider the following simple workflow example.
 
+<!--more-->
+
 ![image][0]
 
 {% highlight csharp %}

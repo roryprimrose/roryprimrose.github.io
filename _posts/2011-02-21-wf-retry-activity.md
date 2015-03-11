@@ -9,6 +9,8 @@ One of the tools missing out of the WF toolbox is the ability to run some retry 
 
 The specific scenario I am addressing is a little different. I have created some custom MSF providers that will allow me to run a MSF sync session behind a WCF service. The main issue with this design is that it is possible that multiple clients may want to sync the same data set at the same time. MSF stores the metadata (Replica) that describes the items to sync in a SQLCE file. It will throw an exception if the replica is already open and in use. This doesn’t work well in a services environment. The way I will attempt to manage this is to limit the amount of time the replica is in use and then implement some retry logic around opening the replica in order to run a sync.
 
+<!--more-->
+
 The Retry activity shown below will execute its child activity and watch for a match on a nominated exception type or derivative. It will then determine whether it can make another attempt at the child activity by comparing the current number of attempts against a MaxAttempts property. If another attempt will be made then it will determine whether the child activity will be invoked immediately or whether a delay should occur first.
 
 {% highlight csharp %}

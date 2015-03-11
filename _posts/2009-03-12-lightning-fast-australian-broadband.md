@@ -8,6 +8,8 @@ I've been on ADSL2+ for a few years now. Having a possible maximum speed of 24Gb
 
 [![][1]][0]
 
+<!--more-->
+
 In the test before this one, the upload speed was actually a tad faster than the download speed. Did someone say broadband??? 
 
 Yep, I'm glad that broadband in this country is so fast. My sarcasm drips all the way from this post to [this article][2]. Broadband in this country is a disgrace which is a real shame. 

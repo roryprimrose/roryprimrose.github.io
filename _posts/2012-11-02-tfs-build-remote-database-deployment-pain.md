@@ -8,6 +8,8 @@ I've been taking the pain today with an issue that provided a lot of misdirectio
 
 It always worked from my local machine and manually from the deploy machine. I never worked from the build workflow.
 
+<!--more-->
+
 The most common failure from executing SqlPackage.exe was a message that said Error SQL72018: Function could not be imported but one or more of these objects exist in your source. Other failures were StackOverflowException and OutOfMemoryException. There is basically no information out there about what could be happening here and SqlPackage provides only the most basic output.
 
 OutOfMemoryException seemed like the most likely issue that may be causing the other issues. The web server (deploy target) was not running out of memory however. That lead to thoughts about memory restrictions for remote PowerShell sessions. It turns out that this is the case. Remote PowerShell sessions only get assigned 150Mb.

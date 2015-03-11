@@ -9,6 +9,8 @@ I have been writing lots of unit tests for my [Toolkit][0] project on CodePlex. 
 
 This is easily reproduced with the following code: 
 
+<!--more-->
+
 {% highlight csharp %}
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 

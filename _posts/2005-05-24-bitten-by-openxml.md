@@ -9,6 +9,8 @@ I was working with an OPENXML statement the other week and I was sick of writing
 
 This was great news as I shape my XML data in a way that is consistent with the table schema that stores the data in the database. I wanted to just specify the table that the data was related to. This prevents having to manually type the schema in the WITH clause and also means that if the schema of the real table changes, namely field size or type changes, the procedures don't need to be updated unless fields are removed or added.
 
+<!--more-->
+
 Here is where I hit the snag. My tables typically have a primary key that is an INT IDENTITY and WITH clauses will not work with these. What is happening here is that when with WITH clause in OPENXML uses a table scheme, it skips IDENTITY fields when it interprets the XML.
 
 I guess the argument is that INT IDENTITY fields are not modifiable (without intentionally disabling the constraint with SET IDENTITY_INSERT), therefore why allow it to be seen in interpreted XML. The designers must have thought that people might try to insert these values into an IDENTITY field if they allowed us to see the values in the XML. I think they really should have given the developer the choice though. Besides, OPENXML is about reading data, not writing it.

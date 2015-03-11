@@ -9,6 +9,8 @@ Automatically generating technical documentation from code comments is really ea
 
 Dynamically creating documentation is an easy solution that essentially documents all dll files found in the build directory with some known exclusions. This has the advantage that you don’t need to manage the documentation configuration as assemblies are added and removed from the solution. The disadvantages is that it potentially generates documentation for more assemblies than intended, namely the dependencies for the solution. The dynamic documentation generation is really good for framework/toolkit type solutions that don’t have external dependencies. The dynamic solution tells SHFB the information that it requires that would otherwise be defined via a project file. The MSBuild script looks something like the following.
 
+<!--more-->
+
 {% highlight xml %}
 <Target Name="BuildSandcastleWithDynamicProjectDefinition">
     

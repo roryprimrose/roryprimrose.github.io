@@ -8,6 +8,8 @@ For the last couple of days at work, I have been developing a new ASP.Net site. 
   
  The easiest way to achieve this common functionality is to create a base class that inherits from System.Web.UI.Page. Each WebForm code behind page can then inherit from the custom class instead of the default System.Web.UI.Page class. I hit some interesting problems with developing this solution in the VS IDE.   
   
+<!--more-->
+
  The first problem is that the design-time view of the pages usually didn't render because it couldn't identify the custom class. This was caused because I initially had the custom class in the ASP.Net project. This is an issue because the design-time render needs a compiled class to render controls and pages as it doesn't interpret uncompiled code. As the class was in the web project , the assembly may not yet be compiled, or if compiled, it usually can't be resolved.   
   
  To fix this problem, I separated the custom class out into a class library which was referenced by the web project. This meant that when the designer attempted to render the design-time display, it had a compiled assembly that it could resolve and use.  

@@ -12,6 +12,8 @@ I really enjoyed the experience of presenting and just had a blast. There were 1
 
 I only got hit with the demo gods once. From memory, I think something wasn't being written to the trace/message logs in one of the demos, but that was fairly minor. From a technical point of view, all the other demos went well albeit a little rushed.
 
+<!--more-->
+
 The presentation was well planned and on the whole I think it went well. There were a few presentation style issues that Chris and I had, but that is all stuff that is good for the experience and things that we can learn from.
 
 It was unfortunate that we didn't get many evaluation forms filled out for the session. Of those that did submit their evaluations, the comments were very helpful for feedback. If you went to the session and want to provide any more feedback, please contact me, I would love to hear what you thought of the session (good and bad). I was able to have a really good chat to [Dave][2] (who organised the Connected Systems track) straight after the session and he was really happy with how it went.

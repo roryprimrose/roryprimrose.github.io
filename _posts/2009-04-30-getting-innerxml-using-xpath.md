@@ -8,6 +8,8 @@ I previously posted about [XML comments and the include element][0] for document
 
 Take the following xml for example.
 
+<!--more-->
+
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <CommonDocumentation>

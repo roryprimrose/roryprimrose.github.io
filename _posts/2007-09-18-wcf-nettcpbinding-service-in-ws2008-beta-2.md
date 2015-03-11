@@ -11,6 +11,8 @@ Firstly, I got the service up and running over wsHttpBinding. One thing I notice
 
 Next up was trying netTcpBinding. First job was getting the required features installed. This [MSDN article][0] provides the details as:
 
+<!--more-->
+
 _To install the WCF non-HTTP Activation Components_
 
 1. _From the **Start** button, click the **Control Panel**, click **Programs**, and then click **Programs and Features**._

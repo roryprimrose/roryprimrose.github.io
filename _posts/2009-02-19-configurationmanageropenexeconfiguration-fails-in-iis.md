@@ -9,6 +9,8 @@ Opening an application configuration is useful when you need access to informati
 
 The following code is how I have previously achieved this.
 
+<!--more-->
+
 {% highlight csharp %}
 Configuration appConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 ServiceModelSectionGroup serviceModel = ServiceModelSectionGroup.GetSectionGroup(appConfig);

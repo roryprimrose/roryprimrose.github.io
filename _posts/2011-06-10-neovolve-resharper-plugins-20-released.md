@@ -11,6 +11,8 @@ I always prefer the CLR types over the alias type names. This allows me to easil
 
 The original 1.0 (and subsequent 1.1) version provided the ability to switch between C# alias types and their CLR type equivalents using ReSharper’s code cleanup profile support. This version adds code inspection and QuickFix support. It also adds better support for type conversions in xmldoc comments.
 
+<!--more-->
+
 **Code Cleanup**
 
 The code cleanup profile settings for this plugin are now found under the Neovolve category. This is the only change to the settings used for code cleanup.![image][1]

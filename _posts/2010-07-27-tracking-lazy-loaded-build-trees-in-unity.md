@@ -9,6 +9,8 @@ I recently [posted a Unity extension][0] for disposing build trees created by Re
 
 Consider the following example.
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
 using Microsoft.Practices.Unity;

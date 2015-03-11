@@ -11,6 +11,8 @@ You can [download the toolkit][0] from the project on Codeplex.
 
 The following tables outline the types available in the namespaces across the toolkit assemblies. The information here is copied from the compiled help file.
 
+<!--more-->
+
 **Neovolve.Toolkit.dll**
 
 Neovolve.Toolkit.CommunicationName 

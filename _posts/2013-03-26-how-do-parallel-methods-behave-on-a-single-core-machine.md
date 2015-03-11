@@ -7,6 +7,8 @@ date: 2013-03-26 20:09:36 +10:00
 
 I’ve been wondering about this for a long time. None of the reading that I’ve done has conclusively answered this question. It just so happens that I’ve been developing in a VM for the last couple of months. I got the chance tonight to downgrade the VM specs to a single core to run some tests. The results were very pleasing, yet completely unexpected.
 
+<!--more-->
+
 My test code is very unscientific but achieves the objective.
 
 {% highlight csharp %}

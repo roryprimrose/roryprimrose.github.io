@@ -9,6 +9,8 @@ I've been performance testing a WCF service recently and working away at the bot
 
 After 90 seconds into a load test, the resources on the server got saturated and performance dropped through the floor. After this happened for a minute or so, timeouts and security negotiation failures occurred and test executions essentially halted for the remainder of the load test. I noticed that once service requests were no longer being processed that the server was no longer stressed (CPU dropped back down to normal).
 
+<!--more-->
+
 This lead me to think that the reason the host was no longer processing requests was that WCF throttling was occurring. All the test executions passed without timeouts or security negotiation failures once I increased the throttling limits on the host. The test execution time performance still had the same pattern though. The next thought was regarding the binding I was using. The service was configured for wsHttpBinding. This binding has a lot more functionality but also a lot more overhead when compared with basicHttpBinding. To test the theory, I switched the service over to basicHttpBinding.
 
 This is the load test result using wsHttpBinding. The test starts well, then the CPU gets saturated dealing with the wsHttpBinding overhead. The test time starts to bounce around the 8 second mark and the CPU on the server is working way too hard.

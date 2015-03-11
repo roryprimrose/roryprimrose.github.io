@@ -13,6 +13,8 @@ This has been plaguing me for weeks but I now have an answer.
 
 The definition of a collection event record includes a description field. The description field may be defined with a static value, a property bag (params) value or combination of both. The property bag value can be fully qualified (in the format of $Data/Property[@Name='&lt;PropertyBagItemName&gt;']$) or referenced by index. See [here][2] for more information. 
 
+<!--more-->
+
 My management pack originally contained the following: 
 
 {% highlight xml %}

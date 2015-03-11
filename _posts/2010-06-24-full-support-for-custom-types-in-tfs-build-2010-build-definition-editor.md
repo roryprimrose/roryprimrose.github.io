@@ -11,6 +11,8 @@ I have been putting together a customised build process with TFS Build 2010. Sev
 
 The _Automated Tests_ property seen here has a set of sub-items for each test item specified (items in the collection property). Each of these is expandable and the display text of each parent property is customised according to the values of the child properties.
 
+<!--more-->
+
 I used the TestSpecList and TestSpec classes via Reflector as a template to determine what I needed to implement to get this support. It involved a combination of expandable object converters and type descriptors. It is not rocket science and happens to be what I was playing with about six years ago.
 
 Unfortunately I just couldn’t get the same result for my custom types. My custom collection types for the build definition (_Configuration Updates_ and _Wix deployment list_seen below) simply got displayed as _(Collection)_.

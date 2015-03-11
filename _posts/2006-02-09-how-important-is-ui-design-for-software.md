@@ -12,6 +12,8 @@ date: 2006-02-09 22:33:00 +10:00
 
 [Robert Scoble][0] recently had an [interview with Jenny Lam][1], a designer on the Microsoft User Experience team. It was very interesting to hear about the progress Microsoft and the rest of the industry has made with regard to UI design. As it should, UI design is now starting to become more important in the overall software design process. Although I am a developer, my current role is in a UI design team and I also see many of the struggles in trying to get UI design recognised as important to a product. 
 
+<!--more-->
+
 [Bobinho][2] made some very interesting comments in a response to the [Channel 9][3] video. I really agree with him when he says: 
 
 > _But Windows developers, on the whole have no sense of style. No taste. No feel for design. And their products suffer greatly as a result._

@@ -11,6 +11,8 @@ This drop down list provides some common types and includes some of the types al
 
 Sometimes you don’t want the TypePresenter to provide every available type. The TypePresenter has a great feature that allows you to restrict the types it displays in this list and the associated “Browse for Types …” dialog. This is done by providing a Func&lt;Type, Boolean&gt; reference on the TypePresenter’s Filter property. 
 
+<!--more-->
+
 In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.
 
 {% highlight xml %}

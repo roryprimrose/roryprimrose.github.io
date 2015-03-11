@@ -10,6 +10,8 @@ I coded an automatic property in this way and didn't get any error indication fr
 
 Boom! Now there is a compiler error CS0840 that includes the message _&quot;Automatically implemented properties must define both get and set accessors&quot;_. It is unfortunate that this wasn't indicated with those helpful squiggly red lines in the code editor, but not a major problem.
 
+<!--more-->
+
 This does highlight an issue though. How can you implement read-only automatic properties? The answer is quite simple and is provided by the help description of the compiler error. It says _&quot;To create a read-only auto-implemented property, make the set accessor private_&quot;.
 
 So the code will look something like this:

@@ -7,6 +7,8 @@ date: 2013-10-16 14:12:23 +10:00
 
 A few years ago I posted about some [recommended reading for developers][0]. The tooling I use has changed ever so slightly (NSubstitute replaces RhinoMocks) but the content is still completely relevant. More recently I provide my team with recommended reading specifically about async development. 
 
+<!--more-->
+
 The following links are some great articles to help developers up to speed on async development in addition to the [previous post][0].
 
 **Async/await**

@@ -10,6 +10,8 @@ date: 2005-12-06 02:18:00 +10:00
 
  I was thinking that the only thing that has changed with regard to the timer is that it is now getting initialised and started from a thread that is not the GUI thread. Why should this matter? Perhaps I am showing a little bit of ignorance here, but it shouldn't matter. 
 
+<!--more-->
+
  Although the timer is getting fired from a WM_TIMER message on a window rather than a callback, I wouldn't consider the mechanism involved (the windows message queue) to be a UI thing. Even if the windows message queue is considered UI based (as far as threading issues go), the call to set up the timer is the SetTimer API under the hood. Why would this need to be done from the GUI thread? 
 
  So with my guesswork in place, I start writing a delegate and associated method. Hang on; there is no Invoke method or InvokeRequired property on the Timer. Now I am thinking that my timer not firing is not to do with it being set up on a non-GUI thread. My reasoning is that surely if the timer was required to be set on the GUI thread, the control would expose this method and property. 

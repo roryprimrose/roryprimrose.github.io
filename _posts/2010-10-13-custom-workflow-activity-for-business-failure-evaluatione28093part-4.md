@@ -11,6 +11,8 @@ There are three important pieces of information to provide when defining a busin
 
 The BusinessFailureEvaluator&lt;T&gt; activity is a generic activity type in order to support the generic type requirement of the Code property in BusinessFailure&lt;T&gt;. For ease of use, Int32 is the default type used for the generic type definition. The ArgumentType property can be used to change the activity use a different type for the Code property.
 
+<!--more-->
+
 The activity defines a Nullable&lt;Boolean&gt; Condition property that drives whether the activity results in a failure at runtime. It also supports two methods of defining the failure details. These are to provide a BusinessFailure&lt;T&gt; instance in the Failure property or to define values for the Code and Description properties.
 
 {% highlight csharp %}

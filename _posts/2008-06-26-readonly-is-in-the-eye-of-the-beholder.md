@@ -8,6 +8,8 @@ One of my most used feature in the 3.5 compiler for .Net is automatic properties
 
 Traditionally, properties work with a backing field. For example:
 
+<!--more-->
+
 {% highlight csharp %}
 private String _someValue;
     

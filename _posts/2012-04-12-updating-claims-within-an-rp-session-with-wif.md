@@ -9,6 +9,8 @@ I have a scenario where a web application is using WIF to manage federated secur
 
 The application will store the first name, last name and email address of the user. These values will be populated into the IClaimsPrincipal for an existing account using a custom ClaimsAuthenticationManager implementation.
 
+<!--more-->
+
 {% highlight csharp %}
 public override IClaimsPrincipal Authenticate(String resourceName, IClaimsPrincipal incomingPrincipal)
 {

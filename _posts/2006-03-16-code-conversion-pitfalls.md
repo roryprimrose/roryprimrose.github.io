@@ -8,6 +8,8 @@ After doing four days of training and meetings in Brisbane, I am now back in the
 
 Doing a code review of C# that is based on my VB code has put me in a new situation. Not having done this before, I am trying to think of scenarios that look safe, but are trouble under the surface. Turns out I found one very quickly. In this case, string comparisons are the danger. The VB code often had statements like this: 
 
+<!--more-->
+
 {% highlight vbnet %}
 If sSomeValue = String.Empty Then
 

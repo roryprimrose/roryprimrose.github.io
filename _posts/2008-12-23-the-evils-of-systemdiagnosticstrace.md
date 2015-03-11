@@ -9,6 +9,8 @@ There are a few occasions when I have used System.Diagnostics.Trace rather than 
 
 For example, I have recently done some work on custom tracing implementations that make it really easy for developers to add activity tracing and activity correlation to their code. I wanted to output some messages for diagnostic purposes if there were unexpected issues encountered in the tracing component. Tracing is the right tool for the job, however given that the component is all about tracing, what implementation do I use to trace the information required? 
 
+<!--more-->
+
 Back to the basic .Net framework is really the only option which means using System.Diagnostics.Trace in this case. This simple reason for this is that in a framework type component, what TraceSource in an application configuration would I use? I'm also not a fan of hard-coded configuration keys if they can be avoided, so Trace seemed like a better option than TraceSource. 
 
 In this component, I was tracing three messages regarding an operation that resolves TraceSource implementations. One message indicated a TraceSource name the component was searching for, the second was a warning message if a TraceSource wasn't found and the third was tracing the result of the resolution. This code is a performance critical code path because it has an incredibly high call rate. If this component isn't running as fast as possible, whole systems will slow down. 

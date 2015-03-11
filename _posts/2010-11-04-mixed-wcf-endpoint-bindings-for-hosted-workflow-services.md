@@ -9,6 +9,8 @@ I am working on a project where I have multiple hosted WF services. All the serv
 
 The WCF configuration for the hosted services looked a little like this before the anonymous service was added.
 
+<!--more-->
+
 {% highlight xml %}
 <system.serviceModel>
     <protocolMapping>

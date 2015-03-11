@@ -11,6 +11,8 @@ Given that I haven't had a lot to do with certificates etc, that part of the ses
 
 I think it was good that Payam make a clear distinction between scenarios where you want either no security, want to ensure that the message hasn't been tampered with or where you don't want someone to read part or all of a message. I suspect that most people put message tampering and encryption into the same box but they really are different levels of security.
 
+<!--more-->
+
 After the WCF session, I went to _ASP.NET: End-to-End - Building a Complete Web Application Using ASP.NET 2.0, Visual Studio 2005, and IIS 7 (Part 1)_ by [Scott Guthrie][0]. Scott was a great speaker with good stage presence and interactions with the audience. Being a seasoned speaker, I think he handled questions throughout the session really well. He answered a lot of questions during the session (and more afterwards) but he didn't let the questions change the direction of the session.
 
 Because I have spent most of my time developing ASP.Net and the last 18 months or so with VS2005, I didn't learn anything new from the session, but I still really enjoyed it.

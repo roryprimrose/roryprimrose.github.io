@@ -11,6 +11,8 @@ One of the important points I was not able to make is that the demo code display
 
 Identity delegation was the last demo that I presented. I didn't get the opportunity to show the code that was changed in the STS application to make this work. The code in the STS project had not be changed up until this point. The GetOutputClaimsIdentity method of the CustomSecurityTokenService class simply returned a new ClaimsIdentity created from the provided principal. The delegated identity scenario needs to explicitly cater for the ActAs scenario by attaching the delegating identity to the Actor property on the delegated identity being returned.
 
+<!--more-->
+
 {% highlight csharp %}
 protected override IClaimsIdentity GetOutputClaimsIdentity(IClaimsPrincipal principal, RequestSecurityToken request, Scope scope)
 {

@@ -11,6 +11,8 @@ date: 2007-12-06 12:50:00 +10:00
 
  Unfortunately, David's PublicKey application works from binaries alone. Because I can't compile the assemblies, I can't regenerate the InternalsVisibleTo attribute with the correct PublicKey value. 
 
+<!--more-->
+
  Now there are several ways around this, but I couldn't resist coding my own utility to cover this scenario. Using David's application as inspiration, I have created GetPublicKey. It will identity the PublicKey value from dll, exe, snk and pub files in order to generate an InternalsVisibleTo attribute. 
 
  GetPublicKey looks at command line arguments so that you can send any of the supported file types to it using Explorer, VS External Tools or VS Open With. It leverages sn.exe to extract the public key information so you may need to install the SDK. 

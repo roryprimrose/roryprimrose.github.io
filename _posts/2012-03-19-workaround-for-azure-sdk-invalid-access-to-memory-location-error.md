@@ -9,6 +9,8 @@ There is an issue with the Azure 1.6 SDK that I often hit when I run a cloud pro
 
 This issue seems like it is hitting many [other people][1] as well. This is a significant pain point for working with Azure projects and there is currently no suitable workaround or fix that I can find. Sometimes shutting down the emulator and trying again works. Most often however, the IDE needs to be recycled. Having to do this each fifth F5 is a productivity killer.
 
+<!--more-->
+
 It seems that the most reliable information out there is that the issue is caused by addins/extensions in Visual Studio. This is consistent with my experience of running automated integration tests as defined in [my previous posts][2]. I quickly encounter this problem running F5 from the IDE, yet launching Azure and IISExpress for integration tests does not suffer from this error. This leads me to a reliable workaround for this issue based on my integration test implementation using the External Tools support in Visual Studio to manually launch the emulator. 
 
 **Configuring External Tools**

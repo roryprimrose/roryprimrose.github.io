@@ -12,6 +12,8 @@ Like the posts for Unity injection with [WCF][1] and [ASP.Net][0], there are sim
 * global.asax application events are used which are not easily portable between projects
 * there is no support for teardown operations of the controllers created via Unity (especially important when Unity creates [disposable build tree][2] hierarchies)
 
+<!--more-->
+
 ASP.Net MVC uses a controller factory to create controller instances. Only the controllers need to be created via Unity as the view is a UI control and the model should not have any logic. In a similar manner to the ASP.Net implementation, supporting MVC Unity injection leverages a HttpModule to configure the application for injection.
 
 The UnityControllerFactoryHttpModule creates a new UnityControllerFactory if the current factory has not already been configured for Unity injection. It resets the controller factory back to a default factory when the module is disposed.

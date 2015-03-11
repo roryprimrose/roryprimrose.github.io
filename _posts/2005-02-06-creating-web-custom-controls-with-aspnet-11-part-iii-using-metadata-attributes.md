@@ -7,6 +7,8 @@ date: 2005-02-06 19:03:00 +10:00
 
 Metadata attributes are defined on items with an &lt; &gt; combination before the declaration of the Item. For example, defining Category and Description attributes to a Text property would look like this:
 
+<!--more-->
+
 {% highlight vb.net %}
  < _
  Category("Appearance"), _

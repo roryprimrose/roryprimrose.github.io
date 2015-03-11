@@ -11,6 +11,8 @@ I don’t want to change either the css file from the Nuget package or the locat
 
 I looked at custom routing options but these just seemed to cause more problems than they solved. It then dawned on me that I could use an IBundleBuilder implementation now that I know [how they work][1].
 
+<!--more-->
+
 This is what I have for my current Font Awesome StyleBundle configuration.
 
 {% highlight csharp %}

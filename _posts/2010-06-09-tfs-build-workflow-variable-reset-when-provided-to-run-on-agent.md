@@ -9,6 +9,8 @@ I’ve been working with TFS Build in Visual Studio 2010 over the last week. It 
 
 My build workflow attempts to determine a “build version” for the build. The build version is used to update the build number and is then injected back into the version info files for the compilation of the solution. It is determined by finding all the version files in the solution. We tend to use a common ProductInfo.cs to contain this information so there really should be only one file found in this search. The “best” version is obtained from the set of version files using a set of business rules. There is also some logic in there for automatically incrementing the Build and Revision numbers and the ability to check the version changes back into source control so the version numbers keep incrementing on subsequent builds.
 
+<!--more-->
+
 What I was finding was that the build version was being reset when the Run On Agent activity was executed. I added some debug messages into the build to track what was happening to the build version.
 
 ![image][0]

@@ -11,6 +11,8 @@ My current issue is testing deployment of a 4.0 framework built WCF service to a
 
 I look to FUSLOGVW.exe to find out these answers. The issue is that this great utility is not on the server image as it comes out of the .Net SDK. With a bit of trickery, it can be used on a server. These are the steps to get this done.
 
+<!--more-->
+
 1. Copy FUSLOGVW.exe from your dev machine to the server (found somewhere around C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin)
 2. Run cmd.exe with elevated privileges to execute _*reg add HKLM\Software\Microsoft\Fusion /v EnableLog /t REG_DWORD /d 1*_
   (Kudos to [Bart][0] for this one)

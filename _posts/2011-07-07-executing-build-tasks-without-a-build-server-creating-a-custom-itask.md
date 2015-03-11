@@ -11,6 +11,8 @@ This post will provide an example of how to create a task that will allow execut
 
 The first thing to do is create a new library project in Visual Studio. You will then need to add BuildTaskExecutor.exe as a reference. You will also need to add a reference to System.ComponentModel.Composition.dll to get access to MEF.![image][1]
 
+<!--more-->
+
 The next step is to add a new class for the custom task. I have added a MultiTask class in this example and marked it as implementing the ITask interface. The class also needs to be decorated with the _[Export(typeof(ITask))]_ attribute so that it can be picked up by MEF.
 
 Next thing to do is add support for importing BTE types via MEF. This can either be done using either constructor or property injection. Constructor injection requires that the constructor be decorated with the _[ImportingConstructor]_ attribute. Depending on the types being imported, constructor parameters may also need to define an Import attribute and possibly an import name. Property injection also requires the Import attribute and possibly an import name.

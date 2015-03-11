@@ -8,6 +8,8 @@ The using statement in the .Net framework is a really good way of neatly using a
 
 The following is an example taken from [John Papa's][0] latest [Data Points][1] [MSDN Magazine][2] article:
 
+<!--more-->
+
 {% highlight csharp %}
 using (TransactionScope ts = new TransactionScope())    
 {

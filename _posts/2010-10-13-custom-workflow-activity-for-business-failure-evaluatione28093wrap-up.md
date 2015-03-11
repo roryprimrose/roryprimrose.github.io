@@ -14,6 +14,8 @@ The BusinessFailureEvaluator&lt;T&gt; activity evaluates a single business failu
 The BusinessFailureScope&lt;T&gt; activity manages multiple business failures and may result in an exception being thrown for a set of failures.  
 ![][1]
 
+<!--more-->
+
 The following is a list of all the posts in this series.
 
 * [Custom Workflow activity for business failure evaluation–Part 1][2] – Defines the high-level design requirements for the custom activities

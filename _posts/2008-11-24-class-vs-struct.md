@@ -19,6 +19,8 @@ MSDN has [a good resource][0] which provides guidance on how to choose between c
 
 > _If one or more of these conditions are not met, create a reference type instead of a structure. Failure to adhere to this guideline can negatively impact performance._
 
+<!--more-->
+
 The one that got me was having an instance size of 16 bytes or smaller. Several of the classes that I wanted to convert into structs defined string properties. Initially, I thought that a string would almost always be over 16 bytes making it inappropriate for a struct. 
 
 It later occurred to me that strings are reference types not value types. Any string variable is simply a pointer to the memory location that holds the data for that reference type. This means that the size of a string property in a struct is the size of IntPtr. 

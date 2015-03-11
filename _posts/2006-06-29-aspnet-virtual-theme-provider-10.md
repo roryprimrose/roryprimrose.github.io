@@ -8,6 +8,8 @@ date: 2006-06-29 14:40:00 +10:00
 
  Take the example of a web project that has mutliple themes that are assigned depending on the type of user. Each theme has a subset of styles that display that theme according to different accessibility requirements (such as vision impared users). 
 
+<!--more-->
+
  By using this provider, defining filter sets will allow the application to include or exclude items from the theme directories when processing a request. In this example, the style of the site that is for full vision users, would exclude the vision impaired files within that theme. The style of site that is for the vision impaired users would exclude the files in the theme for the full vision users. You may also have a text only version of the site, which could be acheived by filtering all css files from the theme directories. 
 
  This example project may also define a set of common property values assigned to controls through a skin file. This is useful because those properties would only need to be defined in a skin file in the theme directory rather than against each instance of the control in all the pages. What if you want those same skin definitions applied to all themes? Currently, this is not possible without having to copy the same skin file across all theme directories. By allowing a global directory to be merged with the theme directory, the global skin file for the application can be shared with all themes. 

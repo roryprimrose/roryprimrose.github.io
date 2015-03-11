@@ -15,6 +15,8 @@ For several days I have been doing the very bad practice of writing the document
 
 Lets look some examples. Here is my initial code:
 
+<!--more-->
+
 {% highlight csharp %}
 using System.Diagnostics;
      

@@ -11,6 +11,8 @@ Most people (myself included) assume that the Parallel and ParallelForEach&lt;t&
 You can achieve multi-threaded parallel execution by using AsyncCodeActivity derived activities (such as InvokeMethod) with the RunAsynchronously set to True running in a Parallel or ParallelForEach&lt;t&gt;
 activity. Consider the following workflow.
 
+<!--more-->
+
 ![image][2]
 
 Each parallel branch writes the start time to the console, runs a Thread.Sleep for 2, 4 or 6 seconds and writes the end time. The following is written to the console if each InvokeMethod activity has RunAsynchronously set to False.

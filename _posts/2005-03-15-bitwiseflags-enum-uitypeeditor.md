@@ -9,6 +9,8 @@ I quickly found that I didn't like the default support for bitwise enum types in
 
 I thought that a better way of doing this would be to use a CheckedListBox control instead of the normal ListBox control in the UITypeEditor. True to my style, I rushed in to coding it, only to find out that several other people have done it. It was fun, but with my lack of time, I should have checked Google first. In any case, to maintain some sense of worth and satisfaction, instead of throwing away my code, I made it better than the examples I have seen so far.
 
+<!--more-->
+
 My version of the enum editor will auto-detect if the flags enum has been defined. It will either display a CheckedListBox if the Flags attribute is defined, or the standard ListBox if the Flags attribute isn't defined. This makes the editor more flexible as it can be used on any enum.
 
 Hope you find this helpful.

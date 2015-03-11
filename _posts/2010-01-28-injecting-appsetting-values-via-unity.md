@@ -9,6 +9,8 @@ I've been working with Unity a bit in an enterprise level system and I have been
 
 To demonstrate this scenario, consider the following example:
 
+<!--more-->
+
 {% highlight csharp %}
 using System;
     

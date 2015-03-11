@@ -9,6 +9,8 @@ Take my (work in progress) ImageButton control from the previous articles for an
 
 The implementer of the ImageButton control may also want to run their own script when the button is clicked. If the implementor can't run their own code on the client, then the control will only be useful as a server control that fires a click event on the server. I want the implementor to be able to run their own function when the onclick event fires, and also allow them to stop the postback as required.
 
+<!--more-->
+
 The control needs to be able to run two functions when the button is clicked. The first is the control specific code which the control. The second is the implementer code. The control will know how to call its own internal function, but how does the control know what code the implementer wants to run?
 
 There are several ways to do this. These include but are not limited to:

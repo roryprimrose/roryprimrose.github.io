@@ -9,6 +9,8 @@ I have been hitting an issue with MVC4 Web Api where my global error handling fi
 
 I have finally figured out that returning a lazy IEnumerable instance will also cause the global error handler to not execute. In fact, it won’t cause controller or action level exception filters to execute either. 
 
+<!--more-->
+
 Consider the following:
 
 {% highlight csharp %}

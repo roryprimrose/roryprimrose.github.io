@@ -11,6 +11,8 @@ date: 2008-11-18 11:45:00 +10:00
 
  These instructions assume that all the projects in the solution are in child directories under the location that the solution file resides in. 
 
+<!--more-->
+
 **How to manage your StyleCop settings**
 
  If a Settings.StyleCop file doesn't already exist, right-click on a project and select StyleCop Settings. Remove any of the rules that you don't want applied and click OK. 

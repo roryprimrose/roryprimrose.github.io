@@ -16,6 +16,8 @@ At work we run TFS2010 with build controllers, build agents and lab management. 
 * Deploying MSIs to remove servers
 * Filtering drop folder output (no source, just build output like configuration files, documentation and MSIs)
 
+<!--more-->
+
 I use Codeplex at home for my personal projects. This means that I don't get all the goodness that comes with TFSBuild in 2010. I still want the automatic version management functionality listed above however. I have the following functionality requirements to make this happen:
 
 * Determine the current product version number

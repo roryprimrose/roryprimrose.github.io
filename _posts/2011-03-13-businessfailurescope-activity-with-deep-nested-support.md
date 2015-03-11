@@ -8,6 +8,8 @@ I wrote a [series of posts][0] late last year about a custom WF activity that co
 
 The relationship between the parent scope activity and child evaluator activity works like this. The parent scope activity registers all the child evaluator activities with the extension in order to create a link between them. The extension then holds on to the failures from the child activities so that it can throw an exception for them as a set when the parent scope completes. If there was no link between the parent scope and a child evaluator then the extension would throw the exception directly for the singular failure.
 
+<!--more-->
+
 One of the limitations of this design was that I could not create a link between a parent scope and child evaluator activity when the child activity was not a direct descendent. This was quite limiting because you could not branch off into validation checks and run evaluators within those sub-branches. You can see from the [post that describes the extension][1] that the implementation is also very messy. 
 
 If only I had known about [Workflow Execution Properties][3] back then. You can see a good description of execution properties in [Tim’s post][4]. 

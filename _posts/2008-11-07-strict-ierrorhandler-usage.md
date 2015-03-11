@@ -11,6 +11,8 @@ The advantage of using configuration is that the behaviour of the service can be
 
 Configuration is something that probably shouldn't change independent of the dev/test/release cycle of a service, especially when it comes to error handling and exception shielding. This in itself means that minimal flexibility is lost if the error handler is compiled into the service rather than wired up through configuration. 
 
+<!--more-->
+
 Failure to configure the service correctly for IErrorHandler implementations may pose a risk for two reasons. Firstly, without the intended error handlers being invoked, incorrect exceptions may flow across the service boundary. This occurs because there is no error handling in place. Secondly and more importantly, sensitive information in exceptions may also flow across the service boundary which could be a security risk. This occurs because there is no exception shielding in place. 
 
 An alternative to configuration is to use an attribute implementation to compile IErrorHandler implementations to the service implementation. 

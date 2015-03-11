@@ -9,6 +9,8 @@ date: 2011-07-03 14:40:05 +10:00
 
 Neovolve.BuildTaskExecutor (or BTE) is the application that will execute specific tasks based on command line parameters. It implements MEF for the extensibility support so that additional tasks can be added at any time with zero impact on the application itself. 
 
+<!--more-->
+
 **Extensibility**
 
 The main interface for BTE extensibility is the ITask interface. It provides the ability for BTE to identify the command line names associated with the task, validate command line arguments, obtain help information about the task and to execute the task.

@@ -7,6 +7,8 @@ date: 2009-04-08 23:55:00 +10:00
 
  There are many AOP frameworks around and they all use one of just a few techniques to inject code into join points. [Oren][0] has previously [posted a list][1] of these types of AOP techniques with their advantages and disadvantages. This list is copied below for reference: 
 
+<!--more-->
+
 **#**
 
 **Approach**

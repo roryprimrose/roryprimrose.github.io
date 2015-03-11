@@ -11,6 +11,8 @@ The issue in this case is that the collection object I was referencing was Confi
 
 After running the test again, I had 100% code coverage. I have now confirmed that the missing blocks in coverage are a result of the foreach statement rather than an issue with my unit test. Now the question is do I remove the additional code and redundant array copy ? The reasons to convert the code back to the foreach loop are:
 
+<!--more-->
+
 * Cleaner code 
   * Less bloat
   * More understandable

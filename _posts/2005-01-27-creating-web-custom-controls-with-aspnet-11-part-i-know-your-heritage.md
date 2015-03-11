@@ -9,6 +9,8 @@ Inheriting from System.Web.UI.WebControls.WebControl will intrinsically provide 
 
 I almost always inherit from WebControl, but in this example, I will inherit from Control because I want to create a very simple lightweight Label control. By lightweight, I mean that I want it to render a Text value, but no HTML tags. Because there are no tags, there isn't a point allowing the implementer of the control to manipulate properties such as BackColor.
 
+<!--more-->
+
 The next thing to understand about web custom controls is the ways in which they can be rendered. You can create child controls as member variables, or as objects that are simply added to the objects Controls collection. Regardless of their scope, they are normally added to the Controls collection by overriding the CreateChildControls method. Controls created in this manner are usually referred to as Composite Controls.
 
 I am not a huge fan of composite controls, so I normally create Rendered Controls which are created by writing HTML data directly to an HTMLTextWriter. There are times when this method can take a lot of code to render the control. Because of this, sometimes I will create instances of controls inside one of the Render methods in order to build a child control hierarchy using OOP, then render the top level control out to the HTMLTextWriter using its RenderControl method. For example, this method is perfect when you want a rendered control, but need to render a TABLE hierarchy as part of its output. I still however consider this a rendered control.

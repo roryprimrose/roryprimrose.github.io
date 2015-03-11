@@ -14,6 +14,8 @@ Administrative rights are required to create event log sources using the _System
 
 Attempting to create a new source or checking to see if the source already exists will enumerate all the event logs on the machine. This requires administrative rights because some event logs (such as the Security event log) are protected with specific security permissions. Without administrative rights, those event logs fail to be read.
 
+<!--more-->
+
 **Avoiding System.Diagnostics.EventLog**
 
 As administrative rights shouldn't be used to run applications and services, this is a bit of a problem. Almost every suggested solution on the net says to run the application with administrative rights. This is a really bad idea. If the application is a client application, the user's profile doesn't necessarily have administrative rights to begin with. If it is a service application, you don't want it to run with administrative rights as this would be a significant security risk (especially if it is an IIS based application).

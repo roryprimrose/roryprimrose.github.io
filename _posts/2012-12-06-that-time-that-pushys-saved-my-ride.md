@@ -10,6 +10,8 @@ I then get a second puncture 100m from the top of the mountain.
 
 [![Up a hill without a tube][1]][0] 
 
+<!--more-->
+
 Ok, not ideal, but I still have that repair kit. Turns out however that the glue tube in the repair kit had broken and the tube was only filled with air. I’m now up the top of the mountain (about 7km from the car) with a double puncture and a faulty repair kit. Not many people come though here mid week so fun times ahead.   
 
 There were a few people that passed after a while. Unfortunately they only had larger tubes or canisters but no repair kit glue. Luckily enough, some guys from [pushys.com.au][2] rocked up to film a TV advertisement. They just happened to have a tube in the right size. Their generosity meant that still got that downhill ride and avoided a very long steep walk back to the car.  

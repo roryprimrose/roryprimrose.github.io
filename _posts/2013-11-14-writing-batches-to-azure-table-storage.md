@@ -12,6 +12,8 @@ Writing records to Azure Table Storage in batches is handy when you are writing 
 
 Writing batches is easy, even adhering to the above rules. The problem however is that it can start to result in a lot of boilerplate style code. I created a batch writer class to abstract this logic away.
 
+<!--more-->
+
 {% highlight csharp %}
 namespace MyProject.Server.DataAccess.Azure
 {

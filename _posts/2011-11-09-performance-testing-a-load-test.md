@@ -9,6 +9,8 @@ Running a load test in Visual Studio is a great way to put your code under stres
 
 The problem is that Visual Studio does not provide out of the box support for running a performance session against a load test. There is a reasonably easy workaround though. Any other profiling tool will also work using the same technique. The trick is to get the performance session to manually profile mstest.exe as it runs the load test. 
 
+<!--more-->
+
 The way to set this up is as follows:
 
 1. Set the application to profile as _C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\MSTest.exe_

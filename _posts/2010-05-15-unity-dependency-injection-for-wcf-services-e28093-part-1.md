@@ -11,6 +11,8 @@ The poor mans injection option is to create a unity container within the constru
 
 The second option is to create a custom service host factory. This option allows a service type to be created with constructor dependencies rather than a default constructor. It uses the mark-up in svc files to identify the custom factory to be used rather than the default one. The 4.0 framework also supports this configuration via web.config as svc files are no longer required.
 
+<!--more-->
+
 The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].
 
 {% highlight csharp %}

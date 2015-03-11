@@ -11,6 +11,8 @@ I have upgraded a decent sized solution to Azure SDK 2.2, VS2013 and most of the
 The page cannot be displayed because an internal server error has occurred.
 {% endhighlight %}
 
+<!--more-->
+
 I’ve burnt a couple of days on this problem so far. The event log is no help and only provides the following:
 
 {% highlight text %}

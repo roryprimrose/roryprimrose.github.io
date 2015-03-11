@@ -9,6 +9,8 @@ I have an ASP.Net MVC4 website that is running passive federation to Azure ACS. 
 
 I have secured my api action using the following.
 
+<!--more-->
+
 {% highlight csharp %}
 [Authorize(Roles = Role.Administrator)]
 public class AdminReportController : ApiController

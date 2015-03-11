@@ -9,6 +9,8 @@ I’ve been playing with the MSF over the last couple of years. For too long I h
 
 The latest design allows clients to simply work with services and not have to have any understanding of MSF. There are a few hurdles with this design however. The provider implementation on the server needs to implement a preview sync so it can tell the client what changes needs to happen without doing them at that time. When a change does happens, the client will only action a single change at a time each of which must operate within a sync session in the service. This means that the sync provider also needs to work with a filtered sync session.
 
+<!--more-->
+
 I created a POC project to prove that I could actually achieve these features with MSF before I invested any more time in the latest design. The POC aims to sync a data item that looks like the following.    
 
 {% highlight csharp %}

@@ -15,6 +15,8 @@ This project is configuration driven so that when a web service changes, the con
 
 After the package is installed, add your object mappings to the configuration file. The configuration for the mappings looks like this:
 
+<!--more-->
+
 {% highlight xml %}
 <MapperItem key="MyService.XmlNodeKey"
             xmlName="XmlNode"

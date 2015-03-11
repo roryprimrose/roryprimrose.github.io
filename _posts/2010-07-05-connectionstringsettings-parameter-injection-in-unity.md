@@ -8,6 +8,8 @@ I have previously posted about supporting AppSetting value resolution for Unity 
 
 This implementation leverages the AppSettingParameterValueExtension class from the prior examples and renames it to SectionExtensionInitiator. This class now configures a Unity section for multiple element extensions rather than a single specific implementation.
 
+<!--more-->
+
 {% highlight csharp %}
 using Microsoft.Practices.Unity.Configuration;
     

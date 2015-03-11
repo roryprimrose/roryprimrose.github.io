@@ -15,6 +15,8 @@ In Visual Studio do the following:
 * Select **Visual Studio Team Foundation Server** tree item
 * Click on **Configure User Tools...** button
 
+<!--more-->
+
 **Comparing**
 
 To use WinMerge as the Compare/Diff tool:

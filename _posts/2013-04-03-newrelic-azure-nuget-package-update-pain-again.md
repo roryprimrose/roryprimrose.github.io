@@ -7,6 +7,8 @@ date: 2013-04-03 14:10:37 +10:00
 
 I [previously posted][0] about issues I found when updating to the latest Azure NuGet package published by NewRelic. Unfortunately the install PowerShell script for the latest package now has more issues than the previous version. Here are the issues I found and how to fix them.
 
+<!--more-->
+
 1. newrelic.cmd not updated   
 I believe the issue here (unconfirmed) is that the file is not updated because it has been changed as part of the previous package installation. The fix is to uninstall the previous package first and then manually delete the newrelic.cmd file. The uninstall won’t remove the file for the same reason.
 1. The license key is not written to newrelic.cmd   

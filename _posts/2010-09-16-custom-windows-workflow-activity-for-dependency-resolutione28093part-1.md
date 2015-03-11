@@ -11,6 +11,8 @@ This first part will go through the design goals of the custom activity.
 
 The custom activity will have the following characteristics:
 
+<!--more-->
+
 * Operate as a scope type activity (like ForEach&lt;T&gt; or ParallelFor&lt;T&gt;)
 * It can hold a single child activity
 * Resolved instance is available to all child activities

@@ -10,6 +10,8 @@ Today, I felt like a novice programmer. Something very simple, but also simply m
 
 Each time I need to loop though an array, I will loop while the index is less than MyArray.Length. Until today, this has always been fine. Now I have a multi-dimensional array, Length is returning a much larger number than I expected. I initially thought that the Length property was returning the length of the first dimension x the number of dimensions. I thought this because I had a [24, 2] array declaration and Length was returning 48. Logical conclusion right?
 
+<!--more-->
+
 No problem I thought. A little messy, but I changed my code to loop while the index was less than (MyArray.Length / MyArray.Rank). This worked a treat until I found a need to change my array declaration from [24, 2] to [24, 3]. Without thinking enough about the change I was assuming that this was now a three dimensional array (yeah, so let's just ignore that little tidbit of information).
 
 Now the code fails again. Because I was incorrect about the number of dimensions, (MyArray.Length / MyArray.Rank) is now producing a result of 36, which errors when I reference index 24 of the first dimension because it only has a length of 24 (23 being the last index).

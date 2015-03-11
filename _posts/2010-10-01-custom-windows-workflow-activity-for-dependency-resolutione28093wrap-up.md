@@ -9,6 +9,8 @@ I have been writing a series of posts recently about implementing a custom WF ac
 
 The InstanceResolver activity caters for lazy loading dependencies, multiple resolutions on the one activity, workflow persistence (including support for non-serializable dependencies) and lifetime management of the resolved dependencies. The activity uses Unity as the backend IoC container however this could be modified to support a different container with minimal changes.
 
+<!--more-->
+
 The following is a list of all the posts in this series.
 
 * [Dependency injection options for Windows Workflow 4][2] - Describes the options for getting dependencies into a workflow

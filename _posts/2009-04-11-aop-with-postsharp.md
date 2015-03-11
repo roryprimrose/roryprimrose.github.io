@@ -9,6 +9,8 @@ PostSharp is a very power AOP framework. It changes the IL emitted from the comp
 
 The demos in this series will look at a very simple scenario. PostSharp will be used to aspect the RunTest() method in the following code. The aspect used will output console messages surrounding the RunTest method. 
 
+<!--more-->
+
 {% highlight csharp %}
 using System; 
     

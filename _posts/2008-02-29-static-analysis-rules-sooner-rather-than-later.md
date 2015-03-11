@@ -11,6 +11,8 @@ date: 2008-02-29 00:16:00 +10:00
 
  Enter the static analysis rules. It turned out that these are really easy to write. In about an hour, I have created four static analysis rules and tested them. The rules so far are: 
 
+<!--more-->
+
 * ND1001 - Mark DataContract properties with DataMember
 * ND1002 - Mark class with DataContract where properties with DataMember exist
 * ND1003 - Scope properties marked with a DataMember attribute as public
