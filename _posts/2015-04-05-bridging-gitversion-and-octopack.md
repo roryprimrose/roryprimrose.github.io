@@ -5,13 +5,13 @@ tags:
 date: 2015-04-05 00:05:00 +11:00
 ---
 
-I've started converting projects from TFSC to Git in VSO. As part of this process I am working out the best way to achieve semantic versioning. GitVersion looks like a great product to assist in this. By default however the version numbers that it produces are not supported by NuGet.
+I've started converting projects from TFSC to Git in VSO. As part of this process I am working out the best way to achieve semantic versioning. [GitVersion][0] looks like a great product to assist in this. By default however the version numbers that it produces are not supported by NuGet.
 
-The particular problem with NuGet version numbers can be read in more detail [here][0].
+The particular problem with NuGet version numbers can be read in more detail [here][1].
 
 <!--more-->
 
-More specifically, I am using OctoPack to generate a NuGet package as part of a build and publish it to an [Octopus Deploy][1] instance. I need to get the generated version number from GitVersion and pipe it into the OctoPackPackageVersion MsBuild property prior to OctoPack being run. 
+More specifically, I am using OctoPack to generate a NuGet package as part of a build and publish it to an [Octopus Deploy][2] instance. I need to get the generated version number from GitVersion and pipe it into the OctoPackPackageVersion MsBuild property prior to OctoPack being run. 
 
 If you look at the targets file for OctoPack, it overrides and appends OctoPack to the BuildDependsOn MsBuild property. We can do the same by overriding BuildDependsOn before OctoPack overrides it. This will allow us to update the OctoPackPackageVersion property.
 
@@ -54,5 +54,6 @@ BuildDependsOn is overriden to call SetOctoPackVersion. OctoPack then overrides 
 
 The SetOctoPackVersion gets the NuGet safe version calculated by GitVersion (via GitVersionTask) and pushes it into the version property that OctoPack uses. The build will now succeed and we have a good solution for SemVer with NuGet/OctopusDeploy.
 
-[0]: https://github.com/ParticularLabs/GitVersion#nuget-compatibility
-[1]: http://www.octopusdeploy.com
+[0]: https://github.com/ParticularLabs/GitVersion
+[1]: https://github.com/ParticularLabs/GitVersion#nuget-compatibility
+[2]: http://www.octopusdeploy.com
