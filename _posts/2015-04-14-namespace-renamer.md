@@ -5,9 +5,9 @@ tags:
 date: 2015-04-14 16:27:00 +11:00
 ---
 
-All the way [back in 2009][0] I wrote a little console application that assisted with renaming a Visual Studio project and/or namespace. It was handy in that it look into consideration the solution being under source control with TFS. Over the years I have been using TF source control less and Git more. Outside of source control I have also needed to use this script for solutions that are not bound in source control.
+All the way [back in 2009][0] I wrote a little console application that assisted with renaming a Visual Studio project and/or namespace. It was handy in that it took into consideration the solution being under source control with TFS. Over the years I have been using TF source control less and Git more. On the odd occasion I have also used this script for solutions that are not bound in source control.
 
-I have re-written that script here and taken out the TF integration and removed the logging that was just causing a whole lot of white noise. I have also added in a few more out of the box exclusions for directories to skip in the process.
+I have refactored the script to take out the TF integration, remove the logging that was just causing a whole lot of white noise and to add in a few more out of the box exclusions for directories to skip in the process.
 
 <!--more-->
 
