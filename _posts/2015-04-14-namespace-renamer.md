@@ -23,18 +23,15 @@ namespace Neovolve.NamespaceRenamer
     using System.Text;
     using System.Text.RegularExpressions;
 
-    /// <summary>
-    ///     The program.
-    /// </summary>
     internal class Program
     {
         /// <summary>
-        ///     The find name.
+        ///     The name to find.
         /// </summary>
         private const string FindName = "Solution.Project.OldNamespace";
 
         /// <summary>
-        ///     The replace name.
+        ///     The name to replace.
         /// </summary>
         private const string ReplaceName = "Solution.Project.NewNamespace";
 
@@ -67,29 +64,11 @@ namespace Neovolve.NamespaceRenamer
             ".pdb"
         };
 
-        /// <summary>
-        ///     Stores the log path
-        /// </summary>
         private static readonly string LogPath = Assembly.GetExecutingAssembly().Location + "."
                                                  + DateTime.Now.ToString("yyyyMMdd-hhmmss") + ".log";
 
-        /// <summary>
-        ///     Stores the expression used to find and replace text.
-        /// </summary>
         private static Regex _expression;
 
-        /// <summary>
-        /// Determines the find replace expression.
-        /// </summary>
-        /// <param name="findText">
-        /// The find text.
-        /// </param>
-        /// <param name="replaceText">
-        /// The replace text.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Regex"/> instance.
-        /// </returns>
         private static Regex DetermineFindReplaceExpression(string findText, string replaceText)
         {
             string pattern;
@@ -131,12 +110,6 @@ namespace Neovolve.NamespaceRenamer
             return new Regex(pattern, RegexOptions.Compiled);
         }
 
-        /// <summary>
-        /// Mains the specified args.
-        /// </summary>
-        /// <param name="args">
-        /// The args.
-        /// </param>
         private static void Main(string[] args)
         {
             _expression = DetermineFindReplaceExpression(FindName, ReplaceName);
@@ -151,12 +124,6 @@ namespace Neovolve.NamespaceRenamer
             Console.ReadKey();
         }
 
-        /// <summary>
-        /// Renames the directory in TFS.
-        /// </summary>
-        /// <param name="directory">
-        /// The directory.
-        /// </param>
         private static void RenameDirectory(DirectoryInfo directory)
         {
             WriteMessage("Renaming directory " + directory.FullName);
@@ -169,12 +136,6 @@ namespace Neovolve.NamespaceRenamer
             directory.MoveTo(newPath);
         }
 
-        /// <summary>
-        /// Renames the file in TFS.
-        /// </summary>
-        /// <param name="file">
-        /// The file.
-        /// </param>
         private static void RenameFile(FileInfo file)
         {
             WriteMessage("Renaming file " + file.FullName);
@@ -187,12 +148,6 @@ namespace Neovolve.NamespaceRenamer
             file.MoveTo(newPath);
         }
 
-        /// <summary>
-        /// Runs the rename against the specified directory.
-        /// </summary>
-        /// <param name="directory">
-        /// The directory.
-        /// </param>
         private static void RunRename(DirectoryInfo directory)
         {
             if (DirectoryExclusions.Contains(directory.Name))
@@ -251,12 +206,6 @@ namespace Neovolve.NamespaceRenamer
             }
         }
 
-        /// <summary>
-        /// Writes the message.
-        /// </summary>
-        /// <param name="message">
-        /// The message.
-        /// </param>
         private static void WriteMessage(string message)
         {
             Console.WriteLine(message);
