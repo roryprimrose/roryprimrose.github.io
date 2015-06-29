@@ -60,7 +60,7 @@ The solution to this is in two parts. The first improvement is to provide more d
 
 Using the throw statement on an existing exception instance wipes out any existing stack trace information. This is why you should never catch ex then throw ex, you should always just use the throw statement by itself. This isn’t possible in the case of the workflow engine as it has caught the exception on a different thread and has no choice but to throw the exception instance back on the original calling thread. 
 
-The trick here is to get the exception to preserve the original stack trace when it is re-thrown. Exception has a method called InternalPreserveStackTrace that will do this for us. Reflection must be used here because the method is marked as internal.
+The trick here is to get the exception to preserve the original stack trace when it is re-thrown. Exception has a method called InternalPreserveStackTrace that will do this for us. Reflection must be used here because the method is marked as internal. (Starting from .NET 4.5 you can use ExceptionDispatchInfo class instead of InternalPreserveStackTrace)
 
 The first thing to change is that we need to use WorkflowApplication directly rather than WorkflowInvoker. WorkflowInvoker is great for simplicity but does not provide direct access to the thrown exception before it is re-thrown. Using WorkflowApplication provides the ability to hook the OnUnhandledException action where the exception is available. The reflected InternalPreserveStackTrace method can then be invoked on the exception instance before it is re-thrown.
 
