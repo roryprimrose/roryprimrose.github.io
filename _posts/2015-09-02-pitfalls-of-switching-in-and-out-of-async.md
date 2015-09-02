@@ -103,7 +103,7 @@ By making the method async, the task from the repository is evaluated within the
 
 {% highlight csharp %}
 
-public Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
+public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     try
 	{
