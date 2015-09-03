@@ -37,69 +37,31 @@ namespace MySystem.Server.DataAccess.Azure
     using Microsoft.WindowsAzure.Storage.Table;
     using Seterlund.CodeGuard;
     
-    /// <summary>
-    ///     The <see cref=&quot;EntityAdapter{T}&quot; />
-    ///     class provides the base adapter implementation for reading and writing a POCO class with Azure Table Storage.
-    /// </summary>
-    /// <typeparam name=&quot;T&quot;>
-    ///     The type of value.
-    /// </typeparam>
     [CLSCompliant(false)]
     public abstract class EntityAdapter<T> : ITableEntity where T : class, new()
     {
-        /// <summary>
-        ///     The synchronization lock.
-        /// </summary>
-        /// <remarks>A dictionary is not required here because the static will have a different value for each generic type.</remarks>
         private static readonly object _syncLock = new object();
-    
-        /// <summary>
-        ///     The additional properties to map for types.
-        /// </summary>
-        /// <remarks>A dictionary is not required here because the static will have a different value for each generic type.</remarks>
         private static List<AdditionalPropertyMetadata> _additionalProperties;
-    
-        /// <summary>
-        ///     The partition key
-        /// </summary>
         private string _partitionKey;
-    
-        /// <summary>
-        ///     The row key
-        /// </summary>
         private string _rowKey;
-    
-        /// <summary>
-        ///     The entity value.
-        /// </summary>
         private T _value;
     
-        /// <summary>
-        ///     Initializes a new instance of the <see cref=&quot;EntityAdapter{T}&quot; /> class.
-        /// </summary>
         protected EntityAdapter()
         {
         }
     
-        /// <summary>
-        ///     Initializes a new instance of the <see cref=&quot;EntityAdapter{T}&quot; /> class.
-        /// </summary>
-        /// <param name=&quot;value&quot;>
-        ///     The value.
-        /// </param>
         protected EntityAdapter(T value)
         {
-            Guard.That(value, &quot;value&quot;).IsNotNull();
+            Guard.That(value, "value").IsNotNull();
     
             _value = value;
         }
     
-        /// <inheritdoc />
-        [SuppressMessage(&quot;Microsoft.Design&quot;, &quot;CA1062:Validate arguments of public methods&quot;, MessageId = &quot;0&quot;,
-            Justification = &quot;Parameter is validated using CodeGuard.&quot;)]
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "Parameter is validated using CodeGuard.")]
         public void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
         {
-            Guard.That(properties, &quot;properties&quot;).IsNotNull();
+            Guard.That(properties, "properties").IsNotNull();
     
             _value = new T();
     
@@ -115,7 +77,6 @@ namespace MySystem.Server.DataAccess.Azure
             ReadValues(properties, operationContext);
         }
     
-        /// <inheritdoc />
         public IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
         {
             var properties = TableEntity.WriteUserObject(Value, operationContext);
@@ -132,25 +93,10 @@ namespace MySystem.Server.DataAccess.Azure
             return properties;
         }
     
-        /// <summary>
-        ///     Builds the entity partition key.
-        /// </summary>
-        /// <returns>
-        ///     The partition key of the entity.
-        /// </returns>
         protected abstract string BuildPartitionKey();
     
-        /// <summary>
-        ///     Builds the entity row key.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref=&quot;string&quot; />.
-        /// </returns>
         protected abstract string BuildRowKey();
     
-        /// <summary>
-        ///     Clears the cache.
-        /// </summary>
         protected void ClearCache()
         {
             lock (_syncLock)
@@ -159,44 +105,18 @@ namespace MySystem.Server.DataAccess.Azure
             }
         }
     
-        /// <summary>
-        ///     Reads the values from the specified properties.
-        /// </summary>
-        /// <param name=&quot;properties&quot;>
-        ///     The properties of the entity.
-        /// </param>
-        /// <param name=&quot;operationContext&quot;>
-        ///     The operation context.
-        /// </param>
         protected virtual void ReadValues(
             IDictionary<string, EntityProperty> properties,
             OperationContext operationContext)
         {
         }
     
-        /// <summary>
-        ///     Writes the entity values to the specified properties.
-        /// </summary>
-        /// <param name=&quot;properties&quot;>
-        ///     The properties.
-        /// </param>
-        /// <param name=&quot;operationContext&quot;>
-        ///     The operation context.
-        /// </param>
         protected virtual void WriteValues(
             IDictionary<string, EntityProperty> properties,
             OperationContext operationContext)
         {
         }
     
-        /// <summary>
-        ///     Gets the additional property mappings.
-        /// </summary>
-        /// <param name=&quot;value&quot;>The value.</param>
-        /// <param name=&quot;operationContext&quot;>The operation context.</param>
-        /// <returns>
-        ///     The additional property mappings.
-        /// </returns>
         private static List<AdditionalPropertyMetadata> GetAdditionPropertyMappings(
             T value,
             OperationContext operationContext)
@@ -224,14 +144,6 @@ namespace MySystem.Server.DataAccess.Azure
             return additionalProperties;
         }
     
-        /// <summary>
-        ///     Resolves the additional property mappings.
-        /// </summary>
-        /// <param name=&quot;value&quot;>The value.</param>
-        /// <param name=&quot;operationContext&quot;>The operation context.</param>
-        /// <returns>
-        ///     The additional properties.
-        /// </returns>
         private static List<AdditionalPropertyMetadata> ResolvePropertyMappings(
             T value,
             OperationContext operationContext)
@@ -253,15 +165,6 @@ namespace MySystem.Server.DataAccess.Azure
             return additionalProperties.ToList();
         }
     
-        /// <summary>
-        ///     Reads the additional properties.
-        /// </summary>
-        /// <param name=&quot;properties&quot;>The properties.</param>
-        /// <param name=&quot;additionalMappings&quot;>The additional mappings.</param>
-        /// <exception cref=&quot;System.InvalidOperationException&quot;>
-        ///     The ITableEntity interface now defines a property that is not
-        ///     supported by this adapter.
-        /// </exception>
         private void ReadAdditionalProperties(
             IDictionary<string, EntityProperty> properties,
             IEnumerable<AdditionalPropertyMetadata> additionalMappings)
@@ -273,25 +176,25 @@ namespace MySystem.Server.DataAccess.Azure
                 {
                     // We don't want to use a string conversion here
                     // Explicitly map the types across
-                    if (additionalMapping.PropertyMetadata.Name == &quot;Timestamp&quot; &&
+                    if (additionalMapping.PropertyMetadata.Name == "Timestamp" &&
                         additionalMapping.PropertyMetadata.PropertyType == typeof(DateTimeOffset))
                     {
                         // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, Timestamp);
                     }
-                    else if (additionalMapping.PropertyMetadata.Name == &quot;ETag&quot; &&
+                    else if (additionalMapping.PropertyMetadata.Name == "ETag" &&
                                 additionalMapping.PropertyMetadata.PropertyType == typeof(string))
                     {
                         // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, ETag);
                     }
-                    else if (additionalMapping.PropertyMetadata.Name == &quot;PartitionKey&quot; &&
+                    else if (additionalMapping.PropertyMetadata.Name == "PartitionKey" &&
                                 additionalMapping.PropertyMetadata.PropertyType == typeof(string))
                     {
                         // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, PartitionKey);
                     }
-                    else if (additionalMapping.PropertyMetadata.Name == &quot;RowKey&quot; &&
+                    else if (additionalMapping.PropertyMetadata.Name == "RowKey" &&
                                 additionalMapping.PropertyMetadata.PropertyType == typeof(string))
                     {
                         // This is the timestamp property
@@ -300,7 +203,7 @@ namespace MySystem.Server.DataAccess.Azure
                     else
                     {
                         const string UnsupportedPropertyMessage =
-                            &quot;The {0} interface now defines a property {1} which is not supported by this adapter.&quot;;
+                            "The {0} interface now defines a property {1} which is not supported by this adapter.";
     
                         var message = string.Format(
                             CultureInfo.CurrentCulture,
@@ -327,11 +230,6 @@ namespace MySystem.Server.DataAccess.Azure
             }
         }
     
-        /// <summary>
-        ///     Writes the additional properties.
-        /// </summary>
-        /// <param name=&quot;additionalMappings&quot;>The additional mappings.</param>
-        /// <param name=&quot;properties&quot;>The properties.</param>
         private void WriteAdditionalProperties(
             IEnumerable<AdditionalPropertyMetadata> additionalMappings,
             IDictionary<string, EntityProperty> properties)
@@ -354,14 +252,12 @@ namespace MySystem.Server.DataAccess.Azure
             }
         }
     
-        /// <inheritdoc />
         public string ETag
         {
             get;
             set;
         }
     
-        /// <inheritdoc />
         public string PartitionKey
         {
             get
@@ -380,7 +276,6 @@ namespace MySystem.Server.DataAccess.Azure
             }
         }
     
-        /// <inheritdoc />
         public string RowKey
         {
             get
@@ -399,19 +294,12 @@ namespace MySystem.Server.DataAccess.Azure
             }
         }
     
-        /// <inheritdoc />
         public DateTimeOffset Timestamp
         {
             get;
             set;
         }
     
-        /// <summary>
-        ///     Gets the value managed by the adapter.
-        /// </summary>
-        /// <value>
-        ///     The value.
-        /// </value>
         public T Value
         {
             get
@@ -420,30 +308,14 @@ namespace MySystem.Server.DataAccess.Azure
             }
         }
     
-        /// <summary>
-        ///     The <see cref=&quot;AdditionalPropertyMetadata&quot; />
-        ///     provides information about additional storage properties for an entity type.
-        /// </summary>
         private struct AdditionalPropertyMetadata
         {
-            /// <summary>
-            ///     Gets or sets a value indicating whether this instance is infrastructure property.
-            /// </summary>
-            /// <value>
-            ///     <c>true</c> if this instance is infrastructure property; otherwise, <c>false</c>.
-            /// </value>
             public bool IsInfrastructureProperty
             {
                 get;
                 set;
             }
     
-            /// <summary>
-            ///     Gets or sets the property metadata.
-            /// </summary>
-            /// <value>
-            ///     The property metadata.
-            /// </value>
             public PropertyInfo PropertyMetadata
             {
                 get;
