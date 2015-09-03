@@ -179,25 +179,21 @@ namespace MySystem.Server.DataAccess.Azure
                     if (additionalMapping.PropertyMetadata.Name == "Timestamp" &&
                         additionalMapping.PropertyMetadata.PropertyType == typeof(DateTimeOffset))
                     {
-                        // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, Timestamp);
                     }
                     else if (additionalMapping.PropertyMetadata.Name == "ETag" &&
                                 additionalMapping.PropertyMetadata.PropertyType == typeof(string))
                     {
-                        // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, ETag);
                     }
                     else if (additionalMapping.PropertyMetadata.Name == "PartitionKey" &&
                                 additionalMapping.PropertyMetadata.PropertyType == typeof(string))
                     {
-                        // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, PartitionKey);
                     }
                     else if (additionalMapping.PropertyMetadata.Name == "RowKey" &&
                                 additionalMapping.PropertyMetadata.PropertyType == typeof(string))
                     {
-                        // This is the timestamp property
                         additionalMapping.PropertyMetadata.SetValue(Value, RowKey);
                     }
                     else
