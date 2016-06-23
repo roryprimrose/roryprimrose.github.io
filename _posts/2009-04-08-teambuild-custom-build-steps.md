@@ -1,5 +1,5 @@
 ---
-title: TeamBuild: Custom build steps
+title: TeamBuild - Custom build steps
 categories: .Net
 tags: Sandcastle, TeamBuild
 date: 2009-04-08 16:30:00 +10:00

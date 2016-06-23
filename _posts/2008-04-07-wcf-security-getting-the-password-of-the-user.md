@@ -1,5 +1,5 @@
 ---
-title: WCF Security: Getting the password of the user
+title: WCF Security - Getting the password of the user
 categories: .Net, My Software
 tags: Extensibility, WCF
 date: 2008-04-07 20:41:00 +10:00

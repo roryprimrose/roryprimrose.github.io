@@ -1,5 +1,5 @@
 ---
-title: Visual Studio Tip: Escape without fear
+title: Visual Studio Tip - Escape without fear
 categories: .Net
 tags: ASP.Net
 date: 2008-08-27 13:07:00 +10:00
