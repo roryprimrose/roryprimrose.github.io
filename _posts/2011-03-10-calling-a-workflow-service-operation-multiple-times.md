@@ -1,6 +1,6 @@
 ---
 title: Calling a workflow service operation multiple times
-tags : WCF, WF
+tags: WCF, WF
 date: 2011-03-10 14:23:43 +10:00
 ---
 

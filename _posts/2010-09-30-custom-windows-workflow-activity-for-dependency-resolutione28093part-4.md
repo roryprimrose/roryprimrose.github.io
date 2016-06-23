@@ -1,7 +1,7 @@
 ---
 title: Custom Windows Workflow activity for dependency resolution–Part 4
-categories : .Net
-tags : Extensibility
+categories: .Net
+tags: Extensibility
 date: 2010-09-30 16:17:57 +10:00
 ---
 

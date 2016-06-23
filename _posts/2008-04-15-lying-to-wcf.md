@@ -1,7 +1,7 @@
 ---
 title: Lying to WCF
-categories : .Net, IT Related
-tags : Useful Links, WCF
+categories: .Net, IT Related
+tags: Useful Links, WCF
 date: 2008-04-15 20:16:00 +10:00
 ---
 

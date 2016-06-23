@@ -1,7 +1,7 @@
 ---
 title: Recommended reading for developers- V2
-categories : .Net
-tags : ASP.Net, Performance
+categories: .Net
+tags: ASP.Net, Performance
 date: 2013-10-16 14:12:23 +10:00
 ---
 

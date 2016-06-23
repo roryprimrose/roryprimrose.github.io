@@ -1,6 +1,6 @@
 ---
 title: Reflection Pop Quiz - Does interface inheritance exist?
-categories : .Net
+categories: .Net
 date: 2008-07-03 14:43:10 +10:00
 ---
 

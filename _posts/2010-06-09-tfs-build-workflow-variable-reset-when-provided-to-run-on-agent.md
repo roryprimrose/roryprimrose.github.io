@@ -1,7 +1,7 @@
 ---
 title: TFS Build workflow variable reset when provided to Run On Agent
-categories : .Net
-tags : TeamBuild, TFS
+categories: .Net
+tags: TeamBuild, TFS
 date: 2010-06-09 09:36:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Red Gate picks up Reflector
-categories : .Net, Applications
-tags : Great Tools
+categories: .Net, Applications
+tags: Great Tools
 date: 2008-08-21 08:46:50 +10:00
 ---
 

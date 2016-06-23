@@ -1,7 +1,7 @@
 ---
 title: Getting Rhino mock to return a new mock type for the same interface
-categories : .Net
-tags : Dependency Injection, RhinoMock, Unit Testing
+categories: .Net
+tags: Dependency Injection, RhinoMock, Unit Testing
 date: 2008-12-03 13:31:00 +10:00
 ---
 

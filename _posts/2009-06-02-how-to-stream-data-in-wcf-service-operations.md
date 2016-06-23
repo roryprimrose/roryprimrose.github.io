@@ -1,7 +1,7 @@
 ---
 title: How to stream data in WCF service operations
-categories : .Net
-tags : ASP.Net, WCF
+categories: .Net
+tags: ASP.Net, WCF
 date: 2009-06-02 01:09:44 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: How do Parallel methods behave on a single core machine?
-categories : .Net
-tags : Performance
+categories: .Net
+tags: Performance
 date: 2013-03-26 20:09:36 +10:00
 ---
 

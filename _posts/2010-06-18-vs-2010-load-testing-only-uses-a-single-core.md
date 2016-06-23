@@ -1,6 +1,6 @@
 ---
 title: VS2010 load testing only uses a single core
-categories : .Net
+categories: .Net
 date: 2010-06-18 12:14:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Dynamic searching in TSQL
-categories : IT Related
-tags : Useful Links
+categories: IT Related
+tags: Useful Links
 date: 2007-06-19 20:05:52 +10:00
 ---
 

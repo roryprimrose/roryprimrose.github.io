@@ -1,7 +1,7 @@
 ---
 title: Unity dependency injection for WCF services – Part 1
-categories : .Net
-tags : Dependency Injection, Unity, WCF
+categories: .Net
+tags: Dependency Injection, Unity, WCF
 date: 2010-05-15 15:26:11 +10:00
 ---
 

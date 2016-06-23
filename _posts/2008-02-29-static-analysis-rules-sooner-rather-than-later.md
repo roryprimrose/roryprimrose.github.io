@@ -1,7 +1,7 @@
 ---
 title: Static Analysis Rules - Sooner rather than later
-categories : .Net, Applications
-tags : TFS, WCF
+categories: .Net, Applications
+tags: TFS, WCF
 date: 2008-02-29 00:16:00 +10:00
 ---
 

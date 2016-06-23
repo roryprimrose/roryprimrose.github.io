@@ -1,7 +1,7 @@
 ---
 title: Executing build tasks without a build server – Example scenario
-categories : .Net
-tags : Extensibility, TFS, WiX
+categories: .Net
+tags: Extensibility, TFS, WiX
 date: 2011-07-07 00:14:06 +10:00
 ---
 

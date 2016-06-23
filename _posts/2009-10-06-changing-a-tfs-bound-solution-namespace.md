@@ -1,7 +1,7 @@
 ---
 title: Changing a TFS bound solution namespace
-categories : .Net
-tags : ReSharper, TFS
+categories: .Net
+tags: ReSharper, TFS
 date: 2009-10-06 16:17:00 +10:00
 ---
 

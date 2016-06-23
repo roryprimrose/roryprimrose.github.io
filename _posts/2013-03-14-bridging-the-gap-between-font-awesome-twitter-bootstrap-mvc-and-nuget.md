@@ -1,7 +1,7 @@
 ---
 title: Bridging the gap between Font Awesome, Twitter Bootstrap, MVC and Nuget
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2013-03-14 22:56:55 +10:00
 ---
 

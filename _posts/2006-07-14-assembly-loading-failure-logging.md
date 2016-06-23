@@ -1,7 +1,7 @@
 ---
 title: Assembly loading failure logging
-categories : .Net, IT Related
-tags : Useful Links
+categories: .Net, IT Related
+tags: Useful Links
 date: 2006-07-14 23:40:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Unity dependency injection for ASP.Net
-categories : .Net
-tags : ASP.Net, Dependency Injection, Unity, WCF
+categories: .Net
+tags: ASP.Net, Dependency Injection, Unity, WCF
 date: 2010-05-19 15:39:13 +10:00
 ---
 

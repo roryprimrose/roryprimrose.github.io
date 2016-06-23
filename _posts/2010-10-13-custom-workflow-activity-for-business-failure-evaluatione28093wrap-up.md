@@ -1,7 +1,7 @@
 ---
 title: Custom Workflow activity for business failure evaluation–Wrap up
-categories : .Net, My Software
-tags : WF
+categories: .Net, My Software
+tags: WF
 date: 2010-10-13 14:19:00 +10:00
 ---
 

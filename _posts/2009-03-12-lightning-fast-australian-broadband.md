@@ -1,6 +1,6 @@
 ---
 title: Lightning fast Australian broadband
-categories : .Net, IT Related, Software Design
+categories: .Net, IT Related, Software Design
 date: 2009-03-12 00:45:00 +10:00
 ---
 

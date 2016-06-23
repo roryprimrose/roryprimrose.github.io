@@ -1,6 +1,6 @@
 ---
 title: How does the GC handle circular references?
-categories : .Net
+categories: .Net
 date: 2007-04-13 15:35:30 +10:00
 ---
 

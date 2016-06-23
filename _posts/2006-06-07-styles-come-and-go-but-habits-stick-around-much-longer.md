@@ -1,6 +1,6 @@
 ---
 title: Styles come and go, but habits stick around much longer
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-06-07 09:31:00 +10:00
 ---
 

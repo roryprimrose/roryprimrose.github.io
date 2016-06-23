@@ -1,7 +1,7 @@
 ---
 title: Windows Live Writer
-categories : Applications, IT Related
-tags : Great Tools
+categories: Applications, IT Related
+tags: Great Tools
 date: 2006-08-14 11:19:27 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Unit testing a workflow that relies on Thread.CurrentPrincipal.Identity.Name
-categories : .Net
-tags : Unit Testing
+categories: .Net
+tags: Unit Testing
 date: 2010-10-21 14:03:05 +10:00
 ---
 

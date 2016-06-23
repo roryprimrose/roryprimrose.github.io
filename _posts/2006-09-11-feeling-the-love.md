@@ -1,6 +1,6 @@
 ---
 title: Feeling the love
-categories : Personal
+categories: Personal
 date: 2006-09-11 13:19:00 +10:00
 ---
 

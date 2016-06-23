@@ -1,7 +1,7 @@
 ---
 title: Updated CodeCampOz presentation abstract
-categories : .Net, Applications, IT Related
-tags : ASP.Net, WCF, WIF
+categories: .Net, Applications, IT Related
+tags: ASP.Net, WCF, WIF
 date: 2010-11-03 11:38:37 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: GhostDoc has been acquired by SubMain
-categories : .Net, Applications
-tags : ASP.Net
+categories: .Net, Applications
+tags: ASP.Net
 date: 2009-06-02 02:26:55 +10:00
 ---
 

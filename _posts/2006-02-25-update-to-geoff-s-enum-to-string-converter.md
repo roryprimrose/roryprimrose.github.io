@@ -1,6 +1,6 @@
 ---
 title: Update to Geoff's enum to string converter
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-02-25 03:43:00 +10:00
 ---
 

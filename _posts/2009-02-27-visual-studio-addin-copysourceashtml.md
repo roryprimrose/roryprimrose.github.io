@@ -1,6 +1,6 @@
 ---
 title: Visual Studio Addin: CopySourceAsHtml
-categories : .Net, Applications
+categories: .Net, Applications
 date: 2009-02-27 09:14:03 +10:00
 ---
 

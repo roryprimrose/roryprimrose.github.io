@@ -1,7 +1,7 @@
 ---
 title: Navigating XBAP to a different page
-categories : .Net, IT Related
-tags : WPF
+categories: .Net, IT Related
+tags: WPF
 date: 2006-09-11 13:42:51 +10:00
 ---
 

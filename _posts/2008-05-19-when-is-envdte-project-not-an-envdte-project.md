@@ -1,7 +1,7 @@
 ---
 title: When is EnvDTE.Project not an EnvDTE.Project?
-categories : .Net, My Software
-tags : Extensibility
+categories: .Net, My Software
+tags: Extensibility
 date: 2008-05-19 13:37:01 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Tracing Performance Tips
-categories : .Net
-tags : Performance, Tracing
+categories: .Net
+tags: Performance, Tracing
 date: 2009-01-12 12:18:00 +10:00
 ---
 

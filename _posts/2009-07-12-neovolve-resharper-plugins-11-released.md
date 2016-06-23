@@ -1,7 +1,7 @@
 ---
 title: Neovolve ReSharper Plugins 1.1 Released
-categories : My Software
-tags : ReSharper
+categories: My Software
+tags: ReSharper
 date: 2009-07-12 23:10:42 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Using Lambda expressions to create generic exception handling
-tags : Unity
+tags: Unity
 date: 2010-04-09 13:50:06 +10:00
 ---
 

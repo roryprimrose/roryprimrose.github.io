@@ -1,7 +1,7 @@
 ---
 title: AppSetting parameter injection in Unity 2
-categories : .Net
-tags : Unity
+categories: .Net
+tags: Unity
 date: 2010-04-23 12:26:00 +10:00
 ---
 

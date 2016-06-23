@@ -1,7 +1,7 @@
 ---
 title: NewRelic Azure NuGet package update pain again
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2013-04-03 14:10:37 +10:00
 ---
 

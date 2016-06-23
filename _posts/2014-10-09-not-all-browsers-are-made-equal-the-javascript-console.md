@@ -1,7 +1,7 @@
 ---
 title: Not all browsers are made equal - The JavaScript console
-categories : .Net
-tags : JavaScript
+categories: .Net
+tags: JavaScript
 date: 2014-10-09 09:17:00 +10:00
 ---
 

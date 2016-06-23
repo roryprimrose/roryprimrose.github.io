@@ -1,6 +1,6 @@
 ---
 title: Scope Sneak
-categories : IT Related
+categories: IT Related
 date: 2008-02-14 11:25:54 +10:00
 ---
 

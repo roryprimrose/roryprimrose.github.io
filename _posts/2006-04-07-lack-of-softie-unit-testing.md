@@ -1,7 +1,7 @@
 ---
 title: Lack of softie unit testing
-categories : .Net, IT Related
-tags : ASP.Net, Unit Testing, WF
+categories: .Net, IT Related
+tags: ASP.Net, Unit Testing, WF
 date: 2006-04-07 02:26:00 +10:00
 ---
 

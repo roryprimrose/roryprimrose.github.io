@@ -1,6 +1,6 @@
 ---
 title: Code conversion pitfalls
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-03-16 23:06:00 +10:00
 ---
 

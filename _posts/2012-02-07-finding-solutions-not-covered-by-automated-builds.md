@@ -1,6 +1,6 @@
 ---
 title: Finding solutions not covered by automated builds
-tags : TFS
+tags: TFS
 date: 2012-02-07 17:01:07 +10:00
 ---
 

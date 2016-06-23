@@ -1,7 +1,7 @@
 ---
 title: Executing build tasks without a build server – Implementation
-categories : Personal
-tags : Extensibility, MEF, TFS, WiX
+categories: Personal
+tags: Extensibility, MEF, TFS, WiX
 date: 2011-07-03 14:40:05 +10:00
 ---
 

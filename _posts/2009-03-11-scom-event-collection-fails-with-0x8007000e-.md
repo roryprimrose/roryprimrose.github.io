@@ -1,7 +1,7 @@
 ---
 title: SCOM event collection fails with (0x8007000E)
-categories : IT Related
-tags : SCOM
+categories: IT Related
+tags: SCOM
 date: 2009-03-11 13:59:00 +10:00
 ---
 

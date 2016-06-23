@@ -1,6 +1,6 @@
 ---
 title: VS2008 read-only automatic properties
-categories : .Net
+categories: .Net
 date: 2007-12-13 10:31:31 +10:00
 ---
 

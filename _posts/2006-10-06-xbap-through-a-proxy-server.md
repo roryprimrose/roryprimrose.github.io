@@ -1,7 +1,7 @@
 ---
 title: XBAP through a proxy server
-categories : .Net, IT Related
-tags : WPF
+categories: .Net, IT Related
+tags: WPF
 date: 2006-10-06 08:45:59 +10:00
 ---
 

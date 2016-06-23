@@ -1,6 +1,6 @@
 ---
 title: Bug found in calculating Code Metrics in VS2008
-categories : .Net
+categories: .Net
 date: 2007-12-21 09:14:54 +10:00
 ---
 

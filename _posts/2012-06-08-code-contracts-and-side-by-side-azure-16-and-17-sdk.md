@@ -1,7 +1,7 @@
 ---
 title: Code Contracts and side by side Azure 1.6 and 1.7 SDK
-categories : .Net, Applications
-tags : Azure
+categories: .Net, Applications
+tags: Azure
 date: 2012-06-08 22:42:05 +10:00
 ---
 

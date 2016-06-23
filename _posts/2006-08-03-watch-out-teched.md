@@ -1,7 +1,7 @@
 ---
 title: Watch out TechEd
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-03 13:28:00 +10:00
 ---
 

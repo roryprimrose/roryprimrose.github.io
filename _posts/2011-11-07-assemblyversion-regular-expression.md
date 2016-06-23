@@ -1,7 +1,7 @@
 ---
 title: AssemblyVersion regular expression
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2011-11-07 11:40:36 +10:00
 ---
 

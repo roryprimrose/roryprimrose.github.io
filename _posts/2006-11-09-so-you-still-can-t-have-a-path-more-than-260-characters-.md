@@ -1,7 +1,7 @@
 ---
 title: So you still can't have a path more than 260 characters???
-categories : .Net, IT Related
-tags : TFS
+categories: .Net, IT Related
+tags: TFS
 date: 2006-11-09 12:10:24 +10:00
 ---
 

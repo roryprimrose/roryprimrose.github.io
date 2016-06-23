@@ -1,7 +1,7 @@
 ---
 title: Using WinMerge with TFS
-categories : .Net, Applications
-tags : Great Tools, ReSharper, TFS
+categories: .Net, Applications
+tags: Great Tools, ReSharper, TFS
 date: 2007-06-19 21:49:00 +10:00
 ---
 

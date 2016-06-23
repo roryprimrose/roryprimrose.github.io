@@ -1,6 +1,6 @@
 ---
 title: The goods are arriving
-categories : IT Related, Personal
+categories: IT Related, Personal
 date: 2006-05-09 06:22:00 +10:00
 ---
 

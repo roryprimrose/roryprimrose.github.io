@@ -1,6 +1,6 @@
 ---
 title: What is the working directory for Windows services?
-categories : .Net
+categories: .Net
 date: 2009-12-15 17:03:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Using RestSharp to pass a set of variables to an ASP.Net MVC Web API action
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2013-02-15 16:23:53 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Canadian signage
-categories : Personal
+categories: Personal
 date: 2009-05-24 14:20:00 +10:00
 ---
 

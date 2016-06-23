@@ -1,6 +1,6 @@
 ---
 title: Cleaning a VS2010 solution with a sledgehammer
-categories : .Net, My Software
+categories: .Net, My Software
 date: 2010-08-02 12:11:00 +10:00
 ---
 

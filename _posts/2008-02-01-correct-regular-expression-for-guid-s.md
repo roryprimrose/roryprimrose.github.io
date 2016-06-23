@@ -1,6 +1,6 @@
 ---
 title: Correct Regular Expression For GUID's
-categories : .Net
+categories: .Net
 date: 2008-02-01 09:24:15 +10:00
 ---
 

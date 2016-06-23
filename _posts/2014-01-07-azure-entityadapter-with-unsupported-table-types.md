@@ -1,6 +1,6 @@
 ---
 title: Azure EntityAdapter with unsupported table types
-tags : Azure
+tags: Azure
 date: 2014-01-07 16:02:45 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Interfaces or Inheritance
-categories : .Net
+categories: .Net
 date: 2005-08-26 01:12:00 +10:00
 ---
 

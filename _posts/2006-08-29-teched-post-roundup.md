@@ -1,7 +1,7 @@
 ---
 title: TechEd post roundup
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-29 15:30:55 +10:00
 ---
 

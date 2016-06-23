@@ -1,6 +1,6 @@
 ---
 title: WebBrowser.DocumentText doesn't always update the browser contents
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-02-12 05:23:00 +10:00
 ---
 

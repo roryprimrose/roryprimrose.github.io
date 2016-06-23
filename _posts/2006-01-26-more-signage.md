@@ -1,6 +1,6 @@
 ---
 title: More signage
-categories : Personal
+categories: Personal
 date: 2006-01-26 08:47:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Guidance on use of include in XML documentation comments
-categories : .Net, Applications
-tags : ReSharper, StyleCop
+categories: .Net, Applications
+tags: ReSharper, StyleCop
 date: 2009-01-12 13:32:00 +10:00
 ---
 

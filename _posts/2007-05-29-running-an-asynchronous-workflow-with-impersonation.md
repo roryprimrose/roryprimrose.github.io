@@ -1,7 +1,7 @@
 ---
 title: Running an asynchronous workflow with impersonation
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2007-05-29 19:59:28 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Hashing on the fly
-categories : .Net
+categories: .Net
 date: 2007-10-02 12:10:32 +10:00
 ---
 

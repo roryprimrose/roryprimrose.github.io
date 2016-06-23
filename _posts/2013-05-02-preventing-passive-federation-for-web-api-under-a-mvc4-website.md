@@ -1,7 +1,7 @@
 ---
 title: Preventing passive federation for Web Api under a MVC4 website
-categories : .Net
-tags : ASP.Net, Azure, Web Api, WIF
+categories: .Net
+tags: ASP.Net, Azure, Web Api, WIF
 date: 2013-05-02 12:53:08 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: At war with F1
-categories : IT Related
+categories: IT Related
 date: 2008-10-17 10:30:00 +10:00
 ---
 

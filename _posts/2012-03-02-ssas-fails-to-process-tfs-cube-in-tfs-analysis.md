@@ -1,6 +1,6 @@
 ---
 title: SSAS fails to process TFS cube in Tfs_Analysis
-tags : TFS
+tags: TFS
 date: 2012-03-02 10:43:47 +10:00
 ---
 

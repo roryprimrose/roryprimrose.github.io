@@ -1,7 +1,7 @@
 ---
 title: Azure SDK 2.2 with IIS Express 8.0 not supporting configSource like previous version
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2013-10-26 23:04:17 +10:00
 ---
 

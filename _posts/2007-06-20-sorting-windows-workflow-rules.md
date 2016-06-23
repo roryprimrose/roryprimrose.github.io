@@ -1,7 +1,7 @@
 ---
 title: Sorting Windows Workflow rules
-categories : .Net, Applications
-tags : Great Tools, WF
+categories: .Net, Applications
+tags: Great Tools, WF
 date: 2007-06-20 21:17:00 +10:00
 ---
 

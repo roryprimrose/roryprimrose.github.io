@@ -1,7 +1,7 @@
 ---
 title: Finding the type of UIHierarchyItem.Object
-categories : .Net, My Software
-tags : Extensibility
+categories: .Net, My Software
+tags: Extensibility
 date: 2008-05-19 13:50:52 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Executing build tasks without a build server – Creating a custom ITask
-categories : .Net, My Software
-tags : Extensibility, MEF
+categories: .Net, My Software
+tags: Extensibility, MEF
 date: 2011-07-07 15:28:00 +10:00
 ---
 

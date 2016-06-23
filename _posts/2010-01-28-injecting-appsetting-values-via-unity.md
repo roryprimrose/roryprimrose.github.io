@@ -1,7 +1,7 @@
 ---
 title: Injecting AppSetting values via Unity
-categories : .Net
-tags : Unity
+categories: .Net
+tags: Unity
 date: 2010-01-28 13:14:50 +10:00
 ---
 

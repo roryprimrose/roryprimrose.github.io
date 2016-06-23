@@ -1,7 +1,7 @@
 ---
 title: Fixing New Relic Nuget package for Azure
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2013-02-07 21:55:39 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Writing your own FxCop rules
-categories : .Net, IT Related
-tags : Useful Links
+categories: .Net, IT Related
+tags: Useful Links
 date: 2008-02-25 17:02:15 +10:00
 ---
 

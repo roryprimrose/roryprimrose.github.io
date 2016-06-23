@@ -1,6 +1,6 @@
 ---
 title: Shane helps to shape the future
-categories : IT Related
+categories: IT Related
 date: 2007-03-28 14:17:29 +10:00
 ---
 

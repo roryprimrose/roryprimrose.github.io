@@ -1,6 +1,6 @@
 ---
 title: Using GhostDoc to document unit test methods
-categories : .Net, Applications
+categories: .Net, Applications
 date: 2009-03-18 11:15:00 +10:00
 ---
 

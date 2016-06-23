@@ -1,7 +1,7 @@
 ---
 title: Full support for custom types in TFS Build 2010 build definition editor
-categories : .Net
-tags : TeamBuild, TFS, WiX
+categories: .Net
+tags: TeamBuild, TFS, WiX
 date: 2010-06-24 13:01:00 +10:00
 ---
 

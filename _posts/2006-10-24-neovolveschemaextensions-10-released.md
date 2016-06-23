@@ -1,7 +1,7 @@
 ---
 title: Neovolve.Schema.Extensions 1.0 released
-categories : .Net, IT Related, My Software
-tags : ASP.Net, Schema Extensions
+categories: .Net, IT Related, My Software
+tags: ASP.Net, Schema Extensions
 date: 2006-10-24 16:25:00 +10:00
 ---
 

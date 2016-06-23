@@ -1,7 +1,7 @@
 ---
 title: Neovolve ReSharper Plugins 1.0 released
-categories : .Net, Applications, My Software
-tags : Extensibility, ReSharper
+categories: .Net, Applications, My Software
+tags: Extensibility, ReSharper
 date: 2008-07-06 15:42:00 +10:00
 ---
 

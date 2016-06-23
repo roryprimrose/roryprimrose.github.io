@@ -1,7 +1,7 @@
 ---
 title: Creating proxies with RealProxy
-categories : .Net, .Net
-tags : WCF, WCF
+categories: .Net, .Net
+tags: WCF, WCF
 date: 2010-07-17 19:53:24 +10:00
 ---
 

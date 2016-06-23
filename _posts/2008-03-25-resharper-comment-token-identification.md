@@ -1,7 +1,7 @@
 ---
 title: ReSharper comment token identification
-categories : Applications
-tags : ReSharper
+categories: Applications
+tags: ReSharper
 date: 2008-03-25 14:33:23 +10:00
 ---
 

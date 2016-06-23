@@ -1,6 +1,6 @@
 ---
 title: Sense of satisfaction
-categories : Personal
+categories: Personal
 date: 2009-09-15 09:46:00 +10:00
 ---
 

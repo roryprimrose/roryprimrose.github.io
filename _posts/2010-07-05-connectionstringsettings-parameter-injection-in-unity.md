@@ -1,6 +1,6 @@
 ---
 title: ConnectionStringSettings parameter injection in Unity
-tags : Unity
+tags: Unity
 date: 2010-07-05 23:15:00 +10:00
 ---
 

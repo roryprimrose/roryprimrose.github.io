@@ -1,6 +1,6 @@
 ---
 title: Getting the X509Certificate from a remote HTTPS resource
-categories : .Net
+categories: .Net
 date: 2011-10-27 16:45:22 +10:00
 ---
 

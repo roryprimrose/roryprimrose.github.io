@@ -1,6 +1,6 @@
 ---
 title: Headless 1.0.103 Released
-categories : .Net, My Software
+categories: .Net, My Software
 date: 2013-10-18 23:16:19 +10:00
 ---
 

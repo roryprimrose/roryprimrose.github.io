@@ -1,7 +1,7 @@
 ---
 title: WCF, SSL and localhost
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2008-02-28 22:05:29 +10:00
 ---
 

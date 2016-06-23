@@ -1,7 +1,7 @@
 ---
 title: Testing IErrorHandler
-categories : .Net
-tags : Unit Testing, WCF
+categories: .Net
+tags: Unit Testing, WCF
 date: 2009-02-19 16:00:00 +10:00
 ---
 

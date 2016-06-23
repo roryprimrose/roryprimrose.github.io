@@ -1,6 +1,6 @@
 ---
 title: Consolas for Visual Studio
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-05-06 00:33:00 +10:00
 ---
 

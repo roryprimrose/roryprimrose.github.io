@@ -1,7 +1,7 @@
 ---
 title: Working with unmanaged and IDisposable resources in WF
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2011-03-09 15:18:00 +10:00
 ---
 

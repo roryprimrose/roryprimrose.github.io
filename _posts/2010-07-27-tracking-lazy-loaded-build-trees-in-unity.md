@@ -1,7 +1,7 @@
 ---
 title: Tracking lazy loaded build trees in Unity
-categories : .Net
-tags : Dependency Injection, Unity
+categories: .Net
+tags: Dependency Injection, Unity
 date: 2010-07-27 13:31:38 +10:00
 ---
 

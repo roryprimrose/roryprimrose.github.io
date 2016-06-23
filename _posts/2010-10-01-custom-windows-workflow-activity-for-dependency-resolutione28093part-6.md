@@ -1,7 +1,7 @@
 ---
 title: Custom Windows Workflow activity for dependency resolution–Part 6
-categories : .Net
-tags : WPF
+categories: .Net
+tags: WPF
 date: 2010-10-01 13:10:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: DisconnectedContext when debugging with MSTest
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2009-09-18 15:42:00 +10:00
 ---
 

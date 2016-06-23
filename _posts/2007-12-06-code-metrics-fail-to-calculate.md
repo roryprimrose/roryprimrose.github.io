@@ -1,6 +1,6 @@
 ---
 title: Code Metrics fail to calculate
-categories : .Net
+categories: .Net
 date: 2007-12-06 12:25:12 +10:00
 ---
 

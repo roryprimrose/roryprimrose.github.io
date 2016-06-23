@@ -1,7 +1,7 @@
 ---
 title: Visual Studio Addin - No such interface supported
-categories : .Net, My Software
-tags : Extensibility
+categories: .Net, My Software
+tags: Extensibility
 date: 2008-07-08 16:00:54 +10:00
 ---
 

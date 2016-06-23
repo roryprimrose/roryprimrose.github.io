@@ -1,7 +1,7 @@
 ---
 title: TechEd - Morning of Day 1
-categories : .Net, IT Related
-tags : TechEd, WCF, WF, WPF
+categories: .Net, IT Related
+tags: TechEd, WCF, WF, WPF
 date: 2006-08-23 15:12:48 +10:00
 ---
 

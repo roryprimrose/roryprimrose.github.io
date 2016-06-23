@@ -1,7 +1,7 @@
 ---
 title: Insight.Database with Unity integration
-categories : .Net
-tags : Azure, Dependency Injection, Unity
+categories: .Net
+tags: Azure, Dependency Injection, Unity
 date: 2013-06-18 14:01:42 +10:00
 ---
 

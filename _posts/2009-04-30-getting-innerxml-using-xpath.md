@@ -1,6 +1,6 @@
 ---
 title: Getting InnerXML using XPath
-categories : .Net
+categories: .Net
 date: 2009-04-30 13:33:05 +10:00
 ---
 

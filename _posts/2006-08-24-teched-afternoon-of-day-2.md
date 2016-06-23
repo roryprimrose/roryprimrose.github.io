@@ -1,7 +1,7 @@
 ---
 title: TechEd - Afternoon of Day 2
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-24 18:34:11 +10:00
 ---
 

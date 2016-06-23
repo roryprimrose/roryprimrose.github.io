@@ -1,6 +1,6 @@
 ---
 title: Designing Action and TryAction members
-categories : .Net, Software Design
+categories: .Net, Software Design
 date: 2011-10-25 13:13:26 +10:00
 ---
 

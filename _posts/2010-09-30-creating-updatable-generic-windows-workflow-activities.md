@@ -1,6 +1,6 @@
 ---
 title: Creating updatable generic Windows Workflow activities
-categories : .Net
+categories: .Net
 date: 2010-09-30 14:17:00 +10:00
 ---
 

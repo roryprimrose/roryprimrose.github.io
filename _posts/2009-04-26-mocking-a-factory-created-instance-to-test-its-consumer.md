@@ -1,7 +1,7 @@
 ---
 title: Mocking a factory created instance to test its consumer
-categories : .Net
-tags : Unit Testing
+categories: .Net
+tags: Unit Testing
 date: 2009-04-26 00:26:00 +10:00
 ---
 

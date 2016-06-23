@@ -1,6 +1,6 @@
 ---
 title: Going to CodeCampOz 2009
-categories : IT Related
+categories: IT Related
 date: 2009-03-30 21:24:00 +10:00
 ---
 

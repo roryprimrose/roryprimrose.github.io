@@ -1,7 +1,7 @@
 ---
 title: Adding workflows to a non-WF project
-categories : .Net, IT Related
-tags : WF
+categories: .Net, IT Related
+tags: WF
 date: 2006-12-13 09:37:42 +10:00
 ---
 

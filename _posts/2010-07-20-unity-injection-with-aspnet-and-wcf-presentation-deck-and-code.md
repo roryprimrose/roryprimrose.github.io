@@ -1,7 +1,7 @@
 ---
 title: Unity Injection With ASP.Net and WCF - Presentation deck and code
-categories : .Net, IT Related
-tags : ASP.Net, Unity, WCF
+categories: .Net, IT Related
+tags: ASP.Net, Unity, WCF
 date: 2010-07-20 13:25:00 +10:00
 ---
 

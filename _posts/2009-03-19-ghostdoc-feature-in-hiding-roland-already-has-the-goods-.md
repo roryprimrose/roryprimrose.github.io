@@ -1,6 +1,6 @@
 ---
 title: GhostDoc feature in hiding - Roland already has the goods!
-categories : .Net, Applications
+categories: .Net, Applications
 date: 2009-03-19 09:44:00 +10:00
 ---
 

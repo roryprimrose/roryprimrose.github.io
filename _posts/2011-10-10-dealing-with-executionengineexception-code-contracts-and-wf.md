@@ -1,7 +1,7 @@
 ---
 title: Dealing with ExecutionEngineException, code contracts and WF
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2011-10-10 13:34:20 +10:00
 ---
 

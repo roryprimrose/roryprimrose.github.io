@@ -1,6 +1,6 @@
 ---
 title: Geek vs Nerd
-categories : Personal
+categories: Personal
 date: 2006-04-02 12:09:00 +10:00
 ---
 

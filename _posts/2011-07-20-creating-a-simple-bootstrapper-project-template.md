@@ -1,7 +1,7 @@
 ---
 title: Creating a simple bootstrapper - Project template
-categories : .Net, My Software
-tags : Extensibility, WiX
+categories: .Net, My Software
+tags: Extensibility, WiX
 date: 2011-07-20 14:35:34 +10:00
 ---
 

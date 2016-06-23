@@ -1,7 +1,7 @@
 ---
 title: Dynamic types in Web API
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2015-02-24 13:39:57 +11:00
 ---
 

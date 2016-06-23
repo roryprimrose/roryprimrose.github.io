@@ -1,7 +1,7 @@
 ---
 title: Refreshing an expired STSTestCert WIF certificate
-categories : .Net, Applications, Personal
-tags : WIF
+categories: .Net, Applications, Personal
+tags: WIF
 date: 2012-01-29 23:32:45 +10:00
 ---
 

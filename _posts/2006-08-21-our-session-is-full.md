@@ -1,7 +1,7 @@
 ---
 title: Our session is full
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-21 11:04:32 +10:00
 ---
 

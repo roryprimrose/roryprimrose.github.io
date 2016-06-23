@@ -1,6 +1,6 @@
 ---
 title: Caching should not be the source of truth
-categories : Software Design
+categories: Software Design
 date: 2008-09-25 10:44:30 +10:00
 ---
 

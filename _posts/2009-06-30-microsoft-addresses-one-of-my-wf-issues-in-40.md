@@ -1,7 +1,7 @@
 ---
 title: Microsoft addresses one of my WF issues in 4.0
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2009-06-30 13:32:47 +10:00
 ---
 

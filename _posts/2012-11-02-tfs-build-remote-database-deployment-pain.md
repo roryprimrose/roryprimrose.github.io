@@ -1,6 +1,6 @@
 ---
 title: TFS Build Remote Database Deployment Pain
-tags : TFS
+tags: TFS
 date: 2012-11-02 13:43:00 +10:00
 ---
 

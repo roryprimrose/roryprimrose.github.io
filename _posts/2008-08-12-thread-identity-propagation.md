@@ -1,6 +1,6 @@
 ---
 title: Thread identity propagation
-categories : .Net
+categories: .Net
 date: 2008-08-12 11:30:53 +10:00
 ---
 

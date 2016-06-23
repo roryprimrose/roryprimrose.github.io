@@ -1,7 +1,7 @@
 ---
 title: WF runtime services
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2006-12-19 09:13:00 +10:00
 ---
 

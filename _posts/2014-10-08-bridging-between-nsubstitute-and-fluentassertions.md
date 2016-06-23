@@ -1,7 +1,7 @@
 ---
 title: Bridging between NSubstitute and FluentAssertions
-categories : .Net
-tags : Unit Testing
+categories: .Net
+tags: Unit Testing
 date: 2014-10-08 05:41:00 +10:00
 ---
 

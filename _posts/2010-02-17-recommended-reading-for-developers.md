@@ -1,7 +1,7 @@
 ---
 title: Recommended reading for developers
-categories : .Net, Applications, IT Related, Software Design
-tags : AOP, Dependency Injection, Performance, PostSharp, ReSharper, StyleCop, Unit Testing, Unity, Useful Links
+categories: .Net, Applications, IT Related, Software Design
+tags: AOP, Dependency Injection, Performance, PostSharp, ReSharper, StyleCop, Unit Testing, Unity, Useful Links
 date: 2010-02-17 12:27:32 +10:00
 ---
 

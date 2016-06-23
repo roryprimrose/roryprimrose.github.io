@@ -1,7 +1,7 @@
 ---
 title: Updating claims within an RP session with WIF
-categories : .Net
-tags : Azure, WIF
+categories: .Net
+tags: Azure, WIF
 date: 2012-04-12 22:17:14 +10:00
 ---
 

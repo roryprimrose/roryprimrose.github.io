@@ -1,7 +1,7 @@
 ---
 title: Integration testing with Azure development storage
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2012-01-12 22:43:19 +10:00
 ---
 

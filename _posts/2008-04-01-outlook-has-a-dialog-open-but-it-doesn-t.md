@@ -1,6 +1,6 @@
 ---
 title: Outlook has a dialog open, but it doesn't
-categories : IT Related
+categories: IT Related
 date: 2008-04-01 08:40:45 +10:00
 ---
 

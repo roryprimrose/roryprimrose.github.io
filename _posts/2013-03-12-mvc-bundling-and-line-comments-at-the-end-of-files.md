@@ -1,7 +1,7 @@
 ---
 title: MVC bundling and line comments at the end of files
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2013-03-12 07:51:08 +10:00
 ---
 

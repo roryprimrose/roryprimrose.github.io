@@ -1,7 +1,7 @@
 ---
 title: ASP.Net Virtual Theme Provider 1.0 released
-categories : .Net, IT Related, My Software
-tags : ASP.Net, VirtualThemeProvider
+categories: .Net, IT Related, My Software
+tags: ASP.Net, VirtualThemeProvider
 date: 2006-06-29 15:06:00 +10:00
 ---
 

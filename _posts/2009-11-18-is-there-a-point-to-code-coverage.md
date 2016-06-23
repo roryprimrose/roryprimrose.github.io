@@ -1,6 +1,6 @@
 ---
 title: Is there a point to code coverage?
-categories : IT Related
+categories: IT Related
 date: 2009-11-18 14:40:48 +10:00
 ---
 

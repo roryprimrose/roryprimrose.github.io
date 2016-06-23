@@ -1,7 +1,7 @@
 ---
 title: Custom DisposalScope activity
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2011-03-10 09:51:30 +10:00
 ---
 

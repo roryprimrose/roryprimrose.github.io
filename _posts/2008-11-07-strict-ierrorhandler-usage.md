@@ -1,7 +1,7 @@
 ---
 title: Strict IErrorHandler usage
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2008-11-07 14:50:00 +10:00
 ---
 

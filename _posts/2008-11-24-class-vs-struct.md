@@ -1,7 +1,7 @@
 ---
 title: Class vs Struct
-categories : .Net, Software Design
-tags : Useful Links
+categories: .Net, Software Design
+tags: Useful Links
 date: 2008-11-24 13:09:00 +10:00
 ---
 

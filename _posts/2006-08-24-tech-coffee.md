@@ -1,7 +1,7 @@
 ---
 title: Tech.Coffee
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-24 10:30:48 +10:00
 ---
 

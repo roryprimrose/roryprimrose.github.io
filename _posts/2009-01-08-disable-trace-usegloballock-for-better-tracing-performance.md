@@ -1,7 +1,7 @@
 ---
 title: Disable Trace UseGlobalLock For Better Tracing Performance
-categories : .Net
-tags : Performance, Tracing
+categories: .Net
+tags: Performance, Tracing
 date: 2009-01-08 12:58:00 +10:00
 ---
 

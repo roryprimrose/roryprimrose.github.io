@@ -1,6 +1,6 @@
 ---
 title: Debugging Windows Services
-categories : .Net
+categories: .Net
 date: 2005-07-13 19:18:00 +10:00
 ---
 

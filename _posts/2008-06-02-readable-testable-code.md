@@ -1,7 +1,7 @@
 ---
 title: Readable testable code
-categories : .Net
-tags : Performance
+categories: .Net
+tags: Performance
 date: 2008-06-02 13:14:26 +10:00
 ---
 

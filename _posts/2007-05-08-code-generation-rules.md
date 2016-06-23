@@ -1,6 +1,6 @@
 ---
 title: Code generation rules
-categories : .Net
+categories: .Net
 date: 2007-05-08 08:58:47 +10:00
 ---
 

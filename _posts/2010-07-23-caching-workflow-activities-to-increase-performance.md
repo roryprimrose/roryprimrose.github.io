@@ -1,7 +1,7 @@
 ---
 title: Caching workflow activities to increase performance
-categories : .Net
-tags : Performance, WF
+categories: .Net
+tags: Performance, WF
 date: 2010-07-23 12:14:06 +10:00
 ---
 

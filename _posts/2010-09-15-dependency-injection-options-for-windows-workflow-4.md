@@ -1,7 +1,7 @@
 ---
 title: Dependency injection options for Windows Workflow 4
-categories : .Net
-tags : Dependency Injection, WF
+categories: .Net
+tags: Dependency Injection, WF
 date: 2010-09-15 16:42:05 +10:00
 ---
 

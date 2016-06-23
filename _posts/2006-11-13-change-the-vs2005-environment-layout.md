@@ -1,6 +1,6 @@
 ---
 title: Change the VS2005 environment layout
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-11-13 16:05:59 +10:00
 ---
 

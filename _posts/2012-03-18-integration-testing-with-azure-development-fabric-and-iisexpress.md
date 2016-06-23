@@ -1,7 +1,7 @@
 ---
 title: Integration testing with Azure development fabric and IISExpress
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2012-03-18 22:39:46 +10:00
 ---
 

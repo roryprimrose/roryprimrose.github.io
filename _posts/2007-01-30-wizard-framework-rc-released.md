@@ -1,7 +1,7 @@
 ---
 title: Wizard framework RC released
-categories : .Net, IT Related, My Software
-tags : Wizard Framework
+categories: .Net, IT Related, My Software
+tags: Wizard Framework
 date: 2007-01-30 17:49:27 +10:00
 ---
 

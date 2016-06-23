@@ -1,7 +1,7 @@
 ---
 title: CAPTCHA and accessibility
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-10-10 12:08:20 +10:00
 ---
 

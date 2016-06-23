@@ -1,7 +1,7 @@
 ---
 title: Carrying tracing weight you didn't know you had
-categories : .Net
-tags : Performance, Tracing
+categories: .Net
+tags: Performance, Tracing
 date: 2009-01-08 13:14:00 +10:00
 ---
 

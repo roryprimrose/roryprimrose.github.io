@@ -1,7 +1,7 @@
 ---
 title: Filtering items in the MSF 2.0
-categories : .Net
-tags : Sync Framework
+categories: .Net
+tags: Sync Framework
 date: 2010-01-15 16:56:00 +10:00
 ---
 

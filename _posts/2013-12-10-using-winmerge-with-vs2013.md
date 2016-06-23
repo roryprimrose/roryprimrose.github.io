@@ -1,7 +1,7 @@
 ---
 title: Using WinMerge with VS2013
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2013-12-10 13:50:51 +10:00
 ---
 

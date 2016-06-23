@@ -1,7 +1,7 @@
 ---
 title: Object cache keys and equality
-categories : .Net, IT Related
-tags : Useful Links
+categories: .Net, IT Related
+tags: Useful Links
 date: 2007-05-22 10:32:08 +10:00
 ---
 

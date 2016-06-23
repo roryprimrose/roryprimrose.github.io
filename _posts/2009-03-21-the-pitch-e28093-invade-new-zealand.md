@@ -1,6 +1,6 @@
 ---
 title: The pitch – Invade New Zealand
-categories : .Net, Personal
+categories: .Net, Personal
 date: 2009-03-21 21:06:46 +10:00
 ---
 

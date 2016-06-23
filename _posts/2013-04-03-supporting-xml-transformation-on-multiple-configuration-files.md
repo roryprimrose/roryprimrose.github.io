@@ -1,7 +1,7 @@
 ---
 title: Supporting XML transformation on multiple configuration files
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2013-04-03 09:26:01 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Working with custom proxies
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2010-07-22 12:56:00 +10:00
 ---
 

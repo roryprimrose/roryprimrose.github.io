@@ -1,7 +1,7 @@
 ---
 title: Custom Windows Workflow activity for dependency resolution–Part 2
-categories : .Net
-tags : Unity, WF
+categories: .Net
+tags: Unity, WF
 date: 2010-09-29 10:08:25 +10:00
 ---
 

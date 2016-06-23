@@ -1,7 +1,7 @@
 ---
 title: Activator.CreateInstance speed
-categories : .Net, IT Related
-tags : Useful Links
+categories: .Net, IT Related
+tags: Useful Links
 date: 2006-12-04 11:49:51 +10:00
 ---
 

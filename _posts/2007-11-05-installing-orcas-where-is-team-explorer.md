@@ -1,6 +1,6 @@
 ---
 title: Installing Orcas - Where is Team Explorer?
-categories : .Net
+categories: .Net
 date: 2007-11-05 09:09:21 +10:00
 ---
 

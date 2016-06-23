@@ -1,7 +1,7 @@
 ---
 title: The evils of System.Diagnostics.Trace
-categories : .Net
-tags : Performance, Tracing
+categories: .Net
+tags: Performance, Tracing
 date: 2008-12-23 00:27:00 +10:00
 ---
 

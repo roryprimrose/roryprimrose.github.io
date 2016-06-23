@@ -1,6 +1,6 @@
 ---
 title: Securing .Net code
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-12-07 10:01:55 +10:00
 ---
 

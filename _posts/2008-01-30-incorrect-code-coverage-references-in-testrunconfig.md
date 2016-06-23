@@ -1,6 +1,6 @@
 ---
 title: Incorrect code coverage references in testrunconfig
-categories : .Net
+categories: .Net
 date: 2008-01-30 09:59:07 +10:00
 ---
 

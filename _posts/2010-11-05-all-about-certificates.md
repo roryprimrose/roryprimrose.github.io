@@ -1,6 +1,6 @@
 ---
 title: All about certificates
-categories : IT Related
+categories: IT Related
 date: 2010-11-05 15:51:41 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Hosted workflow service with content correlation
-categories : .Net, Applications
-tags : WCF, WF
+categories: .Net, Applications
+tags: WCF, WF
 date: 2010-11-08 16:33:00 +10:00
 ---
 

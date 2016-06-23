@@ -1,6 +1,6 @@
 ---
 title: Coding standards - String vs string etc
-categories : .Net
+categories: .Net
 date: 2007-08-03 11:09:00 +10:00
 ---
 

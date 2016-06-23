@@ -1,7 +1,7 @@
 ---
 title: Triple grading
-categories : IT Related, Personal
-tags : Taekwondo
+categories: IT Related, Personal
+tags: Taekwondo
 date: 2006-06-12 21:49:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Beware of lifetime manager policy locks in Unity
-categories : .Net
-tags : Dependency Injection, Performance, Tracing, Unity, WCF, WF, WIF
+categories: .Net
+tags: Dependency Injection, Performance, Tracing, Unity, WCF, WF, WIF
 date: 2011-03-31 15:32:15 +10:00
 ---
 

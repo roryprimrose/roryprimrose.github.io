@@ -1,7 +1,7 @@
 ---
 title: Removing TeamBuild report noise
-categories : .Net
-tags : TeamBuild, Useful Links
+categories: .Net
+tags: TeamBuild, Useful Links
 date: 2009-05-04 15:16:47 +10:00
 ---
 

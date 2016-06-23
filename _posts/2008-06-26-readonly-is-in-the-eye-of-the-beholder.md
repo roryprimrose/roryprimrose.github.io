@@ -1,6 +1,6 @@
 ---
 title: Readonly is in the eye of the beholder
-categories : .Net
+categories: .Net
 date: 2008-06-26 11:11:04 +10:00
 ---
 

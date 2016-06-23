@@ -1,6 +1,6 @@
 ---
 title: Too much Xbox
-categories : Personal
+categories: Personal
 date: 2006-10-12 22:12:18 +10:00
 ---
 

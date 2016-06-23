@@ -1,7 +1,7 @@
 ---
 title: WF rules and bitwise OR
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2007-03-15 10:09:52 +10:00
 ---
 

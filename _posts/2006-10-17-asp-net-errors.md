@@ -1,7 +1,7 @@
 ---
 title: ASP.Net errors
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-10-17 10:29:53 +10:00
 ---
 

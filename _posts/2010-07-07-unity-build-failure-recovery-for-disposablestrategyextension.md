@@ -1,7 +1,7 @@
 ---
 title: Unity build failure recovery for DisposableStrategyExtension
-categories : .Net, Applications
-tags : Unity
+categories: .Net, Applications
+tags: Unity
 date: 2010-07-07 22:41:31 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Is your timer not firing?
-categories : .Net
+categories: .Net
 date: 2005-12-06 02:18:00 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: SQLEXPRESS fails to start
-categories : IT Related
+categories: IT Related
 date: 2009-02-13 09:33:00 +10:00
 ---
 

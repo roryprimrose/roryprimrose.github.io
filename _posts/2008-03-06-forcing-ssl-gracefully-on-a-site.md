@@ -1,7 +1,7 @@
 ---
 title: Forcing SSL Gracefully on a Site
-categories : IT Related
-tags : Useful Links
+categories: IT Related
+tags: Useful Links
 date: 2008-03-06 12:54:01 +10:00
 ---
 

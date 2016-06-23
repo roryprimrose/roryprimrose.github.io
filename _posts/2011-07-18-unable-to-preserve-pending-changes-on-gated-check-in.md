@@ -1,7 +1,7 @@
 ---
 title: Unable to preserve pending changes on gated check in
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2011-07-18 10:02:00 +10:00
 ---
 

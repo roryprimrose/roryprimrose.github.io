@@ -1,6 +1,6 @@
 ---
 title: Generic Func IEqualityComparer
-categories : .Net
+categories: .Net
 date: 2014-05-22 06:35:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: TFS and WF4: The diff noise problem
-categories : .Net
-tags : TFS, WF
+categories: .Net
+tags: TFS, WF
 date: 2011-03-30 16:29:00 +10:00
 ---
 

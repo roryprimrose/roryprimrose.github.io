@@ -1,7 +1,7 @@
 ---
 title: Configuration for NewRelic 1.0.0.35 Azure Nuget package
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2013-07-18 08:31:30 +10:00
 ---
 

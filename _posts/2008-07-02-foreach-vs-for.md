@@ -1,7 +1,7 @@
 ---
 title: foreach vs for
-categories : .Net
-tags : Performance
+categories: .Net
+tags: Performance
 date: 2008-07-02 10:31:54 +10:00
 ---
 

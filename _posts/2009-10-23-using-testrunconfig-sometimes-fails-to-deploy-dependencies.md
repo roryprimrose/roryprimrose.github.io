@@ -1,6 +1,6 @@
 ---
 title: Using testrunconfig sometimes fails to deploy dependencies
-categories : .Net
+categories: .Net
 date: 2009-10-23 16:45:00 +10:00
 ---
 

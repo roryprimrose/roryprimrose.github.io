@@ -1,7 +1,7 @@
 ---
 title: Developing multi-threaded workflows
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2010-08-06 12:21:00 +10:00
 ---
 

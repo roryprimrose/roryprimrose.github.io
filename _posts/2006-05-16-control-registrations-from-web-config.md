@@ -1,7 +1,7 @@
 ---
 title: Control registrations from web.config
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-05-16 09:24:00 +10:00
 ---
 

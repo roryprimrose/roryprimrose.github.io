@@ -1,6 +1,6 @@
 ---
 title: Entity Adapter for Azure Table Storage
-tags : Azure
+tags: Azure
 date: 2013-11-18 21:17:58 +10:00
 ---
 

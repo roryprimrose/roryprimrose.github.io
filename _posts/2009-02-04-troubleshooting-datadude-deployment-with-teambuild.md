@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting DataDude deployment with TeamBuild
-categories : .Net
-tags : TeamBuild, TFS
+categories: .Net
+tags: TeamBuild, TFS
 date: 2009-02-04 11:28:10 +10:00
 ---
 

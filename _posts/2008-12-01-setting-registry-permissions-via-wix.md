@@ -1,7 +1,7 @@
 ---
 title: Setting registry permissions via WiX
-categories : .Net
-tags : WiX
+categories: .Net
+tags: WiX
 date: 2008-12-01 16:33:00 +10:00
 ---
 

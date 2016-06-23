@@ -1,6 +1,6 @@
 ---
 title: Causing a VS Web Project to fail compilation when content is missing
-tags : TFS
+tags: TFS
 date: 2013-01-11 13:48:13 +10:00
 ---
 

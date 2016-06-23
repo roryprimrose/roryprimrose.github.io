@@ -1,6 +1,6 @@
 ---
 title: Green it was
-categories : Personal
+categories: Personal
 date: 2006-01-27 04:49:00 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Misfire on the keyboard
-categories : IT Related
+categories: IT Related
 date: 2007-04-26 09:26:47 +10:00
 ---
 

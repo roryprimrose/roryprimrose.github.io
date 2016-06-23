@@ -1,6 +1,6 @@
 ---
 title: Doing the unexpected constitutes poor design
-categories : IT Related
+categories: IT Related
 date: 2006-04-11 00:39:00 +10:00
 ---
 

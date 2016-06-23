@@ -1,6 +1,6 @@
 ---
 title: EDM in ADO.Net vNext
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-08-16 10:52:58 +10:00
 ---
 

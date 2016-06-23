@@ -1,6 +1,6 @@
 ---
 title: Cache expiration policies article
-categories : .Net, IT Related, Software Design
+categories: .Net, IT Related, Software Design
 date: 2008-10-08 13:11:00 +10:00
 ---
 

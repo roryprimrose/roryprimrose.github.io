@@ -1,7 +1,7 @@
 ---
 title: Configuring a TFS 2010 build agent to compile SharePoint 2010 projects
-categories : .Net
-tags : TeamBuild, TFS, WiX
+categories: .Net
+tags: TeamBuild, TFS, WiX
 date: 2012-01-24 12:09:40 +10:00
 ---
 

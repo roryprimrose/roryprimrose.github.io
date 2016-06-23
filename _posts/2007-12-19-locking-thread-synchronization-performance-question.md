@@ -1,7 +1,7 @@
 ---
 title: Locking/Thread Synchronization Performance Question
-categories : .Net
-tags : Performance
+categories: .Net
+tags: Performance
 date: 2007-12-19 12:48:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Resolving assembly bind failures on a server
-categories : .Net
-tags : ASP.Net, Sync Framework, WCF
+categories: .Net
+tags: ASP.Net, Sync Framework, WCF
 date: 2010-05-28 11:59:00 +10:00
 ---
 

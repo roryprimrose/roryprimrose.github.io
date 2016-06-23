@@ -1,7 +1,7 @@
 ---
 title: TFS Build fails for no indicated reason with code contracts in test assemblies
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2010-09-10 17:02:08 +10:00
 ---
 

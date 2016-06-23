@@ -1,6 +1,6 @@
 ---
 title: TFS11 gets a new merge/diff tool
-tags : TFS
+tags: TFS
 date: 2011-09-01 11:39:30 +10:00
 ---
 

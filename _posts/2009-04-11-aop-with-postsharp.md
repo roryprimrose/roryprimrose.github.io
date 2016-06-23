@@ -1,7 +1,7 @@
 ---
 title: AOP with PostSharp
-categories : .Net
-tags : AOP, PostSharp
+categories: .Net
+tags: AOP, PostSharp
 date: 2009-04-11 14:18:00 +10:00
 ---
 

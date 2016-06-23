@@ -1,7 +1,7 @@
 ---
 title: Control adapters to the PNG rescue
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-09-27 08:52:41 +10:00
 ---
 

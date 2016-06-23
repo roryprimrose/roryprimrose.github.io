@@ -1,7 +1,7 @@
 ---
 title: Custom IfThen activity
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2011-03-04 14:48:35 +10:00
 ---
 

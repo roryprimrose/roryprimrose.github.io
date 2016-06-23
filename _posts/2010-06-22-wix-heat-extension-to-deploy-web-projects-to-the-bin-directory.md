@@ -1,7 +1,7 @@
 ---
 title: WiX Heat extension to deploy web projects to the bin directory
-categories : .Net
-tags : Extensibility, WiX
+categories: .Net
+tags: Extensibility, WiX
 date: 2010-06-22 13:28:00 +10:00
 ---
 

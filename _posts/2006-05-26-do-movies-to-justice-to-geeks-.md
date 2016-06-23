@@ -1,6 +1,6 @@
 ---
 title: Do movies to justice to geeks?
-categories : Personal
+categories: Personal
 date: 2006-05-26 05:52:12 +10:00
 ---
 

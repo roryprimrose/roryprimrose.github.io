@@ -1,6 +1,6 @@
 ---
 title: Microsoft going open source - kind of
-categories : .Net
+categories: .Net
 date: 2007-10-04 09:22:48 +10:00
 ---
 

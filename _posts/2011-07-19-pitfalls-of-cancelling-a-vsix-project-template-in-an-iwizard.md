@@ -1,7 +1,7 @@
 ---
 title: Pitfalls of cancelling a VSIX project template in an IWizard
-categories : .Net
-tags : Extensibility
+categories: .Net
+tags: Extensibility
 date: 2011-07-19 12:36:44 +10:00
 ---
 

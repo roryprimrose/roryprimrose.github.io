@@ -1,7 +1,7 @@
 ---
 title: Load test results not available
-categories : Applications
-tags : TFS
+categories: Applications
+tags: TFS
 date: 2008-10-10 09:15:00 +10:00
 ---
 

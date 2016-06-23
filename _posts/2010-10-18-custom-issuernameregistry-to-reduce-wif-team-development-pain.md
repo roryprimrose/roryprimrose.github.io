@@ -1,7 +1,7 @@
 ---
 title: Custom IssuerNameRegistry to reduce WIF team development pain
-categories : .Net
-tags : Extensibility, WIF
+categories: .Net
+tags: Extensibility, WIF
 date: 2010-10-18 13:54:33 +10:00
 ---
 

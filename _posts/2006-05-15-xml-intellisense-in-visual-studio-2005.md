@@ -1,7 +1,7 @@
 ---
 title: XML Intellisense in Visual Studio 2005
-categories : .Net, Applications, IT Related
-tags : ASP.Net, Great Tools
+categories: .Net, Applications, IT Related
+tags: ASP.Net, Great Tools
 date: 2006-05-15 06:13:00 +10:00
 ---
 

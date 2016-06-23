@@ -1,7 +1,7 @@
 ---
 title: ActivityExecutionContext failed to serialize
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2007-08-13 14:07:04 +10:00
 ---
 

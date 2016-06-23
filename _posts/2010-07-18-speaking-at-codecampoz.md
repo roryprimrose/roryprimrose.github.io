@@ -1,7 +1,7 @@
 ---
 title: Speaking at CodeCampOz
-categories : .Net, Applications, IT Related
-tags : ASP.Net, WCF
+categories: .Net, Applications, IT Related
+tags: ASP.Net, WCF
 date: 2010-07-18 09:19:40 +10:00
 ---
 

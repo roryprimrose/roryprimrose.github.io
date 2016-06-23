@@ -1,7 +1,7 @@
 ---
 title: ActivityValidator passes compiler but fails in designer
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2009-07-13 11:11:01 +10:00
 ---
 

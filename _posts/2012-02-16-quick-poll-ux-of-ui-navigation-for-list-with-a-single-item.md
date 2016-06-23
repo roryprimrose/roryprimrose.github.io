@@ -1,6 +1,6 @@
 ---
 title: Quick Poll–UX of UI navigation for list with a single item
-categories : Software Design
+categories: Software Design
 date: 2012-02-16 22:31:32 +10:00
 ---
 

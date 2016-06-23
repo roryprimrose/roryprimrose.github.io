@@ -1,7 +1,7 @@
 ---
 title: Getting meaningful exceptions from WF
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2010-08-18 13:33:00 +10:00
 ---
 

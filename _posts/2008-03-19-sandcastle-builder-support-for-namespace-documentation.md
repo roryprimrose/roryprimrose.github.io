@@ -1,7 +1,7 @@
 ---
 title: SandCastle Builder Support for Namespace Documentation
-categories : .Net, Applications
-tags : Sandcastle, TeamBuild
+categories: .Net, Applications
+tags: Sandcastle, TeamBuild
 date: 2008-03-19 10:35:32 +10:00
 ---
 

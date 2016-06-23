@@ -1,7 +1,7 @@
 ---
 title: Executing build tasks without a build server – In action
-categories : .Net, My Software
-tags : TFS, WiX
+categories: .Net, My Software
+tags: TFS, WiX
 date: 2011-07-06 23:02:00 +10:00
 ---
 

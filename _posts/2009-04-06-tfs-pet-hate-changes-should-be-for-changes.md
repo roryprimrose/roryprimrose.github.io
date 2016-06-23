@@ -1,7 +1,7 @@
 ---
 title: TFS pet hate - changes should be for changes
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2009-04-06 10:11:57 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Modifying application configuration depending on build type
-categories : .Net
+categories: .Net
 date: 2007-05-04 16:21:48 +10:00
 ---
 

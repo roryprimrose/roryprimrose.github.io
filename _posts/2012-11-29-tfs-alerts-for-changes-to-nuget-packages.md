@@ -1,6 +1,6 @@
 ---
 title: TFS alerts for changes to NuGet packages
-tags : TFS
+tags: TFS
 date: 2012-11-29 11:21:51 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Movember - Please donate
-categories : Personal
+categories: Personal
 date: 2011-11-08 23:12:59 +10:00
 ---
 

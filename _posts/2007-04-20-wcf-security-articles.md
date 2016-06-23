@@ -1,7 +1,7 @@
 ---
 title: WCF security articles
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2007-04-20 09:37:29 +10:00
 ---
 

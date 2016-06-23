@@ -1,7 +1,7 @@
 ---
 title: GetPublicKey - InternalsVisibleTo
-categories : .Net, Applications, My Software
-tags : GetPublicKey, Great Tools, Unit Testing
+categories: .Net, Applications, My Software
+tags: GetPublicKey, Great Tools, Unit Testing
 date: 2007-12-06 12:50:00 +10:00
 ---
 

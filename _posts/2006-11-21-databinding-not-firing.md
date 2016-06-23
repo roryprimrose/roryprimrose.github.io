@@ -1,7 +1,7 @@
 ---
 title: Databinding not firing
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-11-21 14:28:00 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Splitting up arguments with a regular expression
-categories : .Net
+categories: .Net
 date: 2009-02-18 13:13:21 +10:00
 ---
 

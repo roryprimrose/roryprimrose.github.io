@@ -1,6 +1,6 @@
 ---
 title: Dynamic realm discovery for federated authentication
-tags : Azure
+tags: Azure
 date: 2013-02-14 22:39:08 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: I finally got the black belt
-categories : Personal
-tags : Taekwondo
+categories: Personal
+tags: Taekwondo
 date: 2008-09-10 22:40:00 +10:00
 ---
 

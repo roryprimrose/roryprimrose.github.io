@@ -1,6 +1,6 @@
 ---
 title: Should code contracts be tested?
-categories : .Net, Software Design
+categories: .Net, Software Design
 date: 2012-03-20 21:26:23 +10:00
 ---
 

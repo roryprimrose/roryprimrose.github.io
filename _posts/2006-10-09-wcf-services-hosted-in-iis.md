@@ -1,7 +1,7 @@
 ---
 title: WCF services hosted in IIS
-categories : .Net, IT Related
-tags : WCF
+categories: .Net, IT Related
+tags: WCF
 date: 2006-10-09 22:02:01 +10:00
 ---
 

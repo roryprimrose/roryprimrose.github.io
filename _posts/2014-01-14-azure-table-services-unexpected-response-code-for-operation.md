@@ -1,6 +1,6 @@
 ---
 title: Azure Table Services Unexpected response code for operation
-tags : Azure
+tags: Azure
 date: 2014-01-14 10:59:47 +10:00
 ---
 

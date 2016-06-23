@@ -1,7 +1,7 @@
 ---
 title: Code coverage doesn't like foreach loops
-categories : .Net
-tags : Performance
+categories: .Net
+tags: Performance
 date: 2008-04-04 17:03:00 +10:00
 ---
 

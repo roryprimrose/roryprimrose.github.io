@@ -1,7 +1,7 @@
 ---
 title: Getting the PublicKey for InternalsVisibleTo
-categories : .Net, Applications
-tags : Great Tools
+categories: .Net, Applications
+tags: Great Tools
 date: 2007-10-04 16:01:02 +10:00
 ---
 

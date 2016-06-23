@@ -1,7 +1,7 @@
 ---
 title: Psexec hangs in TeamBuild script when invoking msiexec on remote machine
-categories : .Net
-tags : TeamBuild
+categories: .Net
+tags: TeamBuild
 date: 2009-04-15 09:15:46 +10:00
 ---
 

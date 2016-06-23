@@ -1,6 +1,6 @@
 ---
 title: Using a Vista x64 network printer from Vista x86
-categories : IT Related
+categories: IT Related
 date: 2008-03-17 08:40:57 +10:00
 ---
 

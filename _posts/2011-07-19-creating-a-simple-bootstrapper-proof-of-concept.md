@@ -1,7 +1,7 @@
 ---
 title: Creating a simple bootstrapper - Proof of concept
-categories : .Net, Applications
-tags : WiX
+categories: .Net, Applications
+tags: WiX
 date: 2011-07-19 17:00:59 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: That beginners feeling - Episode 23
-categories : .Net
+categories: .Net
 date: 2006-01-27 08:19:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: TechEd - Developing Manageable WCF Services
-categories : .Net, IT Related
-tags : TechEd, WCF
+categories: .Net, IT Related
+tags: TechEd, WCF
 date: 2006-08-24 10:10:46 +10:00
 ---
 

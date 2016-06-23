@@ -1,7 +1,7 @@
 ---
 title: Injecting a version number into WiX via TeamBuild
-categories : .Net
-tags : TeamBuild, WiX
+categories: .Net
+tags: TeamBuild, WiX
 date: 2009-05-04 10:32:02 +10:00
 ---
 

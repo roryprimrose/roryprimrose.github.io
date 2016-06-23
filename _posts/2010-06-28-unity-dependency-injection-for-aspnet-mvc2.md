@@ -1,7 +1,7 @@
 ---
 title: Unity dependency injection for ASP.Net MVC2
-categories : .Net
-tags : ASP.Net, Dependency Injection, Unity, WCF
+categories: .Net
+tags: ASP.Net, Dependency Injection, Unity, WCF
 date: 2010-06-28 13:34:56 +10:00
 ---
 

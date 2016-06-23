@@ -1,7 +1,7 @@
 ---
 title: Code check in procedure
-categories : .Net, IT Related
-tags : TFS
+categories: .Net, IT Related
+tags: TFS
 date: 2013-12-20 14:14:40 +10:00
 ---
 

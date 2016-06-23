@@ -1,7 +1,7 @@
 ---
 title: WCF and large messages
-categories : .Net, IT Related
-tags : WCF
+categories: .Net, IT Related
+tags: WCF
 date: 2006-12-05 11:11:00 +10:00
 ---
 

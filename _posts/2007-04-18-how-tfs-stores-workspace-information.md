@@ -1,7 +1,7 @@
 ---
 title: How TFS stores workspace information
-categories : .Net, Applications
-tags : TFS
+categories: .Net, Applications
+tags: TFS
 date: 2007-04-18 08:46:24 +10:00
 ---
 

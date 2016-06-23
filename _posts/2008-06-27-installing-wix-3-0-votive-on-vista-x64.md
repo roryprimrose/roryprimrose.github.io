@@ -1,7 +1,7 @@
 ---
 title: Installing WiX 3.0 - Votive on Vista x64
-categories : .Net, Applications
-tags : WiX
+categories: .Net, Applications
+tags: WiX
 date: 2008-06-27 11:36:52 +10:00
 ---
 

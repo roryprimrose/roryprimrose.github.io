@@ -1,6 +1,6 @@
 ---
 title: Nested Whidbey ASP.Net control designers
-categories : .Net
+categories: .Net
 date: 2005-10-10 13:54:00 +10:00
 ---
 

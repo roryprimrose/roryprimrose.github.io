@@ -1,7 +1,7 @@
 ---
 title: HttpUtility.HtmlAttributeEncode does not encode &gt; characters
-categories : .Net
-tags : ASP.Net, WIF
+categories: .Net
+tags: ASP.Net, WIF
 date: 2013-09-27 12:35:33 +10:00
 ---
 

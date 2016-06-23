@@ -1,7 +1,7 @@
 ---
 title: Workaround for Azure SDK Invalid access to memory location error
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2012-03-19 13:38:12 +10:00
 ---
 

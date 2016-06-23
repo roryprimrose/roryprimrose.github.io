@@ -1,7 +1,7 @@
 ---
 title: Unit testing WF with InternalsVisibleTo
-categories : .Net
-tags : Unit Testing, WF
+categories: .Net
+tags: Unit Testing, WF
 date: 2009-07-09 16:16:00 +10:00
 ---
 

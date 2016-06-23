@@ -1,6 +1,6 @@
 ---
 title: VS2008 Code Analysis Dictionary
-categories : .Net
+categories: .Net
 date: 2007-12-06 10:28:01 +10:00
 ---
 

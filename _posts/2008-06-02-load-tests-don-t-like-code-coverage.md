@@ -1,6 +1,6 @@
 ---
 title: Load tests don't like code coverage
-categories : .Net
+categories: .Net
 date: 2008-06-02 16:13:00 +10:00
 ---
  

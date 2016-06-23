@@ -1,6 +1,6 @@
 ---
 title: How much do I love the yield statement?
-categories : .Net, Software Design
+categories: .Net, Software Design
 date: 2012-01-29 22:15:09 +10:00
 ---
 

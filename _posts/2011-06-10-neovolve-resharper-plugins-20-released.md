@@ -1,7 +1,7 @@
 ---
 title: Neovolve ReSharper Plugins 2.0 released
-categories : .Net, My Software
-tags : ReSharper, StyleCop
+categories: .Net, My Software
+tags: ReSharper, StyleCop
 date: 2011-06-10 14:26:02 +10:00
 ---
 

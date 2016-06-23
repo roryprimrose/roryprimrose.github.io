@@ -1,7 +1,7 @@
 ---
 title: ASMX interoperability with WCF
-categories : .Net
-tags : ASP.Net, WCF
+categories: .Net
+tags: ASP.Net, WCF
 date: 2007-04-20 15:42:47 +10:00
 ---
 

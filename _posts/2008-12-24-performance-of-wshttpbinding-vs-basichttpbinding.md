@@ -1,7 +1,7 @@
 ---
 title: Performance of wsHttpBinding vs basicHttpBinding
-categories : .Net
-tags : Performance, WCF
+categories: .Net
+tags: Performance, WCF
 date: 2008-12-24 11:15:00 +10:00
 ---
 

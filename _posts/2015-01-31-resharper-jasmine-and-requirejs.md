@@ -1,6 +1,6 @@
 ---
 title: ReSharper Jasmine and RequireJS
-categories : Development
+categories: Development
 date: 2015-01-31 09:22:00 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Creating event log sources without administrative rights
-categories : .Net, Applications
+categories: .Net, Applications
 date: 2008-11-12 20:13:00 +10:00
 ---
 

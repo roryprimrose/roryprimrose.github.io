@@ -1,7 +1,7 @@
 ---
 title: CSS/Control Adapters - The word is almost out
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-05-03 02:27:12 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Is this what the typical IT project is like?
-categories : IT Related
+categories: IT Related
 date: 2005-08-05 02:59:00 +10:00
 ---
 

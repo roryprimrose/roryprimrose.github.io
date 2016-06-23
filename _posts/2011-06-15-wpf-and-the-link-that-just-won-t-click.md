@@ -1,7 +1,7 @@
 ---
 title: WPF and the link that just won’t click
-categories : .Net
-tags : WPF
+categories: .Net
+tags: WPF
 date: 2011-06-15 20:56:10 +10:00
 ---
 

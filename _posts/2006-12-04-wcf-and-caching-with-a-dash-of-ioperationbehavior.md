@@ -1,7 +1,7 @@
 ---
 title: WCF and caching with a dash of IOperationBehavior
-categories : .Net, IT Related
-tags : WCF
+categories: .Net, IT Related
+tags: WCF
 date: 2006-12-04 12:16:03 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Implementing IErrorHandler
-categories : .Net
-tags : Tracing, WCF
+categories: .Net
+tags: Tracing, WCF
 date: 2008-04-07 16:08:49 +10:00
 ---
 

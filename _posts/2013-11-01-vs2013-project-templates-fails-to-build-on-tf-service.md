@@ -1,7 +1,7 @@
 ---
 title: VS2013 project templates fails to build on TF Service
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2013-11-01 16:16:09 +10:00
 ---
 

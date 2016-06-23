@@ -1,6 +1,6 @@
 ---
 title: Public Fields vs. Public Properties
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-10-06 09:07:22 +10:00
 ---
 

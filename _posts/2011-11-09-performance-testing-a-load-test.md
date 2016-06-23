@@ -1,7 +1,7 @@
 ---
 title: Performance Testing a Load Test
-categories : .Net
-tags : Performance
+categories: .Net
+tags: Performance
 date: 2011-11-09 22:59:51 +10:00
 ---
 

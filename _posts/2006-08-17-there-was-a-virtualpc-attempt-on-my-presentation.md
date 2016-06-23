@@ -1,7 +1,7 @@
 ---
 title: There was a VirtualPC attempt on my presentation
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-17 22:20:22 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: How important is UI design for software?
-categories : IT Related
+categories: IT Related
 date: 2006-02-09 22:33:00 +10:00
 ---
 

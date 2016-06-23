@@ -1,6 +1,6 @@
 ---
 title: ReSharper for VS2008
-categories : .Net
+categories: .Net
 date: 2007-11-29 08:28:00 +10:00
 ---
 

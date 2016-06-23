@@ -1,7 +1,7 @@
 ---
 title: WPF - The beginning
-categories : .Net, IT Related
-tags : WPF
+categories: .Net, IT Related
+tags: WPF
 date: 2006-09-08 15:48:00 +10:00
 ---
 

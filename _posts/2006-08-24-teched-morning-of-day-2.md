@@ -1,7 +1,7 @@
 ---
 title: TechEd - Morning of Day 2
-categories : IT Related
-tags : TechEd
+categories: IT Related
+tags: TechEd
 date: 2006-08-24 12:36:09 +10:00
 ---
 

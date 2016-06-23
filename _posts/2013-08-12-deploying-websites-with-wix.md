@@ -1,6 +1,6 @@
 ---
 title: Deploying websites with WiX
-tags : WiX
+tags: WiX
 date: 2013-08-12 15:15:23 +10:00
 ---
 

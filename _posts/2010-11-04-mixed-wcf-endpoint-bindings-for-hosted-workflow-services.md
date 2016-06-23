@@ -1,7 +1,7 @@
 ---
 title: Mixed WCF endpoint bindings for hosted workflow services
-categories : .Net
-tags : WCF, WF, WIF
+categories: .Net
+tags: WCF, WF, WIF
 date: 2010-11-04 15:37:00 +10:00
 ---
 

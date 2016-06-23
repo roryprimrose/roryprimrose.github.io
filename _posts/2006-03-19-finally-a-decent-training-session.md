@@ -1,7 +1,7 @@
 ---
 title: Finally, a decent training session
-categories : Personal
-tags : Taekwondo
+categories: Personal
+tags: Taekwondo
 date: 2006-03-19 11:00:00 +10:00
 ---
 

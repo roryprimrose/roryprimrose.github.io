@@ -1,7 +1,7 @@
 ---
 title: Example of coding for testability
-categories : .Net, Software Design
-tags : Dependency Injection, Unit Testing
+categories: .Net, Software Design
+tags: Dependency Injection, Unit Testing
 date: 2008-08-28 12:40:41 +10:00
 ---
 

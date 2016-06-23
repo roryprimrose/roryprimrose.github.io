@@ -1,6 +1,6 @@
 ---
 title: One day, there will be a Cloud Camp
-categories : IT Related
+categories: IT Related
 date: 2008-10-17 09:11:12 +10:00
 ---
 

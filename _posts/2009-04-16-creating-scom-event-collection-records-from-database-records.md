@@ -1,7 +1,7 @@
 ---
 title: Creating SCOM event collection records from database records
-categories : .Net
-tags : SCOM
+categories: .Net
+tags: SCOM
 date: 2009-04-16 16:52:00 +10:00
 ---
 

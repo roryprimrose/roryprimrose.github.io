@@ -1,7 +1,7 @@
 ---
 title: Executing build tasks without a build server – Design
-categories : .Net, Personal
-tags : MEF, Sandcastle, TFS, WiX
+categories: .Net, Personal
+tags: MEF, Sandcastle, TFS, WiX
 date: 2011-07-01 13:15:00 +10:00
 ---
 

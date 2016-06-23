@@ -1,7 +1,7 @@
 ---
 title: WorkflowApplication throws ObjectDisposedException on ActivityContext with LINQ queries
-categories : .Net
-tags : WF, WIF
+categories: .Net
+tags: WF, WIF
 date: 2011-01-23 13:33:00 +10:00
 ---
 

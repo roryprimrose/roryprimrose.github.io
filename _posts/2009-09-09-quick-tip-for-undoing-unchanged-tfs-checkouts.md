@@ -1,7 +1,7 @@
 ---
 title: Quick tip for undoing unchanged TFS checkouts
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2009-09-09 10:13:00 +10:00
 ---
 

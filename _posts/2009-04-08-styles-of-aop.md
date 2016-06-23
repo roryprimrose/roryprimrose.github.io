@@ -1,7 +1,7 @@
 ---
 title: Styles of AOP
-categories : .Net
-tags : AOP, Performance, PostSharp
+categories: .Net
+tags: AOP, Performance, PostSharp
 date: 2009-04-08 23:55:00 +10:00
 ---
 

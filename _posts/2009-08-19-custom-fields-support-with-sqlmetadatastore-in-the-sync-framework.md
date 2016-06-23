@@ -1,6 +1,6 @@
 ---
 title: Custom fields support with SqlMetadataStore in the sync framework
-categories : .Net
+categories: .Net
 date: 2009-08-19 13:59:52 +10:00
 ---
 

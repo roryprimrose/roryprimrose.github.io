@@ -1,7 +1,7 @@
 ---
 title: Extract WCF identity into a WorkflowServiceHost activity
-categories : .Net
-tags : WCF, WF, WIF
+categories: .Net
+tags: WCF, WF, WIF
 date: 2011-02-21 11:02:54 +10:00
 ---
 

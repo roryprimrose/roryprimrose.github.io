@@ -1,7 +1,7 @@
 ---
 title: WCF service contract design article
-categories : .Net, Software Design
-tags : WCF
+categories: .Net, Software Design
+tags: WCF
 date: 2008-10-08 23:26:00 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Tip for building a private domain controller for Lab Management with Network Isolation
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2011-05-27 13:02:21 +10:00
 ---
 

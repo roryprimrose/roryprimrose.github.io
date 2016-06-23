@@ -1,7 +1,7 @@
 ---
 title: TechEd - Afternoon of Day 3
-categories : .Net, IT Related
-tags : TechEd, WPF
+categories: .Net, IT Related
+tags: TechEd, WPF
 date: 2006-08-25 16:26:40 +10:00
 ---
 

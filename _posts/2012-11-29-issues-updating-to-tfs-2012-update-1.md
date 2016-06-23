@@ -1,6 +1,6 @@
 ---
 title: Issues updating to TFS 2012 Update 1
-tags : TFS
+tags: TFS
 date: 2012-11-29 11:56:36 +10:00
 ---
 

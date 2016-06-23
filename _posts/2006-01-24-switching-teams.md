@@ -1,6 +1,6 @@
 ---
 title: Switching teams
-categories : .Net
+categories: .Net
 date: 2006-01-24 03:30:00 +10:00
 ---
 

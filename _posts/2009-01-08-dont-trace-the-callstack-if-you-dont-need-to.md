@@ -1,7 +1,7 @@
 ---
 title: Don't trace the callstack if you don't need to
-categories : .Net
-tags : Performance, Tracing
+categories: .Net
+tags: Performance, Tracing
 date: 2009-01-08 15:04:00 +10:00
 ---
 

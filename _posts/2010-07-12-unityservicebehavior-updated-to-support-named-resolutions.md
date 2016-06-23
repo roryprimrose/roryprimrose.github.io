@@ -1,7 +1,7 @@
 ---
 title: UnityServiceBehavior updated to support named resolutions
-categories : .Net
-tags : Unity, WCF
+categories: .Net
+tags: Unity, WCF
 date: 2010-07-12 22:43:00 +10:00
 ---
 

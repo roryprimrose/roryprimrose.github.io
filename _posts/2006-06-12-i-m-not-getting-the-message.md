@@ -1,6 +1,6 @@
 ---
 title: I'm not getting the message
-categories : .Net
+categories: .Net
 date: 2006-06-12 21:47:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Changing TFS changeset comments
-categories : .Net, Applications
-tags : TFS
+categories: .Net, Applications
+tags: TFS
 date: 2008-07-03 09:53:49 +10:00
 ---
 

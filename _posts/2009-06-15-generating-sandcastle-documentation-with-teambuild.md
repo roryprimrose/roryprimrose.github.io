@@ -1,7 +1,7 @@
 ---
 title: Generating Sandcastle documentation with TeamBuild
-categories : .Net
-tags : Sandcastle, TeamBuild
+categories: .Net
+tags: Sandcastle, TeamBuild
 date: 2009-06-15 16:00:26 +10:00
 ---
 

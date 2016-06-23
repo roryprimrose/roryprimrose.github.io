@@ -1,6 +1,6 @@
 ---
 title: Extension methods that add fluent elegance
-categories : .Net
+categories: .Net
 date: 2010-10-21 09:52:59 +10:00
 ---
 

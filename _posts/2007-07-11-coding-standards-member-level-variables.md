@@ -1,6 +1,6 @@
 ---
 title: Coding standards - Member level variables
-categories : .Net
+categories: .Net
 date: 2007-07-11 17:03:22 +10:00
 ---
 

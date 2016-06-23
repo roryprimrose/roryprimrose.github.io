@@ -1,7 +1,7 @@
 ---
 title: Configuration support for custom IErrorHandler in WCF
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2010-10-19 10:20:54 +10:00
 ---
 

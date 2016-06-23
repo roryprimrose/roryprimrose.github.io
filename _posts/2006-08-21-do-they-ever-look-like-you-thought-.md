@@ -1,7 +1,7 @@
 ---
 title: Do they ever look like you thought?
-categories : .Net, IT Related, Personal
-tags : ASP.Net, TechEd
+categories: .Net, IT Related, Personal
+tags: ASP.Net, TechEd
 date: 2006-08-21 09:05:00 +10:00
 ---
 

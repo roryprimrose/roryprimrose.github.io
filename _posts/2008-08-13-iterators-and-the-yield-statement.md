@@ -1,7 +1,7 @@
 ---
 title: Iterators and the yield statement
-categories : .Net, IT Related
-tags : Performance, Useful Links
+categories: .Net, IT Related
+tags: Performance, Useful Links
 date: 2008-08-13 09:57:55 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Wizard UI framework 1.0.1.0 RC
-categories : .Net, My Software
-tags : Wizard Framework
+categories: .Net, My Software
+tags: Wizard Framework
 date: 2007-02-14 12:54:06 +10:00
 ---
 

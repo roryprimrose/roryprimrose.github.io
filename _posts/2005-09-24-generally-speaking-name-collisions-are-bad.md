@@ -1,6 +1,6 @@
 ---
 title: Generally speaking, name collisions are bad
-categories : .Net
+categories: .Net
 date: 2005-09-24 01:32:00 +10:00
 ---
 

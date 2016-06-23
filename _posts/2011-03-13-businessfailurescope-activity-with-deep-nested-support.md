@@ -1,6 +1,6 @@
 ---
 title: BusinessFailureScope activity with deep nested support
-tags : WF
+tags: WF
 date: 2011-03-13 13:50:00 +10:00
 ---
 

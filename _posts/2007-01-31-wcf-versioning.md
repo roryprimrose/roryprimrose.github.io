@@ -1,7 +1,7 @@
 ---
 title: WCF versioning
-categories : .Net, IT Related
-tags : Useful Links, WCF
+categories: .Net, IT Related
+tags: Useful Links, WCF
 date: 2007-01-31 10:00:27 +10:00
 ---
 

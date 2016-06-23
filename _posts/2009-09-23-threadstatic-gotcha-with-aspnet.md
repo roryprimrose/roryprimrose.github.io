@@ -1,7 +1,7 @@
 ---
 title: ThreadStatic gotcha with ASP.Net
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2009-09-23 11:40:42 +10:00
 ---
 

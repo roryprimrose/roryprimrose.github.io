@@ -1,7 +1,7 @@
 ---
 title: MStest unit test adapter fails on CorrelationManager logical operation that isn't stopped
-categories : .Net
-tags : Tracing, Unit Testing, WF
+categories: .Net
+tags: Tracing, Unit Testing, WF
 date: 2008-12-11 13:02:00 +10:00
 ---
 

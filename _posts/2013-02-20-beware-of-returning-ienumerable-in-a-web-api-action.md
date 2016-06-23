@@ -1,7 +1,7 @@
 ---
 title: Beware of returning IEnumerable in a Web Api action
-categories : .Net
-tags : ASP.Net, Tracing, Web Api
+categories: .Net
+tags: ASP.Net, Tracing, Web Api
 date: 2013-02-20 14:27:16 +10:00
 ---
 

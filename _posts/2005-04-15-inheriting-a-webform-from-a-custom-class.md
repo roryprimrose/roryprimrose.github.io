@@ -1,6 +1,6 @@
 ---
 title: Inheriting A WebForm From A Custom Class
-categories : .Net
+categories: .Net
 date: 2005-04-15 03:01:00 +10:00
 ---
 

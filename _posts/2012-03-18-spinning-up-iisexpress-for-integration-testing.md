@@ -1,7 +1,7 @@
 ---
 title: Spinning up IISExpress for integration testing
-categories : .Net
-tags : Azure, WIF
+categories: .Net
+tags: Azure, WIF
 date: 2012-03-18 22:34:51 +10:00
 ---
 

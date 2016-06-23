@@ -1,7 +1,7 @@
 ---
 title: Custom Workflow activity for business failure evaluation–Part 3
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2010-10-12 16:15:00 +10:00
 ---
 

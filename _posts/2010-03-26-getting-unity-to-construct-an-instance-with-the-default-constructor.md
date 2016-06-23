@@ -1,7 +1,7 @@
 ---
 title: Getting Unity to construct an instance with the default constructor
-categories : .Net
-tags : Unity
+categories: .Net
+tags: Unity
 date: 2010-03-26 16:51:19 +10:00
 ---
 

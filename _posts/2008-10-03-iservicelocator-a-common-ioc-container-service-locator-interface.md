@@ -1,7 +1,7 @@
 ---
 title: IServiceLocator - A common IoC container / Service locator interface
-categories : .Net, Software Design
-tags : Dependency Injection
+categories: .Net, Software Design
+tags: Dependency Injection
 date: 2008-10-03 11:57:12 +10:00
 ---
 

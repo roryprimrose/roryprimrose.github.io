@@ -1,6 +1,6 @@
 ---
 title: When a bug isn't a bug, but still requires a workaround
-categories : .Net
+categories: .Net
 date: 2005-08-15 05:48:00 +10:00
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Azure Table Storage Adapter Using Reserved Properties
-tags : Azure
+tags: Azure
 date: 2014-04-10 22:27:23 +10:00
 ---
 

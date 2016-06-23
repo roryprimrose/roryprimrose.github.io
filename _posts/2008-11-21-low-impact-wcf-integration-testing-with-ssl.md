@@ -1,7 +1,7 @@
 ---
 title: Low impact WCF integration testing with SSL
-categories : .Net, Personal
-tags : Unit Testing, WCF
+categories: .Net, Personal
+tags: Unit Testing, WCF
 date: 2008-11-21 00:18:00 +10:00
 ---
 

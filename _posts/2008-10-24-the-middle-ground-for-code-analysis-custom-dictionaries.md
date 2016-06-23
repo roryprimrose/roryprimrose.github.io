@@ -1,7 +1,7 @@
 ---
 title: The middle ground for code analysis custom dictionaries
-categories : .Net
-tags : TFS
+categories: .Net
+tags: TFS
 date: 2008-10-24 14:45:00 +10:00
 ---
 

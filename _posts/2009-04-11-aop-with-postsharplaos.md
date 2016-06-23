@@ -1,7 +1,7 @@
 ---
 title: AOP with PostSharp.Laos
-categories : .Net
-tags : AOP, PostSharp, Tracing
+categories: .Net
+tags: AOP, PostSharp, Tracing
 date: 2009-04-11 15:17:00 +10:00
 ---
 

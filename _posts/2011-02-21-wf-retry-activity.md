@@ -1,7 +1,7 @@
 ---
 title: WF Retry activity
-categories : .Net, Applications
-tags : Sync Framework, WCF, WF
+categories: .Net, Applications
+tags: Sync Framework, WCF, WF
 date: 2011-02-21 11:49:08 +10:00
 ---
 

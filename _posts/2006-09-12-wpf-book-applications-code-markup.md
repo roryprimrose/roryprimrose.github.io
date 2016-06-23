@@ -1,7 +1,7 @@
 ---
 title: WPF book: Applications = Code + Markup
-categories : .Net, IT Related
-tags : WPF
+categories: .Net, IT Related
+tags: WPF
 date: 2006-09-12 11:17:00 +10:00
 ---
 

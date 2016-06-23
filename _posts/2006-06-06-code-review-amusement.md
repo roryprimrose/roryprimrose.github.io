@@ -1,6 +1,6 @@
 ---
 title: Code review amusement
-categories : .Net
+categories: .Net
 date: 2006-06-06 01:43:00 +10:00
 ---
 

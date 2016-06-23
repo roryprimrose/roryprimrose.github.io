@@ -1,7 +1,7 @@
 ---
 title: CodeCampOz: Not a WIF of federation
-categories : .Net
-tags : WIF
+categories: .Net
+tags: WIF
 date: 2010-11-21 14:17:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Unpredictable control rendering is never a good thing
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2005-11-23 22:55:00 +10:00
 ---
 

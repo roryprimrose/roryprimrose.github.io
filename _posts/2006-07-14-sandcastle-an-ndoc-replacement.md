@@ -1,7 +1,7 @@
 ---
 title: SandCastle - An NDoc replacement
-categories : .Net, Applications
-tags : Sandcastle, WF
+categories: .Net, Applications
+tags: Sandcastle, WF
 date: 2006-07-14 23:03:00 +10:00
 ---
 

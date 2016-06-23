@@ -1,6 +1,6 @@
 ---
 title: What are the best refactor and profiler tools for VS2005?
-categories : .Net
+categories: .Net
 date: 2007-05-04 08:57:44 +10:00
 ---
 

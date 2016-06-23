@@ -1,7 +1,7 @@
 ---
 title: Custom Windows Workflow activity for dependency resolution–Wrap up
-categories : .Net
-tags : Dependency Injection, Unity, WF
+categories: .Net
+tags: Dependency Injection, Unity, WF
 date: 2010-10-01 15:39:04 +10:00
 ---
 

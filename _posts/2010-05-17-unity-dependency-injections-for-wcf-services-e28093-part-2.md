@@ -1,7 +1,7 @@
 ---
 title: Unity dependency injections for WCF services – Part 2
-categories : .Net, Applications
-tags : Dependency Injection, Unity, WCF, WIF
+categories: .Net, Applications
+tags: Dependency Injection, Unity, WCF, WIF
 date: 2010-05-17 21:23:00 +10:00
 ---
 

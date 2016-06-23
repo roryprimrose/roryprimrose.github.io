@@ -1,7 +1,7 @@
 ---
 title: Last hurrah for the red dobok
-categories : Personal
-tags : Taekwondo
+categories: Personal
+tags: Taekwondo
 date: 2006-12-14 22:26:00 +10:00
 ---
 

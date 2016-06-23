@@ -1,6 +1,6 @@
 ---
 title: Using the EntityAdapter for Azure Table Storage
-tags : Azure
+tags: Azure
 date: 2014-01-07 16:18:14 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Getting nested ASP.Net control designers to render
-categories : .Net
-tags : ASP.Net
+categories: .Net
+tags: ASP.Net
 date: 2005-10-18 23:18:00 +10:00
 ---
 

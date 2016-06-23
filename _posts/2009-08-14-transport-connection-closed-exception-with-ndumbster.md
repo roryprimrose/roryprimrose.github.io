@@ -1,7 +1,7 @@
 ---
 title: Transport connection closed exception with nDumbster
-categories : .Net
-tags : Unit Testing
+categories: .Net
+tags: Unit Testing
 date: 2009-08-14 10:49:46 +10:00
 ---
 

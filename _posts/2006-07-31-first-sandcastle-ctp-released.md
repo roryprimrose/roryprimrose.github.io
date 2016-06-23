@@ -1,6 +1,6 @@
 ---
 title: First SandCastle CTP released
-categories : .Net, IT Related
+categories: .Net, IT Related
 date: 2006-07-31 11:00:45 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Managing content correlation failures
-categories : .Net
-tags : WCF, WF
+categories: .Net
+tags: WCF, WF
 date: 2010-11-09 16:05:58 +10:00
 ---
 

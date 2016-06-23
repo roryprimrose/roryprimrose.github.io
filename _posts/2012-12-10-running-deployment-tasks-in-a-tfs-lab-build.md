@@ -1,6 +1,6 @@
 ---
 title: Running deployment tasks in a TFS lab build
-tags : TFS
+tags: TFS
 date: 2012-12-10 14:54:18 +10:00
 ---
 

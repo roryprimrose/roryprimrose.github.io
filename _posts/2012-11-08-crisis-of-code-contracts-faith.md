@@ -1,6 +1,6 @@
 ---
 title: Crisis of Code Contracts faith
-tags : Azure, TFS
+tags: Azure, TFS
 date: 2012-11-08 15:31:00 +10:00
 ---
 

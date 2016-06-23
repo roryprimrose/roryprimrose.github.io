@@ -1,7 +1,7 @@
 ---
 title: TechEd - Afternoon of Day 1
-categories : .Net, IT Related
-tags : TechEd, WF
+categories: .Net, IT Related
+tags: TechEd, WF
 date: 2006-08-23 18:44:20 +10:00
 ---
 

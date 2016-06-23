@@ -1,6 +1,6 @@
 ---
 title: Kicked it up a gear with ReadyBoost
-categories : IT Related
+categories: IT Related
 date: 2008-12-08 08:25:00 +10:00
 ---
 

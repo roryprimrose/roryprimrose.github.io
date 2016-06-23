@@ -1,7 +1,7 @@
 ---
 title: WPF UserControls can't be found by the Orcas IDE
-categories : .Net, Applications, IT Related
-tags : WPF
+categories: .Net, Applications, IT Related
+tags: WPF
 date: 2006-09-12 11:09:35 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: TechEd session downloads for CON307 - WCF Manageability
-categories : .Net, IT Related
-tags : TechEd, WCF
+categories: .Net, IT Related
+tags: TechEd, WCF
 date: 2006-08-30 10:31:00 +10:00
 ---
 

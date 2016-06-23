@@ -1,7 +1,7 @@
 ---
 title: Authoring xml documentation for Visual Studio and Sandcastle
-categories : .Net
-tags : Sandcastle
+categories: .Net
+tags: Sandcastle
 date: 2009-01-08 13:02:03 +10:00
 ---
 

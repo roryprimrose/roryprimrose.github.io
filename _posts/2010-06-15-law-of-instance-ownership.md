@@ -1,7 +1,7 @@
 ---
 title: Law Of Instance Ownership
-categories : .Net, Software Design
-tags : Unity
+categories: .Net, Software Design
+tags: Unity
 date: 2010-06-15 10:41:53 +10:00
 ---
 

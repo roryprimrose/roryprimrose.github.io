@@ -1,7 +1,7 @@
 ---
 title: Just came back from a little holiday
-categories : Personal
-tags : Travel
+categories: Personal
+tags: Travel
 date: 2005-01-27 01:22:00 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Visual Studio 2005 Performance
-categories : .Net, IT Related
-tags : Useful Links
+categories: .Net, IT Related
+tags: Useful Links
 date: 2007-11-02 09:15:19 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Custom Windows Workflow activity for dependency resolution–Part 1
-categories : .Net
-tags : Dependency Injection, WF
+categories: .Net
+tags: Dependency Injection, WF
 date: 2010-09-16 17:41:00 +10:00
 ---
 

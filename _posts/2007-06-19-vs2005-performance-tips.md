@@ -1,7 +1,7 @@
 ---
 title: VS2005 performance tips
-categories : .Net, IT Related
-tags : Useful Links
+categories: .Net, IT Related
+tags: Useful Links
 date: 2007-06-19 15:50:41 +10:00
 ---
 

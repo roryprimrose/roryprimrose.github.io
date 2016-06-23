@@ -1,7 +1,7 @@
 ---
 title: Be careful of code clean-up's when you have WF projects
-categories : .Net, IT Related
-tags : WF
+categories: .Net, IT Related
+tags: WF
 date: 2007-01-29 09:21:49 +10:00
 ---
 

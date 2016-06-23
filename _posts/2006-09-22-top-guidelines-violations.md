@@ -1,6 +1,6 @@
 ---
 title: Top guidelines violations
-categories : IT Related
+categories: IT Related
 date: 2006-09-22 08:57:30 +10:00
 ---
 

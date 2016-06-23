@@ -1,7 +1,7 @@
 ---
 title: Restricting the types available in TypePresenter in WF designers
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2011-02-17 16:56:36 +10:00
 ---
 

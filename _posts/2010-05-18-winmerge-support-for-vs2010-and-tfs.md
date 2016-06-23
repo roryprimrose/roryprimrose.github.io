@@ -1,7 +1,7 @@
 ---
 title: WinMerge support for VS2010 and TFS
-categories : .Net, Applications
-tags : TFS
+categories: .Net, Applications
+tags: TFS
 date: 2010-05-18 15:12:00 +10:00
 ---
 

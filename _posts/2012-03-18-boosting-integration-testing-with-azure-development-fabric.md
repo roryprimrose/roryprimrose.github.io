@@ -1,7 +1,7 @@
 ---
 title: Boosting integration testing with Azure development fabric
-categories : .Net
-tags : Azure
+categories: .Net
+tags: Azure
 date: 2012-03-18 22:24:49 +10:00
 ---
 

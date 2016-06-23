@@ -1,6 +1,6 @@
 ---
 title: Using WinMerge with VS2012
-tags : TFS
+tags: TFS
 date: 2012-11-15 15:34:00 +10:00
 ---
 

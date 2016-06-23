@@ -1,7 +1,7 @@
 ---
 title: Xml comments and the include element
-categories : .Net, Applications
-tags : Sandcastle, WCF
+categories: .Net, Applications
+tags: Sandcastle, WCF
 date: 2008-03-26 23:57:47 +10:00
 ---
 

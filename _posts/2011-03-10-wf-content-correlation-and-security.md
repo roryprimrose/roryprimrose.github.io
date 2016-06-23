@@ -1,6 +1,6 @@
 ---
 title: WF content correlation and security
-tags : WCF, WF, WIF
+tags: WCF, WF, WIF
 date: 2011-03-10 22:14:35 +10:00
 ---
 

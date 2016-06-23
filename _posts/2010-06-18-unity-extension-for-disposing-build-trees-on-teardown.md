@@ -1,7 +1,7 @@
 ---
 title: Unity Extension For Disposing Build Trees On TearDown
-categories : .Net
-tags : ASP.Net, Unity, WCF
+categories: .Net
+tags: ASP.Net, Unity, WCF
 date: 2010-06-18 13:40:50 +10:00
 ---
 

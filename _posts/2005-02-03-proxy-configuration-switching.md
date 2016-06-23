@@ -1,6 +1,6 @@
 ---
 title: Proxy Configuration Switching
-categories : .Net, Applications
+categories: .Net, Applications
 date: 2005-02-03 23:26:00 +10:00
 ---
 

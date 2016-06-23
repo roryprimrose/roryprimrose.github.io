@@ -1,7 +1,7 @@
 ---
 title: Using StyleCop
-categories : .Net, Applications
-tags : Extensibility, StyleCop
+categories: .Net, Applications
+tags: Extensibility, StyleCop
 date: 2008-11-18 11:45:00 +10:00
 ---
 

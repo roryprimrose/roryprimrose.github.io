@@ -1,7 +1,7 @@
 ---
 title: Accessing performance counters on a remote machine
-categories : .Net
-tags : Performance, WCF
+categories: .Net
+tags: Performance, WCF
 date: 2008-12-05 14:40:00 +10:00
 ---
 

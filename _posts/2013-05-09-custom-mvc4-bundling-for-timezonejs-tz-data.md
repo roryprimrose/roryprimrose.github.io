@@ -1,7 +1,7 @@
 ---
 title: Custom MVC4 bundling for timezoneJS tz data
-categories : .Net
-tags : ASP.Net, Azure
+categories: .Net
+tags: ASP.Net, Azure
 date: 2013-05-09 13:07:00 +10:00
 ---
 

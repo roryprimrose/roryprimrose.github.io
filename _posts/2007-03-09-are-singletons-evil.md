@@ -1,6 +1,6 @@
 ---
 title: Are singletons evil?
-categories : .Net
+categories: .Net
 date: 2007-03-09 08:32:09 +10:00
 ---
 

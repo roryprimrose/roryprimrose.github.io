@@ -1,7 +1,7 @@
 ---
 title: Neovolve.BuildTaskExecutor 1.0 Released
-categories : .Net, My Software
-tags : TFS
+categories: .Net, My Software
+tags: TFS
 date: 2011-07-07 15:43:52 +10:00
 ---
 

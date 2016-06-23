@@ -1,6 +1,6 @@
 ---
 title: Code coverage not available when debugging unit tests
-categories : .Net
+categories: .Net
 date: 2008-03-17 08:54:00 +10:00
 ---
 

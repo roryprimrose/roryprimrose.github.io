@@ -1,6 +1,6 @@
 ---
 title: Writing batches to Azure Table Storage
-tags : Azure
+tags: Azure
 date: 2013-11-14 07:24:38 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Icon support for custom Windows Workflow activities
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2010-10-07 11:25:00 +10:00
 ---
 

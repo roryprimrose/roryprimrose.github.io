@@ -1,7 +1,7 @@
 ---
 title: TaeKwonDo
-categories : Personal
-tags : Taekwondo
+categories: Personal
+tags: Taekwondo
 date: 2005-03-29 00:32:00 +10:00
 ---
 

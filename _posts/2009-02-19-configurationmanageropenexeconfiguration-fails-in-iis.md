@@ -1,7 +1,7 @@
 ---
 title: ConfigurationManager.OpenExeConfiguration fails in IIS
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2009-02-19 16:10:50 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: LogLevel NAnt Task
-categories : .Net, Applications
-tags : NAnt
+categories: .Net, Applications
+tags: NAnt
 date: 2008-01-16 15:53:27 +10:00
 ---
 

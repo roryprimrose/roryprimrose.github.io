@@ -1,7 +1,7 @@
 ---
 title: Free digital certificates from StartCom/StartSSL
-categories : IT Related
-tags : Useful Links
+categories: IT Related
+tags: Useful Links
 date: 2007-04-19 12:52:32 +10:00
 ---
 

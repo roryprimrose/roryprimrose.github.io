@@ -1,7 +1,7 @@
 ---
 title: Canberra .Net Users Group Presentation next week
-categories : .Net, Applications
-tags : ASP.Net, Dependency Injection, Extensibility, Unity, WCF
+categories: .Net, Applications
+tags: ASP.Net, Dependency Injection, Extensibility, Unity, WCF
 date: 2010-07-12 22:32:28 +10:00
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Binding data to ObjectDataSource parameters
-categories : .Net, IT Related
-tags : ASP.Net
+categories: .Net, IT Related
+tags: ASP.Net
 date: 2006-11-07 17:51:45 +10:00
 ---
 

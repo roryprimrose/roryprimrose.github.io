@@ -1,7 +1,7 @@
 ---
 title: Does the WorkflowRuntime have a memory leak?
-categories : .Net
-tags : WCF, WF
+categories: .Net
+tags: WCF, WF
 date: 2007-04-17 12:15:52 +10:00
 ---
 

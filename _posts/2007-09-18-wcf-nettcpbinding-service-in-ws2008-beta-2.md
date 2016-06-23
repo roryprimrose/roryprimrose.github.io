@@ -1,7 +1,7 @@
 ---
 title: WCF netTcpBinding service in WS2008 Beta 2
-categories : .Net
-tags : WCF
+categories: .Net
+tags: WCF
 date: 2007-09-18 21:35:00 +10:00
 ---
 

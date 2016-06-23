@@ -1,7 +1,7 @@
 ---
 title: WF and missing build output from referenced project
-categories : .Net
-tags : WF
+categories: .Net
+tags: WF
 date: 2007-05-11 10:08:38 +10:00
 ---
 

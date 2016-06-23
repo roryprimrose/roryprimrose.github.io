@@ -1,6 +1,6 @@
 ---
 title: Publishing embedded resources in ASP.Net 2.0
-categories : .Net
+categories: .Net
 date: 2005-10-11 11:47:00 +10:00
 ---
 

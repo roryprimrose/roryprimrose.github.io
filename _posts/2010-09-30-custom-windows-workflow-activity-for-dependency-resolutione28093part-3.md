@@ -1,6 +1,6 @@
 ---
 title: Custom Windows Workflow activity for dependency resolution–Part 3
-categories : .Net
+categories: .Net
 date: 2010-09-30 12:34:00 +10:00
 ---
 
