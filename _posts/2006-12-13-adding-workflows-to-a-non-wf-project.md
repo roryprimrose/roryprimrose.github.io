@@ -13,15 +13,15 @@ After using [WinMerge][0] to compare the project file with a workflow project fi
 1. Open the project file in notepad and make the following changes
 1. Add the following to the first Project/ProjectGroup element (it should contain the assembly details) :  
   
-{% highlight xml %}
+```xml
 <ProjectTypeGuids>{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>  
-{% endhighlight %}
+```
   
 Given the name of the ProjectTypeGuids element, I am guessing that the guids should be the same for everyone, but you might have to compare the guids found in a new workflow project to you can create.
 1. Add the following after the CSharp.targets Import element under the Project element:  
   
-{% highlight xml %}
+```xml
 <Import Project="$(MSBuildExtensionsPath)\Microsoft\Windows Workflow Foundation\v3.0\Workflow.Targets" />
-{% endhighlight %}
+```
 
 [0]: http://winmerge.org/

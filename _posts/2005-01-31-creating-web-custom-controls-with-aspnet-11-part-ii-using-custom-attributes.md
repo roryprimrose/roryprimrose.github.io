@@ -19,7 +19,7 @@ As we don't want to override MyBase.RenderBeginTag, a better place to put this c
 
 So far, the control has properties defined like this:
 
-{% highlight vb.net %}
+```vbnet
  < _
      Description("The Key value to identify the purpose of the button."), _
      Category("Client") _
@@ -169,13 +169,13 @@ So far, the control has properties defined like this:
      End  Set
 
  End  Property
-{% endhighlight %}
+```
 
  Take note of how the properties handle ViewState data. For string properties, I am doing a direct convert of the ViewState value. If the ViewState doesn't have a value, Nothing will be returned. vbNullString is defined as Nothing and is a string, therefore it will be a safe conversion. The only way this would fall down is if code outside this property or assembly modified that particular ViewState item to some other object type. Only the implementer of the control would do this and basically, if they break it, they pay for it. For properties that have any other data types, I check if the object in the ViewState is of the same type and return the value if it is, otherwise I return a default value.
 
 Ok, now lets render these property values to the control HTML tag as custom attributes. This is all that needs to be done:
 
-{% highlight vb.net %}
+```vbnet
  Protected  Overrides  Sub OnPreRender( ByVal e As System.EventArgs)
 
      With Attributes
@@ -201,7 +201,7 @@ Ok, now lets render these property values to the control HTML tag as custom attr
      Call  MyBase .OnPreRender(e)
 
  End  Sub
-{% endhighlight %}
+```
 
 The first thing to notice about this code is that I am ensuring that an id attribute is rendered. In the xml of the aspx file, no attribute has to be defined for the control. Also a control can be created at run-time and added as a child of another control and not have its id property set. Regardless of whether an id property value has been defined, the Control object (which all ASP.Net controls are derived from) exposes a ClientID value, which has the value of the control as ASP.Net sees it when rendered to the client. The ClientID property value is typically prefixed with all the parent controls id values, delimited by the _ character. The code here checks if there is no id value and if so, adds a custom attribute that happens to be called id and assigns it the value of ClientID. Simply calling Attributes.Add("id", ClientID) will cause a duplicate id attribute to be rendered where the id property did already have a value and we definitely don't want that. I ensure that the rendered tag always as an id value specified so that client script can identify the controls element by its id value.
 
@@ -211,15 +211,15 @@ As a side note on custom attributes, if you want to add specific inline styles t
 
 I set up a test example with some dummy property values for the code so far and the rendered output is this:
 
-{% highlight aspx-vb %}
+```aspx-vb
 <input type="image" name="ImageButton3" id="ImageButton3" Key="Test" ImageDownUrl="images/down.gif" ImageHoverUrl="images/hover.gif" ClientClickHandler="Image_OnClick" Selected="false" IsToggle="false" src="images/up.gif" alt="" border="0" style="Z-INDEX: 103; LEFT: 395px; POSITION: absolute; TOP: 122px" />
-{% endhighlight %}
+```
 
  We have now been able to take server information that has been defined at either design-time or run-time and render it down to the client. Client code can now take advantage of that information. I have written a JavaScript wrapper function that makes it easy to read custom attributes from an HTML element. HTML elements have two methods called getAttribute and setAttribute and these can be used directly, but I prefer to use a helper function that includes some business rules. For example, I want it to handle the case where no valid element has been specified, or the attribute doesn't exist. I also want to use default values if no value is found in the custom attribute.
 
 My wrapper function looks like this:
 
-{% highlight csharp %}
+```csharp
 function AttributeValue(Item, Name, Default)
 {
     // Set Default to "" if not provided
@@ -254,7 +254,7 @@ function AttributeValue(Item, Name, Default)
         }
     }
 }
-{% endhighlight %}
+```
 
 In the next article, I will touch on Metadata attributes which can be very useful.
 

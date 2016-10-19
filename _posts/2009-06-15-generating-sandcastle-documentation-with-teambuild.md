@@ -11,7 +11,7 @@ Dynamically creating documentation is an easy solution that essentially document
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <Target Name="BuildSandcastleWithDynamicProjectDefinition">
     
     <!-- Uses Sandcastle Help File Builder to build a CHM documentation for all assemblies in the output directory. -->
@@ -66,11 +66,11 @@ Dynamically creating documentation is an easy solution that essentially document
     
 </Target>
     
-{% endhighlight %}
+```
 
 Dynamically creating documentation is easy, but the resultant documentation can become dirty as external dependencies appear in the build directory. This is when using a SHFB project file becomes an advantage. This allows the solution to contain the specific definition of what gets included in the Sandcastle generated documentation. The best option for managing the SHFB project file is to add it as a solution item in Visual Studio. The MSBuild script for using the SHFB project file looks like the following.
 
-{% highlight xml %}
+```xml
 <Target Name="BuildSandcastleProjectFile">
      
     <Message Text="Building Sandcastle documentation using the project '$(SandcastleProjectFilePath)'" />
@@ -93,11 +93,11 @@ Dynamically creating documentation is easy, but the resultant documentation can 
      
 </Target>
     
-{% endhighlight %}
+```
 
 These targets run the implementation for generating the documentation. The following targets are used to orchestrate this work.
 
-{% highlight xml %}
+```xml
 <PropertyGroup>
      
     <ProductName></ProductName>
@@ -222,6 +222,6 @@ These targets run the implementation for generating the documentation. The follo
                 Status="Succeeded" />
      
 </Target>    
-{% endhighlight %}
+```
 
 

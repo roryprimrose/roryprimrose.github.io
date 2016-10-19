@@ -18,7 +18,7 @@ If using [TextWriterTraceListener][1] (or [XmlWriterTraceListener][2] that deriv
 
 The following code is the code in TextWriterTraceListener that causes the issues.   
   
-{% highlight csharp %}
+```csharp
 public override void WriteLine(String message)
 {
     if (EnsureWriter())
@@ -83,7 +83,7 @@ internal Boolean EnsureWriter()
     
     return flag;
 }
-{% endhighlight %}
+```
 
 When writing a record, it ensures that the writer is ready. The biggest problem with this implementation is that the logic in EnsureWriter() swallows any exception. If an exception is encountered, a second attempt is made which is likely to fail for the same reason as the first attempt. This causes WriteLine() to skip out without throwing an exception.
        

@@ -16,9 +16,9 @@ OutOfMemoryException seemed like the most likely issue that may be causing the o
 
 The way to get past the failures is to bump up the memory allocation on the deploy target. The PowerShell script you can run (on x64 PowerShell) is:
 
-{% highlight powershell %}
+```powershell
 winrm set winrm/config/winrs `@`{MaxMemoryPerShellMB =`"512`"`}
 
 restart-service winrm
-{% endhighlight %}
+```
 

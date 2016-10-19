@@ -19,7 +19,7 @@ Using IHttpHandler is perfect for covering our dependency deployment problems, b
 
 This is what is required in the web.config file:
 
-{% highlight xml %}
+```xml
 <configuration >
     <system.web >
         <httpHandlers >
@@ -27,7 +27,7 @@ This is what is required in the web.config file:
         </httpHandlers >
     </system.web >
 </configuration >
-{% endhighlight %}
+```
 
 We have now been able to hook up a web request to call the IHttpHandler interface in a specific class and assembly. Now when the request comes through, we need to identify which resource in the assembly is being requested.When I was originally researching this, I came across an article by [Eric Woodruff][0] that had a great idea for not only identifying the resource requested, but also supporting a caching flag. It will be through querystrings that the handler will be told what resource is being requested.
 
@@ -37,7 +37,7 @@ I created a class that implements IHttpHandler and added as many helpful feature
 
 Here are the goods:
 
-{% highlight vb.net %}
+```vbnet
 # Region " Imports "
 
  Imports System
@@ -670,6 +670,6 @@ End  Property
 # End  Region
 
 End  Class
-{% endhighlight %}
+```
 
 [0]: http://www.codeproject.com/aspnet/ressrvpage.asp

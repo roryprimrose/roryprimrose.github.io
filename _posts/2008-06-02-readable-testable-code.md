@@ -13,7 +13,7 @@ Take this test case based on his post:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -101,7 +101,7 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 MethodA contains the combined if tests while MethodB separates them out into individual tests. While I'm not sure about the nesting depth argument due to compiler optimizations, I totally agree about the increase in testability. I also think that such a coding style is much more readable. The risk of combined if tests is that they quickly become complex and difficult to understand.
 
@@ -111,7 +111,7 @@ So performance isn't a problem as the compiler optimizes the code. The code is m
 
 I'm no IL expert, but it is interesting that the compiler seems to choose the more complex version (at least to Reflectors interpretation). The following is Reflectors decompilation of the release build interpreted in C#.
 
-{% highlight csharp %}
+```csharp
 public static void MethodB(List<string> list)
 {
     foreach (string item in list)
@@ -122,7 +122,7 @@ public static void MethodB(List<string> list)
         }
     }
 }
-{% endhighlight %}
+```
 
 I think I have a new change to my coding style.
 

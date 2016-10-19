@@ -10,7 +10,7 @@ This implementation leverages the AppSettingParameterValueExtension class from t
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using Microsoft.Practices.Unity.Configuration;
     
 namespace Neovolve.Toolkit.Unity
@@ -29,11 +29,11 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The ConnectionStringParameterValueElement is responsible for creating an injection value for a parameter. It can be used to create a parameter for either the String or ConnectionStringSettings types.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Configuration;
 using System.Globalization;
@@ -112,13 +112,13 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 Usually a string parameter would be used as the injection type. This will then decouple the dependency from the System.Configuration assembly. The only time that the ConnectionStringSettings class should be used as the injection parameter type is when the provider information on the connection string configuration is required for some application logic.
 
 The Unity configuration needs to be set up with the SectionExtensionInitiator class to support connection string injection. A connectionString element can then be used to define a connection string injection value.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0"
         encoding="utf-8" ?>
 <configuration>
@@ -146,7 +146,7 @@ The Unity configuration needs to be set up with the SectionExtensionInitiator cl
     </containers>
     </unity>
 </configuration>
-{% endhighlight %}
+```
 
 This configuration will resolve a connection string with the name TestConnection and inject it into the constructor of the ConnectionTest class.
 

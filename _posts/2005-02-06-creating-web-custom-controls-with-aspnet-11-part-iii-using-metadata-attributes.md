@@ -9,7 +9,7 @@ Metadata attributes are defined on items with an &lt; &gt; combination before th
 
 <!--more-->
 
-{% highlight vb.net %}
+```vbnet
  < _
  Category("Appearance"), _
  Description("The value rendered for the control.") _
@@ -24,7 +24,7 @@ Metadata attributes are defined on items with an &lt; &gt; combination before th
  ViewState.Item("Text") = Value
  End  Set
  End  Property
-{% endhighlight %}
+```
 
 I am going to look at a few of the common metadata attributes used in creating web custom controls. Some are self explanatory, while others have some very funny behaviors.
 
@@ -39,15 +39,15 @@ I have noticed a few interesting things about the DefaultValue metadata attribut
 
  Boolean properties also have interesting behavior. If an empty string is specified in the xml data for a Boolean property (such as &lt;CC1:ImageButton Selected=""&gt;) then the value stored in ViewState is a Boolean with the value of True. If the property attribute isn't defined at all in the xml, then the ViewState value is Nothing, in which case my code will return the default value, usually being False. This is different to normal Boolean behavior. For example, if you run code like this:
 
-{% highlight vb.net %}
+```vbnet
  Dim bTest As  Boolean = System.Boolean.Parse(vbNullString)
-{% endhighlight %}
+```
 
 or this:
 
-{% highlight vb.net %}
+```vbnet
  Dim bTest As  Boolean = System.Boolean.Parse("")
-{% endhighlight %}
+```
 
 then an exception will be raised. Our good friends at Microsoft are obviously doing a little extra behind the scenes to capture this issue. They must be identifying that the xml attribute is defined and converting an empty string to "True" when building the ViewStates internal value.
 
@@ -66,9 +66,9 @@ The Description attribute is also useful for people in the VB.Net world who use 
 
 My ToolboxData attribute values normally follow this format:
 
-{% highlight aspx-vb %}
+```aspx-vb
 ToolboxData("<{0}:ImageButton runat=server></{0}:ImageButton>")
-{% endhighlight %}
+```
 
 The {0} part of the value is where the TagPrefix value from the page registration is used. To not include this would be very dangerous. For the other part of the tag name, I have never had a reason to use a different value other than the class name of my control. The TagPrefix value ensures that there are no naming collisions. For example, I am creating this ImageButton control, but there is already the intrinsic ASP.Net ImageButton control. The ASP.Net control is declared as ASP:ImageButton and with a TagPrefix value of cc1 my ImageButton control will be declared as cc1:ImageButton. By default I also need the runat= server declaration put in.
 
@@ -84,7 +84,7 @@ I will provide an example of Designer support in a later article.
 ## ControlBuilder Attribute  
  The ControlBuilder attribute is assigned to a class and is used to help the IDE understand how to interpret xml in an aspx file into control object types. For example, I may have a toolbar control that can hold one or more of my ImageButton controls. When the xml of the aspx file is read, the IDE doesn't establish a relationship of child control definitions and the actual class type of the child control. If my toolbar is defined as this:
 
-{% highlight aspx-vb %}
+```aspx-vb
  <CC1:Toolbar id="tbrTest" runat="server"> 
 
  <CC1:ImageButton id="btnTest1" runat="server">
@@ -94,7 +94,7 @@ I will provide an example of Designer support in a later article.
  <CC1:ImageButton id="btnTest3" runat="server">
 
 </CC1:Toolbar>
-{% endhighlight %}
+```
 
  then the toolbar control doesn't know that the child controls are of the type ImageButton. A ControlBuilder will inform the Toolbar control that a tag that contains the name ImageButton is the ImageButton class. Now that the ControlBuilder is informing the Toolbar control what the correct type of child controls are being created for it, it can take any appropriate action.
 
@@ -107,33 +107,33 @@ I will provide an example of ControlBuilder support in a later article.
 
 A value of Attribute will result in:
 
-{% highlight aspx-vb %}
+```aspx-vb
  <CC1:MyControl id="tbrTest" runat="server" text="my&value"> 
 
 </CC1:MyControl>
-{% endhighlight %}
+```
 
 A value of InnerProperty will result in:
 
-{% highlight aspx-vb %}
+```aspx-vb
  <CC1:MyControl id="tbrTest" runat="server"> 
 
  <Text>my&value</Text> 
 
 </CC1:MyControl>
-{% endhighlight %}
+```
 
 A value of InnerDefaultProperty will result in:
 
-{% highlight aspx-vb %}
+```aspx-vb
  <CC1:MyControl id="tbrTest" runat="server">my&value</CC1:MyControl> 
-{% endhighlight %}
+```
 
 A value of EncodedInnerDefaultProperty will result in:
 
-{% highlight aspx-vb %}
+```aspx-vb
  <CC1:MyControl id="tbrTest" runat= "server">my&amp;value</CC1:MyControl> 
-{% endhighlight %}
+```
 
 In my control development, I have always put my property values as Attribute (which is the default) as I normally support child controls which would be the nested tag definitions.
 

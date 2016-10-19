@@ -13,7 +13,7 @@ ProjectA contains a form that references ClassB in ProjectB like this:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -37,11 +37,11 @@ namespace ProjectA
     }
 }
     
-{% endhighlight %}
+```
 
 ProjectB contains ClassB that references ClassC in ProjectC like this:
 
-{% highlight csharp %}
+```csharp
 using System;
 using ProjectC;
      
@@ -58,11 +58,11 @@ namespace ProjectB
     }
 }
     
-{% endhighlight %}
+```
 
 ClassC in ProjectC looks like this:
 
-{% highlight csharp %}
+```csharp
 using System;
      
 namespace ProjectC
@@ -76,7 +76,7 @@ namespace ProjectC
     }
 }
     
-{% endhighlight %}
+```
 
 When ProjectA compiles, the build output in bin\Debug is the following:
 
@@ -88,7 +88,7 @@ Everything is good here and ProjectA will execute successfully.
 
 Now lets simulate a scenario that WF can bring into the mix. Lets say that ProjectB contains a workflow. This workflow ends up executing a rule set, probably through a PolicyActivity. A rule in the rule set makes a reference to ClassC in ProjectC. Nowhere else in ProjectB references any type defined in ProjectC. What happens? The result can be simulated by making ClassB in ProjectB look like this:
 
-{% highlight csharp %}
+```csharp
 using System;
 using ProjectC;
      
@@ -107,7 +107,7 @@ namespace ProjectB
     }
 }
     
-{% endhighlight %}
+```
 
 When ProjectA compiles, the build output in bin\Debug is the following:
 

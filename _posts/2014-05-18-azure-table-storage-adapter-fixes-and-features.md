@@ -23,7 +23,7 @@ This latest version of the EntityAdapter class fixes the two above issues.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace MySystem.Server.DataAccess.Azure
 {
     using System;
@@ -320,7 +320,7 @@ namespace MySystem.Server.DataAccess.Azure
         }
     }
 }
-{% endhighlight %}
+```
 
 [0]: /2013/11/18/entity-adapter-for-azure-table-storage/
 [1]: /2014/01/07/azure-entityadapter-with-unsupported-table-types/

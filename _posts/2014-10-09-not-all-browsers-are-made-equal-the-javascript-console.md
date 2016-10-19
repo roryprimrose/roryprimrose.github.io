@@ -13,7 +13,7 @@ The primary issue here however is that scripts will still use the console but th
 
 A quick search pulled up [a StackOverflow article][0] which provides a very good workaround to prevent JavaScript errors being thrown. This script handles the first scenario by preventing errors if a function is undefined for a given browser. Unfortunately it completely hides information that could otherwise be logged. Here is my take on that script.
 
-{% highlight javascript %}
+```javascript
 (function () {
     if (!window.console) {
         window.console = {};
@@ -44,10 +44,10 @@ A quick search pulled up [a StackOverflow article][0] which provides a very good
         }
     }
 })();
-{% endhighlight %}
+```
 
 Instead of pointing undefined logging functions to a no-op function, it first attempts to find a default message logging function that is declared on the browser with a fall-back to a no-op function. This default function is then assigned to any console function (across all the browsers) that is not defined. By doing this, a script that calls console.error would be piped into console.log where the browser supports the log function, but not the error function. Worst case, the browser doesn't support the console at all, then all the console messages are swallowed by the no-op function.
 
-**Update:** Added table as per comment from Josh
+**Update: Added table as per comment from Josh
 
 [0]: http://stackoverflow.com/a/13817235

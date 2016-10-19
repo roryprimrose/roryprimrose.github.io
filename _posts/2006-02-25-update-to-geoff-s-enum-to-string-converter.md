@@ -12,7 +12,7 @@ The function now looks like this:
 
 <!--more-->
 
- {% highlight vbnet %}
+ ```vbnet
 'given the passed in enum, convert to a string,
 'but inject spaces in font of all capital letters.
 'a regex might work best here, but for now, let's do it the long way
@@ -43,7 +43,7 @@ Private Function EnumToString(ByVal poSource As Object) As String
     Return sNew.ToString
 
 End Function
-{% endhighlight %}
+```
 
 I ran the following test cases: 
 

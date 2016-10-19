@@ -9,9 +9,9 @@ I [posted previously][0] about creating EventLog sources without administrative 
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <Permission User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes"/> 
-{% endhighlight %}
+```
 
 I found that this didn't work and it failed with the message: 
 
@@ -21,8 +21,8 @@ The answer to this was that I was not defining the domain for the account. By de
 
 Unfortunately it still didn't work. Setting permissions using the alternative element did seem to work successfully.
 
-{% highlight xml %}
+```xml
 <util:PermissionEx Domain="[APP_POOL_USER_DOMAIN]" User="[APP_POOL_USER_NAME]" CreateSubkeys="yes" Write="yes" />
-{% endhighlight %}
+```
 
 [0]: /2008/11/12/creating-event-log-sources-without-administrative-rights/

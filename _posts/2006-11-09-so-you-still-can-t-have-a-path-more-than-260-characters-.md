@@ -11,12 +11,12 @@ Using reflector, I can see the following code in quite a few places in the frame
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 if (num14 >= Path.MaxPath)
 {
     throw new PathTooLongException(Environment.GetResourceString("IO.PathTooLong"));
 }
-{% endhighlight %}
+```
 
 Path.MaxPath references a constant that has a value of 260. The exception returns this information:
 

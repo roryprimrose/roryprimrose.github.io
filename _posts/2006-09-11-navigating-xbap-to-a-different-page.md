@@ -13,7 +13,7 @@ One of the bits of information I came across was from the [MSDN Magazine][1]. I 
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 void viewHyperlink_Click(object sender, RoutedEventArgs e)
 {
     // View Order
@@ -23,11 +23,11 @@ void viewHyperlink_Click(object sender, RoutedEventArgs e)
     
     window.Navigate(page);
 }
-{% endhighlight %}
+```
 
 It said &quot;Don't do this!&quot;, but I was desperate and tried it anyway. It didn't work. Thankfully, later on in the article, it gave an example of how it is done in a way that works:
 
-{% highlight csharp %}
+```csharp
 void viewHyperlink_Click(object sender, RoutedEventArgs e)
 {
     // View Order
@@ -37,7 +37,7 @@ void viewHyperlink_Click(object sender, RoutedEventArgs e)
     
     ns.Navigate(page);
 }
-{% endhighlight %}
+```
 
 That's better!
 

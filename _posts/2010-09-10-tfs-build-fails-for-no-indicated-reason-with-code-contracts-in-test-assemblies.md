@@ -10,7 +10,7 @@ This has been a curly one for a few months and I’ve finally had some time to r
 All of a sudden the builds started failing with no indication as to why. The build activity log just stops and does not contain errors. The MS build log file also does not contain any errors. The event log on the build server does shed some light on the situation however.  
 <!--more-->
 
-{% highlight text %}
+```text
 (MSTest.exe, PID 1868, Thread 1) Exception thrown when enumerating assembly: System.IO.FileLoadException: Could not load file or assembly 'MyProject.Services.Business.UnitTests.Contracts, Version=1.0.449.0, Culture=neutral, PublicKeyToken=0e60eebea588ffe8' or one of its dependencies. Strong name validation failed. (Exception from HRESULT: 0x8013141A)
 File name: 'MyProject.Services.Business.UnitTests.Contracts, Version=1.0.449.0, Culture=neutral, PublicKeyToken=0e60eebea588ffe8' ---> System.Security.SecurityException: Strong name validation failed. (Exception from HRESULT: 0x8013141A)
 
@@ -24,7 +24,7 @@ MyComputer
    at Microsoft.VisualStudio.TestTools.TestTypes.Unit.AssemblyEnumerator.EnumerateAssembly(IWarningHandler warningHandler, String location, ProjectData projectData, ObjectHandle assemblyResolverWrapper)
    at Microsoft.VisualStudio.TestTools.TestTypes.Unit.AssemblyEnumerator.EnumerateAssembly(IWarningHandler warningHandler, String location, ProjectData projectData, ObjectHandle assemblyResolverWrapper)
    at Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAttributeEnumerator.Read(ITestTypeExtensionClientSidesProvider provider, IWarningHandler warningHandler, String assemblyFileName, ProjectData projectData, TestRunConfiguration testRunConfiguration)
-{% endhighlight %}
+```
 
 This didn't make any sense. The initial workaround was to determine whether contracts where actually being used in the assembly for which the contract assembly is generated. Contracts where not being used in the first assembly that failed in this way so I disabled the contract assembly and submitted a new build. The next build fell over with the same problem on a different assembly.
 

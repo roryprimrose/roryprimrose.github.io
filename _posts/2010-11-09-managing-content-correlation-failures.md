@@ -36,7 +36,7 @@ The solution to this issue is to extend the behaviour of an IErrorHandler implem
 
 The ProvideFault method in the IErrorHandler implementation in the service has been updated to manage this detection and conversion process.
 
-{% highlight csharp %}
+```csharp
 public void ProvideFault(Exception error, MessageVersion version, ref Message fault)
 {
     Exception errorToProcess = AttemptBusinessFailureExceptionConversion(error);
@@ -82,11 +82,11 @@ public void ProvideFault(Exception error, MessageVersion version, ref Message fa
         fault = Message.CreateMessage(version, messageFault, faultException.Action);
     }
 }
-{% endhighlight %}
+```
 
 The existing code already managed a BusinessFailureException&lt;T&gt; and converted it to a BusinessFault that is a known fault contract for the service. The method now makes a call out to AttemptBusinessFailureExceptionConversion as an initial step.
 
-{% highlight csharp %}
+```csharp
 private static Exception AttemptBusinessFailureExceptionConversion(Exception errorToProcess)
 {
     FaultException thrownFaultException = errorToProcess as FaultException;
@@ -123,7 +123,7 @@ private static Exception AttemptBusinessFailureExceptionConversion(Exception err
         
     return errorToProcess;
 }
-{% endhighlight %}
+```
 
 The AttemptBusinessFailureExceptionConversion method looks for a predefined FaultException thrown by the service that has a particular failure code. Correlation failures have a Code.SubCode name of _InstanceNotFound_ with the namespace of _http://schemas.datacontract.org/2008/10/WorkflowServices_. The method can return a specific business failure now that a correlation failure has been identified. 
 

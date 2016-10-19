@@ -11,7 +11,7 @@ The code originally looked like the following.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 if (converterActivity.TypeConverterType != null) 
 { 
     // The type must be a type converter 
@@ -20,11 +20,11 @@ if (converterActivity.TypeConverterType != null)
         errors.Add(new ValidationError("Property 'TypeConverterType' is not a TypeConverter", TypeConverterTypeIsInvalidId));   
     } 
 }
-{% endhighlight %}
+```
 
 The compiler successfully passed the validation and the workflow designer that used the activity was clear of any error indicators. If I rebuild the solution then the compiler would still pass but now the workflow designer indicated the error condition from the above code. After adding other validation errors into the designer for debugging there didn’t seem to be a good reason why the Type.IsAssignableFrom method should fail. The TypeConverterType property value was a type that derived from TypeConverter. With no other options, the code was changed to the following:
 
-{% highlight csharp %}
+```csharp
 if (converterActivity.TypeConverterType != null) 
 { 
     // Rebuilds of the solution will cause this error to be added 
@@ -54,7 +54,7 @@ if (converterActivity.TypeConverterType != null)
     } 
 }
     
-{% endhighlight %}
+```
 
 This now works for the compiler and the workflow designer.
 

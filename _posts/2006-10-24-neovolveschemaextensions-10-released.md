@@ -17,7 +17,7 @@ After the package is installed, add your object mappings to the configuration fi
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <MapperItem key="MyService.XmlNodeKey"
             xmlName="XmlNode"
             xmlNamespace="http://www.myservice.com/project" />
@@ -35,7 +35,7 @@ After the package is installed, add your object mappings to the configuration fi
         <NamespaceDependency namespace="System.Xml" />
     </NamespaceDependencies>
 </MapperItem>
-{% endhighlight %}
+```
 
 Check the log file for the project (found through the start menu) to identify the object types that have not been successfully mapped when web references are updated (assuming logging is enabled in the configuration file). The start menu also has a shortcut to the schema for the configuration file. Because the IDE doesn't restart when a configuration file changes, the IDE must be restarted before changes to the configuration will be reflected in updates to web references. 
 

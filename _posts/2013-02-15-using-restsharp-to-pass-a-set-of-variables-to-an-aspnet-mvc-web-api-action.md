@@ -11,17 +11,17 @@ Assume that the controller action is like the following:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 [HttpGet]
 public HttpResponseMessage MyAction(
     [ModelBinder]List<string> referenceNames, DateTime startDate, DateTime endDate)
 {
 }
-{% endhighlight %}
+```
 
 How do you get RestSharp to send the set of strings to the action so that they are deserialized correctly? The answer is like this.
 
-{% highlight csharp %}
+```csharp
 var client = new RestClient(Config.ServiceAddress);
 var request = new RestRequest(ActionLocation, Method.GET);
     
@@ -30,7 +30,7 @@ request.AddParameter("ReferenceNames", "NameA");
 request.AddParameter("ReferenceNames", "NameB");
 request.AddParameter("StartDate", DateTime.Now.AddYears(-2).ToString("D"));
 request.AddParameter("EndDate", DateTime.Now.AddYears(2).ToString("D"));
-{% endhighlight %}
+```
 
 There are two things that make this work:
 

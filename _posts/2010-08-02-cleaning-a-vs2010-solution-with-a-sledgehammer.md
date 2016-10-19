@@ -10,7 +10,7 @@ Enter the sledgehammer. I wrote a little utility that will recursively go throug
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.SolutionCleaner
 {
     using System;
@@ -107,7 +107,7 @@ namespace Neovolve.SolutionCleaner
         }
     }
 }
-{% endhighlight %}
+```
 
 The best way to hook this up is via the Visual Studio External Tools dialog by passing in the current solutions directory path.![image][0]
 

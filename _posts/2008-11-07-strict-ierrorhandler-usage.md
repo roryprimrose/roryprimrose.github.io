@@ -17,18 +17,18 @@ Failure to configure the service correctly for IErrorHandler implementations may
 
 An alternative to configuration is to use an attribute implementation to compile IErrorHandler implementations to the service implementation. 
 
-{% highlight csharp %}
+```csharp
 [ErrorHandler(typeof(KnownErrorHandler), typeof(UnknownErrorHandler))]
 public class TestService : ITestService
 {
 }
-{% endhighlight %}
+```
 
 In this example, there is a TestService implementation that uses the ITestService contract. The ErrorHandler attribute is used to define two error handlers for the service implementation, being KnownErrorHandler and UnknownErrorHandler. 
 
 Here is the attribute code. 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Collections.ObjectModel; 
 using System.Diagnostics; 
@@ -251,7 +251,7 @@ namespace Neovolve.Toolkit.Communication
         } 
     } 
 } 
-{% endhighlight %}
+```
 
 This attribute can be found in the Neovolve.Toolkit project in the [Neovolve][2] project on CodePlex. The Toolkit binary in the project downloads will include this attribute in the near future. Until then, you can access the code either here or from the CodePlex site. 
 

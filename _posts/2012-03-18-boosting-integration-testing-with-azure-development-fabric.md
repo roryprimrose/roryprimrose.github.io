@@ -11,7 +11,7 @@ This updated one might be helpful for others to leverage as well. This version a
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Azure
 {
     using System;
@@ -305,11 +305,11 @@ namespace Neovolve.Toolkit.Azure
         }
     }
 }
-{% endhighlight %}
+```
 
 This makes use of an extension method on the TestContext class.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Azure
 {
     using System;
@@ -383,7 +383,7 @@ namespace Neovolve.Toolkit.Azure
         }
     }
 }
-{% endhighlight %}
+```
 
 Next up, how to provide a similar implementation for IISExpress.
 

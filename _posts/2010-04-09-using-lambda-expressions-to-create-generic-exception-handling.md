@@ -10,7 +10,7 @@ As I was writing the exception management slice, the code started to get incredi
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public String DoSomething(String withSomeValue, Boolean andAnotherValue)
 {
     try
@@ -41,13 +41,13 @@ public String DoSomething(String withSomeValue, Boolean andAnotherValue)
         throw new SystemFailureException(ex);
     }
 }
-{% endhighlight %}
+```
 
 When there are several methods on the interface/class, this ends up being a maintenance nightmare and really breaks the DRY principle.
 
 It then occurred to me that I could use lambda expressions and pass the functions around as Func&lt;T&gt; and Action parameters. This resulted in code that looked like the following.
 
-{% highlight csharp %}
+```csharp
 public String DoSomething(String withSomeValue, Boolean andAnotherValue)
 {
     return InvokeWithLogging(() => Dependency.DoSomething(withSomeValue, andAnotherValue), "Failed to do something");
@@ -85,13 +85,13 @@ private T InvokeWithLogging<T>(Func<T> method, String failureMessage)
         throw new SystemFailureException(ex);
     }
 }
-{% endhighlight %}
+```
 
 The next bit of duplication was that I have void methods and methods that return a value. I first created a duplicate InvokeWIthLogging method that accepted Action method and duplicated the exception management and logging. I wasn’t happy with this duplication so I figured that the ultimate outcome would be to get the void method to be passed to the InvokeWithLogging(Func&lt;T&gt;) method.
 
 So the big question is how do you pass an Action as a Func&lt;T&gt;. This is really easy. Here is the final code.
 
-{% highlight csharp %}
+```csharp
 public void DoSomethingElse(String withThisValue)
 {
     InvokeWithLogging(() => Dependency.DoSomethingElse(withThisValue), "Failed to do something");
@@ -146,7 +146,7 @@ private T InvokeWithLogging<T>(Func<T> method, String failureMessage)
         throw new SystemFailureException(ex);
     }
 }
-{% endhighlight %}
+```
 
 The trick here is to pass the Action method to a function that simply returns null. This function can then be used to pass to the InvokeWithLogging(Func&lt;T&gt;) method. Job done.
 

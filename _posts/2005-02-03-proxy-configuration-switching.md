@@ -18,7 +18,7 @@ There are two problems with this idea. Firstly, when the IP address is determine
 
 Here is the code:
 
-{% highlight vb.net %}
+```vbnet
 #Region " Imports "
      
 Imports System.Net
@@ -73,6 +73,6 @@ Module modGlobal
     End Sub
      
 End Module
-{% endhighlight %}
+```
 
 [0]: http://www.synop.com/Products/SauceReader/

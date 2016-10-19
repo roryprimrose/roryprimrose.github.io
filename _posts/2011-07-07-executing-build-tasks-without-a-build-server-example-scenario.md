@@ -43,7 +43,7 @@ The pre-build event of this project can then invoke BTE to increment the build n
 
 The pre-build event for the Neovolve.Switch.Extensibility project has been changed to invoke the BTE TfsEdit task followed by the IncrementAssemblyVersion task.  
 
-{% highlight text %}
+```text
 If Not '$(ConfigurationName)' == 'Release' GOTO End
 
 CD "$(SolutionDir)"
@@ -53,7 +53,7 @@ CALL bte iav /pattern:"$(SolutionDir)Solution Items\ProductInfo.cs" /b
 GOTO End
 
 :End
-{% endhighlight %}
+```
 
 This script will only execute BTE when the Release build is selected. I didn’t want to increment the build number for Debug build configurations. When it is in a release build, the TfsEdit task has been configured here to ignore any failures to cater for scenarios where someone is building the solution without a TFS workspace mapping for the solution. The script then increments just the build number in the specified file.
 
@@ -63,7 +63,7 @@ The next step is to get the generation of the Wix project to use the same versio
 
 This is the scenario for the Neovolve.Switch.Deployment project. The beginning of the Product.wxs file defines the product version using a wix variable that is defined in an include file.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0"
       encoding="UTF-8" ?>
 <?include Definitions.wxi ?>
@@ -76,15 +76,15 @@ This is the scenario for the Neovolve.Switch.Deployment project. The beginning o
            Version="$(var.ProductVersion)"
            Manufacturer="$(var.COMPANYNAME)"
            UpgradeCode="0FD2155F-5676-448F-864A-482BE0C26E97">
-{% endhighlight %}
+```
 
 The Neovolve.Switch.Deployment project will also define a pre-build event script like the one defined above for the Neovolve.Switch.Extensibility project.
 
-{% highlight text %}
+```text
 CD "$(SolutionDir)"
 CALL bte tfsedit /pattern:"$(ProjectDir)Definitions.wxi" /i
 CALL bte swv /pattern:"$(ProjectPath)" /source:"$(SolutionDir)Neovolve.Switch\$(OutDir)Switch.exe" /M /m /b /r
-{% endhighlight %}
+```
 
 The BTE TfsEdit task is used again here to attempt to check out the Definitions.wxi file from TFS as it is this file that contains the product version in a project variable. The BTE SyncWixVersion task then obtains the product version from the compiled Switch application and synchronises it into the Wix project before the MSI is compiled.
 
@@ -101,10 +101,10 @@ The simpler solution is to just rename the output of the project once compilatio
 
 A post-build event script is added to the Neovolve.Switch.Deployment project in order to resolve the output of the Wix project and rename it.
 
-{% highlight text %}
+```text
 CD "$(SolutionDir)"
 CALL bte wov /pattern:"$(ProjectPath)"
-{% endhighlight %}
+```
 
 BTE invokes the WixOutputVersion task against the wix project. It will look at all the build configuration for the project and rename as many files as possible that match the output name of the project. It will use the product version information that is defined against the Wix project that was synchronised in the pre-build event script.
 
@@ -112,7 +112,7 @@ BTE invokes the WixOutputVersion task against the wix project. It will look at a
 
 When this solution is compiled, the following is seen in the build log (severely cut down for brevity).
 
-{% highlight text %}
+```text
 ------ Rebuild All started: Project: Neovolve.Switch.Extensibility, Configuration: Release Any CPU ------
   BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
   
@@ -196,7 +196,7 @@ Build Summary
 Total build time: 00:55.555
 
 ========== Rebuild All: 6 succeeded or up-to-date, 0 failed, 0 skipped ==========
-{% endhighlight %}
+```
 
 You can see from the logs that BTE has done the following throughout the build of the solution:
 
@@ -216,7 +216,7 @@ The target directory of the Neovolve.Switch.Deployment project now contains nice
 
 Running all the BTE executions in the project build events is a batch file called bte.bat. This is located in the solution root and makes it easy for any project in the solution to invoke BTE with minimal noise in the build event script window. The batch file simply invokes BTE with all the command line parameters and manages the return code.
 
-{% highlight text %}
+```text
 @ECHO OFF
 References\Neovolve\BuildTaskExecutor\BuildTaskExecutor.exe %*
 
@@ -226,7 +226,7 @@ GOTO BuildTaskSuccessful
 :BuildTaskFailed
 exit 1
 :BuildTaskSuccessful
-{% endhighlight %}
+```
 
 You have seen here how a flexible little tool like BTE can integrate into a solution build to achieve valuable results when you don’t have access to a TFS build infrastructure.
       

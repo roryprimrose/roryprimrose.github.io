@@ -11,7 +11,7 @@ I’ve been wondering about this for a long time. None of the reading that I’v
 
 My test code is very unscientific but achieves the objective.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -90,7 +90,7 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 And here is the answer.![image][0]
 

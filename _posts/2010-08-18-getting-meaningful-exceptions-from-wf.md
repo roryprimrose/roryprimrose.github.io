@@ -13,7 +13,7 @@ Consider the following simple workflow example.
 
 ![image][0]
 
-{% highlight csharp %}
+```csharp
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -34,11 +34,11 @@ namespace WorkflowConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 This example provides the following output.
 
-{% highlight text %}
+```text
 System.InvalidOperationException: Something went wrong
    at System.Activities.WorkflowApplication.Invoke(Activity activity, IDictionar
 y`2 inputs, WorkflowInstanceExtensionManager extensions, TimeSpan timeout)
@@ -48,7 +48,7 @@ ut, WorkflowInstanceExtensionManager extensions)
    at WorkflowConsoleApplication1.Program.Main(String[] args) in e:\users\profil
 edr\documents\visual studio 2010\Projects\WorkflowConsoleApplication2\WorkflowCo
 nsoleApplication2\Program.cs:line 12
-{% endhighlight %}
+```
 
 Exceptions thrown from the workflow engine identify the exception type and message but do not contain an accurate stack trace. Exceptions are caught by the workflow engine and re-thrown when WorkflowInvoker.Invoke is used. This means that the stack trace identifies where the exception has been re-thrown rather than where the exception was originally raised. 
 
@@ -64,7 +64,7 @@ The trick here is to get the exception to preserve the original stack trace when
 
 The first thing to change is that we need to use WorkflowApplication directly rather than WorkflowInvoker. WorkflowInvoker is great for simplicity but does not provide direct access to the thrown exception before it is re-thrown. Using WorkflowApplication provides the ability to hook the OnUnhandledException action where the exception is available. The reflected InternalPreserveStackTrace method can then be invoked on the exception instance before it is re-thrown.
 
-{% highlight csharp %}
+```csharp
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -121,11 +121,11 @@ namespace WorkflowConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 Changing the example program code to use this ActivityInvoker class rather than WorkflowInvoker now provides some more detailed stack trace information.
 
-{% highlight text %}
+```text
 System.InvalidOperationException: Something went wrong
    at System.Activities.Statements.Throw.Execute(CodeActivityContext context)
    at System.Activities.CodeActivity.InternalExecute(ActivityInstance instance,
@@ -142,7 +142,7 @@ s:line 82
    at WorkflowConsoleApplication1.Program.Main(String[] args) in e:\users\profil
 edr\documents\visual studio 2010\Projects\WorkflowConsoleApplication2\WorkflowCo
 nsoleApplication2\Program.cs:line 11
-{% endhighlight %}
+```
 
 The stack trace with preservation now includes the stack frames between ActivityInvoker.Invoke and the class that originally threw the exception. This is particularly helpful when the exception was thrown in an underlying component. Unfortunately the architecture of WF does not often provide much of a stack trace in itself. Preserving the stack trace in this simple scenario has added helpful information but not enough to make it really easy to debug.
 
@@ -152,7 +152,7 @@ Identifying the hierarchy of activities being executed will add further debuggin
     
 A tweak to the exception logic in the ActivityInvoker class will hook into the Activity.Parent property to calculate the activity hierarchy.
     
-{% highlight csharp %}
+```csharp
 namespace WorkflowConsoleApplication1
 {
     using System;
@@ -229,13 +229,13 @@ namespace WorkflowConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 The change here calculates the activity hierarchy and appends it to the exception message. A custom ActivityFailureException is used to help identify that this an exception handled from the workflow engine. The original exception is still available via the InnerException property. 
 
 The output of the program now provides the extended stack trace and the activity hierarchy.
 
-{% highlight text %}
+```text
 WorkflowConsoleApplication1.ActivityFailureException: Something went wrong
 Workflow exception thrown from the following activity stack:
 1.5: Throw - System.Activities.Statements.Throw
@@ -261,7 +261,7 @@ s:line 80
    at WorkflowConsoleApplication1.Program.Main(String[] args) in e:\users\profil
 edr\documents\visual studio 2010\Projects\WorkflowConsoleApplication2\WorkflowCo
 nsoleApplication2\Program.cs:line 11
-{% endhighlight %}
+```
     
 The combination of these two pieces of information will now allow you to quickly identify where the exception is being thrown in or through your workflow assembly.
 

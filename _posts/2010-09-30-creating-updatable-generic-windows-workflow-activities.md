@@ -18,7 +18,7 @@ Changing this value will update the definition of the activity with the new type
 
 This post will use my ExecuteBookmark&lt;T&gt; activity to demonstrate this functionality. This activity provides the reusable structure for persisting and resuming workflows.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -69,13 +69,13 @@ namespace Neovolve.Toolkit.Workflow.Activities
         }
     }
 }
-{% endhighlight %}
+```
 
 This activity defines the default type of String. Designer support for changing this type is required after dropping the activity on the designer because the DefaultArgumentTypeAttribute avoids the developer having to define the generic type up front. It has the additional benefit of allowing the developer to change the activity type once it is is already on the designer as the workflow is developed and refactored.
 
 The ArgumentType property does not exist on the ExecuteBookmark&lt;T&gt; class. It is an AttachedProperty&lt;Type&gt; instance attached to the ModelItem that represents the activity on the design surface. The setter of this property provides the notification that the type is being changed. The designer attaches the property to the ModelItem in the activity designer when a new ModelItem instance is assigned.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -98,11 +98,11 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
         }
     }
 }
-{% endhighlight %}
+```
 
 The designer calls down into a custom GenericArgumentTypeUpdater class to attach the updatable type functionality to the ModelItem. Unlike the internal Microsoft implementation, this class supports multiple generic type arguments.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -237,7 +237,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 The class determines how many generic type arguments on the activity will be updatable. It then loops through this number and creates an attached property on the ModelItem for each of these. The AttachedProperty is marked as IsBrowsable = true so that it is displayed in the property grid.
 
@@ -253,7 +253,7 @@ The next job is to detect if the activity has the default display name value. If
 
 Lastly, the class makes a call into a DesignerUpdater helper class that is used to ensure that the updated activity is selected.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -297,7 +297,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 The final piece of the puzzle is support for changing the type within the designer surface itself. This is modelled from the InvokeMethod activity that allows for custom types to be defined in the designer.
 
@@ -305,7 +305,7 @@ The final piece of the puzzle is support for changing the type within the design
 
 The way to get this to work is to add the following into the XAML of the activity designer.
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner.Resources>
     <conv:ModelToObjectValueConverter x:Key="modelItemConverter"
         x:Uid="sadm:ModelToObjectValueConverter_1" />
@@ -318,7 +318,7 @@ The way to get this to work is to add the following into the XAML of the activit
     Label="Target type"
     Type="{Binding Path=ModelItem.TypeArgument, Mode=TwoWay, Converter={StaticResource modelItemConverter}}"
     Context="{Binding Context}" />
-{% endhighlight %}
+```
 
 This will provide the dropdown list of types for the designer. The first important item to note is that the TypePresenter is bound to the attached property created by GenericArgumentTypeUpdater. The second important item is the binding of the EditingContext. Without the editing context, the dropdown list and associated dialog support will not display references to assemblies and types related to the current workflow.
 

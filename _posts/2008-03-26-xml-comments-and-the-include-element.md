@@ -17,7 +17,7 @@ Lets look some examples. Here is my initial code:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System.Diagnostics;
      
 namespace ClassLibrary1
@@ -115,7 +115,7 @@ namespace ClassLibrary1
         }
     }
 }
-{% endhighlight %}
+```
 
 There is some duplication here that we can take care of with &lt;include /&gt;.
 
@@ -123,7 +123,7 @@ There is some duplication here that we can take care of with &lt;include /&gt;.
 
 To cover the first reason above, there is duplication of the comment for the Checksum properties in the two classes. The documentation in its entirety is the same. Excellent candidate for pushing out into a common xml file. Add an xml file to the project called something like CommonDocumentation.xml and come up with an appropriate schema. I put together something like this:
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <CommonDocumentation>
     <Properties>
@@ -147,11 +147,11 @@ To cover the first reason above, there is duplication of the comment for the Che
     </Property>
     </Properties>
 </CommonDocumentation>
-{% endhighlight %}
+```
 
 We can now update each of those properties to something like this:
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <CommonDocumentation>
     <Properties>
@@ -175,13 +175,13 @@ We can now update each of those properties to something like this:
     </Property>
     </Properties>
 </CommonDocumentation>    
-{% endhighlight %}
+```
 
  **Reason 2: You can include part of the xml comment for an item**
 
 You can mix &lt;include /&gt; elements with other xml comments on the same item. This means you are not constrained to having the entire xml comment pushed out to an external file. If there is partial content being duplicated, this works too. Let's update the common documentation file to include the common remarks.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <CommonDocumentation>
     <Properties>
@@ -212,11 +212,11 @@ You can mix &lt;include /&gt; elements with other xml comments on the same item.
     </Remark>
     </Remarks>
 </CommonDocumentation>    
-{% endhighlight %}
+```
 
 We can now update the SomeRandomMethod() comments to be the following:
 
-{% highlight csharp %}
+```csharp
 /// <summary>
 /// Does something random.
 /// </summary>
@@ -227,7 +227,7 @@ public void SomeRandomMethod()
 {
     Debug.WriteLine("Do something.");
 }
-{% endhighlight %}
+```
 
 ## Reason 3: You can include include elements and they will be recursively resolved
 
@@ -237,7 +237,7 @@ In the examples so far, there is an extensive amount of comments in the remarks 
 
 The final xml file is:
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <CommonDocumentation>
     <Properties>
@@ -272,11 +272,11 @@ The final xml file is:
     </Remark>
     </Remarks>
 </CommonDocumentation>    
-{% endhighlight %}
+```
 
 The final class file is:
 
-{% highlight csharp %}
+```csharp
 using System.Diagnostics;
      
 namespace ClassLibrary1
@@ -328,7 +328,7 @@ namespace ClassLibrary1
         }
     }
 }    
-{% endhighlight %}
+```
 
 ## Issues
 

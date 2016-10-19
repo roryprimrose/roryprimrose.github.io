@@ -13,7 +13,7 @@ I have put together the following custom control for my project to suit my purpo
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Switch.Controls
 {
     using System;
@@ -86,6 +86,6 @@ namespace Neovolve.Switch.Controls
         }
     }
 }
-{% endhighlight %}
+```
 
 

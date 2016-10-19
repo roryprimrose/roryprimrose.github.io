@@ -20,7 +20,7 @@ The MSDN documentation (see [here][0]) provides examples about how to to create 
 
 The error handler implements IErrorHandler, but also implements IServiceBehavior. This interface allows the error handler to be hooked up by configuration.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -80,13 +80,13 @@ namespace WcfServiceLibrary1
     }
 }
     
-{% endhighlight %}
+```
 
 ## ErrorHandlerElement
 
 The error handler element defines the extension behavior such that ErrorHandler can be defined against a service behavior.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.ServiceModel.Configuration;
      
@@ -109,13 +109,13 @@ namespace WcfServiceLibrary1
     }
 }
     
-{% endhighlight %}
+```
 
 ## Configuration
 
 This configuration identifies the ErrorHandlerElement as a behavior extension, which then allows errorHandler (the name of the configured extension) to be defined against the service behavior. This is how the error handler gets hooked up for the service.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
      
@@ -147,7 +147,7 @@ This configuration identifies the ErrorHandlerElement as a behavior extension, w
     </services>
     </system.serviceModel>
 </configuration>    
-{% endhighlight %}
+```
 
 This will hook up the error handler to cover any exceptions thrown by the service. Error handlers can also be debugged via the IDE.
 

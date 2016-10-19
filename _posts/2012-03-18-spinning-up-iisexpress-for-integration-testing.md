@@ -11,7 +11,7 @@ The local STS is running on IISExpress. Like the [previous post][0] about runnin
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.TestSupport
 {
     using System;
@@ -153,7 +153,7 @@ namespace Neovolve.Toolkit.TestSupport
         }
     }
 }
-{% endhighlight %}
+```
 
 Unfortunately this implementation is not able to automatically resolve project information that the Azure implementation can. The code would have to make too many inappropriate assumptions in order to make this work. This implementation therefore requires the information about the site it will host to be provided to it.
 

@@ -26,7 +26,7 @@ Another thing also comes to mind. What about performance? By using the array, I 
 
 A quick test gave me a suitable answer.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -87,7 +87,7 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 Each time I run this test, the for loop runs at 70% of the time of the foreach loop, even with the array copy.
 

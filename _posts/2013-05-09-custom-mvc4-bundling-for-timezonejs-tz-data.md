@@ -19,7 +19,7 @@ For background, this is my current implementation. The web project structure loo
 
 The project was already bundling the zone files using the following logic.  
 
-{% highlight csharp %}
+```csharp
 private static void BundleTimeZoneData(BundleCollection bundles, HttpServerUtility server)
 {
     var directory = server.MapPath("~/Scripts/tz");
@@ -41,21 +41,21 @@ private static void BundleTimeZoneData(BundleCollection bundles, HttpServerUtili
         bundles.Add(new Bundle("~/script/tz/" + fileName).Include("~/Scripts/tz/" + fileName));
     }
 }
-{% endhighlight %}
+```
 
 The timezoneJS package is configured so that it correctly references the bundle paths.
 
-{% highlight javascript %}
+```javascript
 timezoneJS.timezone.zoneFileBasePath = "/script/tz";
 timezoneJS.timezone.defaultZoneFile = [];
 timezoneJS.timezone.init({ async: false });
-{% endhighlight %}
+```
 
 ## Custom Bundle Builder
 
 Now comes the part were we strip out the unnecessary comments from the zone files. The TimeZoneBundleBuilder class simply strips out blank lines, lines that start with comments and the parts of lines that end in comments.
 
-{% highlight csharp %}
+```csharp
 public class TimeZoneBundleBuilder : IBundleBuilder
 {
     private readonly IBundleBuilder _builder;
@@ -115,17 +115,17 @@ public class TimeZoneBundleBuilder : IBundleBuilder
         return builder.ToString();
     }
 }
-{% endhighlight %}
+```
 
 This is then hooked up in the bundle configuration for the tz files.
     
-{% highlight csharp %}
+```csharp
 bundles.Add(
     new Bundle("~/script/tz/" + fileName)
     {
         Builder = new TimeZoneBundleBuilder()
     }.Include("~/Scripts/tz/" + fileName));
-{% endhighlight %}
+```
 
 Fiddler confirms that the bundler is stripping the comments. The good news here is that gzip compression also comes into play. Now the gzip compressed “northamerica” file is down from 58kb to 9kb over the wire.
 

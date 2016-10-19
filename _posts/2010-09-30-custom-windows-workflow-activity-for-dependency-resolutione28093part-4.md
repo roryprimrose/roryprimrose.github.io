@@ -29,7 +29,7 @@ It is important to note that the activity assembly should never reference the de
 
 An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -78,7 +78,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 The RegisterMetadata class seen here is the IRegisterMetadata implementation for my custom workflows. This class does two things. Firstly it associates activity designers with their activities. Secondly it takes the opportunity to add a custom morph action into the MorphHelper class.
 
@@ -96,12 +96,12 @@ Understandably MorphHelper will not know how to transform any possible data/type
 
 The DesignerMetadata class contains the following default morph actions.
 
-{% highlight csharp %}
+```csharp
 MorphHelper.AddPropertyValueMorphHelper(typeof(InArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(OutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(ActivityAction<>), new PropertyValueMorphHelper(MorphHelpers.ActivityActionMorphHelper));
-{% endhighlight %}
+```
 
 There is support for morphing InArgument&lt;&gt;, OutArgument&lt;&gt;, InOutArgument&lt;&gt; and ActivityAction&lt;&gt; properties between ModelItem types.
 
@@ -109,7 +109,7 @@ The issue I had with creating the updatable type support for InstanceResolver wa
 
 The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction&lt;T1…T16&gt;.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -158,7 +158,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 This code is modelled from the Microsoft implementation of ActivityAction&lt;&gt; morphing. This implementation however has full support for multiple generic types. 
 

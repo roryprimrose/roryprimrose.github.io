@@ -10,7 +10,7 @@ Consider the following code:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 internal interface IBaseInterface
 {
     void GetSomething();
@@ -20,7 +20,7 @@ internal interface IDerivedInterface : IBaseInterface
 {
     void DoSomethingElse();
 }
-{% endhighlight %}
+```
 
 Does interface inheritance exist?
 
@@ -36,7 +36,7 @@ Now things get a little curly here. An interface that implements an interface do
 
 Here is the complete source:
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Reflection;
      
@@ -116,6 +116,6 @@ namespace ConsoleApplication1
         }
     }
 }    
-{% endhighlight %}
+```
 
 

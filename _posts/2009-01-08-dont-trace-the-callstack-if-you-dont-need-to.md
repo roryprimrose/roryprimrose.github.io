@@ -15,7 +15,7 @@ Here is the configuration I used:
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
   <system.diagnostics> 
@@ -41,11 +41,11 @@ Here is the configuration I used:
     </sources> 
   </system.diagnostics> 
 </configuration> 
-{% endhighlight %}
+```
 
 And here are the unit tests: 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 
@@ -91,8 +91,7 @@ namespace TestProject3
         } 
     } 
 } 
-
-{% endhighlight %}
+```
 
 ## With Callstack 
 

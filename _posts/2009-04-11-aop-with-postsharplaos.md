@@ -9,7 +9,7 @@ PostSharp.Laos is a Lightweight Aspect-Orientated System for PostSharp that make
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
      
 namespace ConsoleApplication1
@@ -29,7 +29,7 @@ namespace ConsoleApplication1
         }
     }
 }    
-{% endhighlight %}
+```
 
 ## Project references required
 
@@ -43,7 +43,7 @@ I know that PostSharp.Laos is easy to use in comparison to PostSharp.Core, but I
 
 In order to aspect the RunTest method in the code defined above, an OnMethodInvocationAspect derived attribute was created for the aspect and declared against the RunTest method.
 
-{% highlight csharp %}
+```csharp
 using System;
 using PostSharp.Laos;
      
@@ -83,7 +83,7 @@ namespace ConsoleApplication1
         }
     }
 }    
-{% endhighlight %}
+```
 
 PostSharp will find the MethodTraceAspect attribute on the RunTest method and change the IL so that the OnInvocation method of the attribute is invoked instead of the RunTest method. The context.Proceed() method in the attribute then invokes the RunTest method.
 
@@ -91,7 +91,7 @@ PostSharp will find the MethodTraceAspect attribute on the RunTest method and ch
 
 PostSharp kicks in after the original code has been compiled and changes the IL to include the aspect. Reflector shows the following outcome as the combination of the compiler and PostSharp doing their work.
 
-{% highlight csharp %}
+```csharp
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using PostSharp.Laos;
@@ -174,7 +174,7 @@ internal sealed class ~PostSharp~Laos~Implementation
     [Serializable]
     public delegate void ~delegate~0();
 }
-{% endhighlight %}
+```
 
 The important part to note is that the contents of RunTest() have been moved into ~RunTest() and have been replaced with a call to MethodTraceAspectAttribute.OnInvocation. A delegate to ~RunTest() is passed in the arguments to OnInvocation so that the aspect can then invoke the original method.
 

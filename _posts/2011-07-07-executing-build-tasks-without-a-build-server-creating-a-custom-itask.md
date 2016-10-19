@@ -21,7 +21,7 @@ The MultiTask class will take the EventWriter service from BTE as a constructor 
 
 MultiTask defines the structure for the command line arguments so that the user can define multiple tasks and their arguments.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -164,7 +164,7 @@ namespace Neovolve.BuildTaskExecutor.ThirdParty
         }
     }
 }
-{% endhighlight %}
+```
 
 The assembly that contains this custom task needs to reside in the same directory as BuildTaskExecutor.exe for MEF to resolve the task. Running BTE with the generic help task will prove that this custom task is being picked up by MEF.![image][2]
 

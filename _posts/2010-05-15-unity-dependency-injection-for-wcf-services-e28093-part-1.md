@@ -15,7 +15,7 @@ The second option is to create a custom service host factory. This option allows
 
 The code goes a bit like this. The UnityServiceHostFactory class is used to define how to create a service host to host the service endpoints. The factory calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][0].
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
@@ -58,21 +58,21 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The configuration for the factory via svc mark-up is the following.
 
-{% highlight xml %}
+```xml
 <%@ ServiceHost 
     Language="C#" 
     Debug="true" 
     Service="Neovolve.Toolkit.Unity.WebIntegrationTests.TestService" 
     Factory="Neovolve.Toolkit.Unity.UnityServiceHostFactory" %>
-{% endhighlight %}
+```
 
 The configuration via web.config (.net 4.0 only) is like this. This configuration also includes an example Unity container configuration.
 
-{% highlight xml %}
+```xml
 <configuration>
     <configSections>
         <section name="unity"
@@ -101,11 +101,11 @@ The configuration via web.config (.net 4.0 only) is like this. This configuratio
         </serviceHostingEnvironment>
     </system.serviceModel>
 </configuration>
-{% endhighlight %}
+```
 
 The UnityServiceHost class is used to configure the host for a behaviour that is used to create the service instances.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.ServiceModel;
 using Microsoft.Practices.Unity;
@@ -142,11 +142,11 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The UnityServiceBehavior is used assign a new instance provider to each endpoint in the service host.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
@@ -214,11 +214,11 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The UnityInstanceProvider is used to resolve an instance from a Unity container using the service type defined for an endpoint. This is where the real work happens to create a service instance with injected dependencies. This implementation also calls the Unity container to destroy the service instance according to its configuration.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Configuration;
 using System.Globalization;
@@ -285,7 +285,7 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 That’s it for the custom service host factory code. The one disadvantage with this technique is that there is no configuration support for ServiceHostFactory implementations. The UnityServiceHostFactory is restricted to resolving the default (un-named) container using the standard unity section name of “unity”. If this restriction is not suitable, then a custom UnityServiceBehavior must be used.
 

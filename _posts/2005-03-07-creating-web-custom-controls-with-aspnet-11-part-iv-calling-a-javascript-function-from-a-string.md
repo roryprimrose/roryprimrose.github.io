@@ -24,9 +24,9 @@ There are several ways to do this. These include but are not limited to:
 
 We could chain the two functions required by declaring them in the event handler on the controls tag. To do this, the tag would be rendered like this:
 
-{% highlight aspx-vb %}
+```aspx-vb
 <DIV onclick="ControlCode();ImpelementorCode();"></DIV>
-{% endhighlight %}
+```
 
 There are issues with this solutions such as:
 
@@ -39,18 +39,18 @@ There are issues with this solutions such as:
 
 These are not the only situations that make the above solution not feasible. Many of these issues can be coded around with more complex control rendering, but it is a lot of work to cover these issues using the above solution. Because of this, we don't want the implementors function call to be rendered in the controls event handler. As such, our controls will usually render a click event handler like this:
 
-{% highlight aspx-vb %}
+```aspx-vb
 <DIV onclick="return ControlCode();"></DIV>
-{% endhighlight %}
+```
 
 ## Setting new function pointers to the events
 
 If the controls internal function is called from the event handler, but the implementors function isn't, there is another way of getting the implementors function to run on the event. We can repoint the event handler to a new function pointer.
 
-{% highlight javascript %}
+```javascript
 var objElement = document.getElementById("MyControlID");
 objElement.onclick = ImplementorFunction;
-{% endhighlight %}
+```
 
 The good news is that there is only one problem with this solution. The bad news is that it is a complete deal breaker. What this will do is when the onclick event fires, it will no longer call the ControlCode function because the event handler has been given a new function pointer. It will now only call the ImplementorCode function. The result is that the controls internal code will not run.
 
@@ -58,14 +58,14 @@ The good news is that there is only one problem with this solution. The bad news
 
 To follow on from the previous solution, instead of repointing the event handler to a new function, we can add a function pointer to the set of functions that the event handler will call. This is done like this:
 
-{% highlight javascript %}
+```javascript
 var objElement = document.getElementById("MyControlID");
 // For IE
 objElement.attachEvent("onclick", ImplementorFunction);
 // Or
 objElement.addEventListener("onclick", ImplementorFunction);
 // For Netscape
-{% endhighlight %}
+```
 
 This solution is better because in this case, the controls click code will run, as well as the implementers code. It does however suffer from the same problems as the previous solutions, as well as:
 
@@ -92,23 +92,23 @@ The answer to all these problems is the JavaScript Function object. With the Fun
 
 To make a function pointer from a function name string, all we have to do is generate a new function where the code calls the string value. This will look like this:
 
-{% highlight javascript %}
+```javascript
 function InvokeFunction(Handler)
 {
     var objFunc = new Function("return " + Handler + "();");
 
     return objFunc.apply(this.caller);
 }
-{% endhighlight %}
+```
 
 The above code will result in an anonymous function being created and called at runtime. If the function name in the Handler parameter was "TestFunc", then the code for the anonymous function when run will be:
 
-{% highlight javascript %}
+```javascript
 function anonymous()
 {
     return TestFunc();
 }
-{% endhighlight %}
+```
 
 With just this amount of code, we have been able to convert a string into a JavaScript function call, and pass back the return value.
 
@@ -118,7 +118,7 @@ My InvokeFunction function will assume that the first and only declared paramete
 
 The full function looks like this:
 
-{% highlight javascript %}
+```javascript
 function InvokeFunction(Handler)
 {
     // Calls Handler and passes any additional parameters
@@ -175,11 +175,11 @@ function InvokeFunction(Handler)
         throw new Error("Failed to invoke function " + Handler + ".\n\n" + e.message);
     }
 }
-{% endhighlight %}
+```
 
 We have now been able to pass parameters to a function call that is defined by either a string or a function pointer and handle its return value. To test this out, a simple test page will do the trick.
 
-{% highlight javascript %}
+```javascript
 <HTML>
     <HEAD>
     <SCRIPT language="javascript">
@@ -269,14 +269,14 @@ We have now been able to pass parameters to a function call that is defined by e
     <BODY onload="RunTest();">
     </BODY>
 </HTML>
-{% endhighlight %}
+```
 
 This test case results in an anonymous function being created and called. That function is this:
 
-{% highlight javascript %}
+```javascript
 function anonymous()
 {
     return TestFunc(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
 }
-{% endhighlight %}
+```
 

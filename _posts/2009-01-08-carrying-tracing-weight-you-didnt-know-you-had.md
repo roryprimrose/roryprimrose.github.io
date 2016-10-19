@@ -13,7 +13,7 @@ All the tracing methods of this listener implementation call down to an internal
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 private void internalWrite(string message)
 {
     if (Debugger.IsLogging())
@@ -29,11 +29,11 @@ private void internalWrite(string message)
         SafeNativeMethods.OutputDebugString(message);
     }
 }    
-{% endhighlight %}
+```
 
 This is extra baggage that you probably didn't know you had. If you want lean tracing performance and don't need this debug trace support, the best option is to remove this listener in configuration. All you have to do is add a _&lt;clear /&gt;_ element as the first item in the listeners element for each source you have defined in your configuration. 
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
     <system.diagnostics>
@@ -52,7 +52,7 @@ This is extra baggage that you probably didn't know you had. If you want lean tr
     </sources>    
     </system.diagnostics> 
 </configuration>     
-{% endhighlight %}
+```
 
 [0]: /2009/01/08/disable-trace-usegloballock-for-better-tracing-performance/
 [1]: http://msdn.microsoft.com/en-us/library/system.diagnostics.defaulttracelistener.aspx

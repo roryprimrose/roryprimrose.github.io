@@ -13,7 +13,7 @@ The way this is done is via an InstanceHandler&lt;T&gt; class.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -65,7 +65,7 @@ namespace Neovolve.Toolkit.Workflow
         }
     }
 }
-{% endhighlight %}
+```
 
 The InstanceHandler&lt;T&gt; class contains the description of the resolution. This identifies the type of resolution (being &lt;T&gt;) and the name for the resolution. This may by null for default resolutions in Unity. The class also creates a GUID value that identifies a particular instance of this class. This is needed so that instances can be resolved from a cache when the owning activity is either persisted or finalised (completed, aborted or cancelled).
 
@@ -80,7 +80,7 @@ The first reason is merely a beneficial side effect. The second reason listed is
 
 This class makes a static call out to an InstanceManagerExtension to resolve the instance. The InstanceManagerExtension class is used to abstract the resolution, management and clean up logic for instances requested by the handler class.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Extensions
 {
     using System;
@@ -250,7 +250,7 @@ namespace Neovolve.Toolkit.Workflow.Extensions
         }
     }
 }
-{% endhighlight %}
+```
 
 The InstanceManagerExtension creates InstanceHandler instances, resolve dependencies and tear down dependencies. The extension will resolve a Unity container from configuration if a container has not already been assigned prior to the first dependency being resolved. This allows for a custom container to be provided if that is required but also falls back on a default behaviour.
 

@@ -22,7 +22,7 @@ The following are some examples of BTE running on the command line. I am using a
 
 The first version of BTE provides the following tasks built into the application (as defined by the help output):
 
-{% highlight text %}
+```text
 BuildTaskExecutor BinaryOutputVersion|bov
 Renames the project output to include the product version of the project output.
 
@@ -40,7 +40,7 @@ Checks out files from TFS based on a search pattern. The checkout will use defau
 
 BuildTaskExecutor WixOutputVersion|wov
 Renames the Wix project output to include the wix product version.
-{% endhighlight %}
+```
 
 The next post will provide a scenario where these tasks are used to manage the version of a solution without a full TFS environment.
 

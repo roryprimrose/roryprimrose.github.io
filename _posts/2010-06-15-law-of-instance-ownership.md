@@ -17,12 +17,12 @@ A common misconception is that the member that creates an instance is responsibl
 
 Take System.IO.File.Open() method for example.
 
-{% highlight csharp %}
+```csharp
 public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
 {
     return new FileStream(path, mode, access, share);
 }
-{% endhighlight %}
+```
 
 This method returns a Stream which must be disposed when it is no longer required. While the File.Open method created the stream instance, it is up to the member that owns the stream to dispose of it.
 

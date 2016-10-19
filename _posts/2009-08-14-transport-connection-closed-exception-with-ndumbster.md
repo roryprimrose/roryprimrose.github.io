@@ -25,7 +25,7 @@ I worked on this one for a while. Without wanting to get my fingers into the nDu
 
 The unit test code looks like the following.
 
-{% highlight csharp %}
+```csharp
 /// <summary>
 /// Stores the random generator.
 /// </summary>
@@ -63,6 +63,6 @@ public void TestInitialize()
 }
     
 #endregion
-{% endhighlight %}
+```
 
 [0]: http://blogs.blackmarble.co.uk/blogs/rfennell/archive/2008/09/27/mocking-out-an-email-server.aspx

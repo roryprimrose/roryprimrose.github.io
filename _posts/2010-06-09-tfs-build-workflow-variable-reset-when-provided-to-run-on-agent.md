@@ -17,7 +17,7 @@ What I was finding was that the build version was being reset when the Run On Ag
 
 This resulted in the following output in the build log.
 
-{% highlight text %}
+```text
 If DropBuild And Build Reason is ValidateShelveset
 Initial Property Values
 Condition = False
@@ -34,7 +34,7 @@ ReservationSpec = Name=*, Tags=
 BuildVersion: (0.0.0.0)
 00:00
 Initialize Variables
-{% endhighlight %}
+```
 
 I posted a question out to the [Build Automation][1] forum, the [OzTFS mail list][2] and emailed [Grant][3] my query. Grant sent my email on to [William Bartholomew][4] who wrote the excellent [MS Press Team Build book][5]. William suggested putting the Serializable attribute on my build version struct because this activity sends the workflow variables to the build agent. Unfortunately this didn’t stop the variable from being reset.
 
@@ -44,7 +44,7 @@ I did some browsing of the Run On Agent (AgentScope) activity using Reflector. I
 
 The build log now contains the following.
 
-{% highlight text %}
+```text
 If DropBuild And Build Reason is ValidateShelveset
 Initial Property Values
 Condition = False
@@ -60,7 +60,7 @@ ReservationSpec = Name=*, Tags=
 BuildVersion: (4.3.7.10)
 00:00
 Initialize Variables
-{% endhighlight %}
+```
 
 So it seems that information provided to the build agent uses property reflection rather than serialization. Perhaps a particular implementation of serialization is used such that the Serialization attribute alone is not enough. If property reflection alone is used then it would be an odd choice of implementation and one that is quite limiting. Either way, using classes with properties seems to be the answer to providing workflow variables to build agents.
 

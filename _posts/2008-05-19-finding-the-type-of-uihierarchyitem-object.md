@@ -13,7 +13,7 @@ By using this DebugHelper class in your addin solution, you will be able to figu
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -88,7 +88,7 @@ namespace Neovolve.Extensibility.VisualStudio
     }
 }
     
-{% endhighlight %}
+```
 
 Using this debug helper method saved hours if not days in fixing [this problem][1]. I hope this helps other people as well.
 

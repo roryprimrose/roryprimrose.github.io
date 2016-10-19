@@ -43,7 +43,7 @@ I added some code to the bootstrapper Main method to extract the resource out to
 
 This is actually really easy to achieve in a Visual Studio project. You can add an application manifest to the project and set the requestedExecutionLevel to requireAdministrator.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
@@ -67,7 +67,7 @@ This is actually really easy to achieve in a Visual Studio project. You can add 
     </security>
     </trustInfo>  
 </asmv1:assembly>
-{% endhighlight %}
+```
 
 The app.manifest file will then cause Windows to automatically elevate the application when it is started. At this point, all other downstream applications (the MSI execution) will also be elevated. The app.manifest is compiled into the assembly which still leaves the bootstrapper being completely self-contained.
 

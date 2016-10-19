@@ -11,7 +11,7 @@ To demonstrate this scenario, consider the following example:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
     
 namespace Neovolve.UnityTesting
@@ -55,7 +55,7 @@ namespace Neovolve.UnityTesting
         }
     }
 }
-{% endhighlight %}
+```
 
 Unfortunately Unity does not provide a way to resolve a configuration value and inject it into the instance being resolved. This means that the configuration value must be injected as a literal value defined in the unity configuration. While this works, most people think in terms of the appSettings element when configuring the options for their application. This would require them to also review the often complex unity configuration to adjust a required value. I wanted a way to essentially redirect the appSetting value into a unity injection value.
 
@@ -63,7 +63,7 @@ I spent a bit of time cruising around the EntLib source with Reflector to see wh
 
 The DeserializePolymorphicElement method is the key. It uses an elementType attribute that gets resolved as InjectionParameterValueElement. This is the point at which Unity can be extended to provide a custom injection implementation. I created an AppSettingsParameterInjectionElement class that is mostly a copy of InstanceValueElement which is the unity definition for injection configuration of literal values. The class looks like the following:
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.ComponentModel;
 using System.Configuration;
@@ -182,11 +182,11 @@ namespace Neovolve.UnityTesting
         }
     }
 }
-{% endhighlight %}
+```
 
 The configuration for this looks like the following:
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     
@@ -234,11 +234,11 @@ The configuration for this looks like the following:
     </containers>
     </unity>
 </configuration>
-{% endhighlight %}
+```
 
 The test application to tie all this together is the following:
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Configuration;
 using Microsoft.Practices.Unity;
@@ -262,7 +262,7 @@ namespace Neovolve.UnityTesting
         }
     }
 }
-{% endhighlight %}
+```
 
 In this process I found that it would be nice if the InstanceValueElement class was designed to allow for easier extension. The two likely options here are to allow the CreateInstance method or the Value property to be overridden. This would mean that the above class would only have to resolve the application setting rather than essentially duplicate the logic in InstanceValueElement.
 

@@ -17,7 +17,7 @@ I am not a huge fan of composite controls, so I normally create Rendered Control
 
 My lightweight Label control looks like this:
 
-{% highlight vb.net %}
+```vbnet
 # Region " Imports "
 
  Imports System.ComponentModel
@@ -75,6 +75,6 @@ My lightweight Label control looks like this:
 # End  Region
 
  End  Class
-{% endhighlight %}
+```
 
 This control doesn't render start or end tags and no styles can be defined for it. The style of the rendered control is inherited via CSS from its parents. It is a very simple control that just renders the Text property of the control. Note that the overridden Render method doesn't call MyBase.Render as it is not required in this case. The Rendering of the control is completely handled by this class.

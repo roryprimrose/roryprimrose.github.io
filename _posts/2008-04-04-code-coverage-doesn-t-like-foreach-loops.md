@@ -11,7 +11,7 @@ Here is the situation. I have a flush method that looks like this:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public void Flush()
 {
     // Loop through each listener
@@ -21,13 +21,13 @@ public void Flush()
         listener.Flush();
     }
 }
-{% endhighlight %}
+```
 
 Code coverage for this method says that 2 blocks not covered, 12.5% not covered, 14 blocks covered, 87.5% covered. Code metrics for this method are maintainability index is 80, cyclomatic complexity is 3, class coupling is 5 and lines of code is 2.
 
 The IL for this method is:
 
-{% highlight text %}
+```text
 .method public hidebysig instance void Flush() cil managed
 {
     .maxstack 2
@@ -76,7 +76,7 @@ The IL for this method is:
     L_004e: ret 
     .try L_0013 to L_0036 finally handler L_0036 to L_004d
 }
-{% endhighlight %}
+```
 
 The UI for code coverage indicates that each line of code is hit. My guess is that there is something to do with the IEnumerator that is called when foreach is compiled.
 

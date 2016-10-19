@@ -8,7 +8,7 @@ I got a request for an example of how to use the EntityAdapter class I [previous
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public enum Gender
 {
     Unspecified = 0,
@@ -79,11 +79,11 @@ public class PersonAdapter : EntityAdapter<Person>
         return BuildRowKey(Value.Email);
     }
 }
-{% endhighlight %}
+```
 
 This adapter can be used to read and write entities to ATS like the following.
 
-{% highlight csharp %}
+```csharp
 public async Task<IEnumerable<Person>> ReadDomainUsersAsync(string domain)
 {
     var storageAccount = CloudStorageAccount.Parse("YourConnectionString");
@@ -135,7 +135,7 @@ public async Task WritePersonAsync(Person person)
     
     table.Execute(operation);
 }
-{% endhighlight %}
+```
 
 Hope this helps.
 

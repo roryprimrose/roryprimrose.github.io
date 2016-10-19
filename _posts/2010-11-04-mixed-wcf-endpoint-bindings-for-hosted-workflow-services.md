@@ -11,7 +11,7 @@ The WCF configuration for the hosted services looked a little like this before t
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <system.serviceModel>
     <protocolMapping>
         <add scheme=&quot;http&quot;
@@ -63,7 +63,7 @@ The WCF configuration for the hosted services looked a little like this before t
     </extensions>
     <serviceHostingEnvironment multipleSiteBindingsEnabled=&quot;true&quot; />
 </system.serviceModel>
-{% endhighlight %}
+```
 
 The key thing to notice is that WCF4 uses default configuration values. These services use ws2007FederationHttpBinding in order to communicate with the STS but this is not the default binding for the HTTP stack. The configuration makes this work by defining the federation binding for HTTP using the protocolMapping/add element. The bindings/ws2007FederationBinding configuration does not specify a name as it represents the default configuration for that type of binding.
 
@@ -75,7 +75,7 @@ This configuration name needs to match to a WCF service configuration name. This
 
 The relevant change to the above configuration is to add the following.
 
-{% highlight xml %}
+```xml
 <services>
     <service name=&quot;Neovolve.Jabiru.Server.Services.Registration&quot;>
         <endpoint binding=&quot;basicHttpBinding&quot;
@@ -90,7 +90,7 @@ The relevant change to the above configuration is to add the following.
         </binding>
     </basicHttpBinding>
 </bindings>
-{% endhighlight %}
+```
 
 The second important step is to define the “correct” contract name. Ordinarily the contract name in WCF would be the [Namespace].[TypeName] value of the service contract. For some reason this only worked when I specified just the type name.
 

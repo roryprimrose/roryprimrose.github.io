@@ -22,7 +22,7 @@ The radio button control inherits from the checkbox control and the only major d
 
 This inconsistency will become a problem especially when classes are used in tags above the control in the HTML hierarchy and selectors are used to style the input fields. Take the following ASPX declaration for example:
 
-{% highlight aspx-vb %}
+```aspx-vb
 <%@ Page Language="VB" AutoEventWireup="false" CodeFile="Default.aspx.vb" Inherits="_Default" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 
@@ -58,13 +58,13 @@ This inconsistency will become a problem especially when classes are used in tag
     </form> 
 </body> 
 </html> 
-{% endhighlight %}
+```
 
 The intention behind this example is that the INPUT tags will be styled with a border and margins based on a CSS class assigned further up the HTML hierarchy. The CSS class and selector is saying that where a tag is found with the CSS class of TestClass, apply the style to any controls like checkboxes and radio buttons. This demonstrates a likely scenario where the developer is under the assumption that a checkbox will always render a SPAN tag as the parent element.
 
 When this is run, the HTML output is this:
 
- {% highlight aspx-vb %}
+ ```aspx-vb
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
@@ -108,7 +108,7 @@ GNoa1Rlc3Q0073yAnmuscc5SVp45f2hz4h5v5k=" />
     </form> 
 </body> 
 </html> 
-{% endhighlight %}
+```
 
 The first two checkboxes don't apply the style, but the other two do. I am sure that there will be developers every now and then that can't figure out why their selector based styles are not being used for their radio buttons and checkbox controls. If the Microsoft developer of these web controls was consistent and always rendered a SPAN tag as the parent element, this wouldn't be a problem.
 

@@ -10,7 +10,7 @@ Take the following xml for example.
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <CommonDocumentation>
     <Remarks>
@@ -27,11 +27,11 @@ Take the following xml for example.
     </Remark>
     </Remarks>
 </CommonDocumentation>    
-{% endhighlight %}
+```
 
 This xml is referenced by the include statements in the code below.
 
-{% highlight csharp %}
+```csharp
 using System.Diagnostics;
      
 namespace ClassLibrary1
@@ -52,7 +52,7 @@ namespace ClassLibrary1
         }
     }
 }    
-{% endhighlight %}
+```
 
 The code indicates the way in which the xpath queries will be able to correctly get the inner xml of the common documentation. Using a /* query against the SecondRemark or ThirdRemark nodes will produce incorrect results as the text will be ignored because /* only select element nodes. Using /text() against the FirstRemark and ThirdRemark nodes will also produce incorrect values as it will only select text nodes and ignore the element nodes.
 

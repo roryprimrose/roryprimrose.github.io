@@ -15,7 +15,7 @@ Imagine a scenario where you want to have an action that you want to take when a
 
 The following is an example of a RealProxy implementation that outputs method invocations to the console.  
 
-{% highlight csharp %}
+```csharp
 public class TestProxy<T> : RealProxy
 {
     public TestProxy()
@@ -82,7 +82,7 @@ public class TestProxy<T> : RealProxy
         return responseMessage;
     }
 }
-{% endhighlight %}
+```
 
 The class informs RealProxy about the type to proxy when it calls the base constructor. Invocations of the proxy methods cause the Invoke method to be called. The Invoke parameters provide information about the method name, parameter types and parameter values for the method invocation on the proxy instance. The Invoke method handles any exceptions so that they can be processed correctly by the proxy and be correctly thrown in the calling code. A return value (or null for void methods) are processed in the return message if no exception was found.
 
@@ -90,7 +90,7 @@ The key for working with a RealProxy instance is how the proxy is created. The p
 
 The following is a console application that uses an interface definition to test the above proxy implementation.
 
-{% highlight csharp %}
+```csharp
 class Program
 {
     static void Main(string[] args)
@@ -108,15 +108,15 @@ public interface ITester
 {
     void RunTest(String message, Boolean flag, Guid marker);
 }
-{% endhighlight %}
+```
 
 This console application uses the TestProxy&lt;T&gt; class to create a proxy for the ITester interface. Invocations of the proxy instance then cause TestProxy&lt;T&gt;.Invoke to process the invocation. TestProxy in this case will output information about the method invocation to the console. The output for this example is something like the following.
     
-{% highlight text %}
+```text
 Invoking RunTest with the following parameters:
 String - This is the message
 Boolean - True
 Guid - aade8728-9ca3-4919-9080-14090b5b016b
-{% endhighlight %}
+```
 
 That’s all there is to it for rolling your own proxy implementation.

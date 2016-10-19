@@ -14,7 +14,7 @@ While the adapter class is intended to encapsulate ITableEntity to prevent it le
 
 The simple fix to the adapter class is to filter out ITableEntity properties from the custom property mapping.
 
-{% highlight csharp %}
+```csharp
 private static List<PropertyInfo> ResolvePropertyMappings(
     T value,
     IDictionary<string, EntityProperty> properties)
@@ -28,11 +28,11 @@ private static List<PropertyInfo> ResolvePropertyMappings(
     
     return additionalProperties.ToList();
 }
-{% endhighlight %}
+```
 
 This makes sure that the Timestamp property is not included in the properties to write to table storage which leads to the StorageException. This still leaves the model returned from table storage without the Timestamp property being assigned. The adapter class implementation can fix this with the following code.
 
-{% highlight csharp %}
+```csharp
 /// <inheritdoc />
 protected override void ReadValues(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
 {
@@ -41,7 +41,7 @@ protected override void ReadValues(IDictionary<string, EntityProperty> propertie
     // Write the timestamp property into the same property on the entity
     Value.Timestamp = Timestamp;
 }
-{% endhighlight %}
+```
 
 Now we are up and running again.
 

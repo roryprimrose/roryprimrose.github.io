@@ -11,7 +11,7 @@ Take the following build target for example:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 <Target Name="RunIntegrationTests">
 
   <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
@@ -37,7 +37,7 @@ Take the following build target for example:
              Status="Succeeded" />
 
 </Target>
-{% endhighlight %}
+```
 
 The BuildStep tasks have allowed the build report to include custom steps that are being executed. In this case, it is reporting on the progress of running integration tests.
 

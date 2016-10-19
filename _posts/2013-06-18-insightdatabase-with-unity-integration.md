@@ -13,7 +13,7 @@ I haven’t been able to play with this feature until the last week. One of the 
 
 I want to support Unity configuration so we need to start with a ParameterValueElement class.
 
-{% highlight csharp %}
+```csharp
 namespace MyApplication.Server.Unity
 {
     using System;
@@ -84,13 +84,13 @@ namespace MyApplication.Server.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 This class leverages a variant of the aforementioned ConnectionStringSettings Unity extension which reads database connection information from Azure configuration. You can easily change this part of the class to read the connection string from wherever is appropriate in your system.
 
 Next we need an InjectionParameterValue class that will actual create the instance when the type is resolved in/by Unity.
 
-{% highlight csharp %}
+```csharp
 namespace MyApplication.Server.Unity
 {
     using System;
@@ -161,13 +161,13 @@ namespace MyApplication.Server.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 This class will either create a connection or a reliable connection using the extension methods available in Insight.Database. It then gets a reflected reference to the As&lt;T&gt; extension method that converts that connection into an auto-implemented interface. This is the instance that gets returned.
 
 Unity needs to know about the custom extension so that it can support it in configuration. The element class needs to be registered with Unity via a SectionExtension.
 
-{% highlight csharp %}
+```csharp
 namespace MyApplication.Server.Unity
 {
     using Microsoft.Practices.Unity.Configuration;
@@ -186,11 +186,11 @@ namespace MyApplication.Server.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 Lastly the configuration in Unity needs a pointer to the SectionExtension.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0"?>
 <unity>
     
@@ -199,11 +199,11 @@ Lastly the configuration in Unity needs a pointer to the SectionExtension.
     <!-- Unity configuration here -->
     
 </unity>
-{% endhighlight %}
+```
 
 The only thing left to do is use the Unity configuration to inject an auto-implemented interface instance.
 
-{% highlight xml %}
+```xml
 <register type="MyApplication.Server.BusinessContracts.IAccountManager, MyApplication.Server.BusinessContracts"
             mapTo="MyApplication.Server.Business.AccountManager, MyApplication.Server.Business">
     <constructor>
@@ -215,7 +215,7 @@ The only thing left to do is use the Unity configuration to inject an auto-imple
     </param>
     </constructor>
 </register>
-{% endhighlight %}
+```
 
 And we are done.
 

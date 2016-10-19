@@ -11,7 +11,7 @@ One of the issues I had was that I wanted to inject a concrete type that didn’
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public class Settings
 {
     public Settings()
@@ -23,20 +23,20 @@ public class Settings
     {
     }
 }
-{% endhighlight %}
+```
 
 In my attempt to wire this up, my Unity configuration contained the following definition:
 
-{% highlight xml %}
+```xml
 <type type="Neovolve.Jabiru.Server.Business.Settings, Neovolve.Jabiru.Server.Business">
 </type>
-{% endhighlight %}
+```
 
 Unity was not able to create an instance of Settings with this configuration. The reason was that Unity was calling the constructor with an interface definition rather than the default constructor. This is not what I expected given that I was not defining any constructor configuration for the type.
 
 The following configuration must be used in order for Unity to invoke the default constructor.
 
-{% highlight xml %}
+```xml
 <type type="Neovolve.Jabiru.Server.Business.Settings, Neovolve.Jabiru.Server.Business">
     <typeConfig extensionType="Microsoft.Practices.Unity.Configuration.TypeInjectionElement,
                             Microsoft.Practices.Unity.Configuration">
@@ -44,7 +44,7 @@ The following configuration must be used in order for Unity to invoke the defaul
     </constructor>
     </typeConfig>
 </type>
-{% endhighlight %}
+```
 
 This is completely counter-intuitive, but that’s life.
 

@@ -11,10 +11,10 @@ The following code is how I have previously achieved this.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 Configuration appConfig = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 ServiceModelSectionGroup serviceModel = ServiceModelSectionGroup.GetSectionGroup(appConfig);
-{% endhighlight %}
+```
 
 This works fine while the application is an exe. Unfortunately it fails when the code is hosted in IIS. You will get an error in the event log like the following:
 
@@ -30,9 +30,9 @@ This works fine while the application is an exe. Unfortunately it fails when the
 
 The issue here is that IIS doesn't have an exe path for the configuration manager to load from. The simple workaround for this is to access the required configuration section (rather than configuration group) directly using the ConfigurationManager and a wicked cool syntax. The previous example can now be rewritten like this:
 
-{% highlight csharp %}
+```csharp
         ClientSection client = ConfigurationManager.GetSection("system.serviceModel/client") as ClientSection;
-{% endhighlight %}
+```
 
 In this case I was after the client configuration for WCF services.
 

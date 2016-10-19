@@ -60,14 +60,13 @@ The best way to do this is to add a DeploymentItem attribute to the test method 
 
 For example:
 
-{% highlight csharp %}
+```csharp
 [TestMethod]
 [DeploymentItem(@"Communication\Security\Neovolve.Toolkit.pfx")]
 public void PasswordSecurityOnThreadTest()
 {
 }
-
-{% endhighlight %}
+```
 
 Note that in this solution, the pfx certificate is in a child directory structure which needs to be indicated in the attribute. This is required because the copy instruction on the properties of the file causes the same directory structure relative to the project file to be used when the file is copied to the output directory by the compiler. When the DeploymentItem attribute is interpreted, the file is copied to the same location as the binaries as no output path has been specified in the attribute.
 
@@ -77,7 +76,7 @@ In order for this certificate to be used in a test that requires SSL, it must be
 
 The CertificateDetails struct below contains the information required to install and uninstall the certificate.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Security.Cryptography.X509Certificates;
  
@@ -133,11 +132,11 @@ namespace Neovolve.Toolkit.UnitTests.Communication.Security
         }
     }
 }
-{% endhighlight %}
+```
 
 Certificates can be installed and uninstalled using the following CertificateManager class. As Mark mentions in his post, keep in mind that if there is collision of subject names with existing certificates, those certificates will also be uninstalled. To avoid this, use a subject name that is unique enough to identify the purpose of the certificate without colliding with existing certificates in the store.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -252,11 +251,11 @@ namespace Neovolve.Toolkit.UnitTests.Communication.Security
         }
     }
 }
-{% endhighlight %}
+```
 
 The next part of the process is to configure the certificates so they can be installed at the beginning of the tests and uninstalled at the end. For example:
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
@@ -314,7 +313,7 @@ namespace Neovolve.Toolkit.UnitTests.Communication.Security
         #endregion
     }
 }
-{% endhighlight %}
+```
 
 This code identifies the pfx certificate using a relative path, the subject name used for the certificate and the password. The store location to use is _CurrentUser_. Using _LocalComputer_ for the store would require elevated privileges in Vista. Because the certificate is being installed, used for testing and then uninstalled by the account running the tests, the _CurrentUser_ store is still appropriate and avoids access denied errors.
     
@@ -322,7 +321,7 @@ This code identifies the pfx certificate using a relative path, the subject name
     
 My unit test is written with a self-hosted service and client that are both configured at runtime to avoid a reliance on IIS or Cassini. The following code is the initial code fragment of the unit test that sets up the host and client channel.
 
-{% highlight csharp %}
+```csharp
 const String ServiceAddress = "net.tcp://localhost/PasswordServiceCredentialsTests";
 
 Uri address = new Uri(ServiceAddress);
@@ -387,7 +386,7 @@ try
         factory.Open();
 
         IPasswordService channel = factory.CreateChannel();
-{% endhighlight %}
+```
 
 The things to note about this code fragment are:
 
