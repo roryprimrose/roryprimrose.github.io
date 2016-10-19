@@ -67,6 +67,10 @@ Now we need to export the work item query data in a way that is suitable for rel
 
 I took the "Requirements Specification" template that came with the extension and started tweaking it to be more appropriate for our release notes. This is a very flexible system that you can modify to output release notes that suit your business purpose.
 
+**Notes**
+
+We made new work item queries similar to the above but with filters of State = Done and Release Version = "" in order to identify work that was ready for the next release. We then added that query to our team dashboard as a chart.
+
 [0]: /files/2016/10/2016-10-19 15_36_42-New-Query-1-Visual-Studio-Team-Services.png
 [1]: https://www.visualstudio.com/en-us/docs/work/process/customize-process-field
 [2]: /files/2016/10/2016-10-19 15_46_14-Work-Item-Type-Bug.png
