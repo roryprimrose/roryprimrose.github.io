@@ -13,7 +13,7 @@ My team uses VSTS to manage the planning and delivery of software and we have de
 
 There are two parts for automatically generating release notes. Firstly, we need to identify what should be in release notes. Secondly, we need to be able to export that data in a way that is suitable as a release notes document. 
 
-We defined the following criteria in our project:
+We defined the following criteria for release notes contents in our project:
 
 - Includes Product Backlog Items and Bugs
 - Does not include Tasks work items
@@ -29,9 +29,9 @@ Because the source of information for the release notes are work items, the mech
 
 The remaining criteria start to get a little tricky with the out of the box implementation of PBI and Bug work items. 
 
-Identifying the release version related to a PBI or Bug could be done using the *Microsoft.VSTS.Build.IntegrationBuild* field. There are issues with this however. Currently this field is not populated with VSTS Build vNext although the old XAML build system still should. Even if this was populated by a build, the build would write to this field and associate the work item (and their parent PBI and Bugs) for the current build. Each of our code changes will participate in many automated builds before they are bundled in an actual production release version. This means that this field will contain pre-release versions which we do not want included in release notes at the point of the work item query. Filtering them out pre-release versions on this field would not be easy.
+Identifying the release version related to a PBI or Bug could be done using the *Microsoft.VSTS.Build.IntegrationBuild* field. There are issues with this however. Currently this field is not populated with VSTS Build vNext although the old XAML build system still should. Even if this was populated by a build, the build would write to this field and associate the work item (and their parent PBI and Bugs) for the current build. Each of our code changes will participate in many automated builds before they are bundled in an actual production release version. This means that this field will contain pre-release versions which we do not want included in release notes at the point of the work item query. Filtering out pre-release versions on this field would not be easy.
 
-Our solution was to add two additional fields to our project process. We added a field to track the release version and a flag as to whether the work item should be included in release notes (a Yes/No pick list). You can read about modifying work items [on MSDN][1]
+Our solution was to add two additional fields to our project process. We added a field to track the release version and a field for whether the work item should be included in release notes (a Yes/No pick list). You can read about modifying work items [on MSDN][1]
 
 ![Custom work item][2]
 
@@ -59,7 +59,7 @@ We then sort the results as:
 - Release Version (Descending)
 - Backlog Priority (Ascending)
 
-Now we have a query that provides all the information we require to generate release notes. In our account, we have several repositories and products so we duplicate this query and include a filter on Area Path so that each query can target a specific product.
+Now we have a query that provides all the information we require to generate release notes. We have several repositories and products in our account so we duplicate this query and include a filter on Area Path so that each query can target a specific product.
 
 **Documentation Generation**
 
