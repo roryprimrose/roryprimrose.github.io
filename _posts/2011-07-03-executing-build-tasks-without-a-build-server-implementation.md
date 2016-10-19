@@ -11,7 +11,7 @@ Neovolve.BuildTaskExecutor (or BTE) is the application that will execute specifi
 
 <!--more-->
 
-**Extensibility**
+## Extensibility
 
 The main interface for BTE extensibility is the ITask interface. It provides the ability for BTE to identify the command line names associated with the task, validate command line arguments, obtain help information about the task and to execute the task.
 
@@ -76,7 +76,7 @@ namespace Neovolve.BuildTaskExecutor.Extensibility
 }
 {% endhighlight %}
 
-**Services**
+## Services
 
 BTE provides several service classes that execute tasks and provide additional service support to tasks. 
 
@@ -218,7 +218,7 @@ namespace Neovolve.BuildTaskExecutor.Services
 }
 {% endhighlight %}
 
-**Task Execution**
+## Task Execution
 
 Finally there is the Program class that is the entry point for BTE. It resolves the TaskExector from an internal ServiceManager and starts processing the command line arguments that are also resolved via MEF.
 

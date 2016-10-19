@@ -7,11 +7,11 @@ date: 2008-08-14 15:45:33 +10:00
 
 There are several issues that can prevent trace data being written. Here are a few of that you might encounter.
 
-**TraceSource names**
+## TraceSource names
 
 If using [TraceSource][0], the name provided to the TraceSource constructor is case sensitive. If the string doesn't match your configuration exactly, a default TraceSource instance is created rather than the configured one you were expecting.
 
-**TextWriterTraceListener**
+## TextWriterTraceListener
 
 If using [TextWriterTraceListener][1] (or [XmlWriterTraceListener][2] that derives from it), there are several more issues that can occur. 
 <!--more-->

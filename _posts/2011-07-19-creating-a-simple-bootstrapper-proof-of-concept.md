@@ -20,7 +20,7 @@ To recap, my design requirements for a bootstrapper solution were:
 
 I figured that I could achieve this by writing a simple project in C#. 
 
-**Seamless Visual Studio integration and compilation**
+## Seamless Visual Studio integration and compilation
 
 The bootstrapper project would reference the output of a WiX project in the same solution and add its MSI as a resource. Using a project in this way had the following issues:
 
@@ -31,15 +31,15 @@ The bootstrapper project would reference the output of a WiX project in the same
 
 At this point, the bootstrapper project would seamlessly participate in the Visual Studio solution build. 
 
-**Bootstrapper must be completely self-contained**
+## Bootstrapper must be completely self-contained
 
 The Bootstrapper executable now contains the MSI as an internal resource. This leaves the bootstrapper output to be completely self-contained. A user can then copy the bootstrapper application around and still have the MSI package. 
 
-**Bootstrapper must be quiet (no****UI****) and simply execute the MSI package**
+## Bootstrapper must be quiet (no**UI****) and simply execute the MSI package**
 
 I added some code to the bootstrapper Main method to extract the resource out to a specific location on the file system and then execute the MSI using Process.Start. My original attempt had the bootstrapper project as a Console project. This unfortunately threw up an empty console window during the execution of the MSI package. As the console UI was not required, I switched the application type over to be a Winforms executable that simply did not display a form.
 
-**Automatically elevate the packaged MSI**
+## Automatically elevate the packaged MSI
 
 This is actually really easy to achieve in a Visual Studio project. You can add an application manifest to the project and set the requestedExecutionLevel to requireAdministrator.
 
@@ -71,17 +71,17 @@ This is actually really easy to achieve in a Visual Studio project. You can add 
 
 The app.manifest file will then cause Windows to automatically elevate the application when it is started. At this point, all other downstream applications (the MSI execution) will also be elevated. The app.manifest is compiled into the assembly which still leaves the bootstrapper being completely self-contained.
 
-**Support change/repair/remove actions on the package**
+## Support change/repair/remove actions on the package
 
 From my research on bootstrappers, there are circumstances that require msiexec to have access to the original MSI media for doing some change/repair/remove functions. If the original media is not available then the user will get a file dialog asking them to select the location of the MSI. The simple answer to this was to get the bootstrapper to extract the MSI to a location that will remain available to msiexec after the package has completed installation.
 
 For this purpose I chose the extraction location as _%CommonProgramFiles%\CompanyName\BootstrapperName BootstrapperVersion.msi_ where CompanyName and BootstrapperVersion are extracted from the FileVersionInfo of the bootstrapper application itself.
 
-**Flexible design to add/remove bootstrapper functionality**
+## Flexible design to add/remove bootstrapper functionality
 
 Being a C# project, the bootstrapper could be changed at any point to add or remove functionality. For example, a UI could be added to the bootstrapper or support for custom actions based on command line parameters.
 
-**Outcome**
+## Outcome
 
 In its basic form, this proof of concept project was a success. The bootstrapper was able to compile within a Visual Studio solution and build a portable bootstrapper package that satisfied all the design requirements.
 

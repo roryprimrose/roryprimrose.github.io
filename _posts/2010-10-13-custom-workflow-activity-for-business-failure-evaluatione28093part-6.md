@@ -7,7 +7,7 @@ date: 2010-10-13 13:34:00 +10:00
 
 The [previous post][0] in this series provided the custom activity that manages multiple business failures in WF. Providing adequate designer support was one of the [design goals][1] of this series. This post will outline the designer support for the BusinessFailureEvaluator&lt;T&gt; and BusinessFailureScope&lt;T&gt; activities.  
 
-**BusinessFailureEvaluator&lt;T&gt;**
+## BusinessFailureEvaluator&lt;T&gt;
 
 The BusinessFailureEvaluator&lt;T&gt; evaluates a single business failure. There is no support for child activities which makes the designer very simple.  
 
@@ -73,7 +73,7 @@ The code behind the designer supports this by [attaching an ArgumentType propert
 
 This attached property allows the generic type of the activity to be changed to another type.
 
-**BusinessFailureScope&lt;T&gt;**
+## BusinessFailureScope&lt;T&gt;
 
 The BusinessFailureScope&lt;T&gt; allows for multiple business failures to be stored against the scope so that they can be thrown together rather than one at a time.
 

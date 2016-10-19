@@ -17,7 +17,7 @@ There are two ways that you can get dependencies to be available on a workflow. 
 
 There are a few considerations that dependency support in workflow should cater for. These are the amount of plumbing code required, validation of dependencies and support for persistence.
 
-**Dependencies via workflow arguments (the almost DI pattern)**
+## Dependencies via workflow arguments (the almost DI pattern)
 
 Using workflow arguments to provide dependencies is similar to property injection. Using handler classes is helpful for abstracting the workflows from callers of the assembly. DI is used to create the handler with required dependencies. The handler then provides these dependencies to the workflow by manually pushing them through to the workflow execution as input parameters when a handler method is invoked. This produces decent amounts of manual code that pollutes the handler classes.
 
@@ -35,7 +35,7 @@ _Cons_
 * Explicit dependency validation required
 * Persistence support not guaranteed
 
-**Dependencies via custom extension/activity (the Service Locator pattern)**
+## Dependencies via custom extension/activity (the Service Locator pattern)
 
 Using a custom extension or activity is more aligned with the service locator (anti-) pattern than dependency injection. A DI container should still be used in this method to resolve the dependencies. This is because the DI containers have the logic to create complex dependencies and typically have some aspects of instance lifetime management.
 
@@ -57,7 +57,7 @@ _Cons_
 * Slightly more coupled to DI container
 * Persistence support not guaranteed, although can be fully supported
 
-**Conclusion**
+## Conclusion
 
 Most of my workflow experience has used workflow arguments to provide dependencies. I tend to be a purist so I prefer a true DI implementation over a Service Locator implementation. I am however finding the advantages of using a custom extension/activity to resolve dependencies in WF4 far outweigh the disadvantages.
 

@@ -51,7 +51,7 @@ internal IPrincipal GetThreadPrincipal()
 }
 {% endhighlight %}
 
-**1. Change the AppDomain PrincipalPolicy**
+## 1. Change the AppDomain PrincipalPolicy
 
 {% highlight csharp %}
 // Configure the app domain to put the current windows credential into the thread when Thread.CurrentPrincipal is invoked
@@ -66,7 +66,7 @@ There are a few caveats for this workaround to be aware of:
 * No flexibility for other principal types
 * No flexibility for custom principal values
     
-**2. Assign a default principal against the AppDomain**
+## 2. Assign a default principal against the AppDomain
 
 Changing the AppDomain PrincipalPolicy will work however the outcome locks you into testing against the current WindowsIdentity which is not ideal. The AppDomain class also has the ability to define a default principal. This overrides the PrincipalPolicy as seen in the above GetThreadPrincipal method. Assigning the principal in this way provides a lot more control over the principal that is used in the workflow thread.
 
@@ -76,7 +76,7 @@ AppDomain.CurrentDomain.SetThreadPrincipal(newPrincipal);
 
 There is a caveat for this workaround as well. The default principal for the app domain can only be set once. You will need to have all your tests running against the same principal to avoid any issues.
 
-**Clean up and test method usage**
+## Clean up and test method usage
 
 It is important to clean up any changes made when the test either completes or fails. This is where a handle context/scope style class comes into play.
 

@@ -15,7 +15,7 @@ Given that this application is going to chew a lot of bandwidth (my entire site)
 
 Here is a simple example of how to take untestable code and make it testable. In the following examples, there is some logic in the ResourceResolver.GetResourceContents method that we want to test.
 
-**The untestable example**
+## The untestable example
 
 {% highlight csharp %}
 using System;
@@ -68,7 +68,7 @@ This is untestable as a unit test. To write a test for this code will require an
 
 This code is a classic example. The HttpWebRequest class is not easily testable. Converting this code so that mocks and stubs can be used will allow unit tests to be supported.
 
-**The testable example**
+## The testable example
 
 {% highlight csharp %}
 using System;

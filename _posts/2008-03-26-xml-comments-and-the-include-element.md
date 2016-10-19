@@ -119,7 +119,7 @@ namespace ClassLibrary1
 
 There is some duplication here that we can take care of with &lt;include /&gt;.
 
-**Reason 1: You can include the entire xml comment for an item**
+## Reason 1: You can include the entire xml comment for an item
 
 To cover the first reason above, there is duplication of the comment for the Checksum properties in the two classes. The documentation in its entirety is the same. Excellent candidate for pushing out into a common xml file. Add an xml file to the project called something like CommonDocumentation.xml and come up with an appropriate schema. I put together something like this:
 
@@ -229,7 +229,7 @@ public void SomeRandomMethod()
 }
 {% endhighlight %}
 
-**Reason 3: You can include include elements and they will be recursively resolved**
+## Reason 3: You can include include elements and they will be recursively resolved
 
 This is where things get really useful. Now that we have pushed out common documentation to an external file, what if there is duplication within that file. No problem. The compiler will recursively resolve all &lt;include /&gt; elements, even if the xml comment itself is in the external file.
 
@@ -330,7 +330,7 @@ namespace ClassLibrary1
 }    
 {% endhighlight %}
 
-**Issues**
+## Issues
 
 Now, there are some hazards with this. 
 

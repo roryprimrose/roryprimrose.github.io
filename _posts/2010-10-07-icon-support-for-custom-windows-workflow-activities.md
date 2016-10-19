@@ -11,7 +11,7 @@ There are two places that provide this icon support. The first is in the Visual 
 
 <!--more-->
 
-**Visual Studio toolbox**
+## Visual Studio toolbox
 
 Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.
 
@@ -26,7 +26,7 @@ The IDE uses the type reference to determine the namespace used as the prefix of
 
 The IDE can then extract this image and use it in the toolbox.![image][5]
 
-**Workflow designer**
+## Workflow designer
 
 The workflow designer support for custom icons has a similar layout as the toolbox icon. The image file for the designer should be co-located with the designer xaml file. While this file should be the same image as the toolbox image, the file must be a different file reference in the Visual Studio solution/project. Adding the image file as a link to the other file should work if you want to have only one physical file for the image. 
 

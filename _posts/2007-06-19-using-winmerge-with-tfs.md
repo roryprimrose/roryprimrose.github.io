@@ -17,7 +17,7 @@ In Visual Studio do the following:
 
 <!--more-->
 
-**Comparing**
+## Comparing
 
 To use WinMerge as the Compare/Diff tool:
 
@@ -28,7 +28,7 @@ To use WinMerge as the Compare/Diff tool:
 * For Arguments, type **/x /e /ub /wl /dl %6 /dr %7 %1 %2**
 * Click **OK** to accept
 
-**Merging**
+## Merging
 
 To use WinMerge as the Merge tool:
 
@@ -41,7 +41,7 @@ To use WinMerge as the Merge tool:
 
 Note: You need to click on the **Save** button on the tool bar within WinMerge merge to commit a merge before exiting the screen
 
-**Merge Error Workaround**
+## Merge Error Workaround
 
 If you encounter an error that says "The manual merge for &lt;filename&gt; has been canceled", the fix is to use a batch file to redirect the call to WinMerge to ensure a 0 return code.
 
@@ -70,7 +70,7 @@ The merge instructions above will then be changed to:
 * For Arguments, type **%6 %7 %1 %2 %4**
 * Click **OK** to accept
 
-**Modified C# Filter**
+## Modified C# Filter
 
 WinMerge uses filter files to filter the entries found when comparing folders. The latest version of WinMerge bundles a C# filter file. I have updated it to include additional entries. Copy the content below into C:\Program Files\WinMerge\Filters\CSharp_loose.flt.
 
@@ -108,7 +108,7 @@ d: \\cvs$ ## CVS control directory
 d: \\.svn$ ## Subversion control directory
 {% endhighlight %}
 
-Updated:
+**Updated:**
 
 After checking out [James Manning's blog post][4] about compare/merge tools (thanks [Grant][5]), I have updated the command line arguments. For the most part, it is a merge of the switches in this original post and James' switches. The /x /e switches give the tool the same behaviour as the TFS tool for using the ESC key and identifying identical files. James' has include the use of the /ub /dl /dr switches to avoid MRU persistence and adds version labels to the left and right sides. I have also added /wl so that the left (server) side file is read-only.
 

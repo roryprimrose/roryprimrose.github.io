@@ -13,7 +13,7 @@ This issue seems like it is hitting many [other people][1] as well. This is a si
 
 It seems that the most reliable information out there is that the issue is caused by addins/extensions in Visual Studio. This is consistent with my experience of running automated integration tests as defined in [my previous posts][2]. I quickly encounter this problem running F5 from the IDE, yet launching Azure and IISExpress for integration tests does not suffer from this error. This leads me to a reliable workaround for this issue based on my integration test implementation using the External Tools support in Visual Studio to manually launch the emulator. 
 
-**Configuring External Tools**
+## Configuring External Tools
 
 We need to add three External Tools entries. These are for launching the compute emulator in the Debug configuration, another one for the Release configuration and finally the storage emulator.![image][3]
 
@@ -36,7 +36,7 @@ Create a new External Tools entry for the storage emulator. The arguments for th
 
 The requirement for a separate entry for the storage emulator is unfortunate. It is required because the csrun.exe does not support command line parameters for both the compute emulator and the storage emulator in the one execution.
 
-**Attaching the debugger**
+## Attaching the debugger
 
 You can configure csrun to attach to the debugger using the /launchDebugger switch. I did not want to use this switch because it will open new instances of the debugger (typically devenv.exe) for each role instance (web and worker). This is unhelpful because I want to use the existing Visual Studio instance. I also found that the browser could not hit the compute instance anyway when the debugger was attached in this way (this could be just a timing issue though).
 
@@ -46,7 +46,7 @@ Click Debug –&gt; Attach to Process…![image][6]
 
 Find w3wp.exe and click Attach.![image][7]
 
-**NOTES:**
+## Notes
 
 This workaround only spins up the compute emulator or the storage emulator. It does not do any of the following:
 

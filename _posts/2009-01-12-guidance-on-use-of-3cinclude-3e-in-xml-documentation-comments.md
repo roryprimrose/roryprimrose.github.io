@@ -11,12 +11,12 @@ As a quick overview, the include element in XML documentation tells the compiler
 
 <!--more-->
 
-**Advantages**
+## Advantages
 
 * Documentation reuse
 * Removes noise in a code file if the bulk of the documentation points to an included reference
 
-**Disadvantages**
+## Disadvantages
 
 * Hard to read the documentation when looking at the source
 * [Current ReSharper 4.1 doesn't correctly walk the include path references to validate using directives][2]
@@ -24,7 +24,7 @@ As a quick overview, the include element in XML documentation tells the compiler
 * Visual Studio doesn't walk the include path references for intellisense (summary and param elements and their content and exception elements - Visual Studio ignores exception element content)
 * [Current StyleCop 4.3 doesn't correctly walk the include path references to validate documentation structure and content][4]
 
-**Guidance**
+## Guidance
 
 There is a tug of war between the reducing noise advantage and the readability disadvantage so the decision between the two must be made with respect to the code and its readers/consumers.
 

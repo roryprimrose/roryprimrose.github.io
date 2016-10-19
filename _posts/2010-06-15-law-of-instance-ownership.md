@@ -7,7 +7,7 @@ date: 2010-06-15 10:41:53 +10:00
 
 I’ve been writing a custom Unity extension for disposing build trees when a container is asked to tear down an instance. This has brought up some interesting ideas about the conditions in which an instance should be destroyed. This has lead to me come up with the Law of Instance Ownership.
 
-**Law of Instance Ownership**
+## Law of Instance Ownership
 
 > _An instance is owned by the highest stack frame that holds a direct reference to an instance, or the application domain for globally held instances._
 

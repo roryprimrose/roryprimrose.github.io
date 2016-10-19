@@ -41,7 +41,7 @@ public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancel
 
 I tend to write plain task based methods and only add in async once I have a continuation as the code evolves. The two pitfalls below come into play when forgetting to add the async keyword into the mix. Both scenarios are a problem because of when the code after the task gets executed.
 
-**Pitfall #1 - Working with locally disposable resources**
+## Pitfall #1 - Working with locally disposable resources
 
 One scenario I came across was when a locally disposable resource was added to a Task based method with a using statement.
 
@@ -75,7 +75,7 @@ public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancel
 
 The good thing about this example is that you will know straight away that this method requires an async keyword as you will get an ObjectDisposedException when you attempt to use the stream.
 
-**Pitfall #2 - Catching exceptions**
+## Pitfall #2 - Catching exceptions
 
 Another scenario I came across was when a plain Task based method was updated to include a catch block. This suffers from exactly the same problem as the first pitfall.
 

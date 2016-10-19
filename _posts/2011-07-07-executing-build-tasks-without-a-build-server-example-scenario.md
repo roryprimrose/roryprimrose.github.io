@@ -33,7 +33,7 @@ All the code projects link in a ProductInfo.cs file so that they all compile wit
 
 The important configuration in this file with regard to versioning the product is the AssemblyVersionAttribute. Each project that links in this file will compile a binary with the same version information.  
 
-**Increment the build number of the product version**  
+## Increment the build number of the product version  
 
 The first task for the custom build actions is to increment the build number of the product before it compiles. This is done by invoking BTE in the pre-build event of the project that will compile first. You can look at the build order of the solution to easily figure out which project this will be.  
 
@@ -57,7 +57,7 @@ GOTO End
 
 This script will only execute BTE when the Release build is selected. I didn’t want to increment the build number for Debug build configurations. When it is in a release build, the TfsEdit task has been configured here to ignore any failures to cater for scenarios where someone is building the solution without a TFS workspace mapping for the solution. The script then increments just the build number in the specified file.
 
-**Sync updated product version into wix project**
+## Sync updated product version into wix project
 
 The next step is to get the generation of the Wix project to use the same version information (which has now been incremented). This is unfortunately not as simple as linking in a common ProductInfo.cs file as it is with the C# projects. Wix projects define the version of the MSI in a version attribute on the Product element. This may also use a wix variable that may be declared in any file in the Wix project.
 
@@ -90,7 +90,7 @@ The BTE TfsEdit task is used again here to attempt to check out the Definitions.
 
 One important thing to note here is that the source of the version number is the compiled output of the Switch application (in the current solution build) rather than reading the version from a source file (ProductInfo.cs). This is important because the AssemblyVersionAttribute in ProductInfo.cs may only define 1.0.*, or 1.0.1.*. The full version information for wildcard version numbers is only available after the compiler has generated the application. In this case, the SyncWixVersion (or swv) task is taking all version parts&#160; (/M = major, /m = minor, /b = build, /r = revision) from Switch.exe and pushing them into the wix product version value.
 
-**Rename wix output to include the product version**
+## Rename wix output to include the product version
 
 Lastly, I want the output of the Wix project to include the version number. This task could update the output file name in the project property prior to compiling the MSI. This would however be messy for two reasons:
 
@@ -108,7 +108,7 @@ CALL bte wov /pattern:"$(ProjectPath)"
 
 BTE invokes the WixOutputVersion task against the wix project. It will look at all the build configuration for the project and rename as many files as possible that match the output name of the project. It will use the product version information that is defined against the Wix project that was synchronised in the pre-build event script.
 
-**The result**
+## The result
 
 When this solution is compiled, the following is seen in the build log (severely cut down for brevity).
 

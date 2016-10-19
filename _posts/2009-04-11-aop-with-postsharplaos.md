@@ -31,13 +31,13 @@ namespace ConsoleApplication1
 }    
 {% endhighlight %}
 
-**Project references required**
+## Project references required
 
 The project requires PostSharp.Public.dll and PostSharp.Laos.dll references in order to create an aspect attribute.![image][0]
 
 As you can see, I also added in a strong name key to see if it caused any issues with PostSharp. It didn’t.
 
-**Code required**
+## Code required
 
 I know that PostSharp.Laos is easy to use in comparison to PostSharp.Core, but I was honestly shocked at just how easy it really is. To put this demo together, it look somewhere in the order of two minutes.
 
@@ -87,7 +87,7 @@ namespace ConsoleApplication1
 
 PostSharp will find the MethodTraceAspect attribute on the RunTest method and change the IL so that the OnInvocation method of the attribute is invoked instead of the RunTest method. The context.Proceed() method in the attribute then invokes the RunTest method.
 
-**IL result**
+## IL result
 
 PostSharp kicks in after the original code has been compiled and changes the IL to include the aspect. Reflector shows the following outcome as the combination of the compiler and PostSharp doing their work.
 
@@ -178,28 +178,28 @@ internal sealed class ~PostSharp~Laos~Implementation
 
 The important part to note is that the contents of RunTest() have been moved into ~RunTest() and have been replaced with a call to MethodTraceAspectAttribute.OnInvocation. A delegate to ~RunTest() is passed in the arguments to OnInvocation so that the aspect can then invoke the original method.
 
-**Compiled assembly references**
+## Compiled assembly references
 
 After PostSharp has finished weaving the aspect into the IL, the assembly still has a reference to PostSharp.Laos.dll and PostSharp.Public.dll.  
 ![][1]
 
-**Debugging support**
+## Debugging support
 
 Debugging the assembly after it has been aspected is seamless. When the Main method invokes RunTest(), the debugger steps into the MethodTraceAspectAttribute.OnInvocation method. Stepping into context.Proceed() takes you into the RunTest() method in the source code (which is actually ~RunTest in the compiled assembly). Stepping out of RunTest takes you back into the MethodTraceAspectAttribute.OnInvocation method.
 
-**Runtime result**
+## Runtime result
 
 ![Result][2]
 
-**License implications**
+## License implications
 
 My understanding of the PostSharp license (read [here][3] and [here][4]) is that this implementation does not require a commercial license as PostSharp.Core.dll does not need to be bundled with the application for distribution.
 
-**Advantages**
+## Advantages
 
 PostSharp.Laos is very easy to use. So easy in fact that I am surprised this product isn’t much more famous than it already is. Something this powerful that is so easy to use is a major advantage especially because it can be implemented for free.
 
-**Disadvantages**
+## Disadvantages
 
 There are several disadvantages using PostSharp.Laos. The importance of each of these disadvantages will depend on your unique scenario.
 
@@ -210,7 +210,7 @@ There are several disadvantages using PostSharp.Laos. The importance of each of 
 * The IL isn’t very clean with all the code used to redirect the RunTest method invocation through the aspect. 
  * If you spend a lot of time in Reflector, the IL generated for the RunTest implementation will be a little confusing especially if compared against the original source code.
     
-**Conclusion**
+## Conclusion
 
 Wow, this is an unbelievable product. If you want to get some easy advantages out of AOP and don’t mind the few disadvantages stated above, then PostSharp.Laos is your new best friend.
 

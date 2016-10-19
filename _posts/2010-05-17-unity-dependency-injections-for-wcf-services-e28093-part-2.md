@@ -163,7 +163,7 @@ The configuration to hook this behavior up to a service looks like this.
 
 The configuration for the element shown here allows for defining custom configuration section and container names for resolving the Unity container.
 
-**ServiceHostFactory or configured service behavior**
+## ServiceHostFactory or configured service behavior
 
 Which one to use?
 

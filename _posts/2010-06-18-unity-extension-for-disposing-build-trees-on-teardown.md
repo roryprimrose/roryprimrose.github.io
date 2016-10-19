@@ -89,7 +89,7 @@ Tree nodes must use a WeakReference for the tracked instance. This ensures that 
 
 The benefit of tracking and storing a build tree means that if dependencies are de-referenced (meaning a sub tree of instances is orphaned from its parent instance), the TearDown of the build tree would still track the references to the orphaned instances and they can still be disposed. The same benefit also applies to instances injected into a constructor that may not be made available via a property or field on the parent instance.
 
-**The Code**
+## The Code
 
 Build trees are made up build tree nodes which may have 0-many children and a reference back to their parent.
 

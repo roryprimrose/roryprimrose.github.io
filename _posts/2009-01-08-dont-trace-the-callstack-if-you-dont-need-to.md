@@ -94,7 +94,7 @@ namespace TestProject3
 
 {% endhighlight %}
 
-**With Callstack** 
+## With Callstack 
 
 The load test that included writing the callstack to the trace record had the following output: 
 
@@ -102,7 +102,7 @@ The load test that included writing the callstack to the trace record had the fo
 
 With a total of 92,608 tests executed, the average execution time was 200 milliseconds per test. 
 
-**Without Callstack** 
+## Without Callstack 
 
 The load test that didn't write the callstack to the trace record had the following output: 
 

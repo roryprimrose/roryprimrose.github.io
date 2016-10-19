@@ -13,7 +13,7 @@ The following tables outline the types available in the namespaces across the to
 
 <!--more-->
 
-**Neovolve.Toolkit.dll**
+## Neovolve.Toolkit.dll
 
 Neovolve.Toolkit.CommunicationName 
 
@@ -183,7 +183,7 @@ LockWriter
 
 The LockWriter class is used to provide thread safe write access to a resource using a provided ReaderWriterLock or ReaderWriterLockSlim instance. 
 
-**Neovolve.Toolkit.Unity.dll**Name 
+## Neovolve.Toolkit.Unity.dllName 
 
 Description 
 
@@ -239,7 +239,7 @@ UnityServiceHostFactory
 
 The UnityServiceHostFactory class is used to create a ServiceHost instance that supports creating service instances with Unity. 
 
-**Neovolve.Toolkit.Workflow.dll**
+## Neovolve.Toolkit.Workflow.dll
 
 Neovolve.Toolkit.WorkflowName 
 

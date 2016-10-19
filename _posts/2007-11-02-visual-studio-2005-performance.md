@@ -13,7 +13,7 @@ Anyway, I have seen this first set of content before (perhaps even blogged it), 
 
 <!--more-->
 
-**Speed up Visual Studio 2005**
+## Speed up Visual Studio 2005
 
 * Make sure Visual Studio 2005 SP1 is installed.
 * Turn off animation.
@@ -29,7 +29,7 @@ There is an option in VS 2005 that will cause VS to automatically populate the t
 
 [http://dotnettipoftheday.org/tips/optimize_launch_of_vs2005.aspx][1]
 
-**Optimize the launch of the Visual Studio 2005**
+## Optimize the launch of the Visual Studio 2005
 
 * Disable "Start Page".
 1. Go to **Tools | Options**.

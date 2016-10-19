@@ -45,7 +45,7 @@ This scenario requires that the first resolved instance is torn down when the bo
   
 As far as the implementation goes, this scenario is actually the same as the second. When the bookmark is resumed, there needs to be some information stored about the instance resolution so that the instance can be recreated again when it is referenced. This instance is then torn down when the activity completes.
 
-**The problems of persistence**
+## The problems of persistence
 
 The central issue with persistence of a dependency in WF is that the dependency instance may not be serializable. The support for persistence in this custom activity is a design issue more than an implementation issue. You may notice that the InvokeMethod activities in the above screenshots make a reference to an Instance property. This indicates how persistence is supported under the covers.
 

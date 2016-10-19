@@ -11,7 +11,7 @@ I’ve previously posted about Nuget package update pain with the NewRelic Azure
 
 Here are the ServiceDefinition.csdef configurations for the two types of roles. The setup of this configuration seems to be the most common point of failure in the installation scripts.
 
-**Web Role**
+## Web Role
 
 {% highlight xml %}
 <WebRole>
@@ -28,7 +28,7 @@ Here are the ServiceDefinition.csdef configurations for the two types of roles. 
 </WebRole>
 {% endhighlight %}
 
-**Worker Role**
+## Worker Role
 
 {% highlight xml %}
 <WorkerRole>

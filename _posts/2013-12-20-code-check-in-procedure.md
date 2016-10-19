@@ -15,11 +15,11 @@ I’ve been running this check in procedure for several years with my developmen
 
 <!--more-->
 
-**Changeset Contents**
+## Changeset Contents
 
 Changesets need to be related to a particular set of **related** changes. A changeset should not include changes or functionality from unrelated pieces of work. This makes reviewing changesets and work tracking very difficult. If you do need to work on unrelated pieces of work, shelve the prior work (undoing local changes) and start working on the new piece of work. Once a piece of work is checked in according to the procedure below, the previous shelveset can be brought back down to your local workspace and you can continue to work on it.
 
-**Check In Procedure**
+## Check In Procedure
 
 The following set of actions must be taken in order to check in changes to source control.
 

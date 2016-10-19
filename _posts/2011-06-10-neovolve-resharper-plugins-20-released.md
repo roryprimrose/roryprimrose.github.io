@@ -13,11 +13,11 @@ The original 1.0 (and subsequent 1.1) version provided the ability to switch bet
 
 <!--more-->
 
-**Code Cleanup**
+## Code Cleanup
 
 The code cleanup profile settings for this plugin are now found under the Neovolve category. This is the only change to the settings used for code cleanup.![image][1]
 
-**Code Inspection**
+## Code Inspection
 
 ReSharper code inspection allows for plugins to notify you when your code does not match defined inspection rules. This release of the plugin adds code inspection to detect when a value type is written in a way that is not desired according to the your ReSharper settings. 
 
@@ -25,7 +25,7 @@ The code inspection settings for this plugin can be found under the Neovolve cat
 
 Code highlights will then notify you when your code does not match the configured rules. For example, the settings in the above screenshot identify that type alias definitions show up as a suggestion to be converted to their CLR types. This can be seen below.![image][3]
 
-**QuickFix**
+## QuickFix
 
 ReSharper has had quick fix support for several years. This version now supports QuickFix bulbs based on the information identified by the code inspection rules. Giving focus to the suggestion will then allow for a quick fix action using Alt + Enter.![image][4]
 

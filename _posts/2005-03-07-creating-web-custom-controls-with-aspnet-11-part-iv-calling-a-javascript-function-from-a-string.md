@@ -20,7 +20,7 @@ There are several ways to do this. These include but are not limited to:
 * Attaching new function pointers to events.
 * Calling a function by name.
 
-**Chaining function calls in the event handler of the tag**
+## Chaining function calls in the event handler of the tag
 
 We could chain the two functions required by declaring them in the event handler on the controls tag. To do this, the tag would be rendered like this:
 
@@ -43,7 +43,7 @@ These are not the only situations that make the above solution not feasible. Man
 <DIV onclick="return ControlCode();"></DIV>
 {% endhighlight %}
 
-**Setting new function pointers to the events**
+## Setting new function pointers to the events
 
 If the controls internal function is called from the event handler, but the implementors function isn't, there is another way of getting the implementors function to run on the event. We can repoint the event handler to a new function pointer.
 
@@ -54,7 +54,7 @@ objElement.onclick = ImplementorFunction;
 
 The good news is that there is only one problem with this solution. The bad news is that it is a complete deal breaker. What this will do is when the onclick event fires, it will no longer call the ControlCode function because the event handler has been given a new function pointer. It will now only call the ImplementorCode function. The result is that the controls internal code will not run.
 
-**Attaching new function pointers to events**
+## Attaching new function pointers to events
 
 To follow on from the previous solution, instead of repointing the event handler to a new function, we can add a function pointer to the set of functions that the event handler will call. This is done like this:
 
@@ -72,7 +72,7 @@ This solution is better because in this case, the controls click code will run, 
 * You can't ensure which function will fire first
 * You can't pass parameters to the function
 
-**Calling a function by name**
+## Calling a function by name
 
 The previous solutions leave us with more problems than decent answers.
 

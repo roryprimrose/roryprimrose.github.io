@@ -56,7 +56,7 @@ Debugging WF activities with this constraint is very difficult. Trying to debug 
 
 The solution to this is in two parts. The first improvement is to provide more detail in the stack trace and the second is to identify the activity hierarchy involved. 
 
-**Enhancing the stack trace**
+## Enhancing the stack trace
 
 Using the throw statement on an existing exception instance wipes out any existing stack trace information. This is why you should never catch ex then throw ex, you should always just use the throw statement by itself. This isn’t possible in the case of the workflow engine as it has caught the exception on a different thread and has no choice but to throw the exception instance back on the original calling thread. 
 
@@ -146,7 +146,7 @@ nsoleApplication2\Program.cs:line 11
 
 The stack trace with preservation now includes the stack frames between ActivityInvoker.Invoke and the class that originally threw the exception. This is particularly helpful when the exception was thrown in an underlying component. Unfortunately the architecture of WF does not often provide much of a stack trace in itself. Preserving the stack trace in this simple scenario has added helpful information but not enough to make it really easy to debug.
 
-**Identifying the activity hierarchy**
+## Identifying the activity hierarchy
 
 Identifying the hierarchy of activities being executed will add further debugging assistance. The Activity class in the 3.x version of WF contained a public Parent property. You could recursively traverse up the chain of parent activities to create a hierarchy of activities to provide this information. This property is still there in version 4.0 but is now internal. Using reflection is again the only option for obtaining this information.
     

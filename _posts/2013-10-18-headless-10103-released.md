@@ -21,7 +21,7 @@ Some of the features of Headless are:
 * Location and status code validation
 * Extensible
 
-**Examples**
+## Examples
 
 Headless can use a page model class that describes the model, location and behaviour of a page.
 

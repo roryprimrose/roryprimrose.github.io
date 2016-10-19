@@ -11,7 +11,7 @@ The library downloads zone files from the web server as it requires. The big thi
 
 <!--more-->
 
-**Current Implementation**  
+## Current Implementation  
 
 For background, this is my current implementation. The web project structure looks like this.  
 
@@ -51,7 +51,7 @@ timezoneJS.timezone.defaultZoneFile = [];
 timezoneJS.timezone.init({ async: false });
 {% endhighlight %}
 
-**Custom Bundle Builder**
+## Custom Bundle Builder
 
 Now comes the part were we strip out the unnecessary comments from the zone files. The TimeZoneBundleBuilder class simply strips out blank lines, lines that start with comments and the parts of lines that end in comments.
 

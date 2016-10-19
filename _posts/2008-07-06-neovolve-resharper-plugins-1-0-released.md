@@ -9,13 +9,13 @@ I have just released the [ReSharper Plugins 1.0][0] in my [NeovolveX][1] extensi
 
 The following is a copy of the [Using ReSharper Plugins 1.0][2] documentation on the [project site][1]
 
-**Value Type Alias Formatter**
+## Value Type Alias Formatter
 
 The ReSharper Plugins project currently contains a single plugin that provides C# code formatting functionality. This formatting function allows for type declarations to be formatted between their alias type and their CLR type. For example, depending of the format settings defined in a code cleanup profile, bool can be converted to Boolean or Boolean converted to bool.  
   
 <!--more-->
 
-**Configuration**
+## Configuration
 
 The following displays the normal code format profile dialog.  
 ![ProfileSettings.jpg][3]
@@ -30,7 +30,7 @@ The type conversion options are:
 
 >  The _Do not change_ setting is the default value.  
   
-**Type mappings**
+## Type mappings
 
 The following are the type mappings that are supported for converting types between alias types and their CLR types.  
   
@@ -66,7 +66,7 @@ The following are the type mappings that are supported for converting types betw
 
 > sbyte &gt; SByte 
   
-**Code examples**
+## Code examples
 
 >  Code formatted to use alias types  
 ![AliasCode.jpg][5]

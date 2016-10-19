@@ -16,7 +16,7 @@ There issue that I have with IErrorHandler is that the documentation is not deta
 
 The MSDN documentation (see [here][0]) provides examples about how to to create an IErrorHandler implementation including the behavior extension, but doesn't provide the full class examples. Hence my misunderstanding that resulted in my handler not being invoked. I suggest that two classes get created. One is the error handler, the other is the error handler element for configuration.
 
-**ErrorHandler**
+## ErrorHandler
 
 The error handler implements IErrorHandler, but also implements IServiceBehavior. This interface allows the error handler to be hooked up by configuration.
 
@@ -82,7 +82,7 @@ namespace WcfServiceLibrary1
     
 {% endhighlight %}
 
-**ErrorHandlerElement**
+## ErrorHandlerElement
 
 The error handler element defines the extension behavior such that ErrorHandler can be defined against a service behavior.
 
@@ -111,7 +111,7 @@ namespace WcfServiceLibrary1
     
 {% endhighlight %}
 
-**Configuration**
+## Configuration
 
 This configuration identifies the ErrorHandlerElement as a behavior extension, which then allows errorHandler (the name of the configured extension) to be defined against the service behavior. This is how the error handler gets hooked up for the service.
 

@@ -16,7 +16,7 @@ In trying to address this environment configuration issue, we did previously com
 
 Recently, I have been migrating my [custom username password service credential solution][1] into the [Neovolve.Toolkit][2] project on Codeplex. I want to create unit and integration tests that are portable to multiple machines without any prior configuration of those machines before running the tests or any assumptions about software installation beyond Visual Studio and the .Net framework. This means that I need a good certificate solution for SSL support. I also want to avoid IIS and Cassini hosting of the services and to support running the tests from both XP and Vista. XP is easy to please, but Vista comes with some security considerations. The intention is to have a solution with unit and integration tests that will work 'out of the box'.
 
-**The answer**
+## The answer
 
 The answer is to use a NetTcpBinding, a pfx certificate with a private key, runtime installation/uninstallation of the certificate using the current user certificate store and specific configuration of the WCF service and client.
 
@@ -24,7 +24,7 @@ Major kudos goes to [Mark Seemann][3] for [this post][4] which describes the ide
 
 This post touches on Mark's guide for pfx certificates and working with the certificate store. It will then describe in more detail how this scenario can be used to cleanly provide an SSL solution for testing WCF services under source control.
 
-**Generating the certificate**
+## Generating the certificate
 
 Firstly, the certificate needs to be created. Using makecert.exe, a certificate can be generated and obtained from the certificate store. The only thing that needs to be modified for your own scenario is the subject name of the certificate.
 
@@ -44,7 +44,7 @@ Go to _Personal Certificates_ and locate the certificate that you created with m
 
 I used the subject name as the password and the export file name so that it is easy to remember.
 
-**Solution configuration**
+## Solution configuration
 
 The first thing to do is to add this pfx certificate file to your solution. If there are multiple projects that will use the certificate, the best way to manage the certificate is to add it as a Solution Item and link it to each project that will use it. Alternatively, if there is just one project that uses the certificate, add it directly to that test project. This is the easiest way to ensure that the pfx certificate is under source control and available to everyone who references the solution.
 
@@ -71,7 +71,7 @@ public void PasswordSecurityOnThreadTest()
 
 Note that in this solution, the pfx certificate is in a child directory structure which needs to be indicated in the attribute. This is required because the copy instruction on the properties of the file causes the same directory structure relative to the project file to be used when the file is copied to the output directory by the compiler. When the DeploymentItem attribute is interpreted, the file is copied to the same location as the binaries as no output path has been specified in the attribute.
 
-**Runtime certificate management**
+## Runtime certificate management
 
 In order for this certificate to be used in a test that requires SSL, it must be installed into a certificate store on the local machine. Because we don't want to leave the machine in an inconsistent state, the certificate needs to be uninstalled when the tests have completed.
 
@@ -318,7 +318,7 @@ namespace Neovolve.Toolkit.UnitTests.Communication.Security
 
 This code identifies the pfx certificate using a relative path, the subject name used for the certificate and the password. The store location to use is _CurrentUser_. Using _LocalComputer_ for the store would require elevated privileges in Vista. Because the certificate is being installed, used for testing and then uninstalled by the account running the tests, the _CurrentUser_ store is still appropriate and avoids access denied errors.
     
-**The service host and client**
+## The service host and client
     
 My unit test is written with a self-hosted service and client that are both configured at runtime to avoid a reliance on IIS or Cassini. The following code is the initial code fragment of the unit test that sets up the host and client channel.
 

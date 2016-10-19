@@ -25,7 +25,7 @@ The first step of correlation is to define a CorrelationHandle variable on the w
 
 There are two ways that content correlation may satisfy this registration workflow. The first method uses content references that are only available in the service contract. The second method provides a content correlation solution that only partially relies on the service contract data.
 
-**Method 1 – Content correlation based on service contract data**
+## Method 1 – Content correlation based on service contract data
 
 This first method uses the correlation support in solely available in the SendReceive activity pairs. The value to correlate on in this case is the ChallengeCode value as it exists as part of the service contract for the RegisterAccount call (the response) and the ConfirmRegistration call (a request property). 
 
@@ -41,7 +41,7 @@ The CorrelatesOn dialog provides similar assistance in defining the XPath query 
 
 Content correlation will now be able to load the correct workflow instance if the ConfirmRegistration service operation request contains the ChallengeCode value returned from a prior call to RegisterAccount (unless the timeout activity has fired first).
 
-**Method 2 - Content correlation based on partial service contract data**
+## Method 2 - Content correlation based on partial service contract data
 
 Defining content correlation on the SendReceive activities in this way restricts you to data that is common between the service contracts for both service operations. This has forced the implementation to use ChallengeCode instead of TransactionId. This is not technically a problem as both values will be unique. The TransactionId value is closer to the concepts of WF instance management and persistence than the ChallengeCode and is a little more appropriate from a design point of view. The ChallengeCode is more of a business-orientated value that has nothing to do with workflows or correlation. Some minor changes to the workflow will be able to use TransactionId rather than ChallengeCode.
 

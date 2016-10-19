@@ -43,7 +43,7 @@ namespace CachedSyncPOC
 
 The code aims to store both the Id and the Data of each item in the metadata store of each replica.
 
-**Preview mode**
+## Preview mode
 
 This was actually easy to implement and is done in two parts.
 
@@ -113,7 +113,7 @@ public override void ProcessChangeBatch(
 
 This example is a little simplistic in that the event does not indicate what action is going to be taken for each item but that should be easily implemented down the track.
 
-**Filtering**
+## Filtering
 
 The MSF team has [provided many examples][0] on how to use the framework. My initial reaction to the [custom filtering sample][1] was one of complete dread. My filtering requirements are simple and the sample code provided is very complex. I [posted a question][2] on the MSF forum to seek some advice. While the advice was good, it unfortunately pushed me back into the provided filter sample code.
 
