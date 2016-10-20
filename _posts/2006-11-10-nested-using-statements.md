@@ -10,7 +10,7 @@ The following is an example taken from [John Papa's][0] latest [Data Points][1] 
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using (TransactionScope ts = new TransactionScope())    
 {
     using (SqlConnection cn2005 = new SqlConnection(cnString))
@@ -22,11 +22,11 @@ using (TransactionScope ts = new TransactionScope())
     
     ts.Complete();
 }
-{% endhighlight %}
+```
 
 As far as the messy look of it goes, I know that you can also do the following.
 
-{% highlight csharp %}
+```csharp
 using (TransactionScope ts = new TransactionScope())
 using (SqlConnection cn2005 = new SqlConnection(cnString))
 {
@@ -36,7 +36,7 @@ using (SqlConnection cn2005 = new SqlConnection(cnString))
 }
     
 ts.Complete();
-{% endhighlight %}
+```
 
 I have some vague recollection that someone had a problem with this way of coding the using statement.
 

@@ -13,15 +13,15 @@ The patterns defined are Todo, Note and Bug (I added Hack as a duplicate of Bug 
 
 <!--more-->
 
-{% highlight text %}
+```text
 (\W|^)(?<TAG>NOTE)(\W|$)(.*)
-{% endhighlight %}
+```
 
 I have modified this to:
 
-{% highlight text %}
+```text
 ^(?<TAG>NOTE)(\W|$)(.*)
-{% endhighlight %}
+```
 
 This will now only identify note comments if the NOTE token exists at the beginning of the comment only.
 

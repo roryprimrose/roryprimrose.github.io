@@ -10,7 +10,7 @@ Consider the scenario where you have a base path to which you want to add severa
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace ConsoleApplication1
 {
     using System;
@@ -32,11 +32,11 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 The statement with multiple Path.Combine evaluations is very difficult to read. A simple extension method can turn this into a fluent API design to achieve the same result and allow the intention of the code to be crystal clear.
 
-{% highlight csharp %}
+```csharp
 namespace ConsoleApplication1
 {
     using System;
@@ -66,7 +66,7 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 The code is now much more readable. You no longer need to backtrack along the line of code to figure out which variables related to which operation in the evaluation as the code now reads fluently from left to right.
 

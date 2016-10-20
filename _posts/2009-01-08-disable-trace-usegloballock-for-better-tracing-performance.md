@@ -11,7 +11,7 @@ The methods on TraceSource check TraceInternal.UseGlobalLock (also referenced by
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
     <system.diagnostics> 
@@ -27,7 +27,7 @@ The methods on TraceSource check TraceInternal.UseGlobalLock (also referenced by
     </sources>    
     </system.diagnostics> 
 </configuration> 
-{% endhighlight %}
+```
 
 TraceSource checks whether a global lock should be used when a trace message is written. 
 
@@ -41,7 +41,7 @@ I find that [System.Diagnostics.XmlWriterTraceListener][3] is the best listener 
 
 On a side note, I created a custom listener to use in my load test because I wanted to be able to test the performance of my tracing components while minimizing the performance &quot;noise&quot; of the .Net framework part of the tracing execution. The listener looks something like this: 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Diagnostics; 
     
@@ -86,7 +86,7 @@ namespace MyApplication.LoadTests
         } 
     } 
 } 
-{% endhighlight %}
+```
 
 This listener will output the trace messages in debug mode, but the compiler will not include the debug statements under a release build. It also indicates that the listener is thread safe to improve performance of TraceSource implementations that use this listener when global locking is disabled. 
 

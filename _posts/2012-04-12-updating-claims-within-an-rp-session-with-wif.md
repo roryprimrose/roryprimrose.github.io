@@ -11,7 +11,7 @@ The application will store the first name, last name and email address of the us
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public override IClaimsPrincipal Authenticate(String resourceName, IClaimsPrincipal incomingPrincipal)
 {
     IClaimsPrincipal principal = base.Authenticate(resourceName, incomingPrincipal);
@@ -63,7 +63,7 @@ public override IClaimsPrincipal Authenticate(String resourceName, IClaimsPrinci
     
     return principal;
 }
-{% endhighlight %}
+```
 
 This code will ensure that the principal executing against the web requests will contain the claims that match the users account. There are two scenarios that this does not cater for.
 
@@ -85,7 +85,7 @@ This leaves me with having to update the FedAuth cookie mid-session from within 
 
 The next issue is that there is no clean API to use to write a new FedAuth cookie to the HttpResponse using the available FederatedAuthentication information. I came up with this extension method with the help of Reflector.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics.Contracts;
 using Microsoft.IdentityModel.Claims;
@@ -179,7 +179,7 @@ public static class ClaimsPrincipalExtensions
         return sessionTokenContextPrefix + signOutUrl;
     }
 }
-{% endhighlight %}
+```
 
 This extension method will write a new FedAuth cookie to the response stream using the same implementation that WIF uses to create the cookie in the first place. This now allows the principal to provide the current set of claims to a web farm regardless of which web instance processes the request.
 

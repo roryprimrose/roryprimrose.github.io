@@ -10,7 +10,7 @@ I have the following initialization code.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {
                                             new FieldSchema("IsContainer", typeof(Boolean)),
@@ -27,7 +27,7 @@ List<IndexSchema> indexFields = new List<IndexSchema>
                                     };
     
 Metadata = MetaStore.InitializeReplicaMetadata(IdFormats, ReplicaId, customFields, indexFields);
-{% endhighlight %}
+```
 
 This code throws the following exception:
 
@@ -41,7 +41,7 @@ There must be something wrong with the implementation of this constructor as thi
 
 The code now looks like the following:
 
-{% highlight csharp %}
+```csharp
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {
                                             new FieldSchema("IsContainer", typeof(Boolean)),
@@ -58,7 +58,7 @@ List<IndexSchema> indexFields = new List<IndexSchema>
                                     };
     
 Metadata = MetaStore.InitializeReplicaMetadata(IdFormats, ReplicaId, customFields, indexFields);
-{% endhighlight %}
+```
 
 This now throws an exception saying:
 
@@ -76,7 +76,7 @@ With a stack trace that looks like the following:
   
 If you follow down the rabbit hole using Reflector, Microsoft.Synchronization.MetadataStorage.Utility.ConvertDataTypeToSyncMetadataFieldType has the following code:
 
-{% highlight csharp %}
+```csharp
 internal static SYNC_METADATA_FIELD_TYPE ConvertDataTypeToSyncMetadataFieldType(Type dataType)
 {
     if (dataType == typeof(byte[]))
@@ -109,13 +109,13 @@ internal static SYNC_METADATA_FIELD_TYPE ConvertDataTypeToSyncMetadataFieldType(
     }
     return SYNC_METADATA_FIELD_TYPE.SYNC_METADATA_FIELD_TYPE_GUID;
 }
-{% endhighlight %}
+```
 
 The answer to this issue is that the Boolean data type is not supported. Unfortunately the documentation for InitializeReplicaMetadata does not to mention this. The way around this is to use a byte value to represent the Boolean state.
 
 Code that successfully executes now looks like this:
 
-{% highlight csharp %}
+```csharp
 List<FieldSchema> customFields = new List<FieldSchema>
                                         {
                                             new FieldSchema("IsContainer", typeof(Byte)),
@@ -132,4 +132,4 @@ List<IndexSchema> indexFields = new List<IndexSchema>
                                     };
     
 Metadata = MetaStore.InitializeReplicaMetadata(IdFormats, ReplicaId, customFields, indexFields);
-{% endhighlight %}
+```

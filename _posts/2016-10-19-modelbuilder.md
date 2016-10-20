@@ -4,7 +4,6 @@ categories: .Net
 tags: 
 date: 2016-10-19 17:25:00 +10:00
 ---
-
 I've been sitting on this one a while and I think this library is ready for some consumption. I created ModelBuilder earlier this year partly as a fun project, but also so that I could get some better test data to work with when doing test automation in C#. 
 
 The library provides an easy way to build model classes with random data where the data is better quality that just Guid values for string properties or Environment.TickCount for integers. It also has a lot of extensibility points so that you can customise the model generation. 
@@ -16,37 +15,37 @@ You can get [ModelBuilder from NuGet][0] by running Install-Package ModelBuilder
 ## Creating a model
 The Model class is a static class that is the easiest way to generator models
 
-```
+```csharp
 var model = Model.Create<Person>();
 ```
 
 This supports creating new instances of classes, nested classes and populating variables out of the box. It will also support providing constructor arguments to the top level type being created.
 
-```
+```csharp
 var model = Model.CreateWith<Person>("Fred", "Smith");
 ```
 
 You may want to create a model that ignores setting a property for a specific construction.
 
-```
+```csharp
 var model = Model.Ignoring<Person>(x => x.FirstName).Create<Person>();
 ```
 
 Ignoring a property can also be configured for types that may exist deep in an inheritance hierarchy for the type being created.
 
-```
+```csharp
 var model = Model.Ignoring<Address>(x => x.AddressLine1).Create<Person>();
 ```
 
 Do you already have an instance that perhaps you didn't create? That is ok too.
 
-```
+```csharp
 var person = new Person
 {
     FirstName = "Jane"
 };
 
-var model = Model.Ignoring<Person>(x => x.FirstName).Populate<Person>();
+var model = Model.Ignoring<Person>(x => x.FirstName).Populate(person);
 
 var customer = new Person();
 
@@ -57,7 +56,7 @@ var customerModel = Model.Populate(customer);
 
 Sometimes you need to tweak a model after it has been created. This can be done easily using the Set extension method on any object.
 
-```
+```csharp
 var person = Model.Create<Person>().Set(x => x.FirstName = "Joe").Set(x => x.Email = null);
 
 var otherPerson = Model.Create<Person>().Set(x => 
@@ -69,7 +68,7 @@ var otherPerson = Model.Create<Person>().Set(x =>
 
 This is nice for simple properties, but assigning values across an enumerable set of data is important. We've got that covered too.
 
-```
+```csharp
 var organisation = Model.Create<Organisation>();
 
 organisation.Staff.SetEach(x => x.Email = null);
@@ -105,7 +104,7 @@ The behaviour of ModelBuilder is to create a BuildStrategy using a pre-defined B
 
 Using a CompilerModule is the easiest mechanism of configuring the default BuildStrategy. Simply by creating a class that implements ICompilerModule will cause the class to be executed on the first call to Model.Create&lt;T&gt;.
 
-```
+```csharp
 public class MyCustomCompilerModule : ICompilerModule
 {
     public void Configure(IBuildStrategyCompiler compiler)
@@ -128,13 +127,13 @@ Creating a model ultimately starts with a BuildStrategy configuration. There are
 
 You can create a custom BuildStrategy from scratch by creating your own type that implements IBuildStrategy. You can then assign this instance as the default BuildStrategy against Model which is then used in calls to Model.Create&lt;T&gt;.
 
-```
+```csharp
 Model.BuildStrategy = new CustomBuildStrategy();
 ```
 
 The other option is to use a BuildStrategyCompiler which compiles a new BuildStrategy instance with a custom configuration. You can get a compiler from an existing BuildStrategy using the IBuildStrategy.Clone() extension method. A new BuildStrategy compiled from the BuildStrategyCompiler can then also be assigned against Model.BuildStrategy.
 
-```
+```csharp
 var strategy = ModelBuilder.DefaultBuildStrategy
     .Clone()
     .AddTypeCreator<MyCustomTypeCreator>()
@@ -152,7 +151,7 @@ Model.BuildStrategy = strategy;
 
 You may want to create multiple build strategies that support different model construction designs. These can be used on the fly as well.
 
-```
+```csharp
 var model = Model.Using<CustomBuildStrategy>().Create<Person>();
 ```
 

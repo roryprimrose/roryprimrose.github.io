@@ -13,7 +13,7 @@ The solution is to author a custom activity that only executes an If-Then branch
 
 I have created an IfThen activity that addresses this designer concern. The IfThen activity below executes its Body activity if the Condition value is true. It also includes some validation logic and a default activity structure provided via IActivityTemplateFactory.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -105,11 +105,11 @@ namespace Neovolve.Toolkit.Workflow.Activities
         }
     }
 }
-{% endhighlight %}
+```
 
 The designer support provides the ability to define the Condition expression and the child activity to execute.
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.IfThenDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -181,7 +181,7 @@ The designer support provides the ability to define the Condition expression and
                             Content="{Binding}" />
     </Grid>
 </sap:ActivityDesigner>
-{% endhighlight %}
+```
 
 Using this new activity, the above example can now be redefined as the following.![image][2]
 

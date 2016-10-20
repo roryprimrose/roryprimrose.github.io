@@ -31,7 +31,7 @@ I have updated the PowerShell script to include the following changes:
 
 Here is my version of the SharePoint harvest script.
 
-{% highlight powershell %}
+```powershell
 #==============================================================================
 # This script collects and installs the files required to build SharePoint
 # projects on a TFS build server. It supports both TFS 2010 and TFS 2008.
@@ -527,7 +527,7 @@ if ($Install) {
 } else {
   WriteHelp
 }
-{% endhighlight %}
+```
 
 [0]: http://code.msdn.microsoft.com/SPPwrShllTeamBuild
 [1]: http://blogs.msdn.com/b/sharepointdev/archive/2011/08/25/creating-your-first-tfs-build-process-for-sharepoint-projects.aspx

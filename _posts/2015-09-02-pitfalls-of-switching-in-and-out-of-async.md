@@ -15,19 +15,16 @@ One thing to note here is that using the async keyword on a method that doesn't 
 
 Below is a task based method, but does not have a continuation. It therefore does not need the async keyword.
 
-{% highlight csharp %}
-
+```csharp
 public Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     return _repository.GetTheThingAsync(id, cancellationToken);
 }
-
-{% endhighlight %}
+```
 
 The next example however does have a continuation. There is a second call and a return statement after the GetTheThingAsync call.
 
-{% highlight csharp %}
-
+```csharp
 public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     var thing = await _repository.GetTheThingAsync(id, cancellationToken).ConfigureAwait(false);
@@ -36,17 +33,15 @@ public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancel
 	
 	return thing;
 }
-
-{% endhighlight %}
+```
 
 I tend to write plain task based methods and only add in async once I have a continuation as the code evolves. The two pitfalls below come into play when forgetting to add the async keyword into the mix. Both scenarios are a problem because of when the code after the task gets executed.
 
-**Pitfall #1 - Working with locally disposable resources**
+## Pitfall #1 - Working with locally disposable resources
 
 One scenario I came across was when a locally disposable resource was added to a Task based method with a using statement.
 
-{% highlight csharp %}
-
+```csharp
 public Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     using (var stream = new MemoryStream())
@@ -54,15 +49,13 @@ public Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellation
         return _repository.GetTheThingAsync(id, stream, cancellationToken);
 	}
 }
-
-{% endhighlight %}
+```
 
 This does not work because the end of the using block is a continuation. What happens here is that the repository is called and the task returned, then the stream is disposed. Most likely the task from the repository is executed after this method has completed and the using block disposes the stream before it is used.
 
 By making the method async, the task from the repository is executed before the end of the using block at which point the stream is still valid.
 
-{% highlight csharp %}
-
+```csharp
 public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     using (var stream = new MemoryStream())
@@ -70,17 +63,15 @@ public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancel
         return await _repository.GetTheThingAsync(id, stream, cancellationToken).ConfigureAwait(false);
 	}
 }
-
-{% endhighlight %}
+```
 
 The good thing about this example is that you will know straight away that this method requires an async keyword as you will get an ObjectDisposedException when you attempt to use the stream.
 
-**Pitfall #2 - Catching exceptions**
+## Pitfall #2 - Catching exceptions
 
 Another scenario I came across was when a plain Task based method was updated to include a catch block. This suffers from exactly the same problem as the first pitfall.
 
-{% highlight csharp %}
-
+```csharp
 public Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     try
@@ -94,15 +85,13 @@ public Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellation
 		throw;
 	}
 }
-
-{% endhighlight %}
+```
 
 Like the first pitfall, this catch block will never be executed. If the task was to throw a TimeoutException, this catch block would not execute because the task has already been returned to the caller and this method is no longer on the call stack.
 
 By making the method async, the task from the repository is evaluated within the scope of the try/catch block.
 
-{% highlight csharp %}
-
+```csharp
 public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancellationToken)
 {
     try
@@ -116,8 +105,7 @@ public async Task<Something> GetSomethingAsync(Guid id, CancellationToken cancel
 		throw;
 	}
 }
-
-{% endhighlight %}
+```
 
 Unlike the first pitfall, this one is a little harder to identify. With good unit test coverage of this code however you will quickly find this issue and resolve it.
 

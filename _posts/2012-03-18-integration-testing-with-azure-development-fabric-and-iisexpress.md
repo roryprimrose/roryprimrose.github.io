@@ -11,7 +11,7 @@ The following code is what I am using the spin up the Azure storage emulator, Az
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace MySystem.Server.Web.IntegrationTests
 {
     using System;
@@ -86,7 +86,7 @@ namespace MySystem.Server.Web.IntegrationTests
         #endregion
     }
 }
-{% endhighlight %}
+```
 
 Enjoy
 

@@ -7,13 +7,13 @@ date: 2010-10-13 13:34:00 +10:00
 
 The [previous post][0] in this series provided the custom activity that manages multiple business failures in WF. Providing adequate designer support was one of the [design goals][1] of this series. This post will outline the designer support for the BusinessFailureEvaluator&lt;T&gt; and BusinessFailureScope&lt;T&gt; activities.  
 
-**BusinessFailureEvaluator&lt;T&gt;**
+## BusinessFailureEvaluator&lt;T&gt;
 
 The BusinessFailureEvaluator&lt;T&gt; evaluates a single business failure. There is no support for child activities which makes the designer very simple.  
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureEvaluatorDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -34,7 +34,7 @@ The BusinessFailureEvaluator&lt;T&gt; evaluates a single business failure. There
     </DrawingBrush>
   </sap:ActivityDesigner.Icon>
 </sap:ActivityDesigner>
-{% endhighlight %}
+```
 
 The XAML for the designer simply identifies the image to use for the activity on the design surface. 
     
@@ -42,7 +42,7 @@ The XAML for the designer simply identifies the image to use for the activity on
     
 The activity has a generic type argument that defaults to Int32 when the activity is dropped onto the designer. This type is not always suitable for the purposes of the application so the generic type argument needs to be updatable.
     
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -65,7 +65,7 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
         }
     }
 }
-{% endhighlight %}
+```
 
 The code behind the designer supports this by [attaching an ArgumentType property][3] to the ModelItem when it is assigned to the designer. 
     
@@ -73,11 +73,11 @@ The code behind the designer supports this by [attaching an ArgumentType propert
 
 This attached property allows the generic type of the activity to be changed to another type.
 
-**BusinessFailureScope&lt;T&gt;**
+## BusinessFailureScope&lt;T&gt;
 
 The BusinessFailureScope&lt;T&gt; allows for multiple business failures to be stored against the scope so that they can be thrown together rather than one at a time.
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.BusinessFailureScopeDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -100,7 +100,7 @@ The BusinessFailureScope&lt;T&gt; allows for multiple business failures to be st
   </sap:ActivityDesigner.Icon>
   <ContentPresenter x:Uid="ContentPresenter_1" Style="{x:Static sacdt:DesignerStylesDictionary.SequenceStyle}" Content="{Binding}" />
 </sap:ActivityDesigner>
-{% endhighlight %}
+```
 
 The XAML for the designer does two things. Firstly it identifies the icon the activity uses on the designer. Secondly, it identifies that the style of the content presenter is the same one that the SequenceDesigner uses for the Sequence activity. This style provides the support for displaying arrows, drag/drop behaviour and animation on the designer for working with child activities. This style is available from the DesignerStylesDictionary.SequenceStyle property. The System.Activities.Core.Presentation assembly exposes this type and is a reference of the designer project.
 
@@ -108,7 +108,7 @@ The XAML for the designer does two things. Firstly it identifies the icon the ac
 
 Like the BusinessFailureEvalator&lt;T&gt; activity, the BusinessFailureScope has a generic type argument that defaults to Int32 when the activity is dropped onto the designer. The code behind the designer makes this type updatable in the same way.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -131,7 +131,7 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
         }
     }
 }
-{% endhighlight %}
+```
 
 The property attached by GenericArgumentTypeUpdater allows generic type to be changed using the ArgumenType property.
     

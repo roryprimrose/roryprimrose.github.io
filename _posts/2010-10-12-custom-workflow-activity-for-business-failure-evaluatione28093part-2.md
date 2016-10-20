@@ -11,7 +11,7 @@ The first issue to work on is how to express a business failure. The design requ
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -50,13 +50,13 @@ namespace Neovolve.Toolkit.Workflow
         }
     }
 }
-{% endhighlight %}
+```
 
 The BusinessFailure&lt;T&gt; class supports these design goals. There is a constraint defined for the code type T that enforces the type to be a struct. Primarily this is to ensure that the code value is serializable and enforces failure codes to be simple types. One thing to note about this class is that it is marked as Serializable. This is critically important in order to support scenarios where a business failure has been created but not yet processed before the executing workflow is persisted.
 
 The next part of the design to address is how a business failure gets processed. The design describes that this will be done using a custom exception. The exception allows calling applications have access to all the failures related to an exception and enforces applications to leverage structured error handling practises to process business failures.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow
 {
     using System;
@@ -183,7 +183,7 @@ namespace Neovolve.Toolkit.Workflow
         }
     }
 }
-{% endhighlight %}
+```
 
 The code analysis rules provided by Microsoft defines the bulk of the signatures on this type. This is done to provide a consistent exception implementation for consumers. The business failure specific parts of this implementation are in three areas:
 

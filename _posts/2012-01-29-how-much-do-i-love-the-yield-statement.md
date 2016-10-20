@@ -10,7 +10,7 @@ Take the following abstract class for example:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace MyApplication.Diagnostics
 {
     using System;
@@ -54,11 +54,11 @@ namespace MyApplication.Diagnostics
         }
     }
 }
-{% endhighlight %}
+```
 
 The design of this abstract class allows for a diagnostic task to have multiple steps. My first implementation of this class however is one that only had a single hard-coded step. Enter the wonderful yield return statement.
 
-{% highlight csharp %}
+```csharp
 public override IEnumerable<DiagnosticTaskStep> Steps
 {
     get
@@ -66,7 +66,7 @@ public override IEnumerable<DiagnosticTaskStep> Steps
         yield return _validateStep;
     }
 }
-{% endhighlight %}
+```
 
 This is so much more elegant than creating a new collection to return the single predetermined item. I can’t say how much I love the yield statement.
 

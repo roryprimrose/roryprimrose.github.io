@@ -21,7 +21,7 @@ We defined the following criteria for release notes contents in our project:
 - Must identify the release version per PBI/Bug
 - Must allow for selectively excluding a PBI/Bug
 
-**Work Item Query**
+## Work Item Query
 
 Because the source of information for the release notes are work items, the mechanism to automate this originates with a work item query. Already we can easily address the first three of the above criteria using available work item query filters.
 
@@ -61,13 +61,13 @@ We then sort the results as:
 
 Now we have a query that provides all the information we require to generate release notes. We have several repositories and products in our account so we duplicate this query and include a filter on Area Path so that each query can target a specific product.
 
-**Documentation Generation**
+## Documentation Generation
 
 Now we need to export the work item query data in a way that is suitable for release notes. There is an excellent VSTS/TFS extension on the marketplace called [Enhanced Export][4]. This allows you to take a work item query or test plan and apply the XML data against an XSLT template. The output of this is HTML which you can then download as a Word or Excel document. This suits our purpose nicely.
 
 I took the "Requirements Specification" template that came with the extension and started tweaking it to be more appropriate for our release notes. This is a very flexible system that you can modify to output release notes that suit your business purpose.
 
-**Notes**
+## Notes
 
 We made new work item queries similar to the above but with filters of State = Done and Release Version = "" in order to identify work that was ready for the next release. We then added that query to our team dashboard as a chart.
 

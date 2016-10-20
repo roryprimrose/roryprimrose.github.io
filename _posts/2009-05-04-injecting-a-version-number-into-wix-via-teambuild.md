@@ -11,7 +11,7 @@ The following target overrides the ResolveSolutionPathsForEndToEndIteration MSBu
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
      
@@ -117,11 +117,11 @@ The following target overrides the ResolveSolutionPathsForEndToEndIteration MSBu
     </Target>
      
 </Project>    
-{% endhighlight %}
+```
 
 The only disadvantage of this solution is that the WiX project needs to be manually updated to include the VersionNumber property. Once this is done, the VersionNumber needs to be defined in the DefineConstants property which is available in the project properties GUI. For example:
 
-{% highlight xml %}
+```xml
 <Project DefaultTargets="Build"
             xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
@@ -185,11 +185,11 @@ The only disadvantage of this solution is that the WiX project needs to be manua
     <Pedantic>False</Pedantic>
     </PropertyGroup>
 </Project>    
-{% endhighlight %}
+```
 
 This solution makes the version number available to the WiX script.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <?define COMPANY = "MyCompany" ?>
 <?define PRODUCTNAME = "MyProject" ?>
@@ -208,7 +208,7 @@ This solution makes the version number available to the WiX script.
                 Comments="$(var.VersionNumber)" />
     </Product>
 </Wix>    
-{% endhighlight %}
+```
 
 This method allows the build script to pass a version number into WiX as a build property. A better solution to this is to extract the version number from the AssemblyInfo.cs from a project in the solution rather than manually providing the version number as a build property. Ideally the projects should reference a common ProductInfo.cs that contains the version number to apply to all projects in the solution. This process can then be extended so that the version number in this common file is updated by the build script before the solution is built.
 

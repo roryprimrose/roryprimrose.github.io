@@ -13,7 +13,7 @@ The Activity class in WF 3.0 and 3.5 provided a public Activity Parent property 
 
 The alternative to these automated methods is to implement an explicit opt-in design where a parent activity informs the extension about a link to a child activity. This makes the parent activity responsible for informing the extension about a link to a child activity. The extension then uses this knowledge in the processing of the business failure.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Extensions
 { 
     using System;
@@ -251,7 +251,7 @@ namespace Neovolve.Toolkit.Workflow.Extensions
         }
     }
 }
-{% endhighlight %}
+```
 
 The BusinessFailureExtension exposes a LinkActivityToScope method that creates the link between a scope and child activity. Child activities can check if they are linked to a scope by calling the IsLinkedToScope method. The link between these activities uses a Dictionary&lt;String, String&gt; instance to store the associations. The key of the dictionary is the ActivityId of the linked activity and the value is the ActivityId of the scope activity. This design allows for multiple activities to be linked to a scope while enforcing that an activity is only linked to a single scope activity.
 

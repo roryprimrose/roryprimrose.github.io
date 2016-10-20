@@ -9,7 +9,7 @@ There is an issue with mocking IUnityContainer from RhinoMocks. A BadImageFormat
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
@@ -39,7 +39,7 @@ namespace TestProject1
         }
     }
 }
-{% endhighlight %}
+```
 
 This test results in the following failure: 
 
@@ -69,7 +69,7 @@ You can use either of these types to get the expected outcome and avoiding the B
 
 For example, both of the following tests pass.
 
-{% highlight csharp %}
+```csharp
 [TestMethod]
 public void MockingUnityContainerBaseSucceedsTest()
 {
@@ -95,7 +95,7 @@ public void MockingUnityContainerSucceedsTest()
     
     resolvedTest.DoSomething();
 }
-{% endhighlight %}
+```
 
 Easy fix.
 

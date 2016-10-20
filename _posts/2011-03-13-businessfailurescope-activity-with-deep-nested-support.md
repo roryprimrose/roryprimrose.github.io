@@ -16,7 +16,7 @@ If only I had known about [Workflow Execution Properties][3] back then. You can 
 
 A great feature of execution properties in a workflow is that they are scoped to a specific sub-tree of the workflow structure. This is perfect for managing sets of failures between the parent scope and child evaluator activities. This method also allows for child evaluators to communicate failures to the parent scope from any depth of the workflow sub-tree.![image][5]
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -47,7 +47,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
         }
     }
 }
-{% endhighlight %}
+```
 
 An instance of the BusinessFailureInjector&lt;T&gt; class is the value that is added to the parent scope’s execution context as an execution property. This class simply holds the failures that child evaluator activities find. One thing to notice about BusinessFailureInjector is the usage of DataContract and DataMember attributes. WF does all the heavy lifting for us with regard to persistence. The data held in the execution property automatically gets persisted and then restored for us. This was done manually in the [old extension version][6] as well as manually tracking the links between scopes and evaluators. 
 
@@ -55,15 +55,15 @@ There are some minor changes to the code in the [BusinessFailureScope][7] and [B
 
 The parent scope adds the execution property to its context when it is executed.
 
-{% highlight csharp %}
+```csharp
 BusinessFailureInjector<T> injector = new BusinessFailureInjector<T>();
     
 context.Properties.Add(BusinessFailureInjector<T>.Name, injector);
-{% endhighlight %}
+```
 
 If the child activity can’t find the execution property then it throws the failure exception straight away for the single failure. If the execution property is found then it adds its failure to the collection of failures.
 
-{% highlight csharp %}
+```csharp
 BusinessFailureInjector<T> injector = context.Properties.Find(BusinessFailureInjector<T>.Name) as BusinessFailureInjector<T>;
     
 if (injector == null)
@@ -72,11 +72,11 @@ if (injector == null)
 }
     
 injector.Failures.Add(failure);
-{% endhighlight %}
+```
 
 The parent scope then checks with the execution property to determine if there are any failures to throw in an exception.
 
-{% highlight csharp %}
+```csharp
 private static void CompleteScope(NativeActivityContext context)
 {
     BusinessFailureInjector<T> injector = context.Properties.Find(BusinessFailureInjector<T>.Name) as BusinessFailureInjector<T>;
@@ -93,7 +93,7 @@ private static void CompleteScope(NativeActivityContext context)
     
     throw new BusinessFailureException<T>(injector.Failures);
 }
-{% endhighlight %}
+```
 
 Overall, the complexity of the code has been significantly reduced by this this method of inter-activity communication. In addition, child evaluators can now exist anywhere under a parent scope activity and still have their failures managed by the parent scope.
 

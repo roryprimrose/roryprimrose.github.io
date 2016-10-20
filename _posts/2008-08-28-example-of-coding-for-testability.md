@@ -15,9 +15,9 @@ Given that this application is going to chew a lot of bandwidth (my entire site)
 
 Here is a simple example of how to take untestable code and make it testable. In the following examples, there is some logic in the ResourceResolver.GetResourceContents method that we want to test.
 
-**The untestable example**
+## The untestable example
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -62,15 +62,15 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 This is untestable as a unit test. To write a test for this code will require an integration test as requests are being made to an external resource (http in this case). What if that resource is not available or produces unknown or unmanageable results? Unit testing normally requires more flexibility as the same code paths need different data thrown at them.
 
 This code is a classic example. The HttpWebRequest class is not easily testable. Converting this code so that mocks and stubs can be used will allow unit tests to be supported.
 
-**The testable example**
+## The testable example
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -139,7 +139,7 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 By abstracting an implementation that actually gets the resource contents (with a bit of dependency injection thrown in), we now have a ResourceResolver.GetResourceContents method that can be unit tested. The unit testing involved now needs to pass in either a stub or a mocked instance of IResourceLoader and we can safely test the logic of this method without requiring http requests.
 

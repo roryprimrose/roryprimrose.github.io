@@ -11,7 +11,7 @@ Here is the situation. I have a flush method that looks like this:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public void Flush()
 {
     // Loop through each listener
@@ -21,13 +21,13 @@ public void Flush()
         listener.Flush();
     }
 }
-{% endhighlight %}
+```
 
 Code coverage for this method says that 2 blocks not covered, 12.5% not covered, 14 blocks covered, 87.5% covered. Code metrics for this method are maintainability index is 80, cyclomatic complexity is 3, class coupling is 5 and lines of code is 2.
 
 The IL for this method is:
 
-{% highlight text %}
+```text
 .method public hidebysig instance void Flush() cil managed
 {
     .maxstack 2
@@ -76,13 +76,13 @@ The IL for this method is:
     L_004e: ret 
     .try L_0013 to L_0036 finally handler L_0036 to L_004d
 }
-{% endhighlight %}
+```
 
 The UI for code coverage indicates that each line of code is hit. My guess is that there is something to do with the IEnumerator that is called when foreach is compiled.
 
 I changed the code to this:
 
-{% highlight csharp %}
+```csharp
 public void Flush()
 {
     // Loop through each listener
@@ -94,13 +94,13 @@ public void Flush()
         listener.Flush();
     }
 }
-{% endhighlight %}
+```
 
 Code coverage now says that 0 blocks not covered, 0% not covered, 11 blocks covered, 100% covered. Code metrics for this method now say that maintainability index is 75, cyclomatic complexity is2, class coupling is 3 and lines of code is 3.
 
 The IL for this method is now:
 
-{% highlight text %}
+```
 .method public hidebysig instance void Flush() cil managed
 {
     .maxstack 2
@@ -138,12 +138,12 @@ The IL for this method is now:
     L_0039: brtrue.s L_0005
     L_003b: ret
 }
-{% endhighlight %}
+```
 
 There are several posts around that talk about the performance difference of foreach vs for, but no-one seems to have actually posted metrics to base their stance on. One post that was in interesting read was [How to Write High-Performance C# Code by Jeff Varszegi][0]. As far as performance goes, the collection in this situation is always going to be very small so it is perhaps not that much of an issue.
 
 I think that for loops would be faster after looking at the IL and understanding what foreach does under the covers. I don't think however that the performance difference is significant in itself. However, if foreach causes issues with code coverage, perhaps both these issues combined is enough of a reason to change coding practices.
 
-**Updated:** Reformatted the IL code to avoid PRE tags that don't wrap.
+**Updated: Reformatted the IL code to avoid PRE tags that don't wrap.**
 
 [0]: http://dotnet.sys-con.com/read/46342.htm

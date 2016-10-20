@@ -10,7 +10,7 @@ Signatures like the LINQ Intersect function seems to just get in the way of prod
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 public class PredicateComparer<T> : IEqualityComparer<T>
 {
     private readonly Func<T, T, bool> _comparer;
@@ -32,15 +32,15 @@ public class PredicateComparer<T> : IEqualityComparer<T>
         return 0;
     }
 }    
-{% endhighlight %}
+```
 
 This little helper doesn’t totally fix the syntax problem, but does limit how big your coding speed bumps are. For example:
 
-{% highlight csharp %}
+```csharp
 var matchingEntities = allEntities.Intersect(
     subsetOfEntities,
     new PredicateComparer<MyEntityType>((x, y) => x.Id == y.Id));
-{% endhighlight %}
+```
 
 Easy.
 

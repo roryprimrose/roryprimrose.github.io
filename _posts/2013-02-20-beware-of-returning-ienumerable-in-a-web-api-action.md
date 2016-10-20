@@ -13,7 +13,7 @@ I have finally figured out that returning a lazy IEnumerable instance will also 
 
 Consider the following:
 
-{% highlight csharp %}
+```csharp
 namespace MyService
 {
     using System;
@@ -43,7 +43,7 @@ namespace MyService
         }
     }
 }
-{% endhighlight %}
+```
 
 This will write information using [a registered ITraceWriter][1] implementation (which [has its problems][2]) but will not fire the exception filter attributes. The reason is that the part of the pipeline that evaluates the data to send in the response (therefore forcing the enumeration and hitting an exception)would presumably be beyond the part of the pipeline that is covered by the error handling.
 

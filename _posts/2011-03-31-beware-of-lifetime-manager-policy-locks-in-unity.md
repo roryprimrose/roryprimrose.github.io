@@ -17,7 +17,7 @@ The GetValue method obtains a lock for the current thread and only releases it i
 
 This is what is happening in my service. In the profiling above you can see that the lifetime manager is getting called from my [Unity extension for disposing build trees][2]. While the extension is not doing anything wrong, it can handle this scenario by using a timeout on obtaining a value from the lifetime manager.
 
-{% highlight csharp %}
+```csharp
 private static Object GetLifetimePolicyValue(ILifetimePolicy lifetimeManager)
 {
     if (lifetimeManager is IRequiresRecovery)
@@ -40,7 +40,7 @@ private static Object GetLifetimePolicyValue(ILifetimePolicy lifetimeManager)
     
     return lifetimeManager.GetValue();
 }
-{% endhighlight %}
+```
 
 This implementation is not ideal, but it is unfortunately the only way to handle this case as there is no way to determine whether another thread has a lock on the lifetime manager.
 
@@ -50,7 +50,7 @@ This workaround will consume threads that will be held on a lock and potentially
 
 The next solution is to use a lifetime manager that gets around this issue by never allowing the lifetime manager to be assigned a null value.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Jabiru.Server.Services
 {
     using System;
@@ -70,11 +70,11 @@ namespace Neovolve.Jabiru.Server.Services
         }
     }
 }
-{% endhighlight %}
+```
 
 This idea fails to get around the locking issue when the lifetime manager is created but never has a value assigned. The next version of this SafeSingletonLifetimeManager solves this by managing its own locking logic around whether a non-null value has been assigned to the policy.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Jabiru.Server.Services
 {
     using System;
@@ -119,7 +119,7 @@ namespace Neovolve.Jabiru.Server.Services
         }
     }
 }
-{% endhighlight %}
+```
 
 Using this policy now avoids the locking problem described in this post. I would still like to know the reason for the locking logic as this SafeSingletonLifetimeManager is completely circumventing that logic.
 

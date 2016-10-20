@@ -34,7 +34,7 @@ Hopefully you will now have some information to work with.
 
 Double clicking on the binding failure gives you all the information about what .Net did to try to find the assembly. The entry in my scenario looks like this:
 
-{% highlight text %}
+```text
 *** Assembly Binder Log Entry  (28/05/2010 @ 11:35:47 AM) ***
 The operation failed.
 Bind result: hr = 0x80070002. The system cannot find the file specified.
@@ -68,7 +68,7 @@ LOG: Attempting download of new URL file:///C:/Windows/Microsoft.NET/Framework64
 LOG: Attempting download of new URL file:///C:/Program Files (x86)/MyService.Service/bin/Microsoft.Synchronization.EXE.
 LOG: Attempting download of new URL file:///C:/Program Files (x86)/MyService.Service/bin/Microsoft.Synchronization/Microsoft.Synchronization.EXE.
 LOG: All probing URLs attempted and failed.
-{% endhighlight %}
+```
 
 In my case I have a binding failure on Sync Framework assemblies. Makes sense since I haven’t installed it yet :).
 

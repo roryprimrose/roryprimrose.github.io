@@ -16,7 +16,7 @@ The gap in functionality here is where I want to use NSubstitute to evaluate rec
 
 Getting this to work uses two key pieces, IArgumentMatcher from NSubstitute and AssertionScope from FluentAssertions.
 
-{% highlight csharp %}
+```csharp
 public static class Verify
 {
     private static readonly ArgumentSpecificationQueue _queue;
@@ -60,8 +60,7 @@ public static class Verify
         }
     }
 }
-
-{% endhighlight %}
+```
 
 The Verify.That method is similar in syntax to the Arg.Is&lt;T&gt; method in NSubstitute. It takes Action&lt;T&gt; so that it can evaluate the T value using the AssertionMatcher&lt;T&gt; class. The AssertionMatcher class runs the action within an AssertionScope so that it can capture any FluentAssertions failures. At this point, AssertionMatcher essentially converts the outcome into a predicate rather than allowing FluentAssertions to throw an exception.
 
@@ -69,16 +68,16 @@ A key outcome of this class is to report failures. This is simply done by tracin
 
 This can be used like the following:
 
-{% highlight csharp %}
+```csharp
 validationStore.Received()
     .AddOutstandingVerification(
         Verify.That<OutstandingVerification>(
             y => y.Expires.Should().BeCloseTo(DateTimeOffset.UtcNow.Add(verificationExpiry), 2000)));
-{% endhighlight %}
+```
 
 The failure reporting of this test would then look like the following:
 
-{% highlight text %}
+```text
 Debug Trace:
 Expected date and time to be within 2000 ms from <2015-10-09 22:18:00.911>, but found <2014-10-09 22:18:00.895>.
 Expected date and time to be within 2000 ms from <2015-10-09 22:18:00.930>, but found <2014-10-09 22:18:00.895>.
@@ -89,7 +88,7 @@ NSubstitute.Exceptions.ReceivedCallsException: Expected to receive a call matchi
 Actually received no matching calls.
 Received 1 non-matching call (non-matching arguments indicated with '*' characters):
     AddOutstandingVerification(*OutstandingVerification*)
-{% endhighlight %}
+```
 
 Easy done.
 

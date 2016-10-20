@@ -11,7 +11,7 @@ The ProxyHandler class below is the first of these reusable classes. It helps wi
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.Reflection;
@@ -90,11 +90,11 @@ namespace Neovolve.Toolkit.Communication
         }
     }
 }
-{% endhighlight %}
+```
 
 The ProxyManager class below encapsulates the creation and lifetime management of a ProxyHandler instance. It creates a proxy instance from the ProxyHandler when the Proxy property is referenced and disposes the proxy when the ProxyManager is disposed. It has some logic for attempted to resolve a ProxyHandler&lt;T&gt; or then falling back on a default proxy or a proxy to a WCF channel if no ProxyHandler is provided in its constructor.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -205,11 +205,11 @@ namespace Neovolve.Toolkit.Communication
         }
     }
 }
-{% endhighlight %}
+```
 
 These classes work together to make it really easy to work with custom proxies. The most common usage I have for these classes is to proxy a call out to a WCF service. The following is an example of how this looks in a client console application. The benefit here for working with WCF is that all the management of WCF channels is abstracted away from the application code.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.ServiceModel;
 using Neovolve.Toolkit.Communication;
@@ -238,7 +238,7 @@ namespace ConsoleApplication1
         String DoSomething(String data);
     }
 }
-{% endhighlight %}
+```
 
 The code for these classes can be found in my [Neovolve.Toolkit][2] project out on Codeplex.
 

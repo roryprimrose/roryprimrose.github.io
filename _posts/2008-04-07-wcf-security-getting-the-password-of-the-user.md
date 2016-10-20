@@ -17,11 +17,11 @@ Thankfully, there is a much more elegant way of passing these credentials around
 
 Setting up the security context of the service is done using [IAuthorizationPolicy][0] implementations. The place in WCF where there is access to the username, password and IAuthorizationPolicy configuration is [CustomUserNameSecurityTokenAuthenticator.ValidateUserNamePasswordCore][1]. The ValidateUserNamePasswordCore method is passed the username and password parameters and returns a readonly collection of IAuthorizationPolicy objects. SecurityTokenAuthenticator, from which CustomUserNameSecurityTokenAuthenticator ultimately inherits from, is not configurable in WCF itself. Using Reflector to follow the calls against SecurityTokenAuthenticator, the place that is extensible in WCF such that a custom SecurityTokenAuthenticator can be used is [ServiceCredentials][2]. Creating a custom ServiceCredentials object, using custom objects between the ServiceCredentials and SecurityTokenAuthenticator call stack is the answer. 
 
-**PasswordServiceCredentials**
+## PasswordServiceCredentials
 
 The custom ServiceCredentials class implementation returns a custom SecurityTokenManager if custom username password validation is enabled. 
 
-{% highlight csharp %}
+```csharp
 public class PasswordServiceCredentials : ServiceCredentials
 {
     public PasswordServiceCredentials()
@@ -51,13 +51,13 @@ public class PasswordServiceCredentials : ServiceCredentials
         return base.CreateSecurityTokenManager();
     }
 }
-{% endhighlight %}
+```
 
-**PasswordSecurityTokenManager**
+## PasswordSecurityTokenManager
 
 The custom SecurityTokenManager returns a custom SecurityTokenAuthenticator when it finds a SecurityTokenRequirement for username security. It also ensures that a default validator is available if one is not configured. 
 
-{% highlight csharp %}
+```csharp
 internal class PasswordSecurityTokenManager : ServiceCredentialsSecurityTokenManager
 {
     public PasswordSecurityTokenManager(PasswordServiceCredentials credentials)
@@ -88,13 +88,13 @@ internal class PasswordSecurityTokenManager : ServiceCredentialsSecurityTokenMan
         return base.CreateSecurityTokenAuthenticator(tokenRequirement, out outOfBandTokenResolver);
     }
 }
-{% endhighlight %}
+```
 
-**PasswordSecurityTokenAuthenticator**
+## PasswordSecurityTokenAuthenticator
 
 The custom SecurityTokenAuthenticator is where the half of the magic happens. Here there is the opportunity to return custom a IAuthorizationPolicy implementation that will allow us to inject a custom IPrincipal and IIdentity on the thread the executes the service code. 
 
-{% highlight csharp %}
+```csharp
 internal class PasswordSecurityTokenAuthenticator : CustomUserNameSecurityTokenAuthenticator
 {
     public PasswordSecurityTokenAuthenticator(UserNamePasswordValidator validator)
@@ -113,13 +113,13 @@ internal class PasswordSecurityTokenAuthenticator : CustomUserNameSecurityTokenA
         return newPolicies.AsReadOnly();
     }
 }
-{% endhighlight %}
+```
 
-**PasswordAuthorizationPolicy**
+## PasswordAuthorizationPolicy
 
 The IAuthorizationPolicy implementation is where the other half of the magic happens. This policy gets passed the username and password so that it can store the password in the security context. The policy will return false until it finds a GenericIdentity in the evaluation context that has the same username as the one provided to the policy. It then creates a custom IIdentity that exposes both the username and password and stores it back into the collection of identities in the evaluation context and also stores it against the PrimaryIdentity property. PrimaryIdentity is then exposed through [ServiceSecurityContext.PrimaryIdentity][3] in the service implementation. A custom principal is then created (without roles) and stores it against the Principal property of the context. Principal is then injected into Thread.CurrentPrincipal by WCF (depending on configuration). 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Collections.Generic; 
 using System.IdentityModel.Claims; 
@@ -229,15 +229,15 @@ namespace Neovolve.Framework.Communication.Security
     } 
 } 
     
-{% endhighlight %}
+```
 
-**Configuration**
+## Configuration
 
 As mentioned above, the custom ServiceCredentials needs to be configured so that the custom IAuthorizationPolicy is evaluated. Under serviceBehaviors, the serviceCredentials element allows a custom type to be defined. userNameAuthentication needs to be set to Custom, otherwise Windows authentication of the username password credentials will be used by default. Lastly, serviceAuthorization needs to set userNamePasswordValidationMode to custom. Without the validation mode being custom, the custom IPrincipal will not be assigned against Thread.CurrentPrincipal. 
 
 The other thing to note is that because username password credentials are being passed over to the wire to the service, transport security is required to protect the credentials. The security mode should be set to TransportWIthMessageCredentials with a message client credential type as UserName. 
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
     <system.web> 
@@ -275,11 +275,11 @@ The other thing to note is that because username password credentials are being 
     </behaviors> 
     </system.serviceModel> 
 </configuration> 
-{% endhighlight %}
+```
 
 Download: [Neovolve.Framework.Communication.Security.zip (78.91 kb)][4]
 
-**Note:** the unit test in the solution must be run in debug rather than normal unit test running because of the use of the WcfServiceHost.exe. With the configuration defined, an x509 certificate is required on the machine with localhost as the subject name. 
+**Note:** The unit test in the solution must be run in debug rather than normal unit test running because of the use of the WcfServiceHost.exe. With the configuration defined, an x509 certificate is required on the machine with localhost as the subject name. 
 
 [0]: http://msdn2.microsoft.com/en-us/library/system.identitymodel.policy.iauthorizationpolicy.aspx
 [1]: http://msdn2.microsoft.com/en-us/library/system.identitymodel.selectors.customusernamesecuritytokenauthenticator.validateusernamepasswordcore.aspx

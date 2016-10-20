@@ -8,18 +8,18 @@ I have a web role (RP) running in Windows Azure that uses ACS 2.0 as the identit
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <wsFederation passiveRedirectEnabled="true" issuer="http://[addressOfAcs]" realm="http://www.domain.com" requireHttps="true" />
-{% endhighlight %}
+```
 
 This works great if the user is browsing on www.domain.com and then goes through the authentication process. A security token will be issued for www.domain.com to which the user is redirected back to. The RP will then validate that the token was issued to the configured audience uri. These thankfully allow multiple addresses to be specified.
 
-{% highlight xml %}
+```xml
 <audienceUris>
     <add value="http://www.domain.com" />
     <add value="http://domain.com" />
 </audienceUris>
-{% endhighlight %}
+```
 
 The problem is when you want to use the www-less address or any other host header for that matter. In this case, the user is browsing domain.com and goes through the authentication process. The token will be issued for www.domain.com but the user is then redirected back to the original address under the domain.com location. An exception is then thrown at this point.
 
@@ -33,7 +33,7 @@ The fix here is to put together some dynamic realm discovery logic. Creating a c
 
 For example:
 
-{% highlight csharp %}
+```csharp
 namespace MyApplication.Web.Security
 {
     using System;
@@ -99,7 +99,7 @@ namespace MyApplication.Web.Security
         }
     }
 }
-{% endhighlight %}
+```
 
 A couple of things to note about this code. 
 
@@ -109,9 +109,9 @@ Secondly, the BuildRequestedAddress method uses request headers to figure out th
 
 Next up, the web.config needs to be updated to use this module rather than the module that comes out of the box.
 
-{% highlight xml %}
+```xml
 <add name="WSFederationAuthenticationModule" type="MyApplication.Web.Security.DynamicRealmFederationAuthenticationModule, MyApplication.Web" preCondition="managedHandler" />
-{% endhighlight %}
+```
 
 The only remaining step is to set up ACS with an additional RP configuration for domain.com. You should now be able to authenticate and be redirected back to either domain.com or www.domain.com. 
 

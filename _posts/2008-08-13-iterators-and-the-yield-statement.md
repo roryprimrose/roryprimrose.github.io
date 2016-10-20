@@ -15,7 +15,7 @@ Take the following code for example:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
      
@@ -80,13 +80,13 @@ namespace ConsoleApplication1
     }
 }
     
-{% endhighlight %}
+```
 
 This code iterates over a set of 10 items and outputs the details of each item encountered. The interesting bit is that each item is only requested and created for each iteration rather than calculating the entire set up front.
 
 The output of this code is:
 
-{% highlight text %}
+```text
 Starting the iterations
 Getting item 0 from the store
 Got item 0 - First0 - Second0
@@ -108,7 +108,7 @@ Getting item 8 from the store
 Got item 8 - First8 - Second8
 Getting item 9 from the store
 Got item 9 - First9 - Second9
-{% endhighlight %}
+```
 
 Very powerful, very easy.
 

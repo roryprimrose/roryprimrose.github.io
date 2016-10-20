@@ -13,7 +13,7 @@ Identity delegation was the last demo that I presented. I didn't get the opportu
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 protected override IClaimsIdentity GetOutputClaimsIdentity(IClaimsPrincipal principal, RequestSecurityToken request, Scope scope)
 {
     if (null == principal)
@@ -46,7 +46,7 @@ protected override IClaimsIdentity GetOutputClaimsIdentity(IClaimsPrincipal prin
     
     return claimsIdentity;
 }
-{% endhighlight %}
+```
 
 The RP that receives the delegated identity can now look at the Actor property on the IClaimsIdentity to see if the RP is being invoked by a delegating identity.
 

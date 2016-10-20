@@ -33,7 +33,7 @@ All the code projects link in a ProductInfo.cs file so that they all compile wit
 
 The important configuration in this file with regard to versioning the product is the AssemblyVersionAttribute. Each project that links in this file will compile a binary with the same version information.  
 
-**Increment the build number of the product version**  
+## Increment the build number of the product version  
 
 The first task for the custom build actions is to increment the build number of the product before it compiles. This is done by invoking BTE in the pre-build event of the project that will compile first. You can look at the build order of the solution to easily figure out which project this will be.  
 
@@ -43,7 +43,7 @@ The pre-build event of this project can then invoke BTE to increment the build n
 
 The pre-build event for the Neovolve.Switch.Extensibility project has been changed to invoke the BTE TfsEdit task followed by the IncrementAssemblyVersion task.  
 
-{% highlight text %}
+```text
 If Not '$(ConfigurationName)' == 'Release' GOTO End
 
 CD "$(SolutionDir)"
@@ -53,17 +53,17 @@ CALL bte iav /pattern:"$(SolutionDir)Solution Items\ProductInfo.cs" /b
 GOTO End
 
 :End
-{% endhighlight %}
+```
 
 This script will only execute BTE when the Release build is selected. I didn’t want to increment the build number for Debug build configurations. When it is in a release build, the TfsEdit task has been configured here to ignore any failures to cater for scenarios where someone is building the solution without a TFS workspace mapping for the solution. The script then increments just the build number in the specified file.
 
-**Sync updated product version into wix project**
+## Sync updated product version into wix project
 
 The next step is to get the generation of the Wix project to use the same version information (which has now been incremented). This is unfortunately not as simple as linking in a common ProductInfo.cs file as it is with the C# projects. Wix projects define the version of the MSI in a version attribute on the Product element. This may also use a wix variable that may be declared in any file in the Wix project.
 
 This is the scenario for the Neovolve.Switch.Deployment project. The beginning of the Product.wxs file defines the product version using a wix variable that is defined in an include file.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0"
       encoding="UTF-8" ?>
 <?include Definitions.wxi ?>
@@ -76,21 +76,21 @@ This is the scenario for the Neovolve.Switch.Deployment project. The beginning o
            Version="$(var.ProductVersion)"
            Manufacturer="$(var.COMPANYNAME)"
            UpgradeCode="0FD2155F-5676-448F-864A-482BE0C26E97">
-{% endhighlight %}
+```
 
 The Neovolve.Switch.Deployment project will also define a pre-build event script like the one defined above for the Neovolve.Switch.Extensibility project.
 
-{% highlight text %}
+```text
 CD "$(SolutionDir)"
 CALL bte tfsedit /pattern:"$(ProjectDir)Definitions.wxi" /i
 CALL bte swv /pattern:"$(ProjectPath)" /source:"$(SolutionDir)Neovolve.Switch\$(OutDir)Switch.exe" /M /m /b /r
-{% endhighlight %}
+```
 
 The BTE TfsEdit task is used again here to attempt to check out the Definitions.wxi file from TFS as it is this file that contains the product version in a project variable. The BTE SyncWixVersion task then obtains the product version from the compiled Switch application and synchronises it into the Wix project before the MSI is compiled.
 
 One important thing to note here is that the source of the version number is the compiled output of the Switch application (in the current solution build) rather than reading the version from a source file (ProductInfo.cs). This is important because the AssemblyVersionAttribute in ProductInfo.cs may only define 1.0.*, or 1.0.1.*. The full version information for wildcard version numbers is only available after the compiler has generated the application. In this case, the SyncWixVersion (or swv) task is taking all version parts&#160; (/M = major, /m = minor, /b = build, /r = revision) from Switch.exe and pushing them into the wix product version value.
 
-**Rename wix output to include the product version**
+## Rename wix output to include the product version
 
 Lastly, I want the output of the Wix project to include the version number. This task could update the output file name in the project property prior to compiling the MSI. This would however be messy for two reasons:
 
@@ -101,18 +101,18 @@ The simpler solution is to just rename the output of the project once compilatio
 
 A post-build event script is added to the Neovolve.Switch.Deployment project in order to resolve the output of the Wix project and rename it.
 
-{% highlight text %}
+```text
 CD "$(SolutionDir)"
 CALL bte wov /pattern:"$(ProjectPath)"
-{% endhighlight %}
+```
 
 BTE invokes the WixOutputVersion task against the wix project. It will look at all the build configuration for the project and rename as many files as possible that match the output name of the project. It will use the product version information that is defined against the Wix project that was synchronised in the pre-build event script.
 
-**The result**
+## The result
 
 When this solution is compiled, the following is seen in the build log (severely cut down for brevity).
 
-{% highlight text %}
+```text
 ------ Rebuild All started: Project: Neovolve.Switch.Extensibility, Configuration: Release Any CPU ------
   BuildTaskExecutor - Neovolve Build Task Executor 1.0.0.29135
   
@@ -196,7 +196,7 @@ Build Summary
 Total build time: 00:55.555
 
 ========== Rebuild All: 6 succeeded or up-to-date, 0 failed, 0 skipped ==========
-{% endhighlight %}
+```
 
 You can see from the logs that BTE has done the following throughout the build of the solution:
 
@@ -216,7 +216,7 @@ The target directory of the Neovolve.Switch.Deployment project now contains nice
 
 Running all the BTE executions in the project build events is a batch file called bte.bat. This is located in the solution root and makes it easy for any project in the solution to invoke BTE with minimal noise in the build event script window. The batch file simply invokes BTE with all the command line parameters and manages the return code.
 
-{% highlight text %}
+```text
 @ECHO OFF
 References\Neovolve\BuildTaskExecutor\BuildTaskExecutor.exe %*
 
@@ -226,7 +226,7 @@ GOTO BuildTaskSuccessful
 :BuildTaskFailed
 exit 1
 :BuildTaskSuccessful
-{% endhighlight %}
+```
 
 You have seen here how a flexible little tool like BTE can integrate into a solution build to achieve valuable results when you don’t have access to a TFS build infrastructure.
       

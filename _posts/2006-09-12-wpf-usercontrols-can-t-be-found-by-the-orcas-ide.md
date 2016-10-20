@@ -9,7 +9,7 @@ I have created some WPF UserControls, but referencing them in XAML is causing gr
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <Page x:Class="XAMLBrowserApplication1.Page1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -20,13 +20,13 @@ I have created some WPF UserControls, but referencing them in XAML is causing gr
         <stuff:UserControl1 />
     </StackPanel>
 </Page>
-{% endhighlight %}
+```
 
 The IDE throws a wobbly saying _Assembly '' was not found. The 'clr-namespace' URI refers to an assembly that is not referenced by the project_. I haven't specified an assembly because the UserControl is in the same assembly as the XAML. This causes the control &lt;stuff:UserControl1 /&gt; to not be resolved which in turn makes the page invalid. Because the page is invalid, it can't be set as the StartupUri of the application. The application still runs, but I loose designer support.
 
 Just to check, I created a control library project and created a UserControl in the external assembly. I added the control library as a reference to the application and updated the XAML to be the following:
 
-{% highlight xml %}
+```xml
 <Page x:Class="XAMLBrowserApplication1.Page1"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -37,7 +37,7 @@ Just to check, I created a control library project and created a UserControl in 
         <stuff:UserControl1 />
     </StackPanel>
 </Page>    
-{% endhighlight %}
+```
 
 Now the IDE throws a wobbly saying _Assembly 'CustomControlLibrary1' was not found. The 'clr-namespace' URI refers to an assembly that is not referenced by the project_.
 

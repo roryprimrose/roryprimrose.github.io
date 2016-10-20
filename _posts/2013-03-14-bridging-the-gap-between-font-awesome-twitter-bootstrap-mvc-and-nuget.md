@@ -15,15 +15,15 @@ I looked at custom routing options but these just seemed to cause more problems 
 
 This is what I have for my current Font Awesome StyleBundle configuration.
 
-{% highlight csharp %}
+```csharp
 bundles.Add(
     new StyleBundle("~/css/fontawesome")
         .Include("~/Content/font-awesome.css"));
-{% endhighlight %}
+```
 
 The contents of the css file need to be adjusted when the bundle is created so that they include the Content directory, but also make the resource reference relative to the application root. Enter the ReplaceContentsBundleBuilder.
 
-{% highlight csharp %}
+```csharp
 namespace MyNamespace
 {
     using System.Collections.Generic;
@@ -63,17 +63,17 @@ namespace MyNamespace
         }
     }
 }
-{% endhighlight %}
+```
 
 This class makes it super easy to modify the bundle of the fly to give me the translation that I require without having to tweek anything coming from Nuget. The bundle config is now:
 
-{% highlight csharp %}
+```csharp
 bundles.Add(
     new StyleBundle("~/css/fontawesome")
     {
         Builder = new ReplaceContentsBundleBuilder("url('font/", "url('/Content/font/")
     }.Include("~/Content/font-awesome.css"));
-{% endhighlight %}
+```
 
 This will replace any content in the bundle that has a relative reference to font/ with a reference to /Content/font/ which is relative to the site root.
 

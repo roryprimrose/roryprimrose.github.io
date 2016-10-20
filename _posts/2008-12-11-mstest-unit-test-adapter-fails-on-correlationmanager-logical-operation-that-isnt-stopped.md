@@ -11,7 +11,7 @@ This is easily reproduced with the following code:
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 
       
@@ -31,7 +31,7 @@ namespace TestProject2
     { 
     } 
 }     
-{% endhighlight %}
+```
 
 This fails with the message: 
 
@@ -43,7 +43,7 @@ The workaround is to ensure that your test stops the logical operation that it s
 
 For example, the following code passes: 
 
-{% highlight csharp %}
+```csharp
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 
       
@@ -64,7 +64,7 @@ namespace TestProject2
     { 
     } 
 }     
-{% endhighlight %}
+```
 
 I have raised a bug in Connect [here][1]. 
 

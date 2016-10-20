@@ -18,7 +18,7 @@ For my application, I have set up the WebBrowser control to be as restricted as 
 
 If you fire up reflector and find the WebBrowser.DocumentText property you will see that internally, setting the WebBrowser.DocumentText property will create a MemoryStream with the new text value and then the stream is assigned to the WebBrowser.DocumentStream property. Reflector shows the DocumentStream property code to be this:
 
- {% highlight csharp %}
+ ```csharp
 public Stream DocumentStream
 {
     get
@@ -52,7 +52,7 @@ public Stream DocumentStream
         }
     }
 }
-{% endhighlight %}
+```
 
 When a new stream is assigned to DocumentStream, it will attempt to navigate to about:blank as the documentation says. The code here indicates that the stream data will be populated into the browser after it has navigated to about:blank. The hitch here is that if the navigation fails, you are none the wiser that the process has failed and the new document text won't be loaded. My problem with the code here is that the try block around the navigate swallows the exception, hence the document content doesn't change and you won't know why.
 

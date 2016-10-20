@@ -14,7 +14,7 @@ The [implementation][3] of the InstanceResolver activity avoids this scenario by
 
 The InstanceResolverTypeUpdater class shown below is very similar to the GenericTypeUpdater provided in [this post][1]. 
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -156,7 +156,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 This implementation is different to the GenericTypeUpdater in that it provides some specialised support regarding the ArgumentCount property of the ModelItem. The ArgumentCount property affects this updatable generic type support in two ways. 
 

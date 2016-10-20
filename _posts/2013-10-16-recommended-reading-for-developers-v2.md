@@ -11,7 +11,7 @@ A few years ago I posted about some [recommended reading for developers][0]. The
 
 The following links are some great articles to help developers up to speed on async development in addition to the [previous post][0].
 
-**Async/await**
+## Async/await
 
 [MSDN - Asynchronous Programming with Async and Await (C# and Visual Basic)][1]
 
@@ -25,7 +25,7 @@ The following links are some great articles to help developers up to speed on as
 
 [ASP.NET – Using Asynchronous Methods in ASP.NET MVC 4][6]
 
-**NSubstitute**
+## NSubstitute
 
 [Documentation and examples][7]
 

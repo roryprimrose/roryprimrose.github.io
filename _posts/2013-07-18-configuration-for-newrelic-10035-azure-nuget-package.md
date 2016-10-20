@@ -11,9 +11,9 @@ I’ve previously posted about Nuget package update pain with the NewRelic Azure
 
 Here are the ServiceDefinition.csdef configurations for the two types of roles. The setup of this configuration seems to be the most common point of failure in the installation scripts.
 
-**Web Role**
+## Web Role
 
-{% highlight xml %}
+```xml
 <WebRole>
     <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
@@ -26,11 +26,11 @@ Here are the ServiceDefinition.csdef configurations for the two types of roles. 
     </Task>
     </Startup>
 </WebRole>
-{% endhighlight %}
+```
 
-**Worker Role**
+## Worker Role
 
-{% highlight xml %}
+```xml
 <WorkerRole>
     <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
@@ -50,7 +50,7 @@ Here are the ServiceDefinition.csdef configurations for the two types of roles. 
     </Environment>
     </Runtime>
 </WorkerRole>
-{% endhighlight %}
+```
 
 [0]: /2013/02/07/fixing-new-relic-nuget-package-for-azure/
 [1]: /2013/04/03/newrelic-azure-nuget-package-update-pain-again/

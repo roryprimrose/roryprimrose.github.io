@@ -11,7 +11,7 @@ Some quick searching brought up [this post][0] which provides 99% of the answer.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace MyProduct.Server.DataAccess.Azure.IntegrationTests
 {
     using System;
@@ -70,7 +70,7 @@ namespace MyProduct.Server.DataAccess.Azure.IntegrationTests
         #endregion
     }
 }
-{% endhighlight %}
+```
 
 Dropping this class into the test assembly will ensure that the Azure development storage is running before the integration tests are executed.
 

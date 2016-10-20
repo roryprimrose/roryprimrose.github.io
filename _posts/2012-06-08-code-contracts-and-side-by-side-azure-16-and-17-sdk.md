@@ -17,12 +17,12 @@ My solution is starting to get to be a decent size with many third party technol
 
 This appears to be a bit concerning because the project itself compiled fine, but the rewriter failed at the tail end of the project compilation. The output window does shed some light on the issue though. 
 
-{% highlight text %}
+```text
 Reading assembly 'Microsoft.WindowsAzure.ServiceRuntime' from 'C:\Program Files\Windows Azure SDK\v1.6\ref\Microsoft.WindowsAzure.ServiceRuntime.dll' resulted in errors.
     Assembly reference not resolved: msshrtmi, Version=1.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35.
     Could not resolve type reference: [msshrtmi]Microsoft.WindowsAzure.ServiceRuntime.Internal.InteropRoleUpdates.
     Could not resolve type reference: [msshrtmi]Microsoft.WindowsAzure.ServiceRuntime.Internal.RoleStatus.
-{% endhighlight %}
+```
 
 While there is side by side support for 1.6 and 1.7 SDK versions, this is clearly referencing the old SDK when I want it to reference the latest bits. The 1.7 SDK readme also provides some further insight.
 

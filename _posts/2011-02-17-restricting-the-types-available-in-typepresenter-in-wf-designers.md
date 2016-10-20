@@ -15,7 +15,7 @@ Sometimes you don’t want the TypePresenter to provide every available type. Th
 
 In my scenario, I want to restrict the types available to those that derive from System.Exception. The first step to achieve this is to make a reference to the filter method in the xaml of the activity designer.
 
-{% highlight xml %}
+```xml
 <sapv:TypePresenter HorizontalAlignment="Left"
     VerticalAlignment="Center"
     Margin="6"
@@ -27,11 +27,11 @@ In my scenario, I want to restrict the types available to those that derive from
     Label="Exception type"
     Type="{Binding Path=ModelItem.ExceptionType, Mode=TwoWay, Converter={StaticResource modelItemConverter}}"
     Context="{Binding Context}" />
-{% endhighlight %}
+```
 
 The code behind class of the designer must contain the method defined in the Filter property (ExceptionTypeFilter in this case). This method must take a Type parameter and return a Boolean in order to satisfy the Func&lt;Type, Boolean&gt; signature. The filter method related to the xaml above is the following.
 
-{% highlight csharp %}
+```csharp
 public Boolean ExceptionTypeFilter(Type typeToValidate)
 {
     if (typeToValidate == null)
@@ -46,7 +46,7 @@ public Boolean ExceptionTypeFilter(Type typeToValidate)
     
     return false;
 }
-{% endhighlight %}
+```
 
 The designer for this activity will now only display exception types in the TypePresenter.![image][2]
 
@@ -58,7 +58,7 @@ I haven’t figured out a way to change this behaviour and I suspect that it is 
 
 The final piece of the puzzle is to address what happens when the developer selects an inappropriate type using the property grid. This is where activity validation using CacheMetadata comes into play.
 
-{% highlight csharp %}
+```csharp
 protected override void CacheMetadata(NativeActivityMetadata metadata)
 {
     metadata.AddDelegate(Body);
@@ -94,7 +94,7 @@ protected override void CacheMetadata(NativeActivityMetadata metadata)
         metadata.AddValidationError(validationError);
     }
 }
-{% endhighlight %}
+```
 
 The validation at the end of this method checks for an inappropriate type. It is marked as an error so that the activity is not able to be executed in this state. For example, it the property grid is used to assign the type of System.String, the designer will display the following.![image][5]
 

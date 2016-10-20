@@ -17,7 +17,7 @@ I guess the argument is that INT IDENTITY fields are not modifiable (without int
 
 Here is a test script to illustrate what I mean.
 
-{% highlight sql %}
+```sql
 DECLARE @sXML NVARCHAR(4000)
 DECLARE @hDoc INT
 
@@ -62,8 +62,7 @@ WITH #tabletest
 EXEC sp_xml_removedocument @hDoc
 
 DROP TABLE #tabletest
-
-{% endhighlight %}
+```
 
 In this example, only the Test and Test fields are returned. Key, being the INT IDENTITY, is ignored.
 
@@ -73,7 +72,7 @@ The way I write these procedures is to define a temporary table (like the above 
 
 The way I would use the above code would be something like this:
 
-{% highlight sql %}
+```sql
 DECLARE @sXML NVARCHAR(4000)
 DECLARE @hDoc INT
 
@@ -123,6 +122,6 @@ SELECT *
 FROM #tabletest
 
 DROP TABLE #tabletest
-{% endhighlight %}
+```
 
 

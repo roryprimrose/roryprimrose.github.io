@@ -13,7 +13,7 @@ The specific scenario I am addressing is a little different. I have created some
 
 The Retry activity shown below will execute its child activity and watch for a match on a nominated exception type or derivative. It will then determine whether it can make another attempt at the child activity by comparing the current number of attempts against a MaxAttempts property. If another attempt will be made then it will determine whether the child activity will be invoked immediately or whether a delay should occur first.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -197,13 +197,13 @@ namespace Neovolve.Toolkit.Workflow.Activities
         }
     }
 }
-{% endhighlight %}
+```
 
 The CacheMetadata method has some logic in it to validate the state of the activity. This validation will display a warning if no child activity has been defined. It will also raise an error if the ExceptionType property has not been assigned a type that derives from System.Exception. The activity implements IActivityTemplateFactory and uses the Create method to include a child Sequence activity when Retry is added to an activity on the designer.
 
 The designer xaml of the Retry activity looks like the following.
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.RetryDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -293,7 +293,7 @@ The designer xaml of the Retry activity looks like the following.
                             Content="{Binding}" />
     </Grid>
 </sap:ActivityDesigner>
-{% endhighlight %}
+```
 
 The designer supports the common expand/collapse style behaviour and allows for a single child activity via the WorkflowItemPresenter control. It also allows for modification of the activities ExceptionType property via the designer using the TypePresenter control. A [recent post][0] discusses the use of the Filter property on the TypePresenter to restrict the available types to be those derived from System.Exception.![image][1]
 

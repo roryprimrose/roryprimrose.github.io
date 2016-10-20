@@ -27,7 +27,7 @@ The PreBuildUp method in BuildTreeTracker gets invoked before each tree node is 
 
 Enter the IRequiresRecovery interface. This interface allows for some recovery operation to be invoked when a build context has failed to create an instance.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
@@ -90,13 +90,13 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The BuildTreeRecovery class allows for a custom action to be invoked. It then cleans up any partial build trees that were successfully created under the failed node and then removes it from its parent. If you assume in the previous example that DependencyA and DependencyB were successfully created before ChildA failed, then BuildTreeRecovery will ensure that ChildA, DependencyA and DependencyB are all disposed and that the failed node (ChildA) is then removed from the build tree.
 
 The final piece missing here is that the BuildTreeTracker class will still have a reference to ChildA being the current node instead of Root when PreBuildUp is invoked for ChildB. This is where the custom action of the recovery class comes in. The BuildTreeTracker.PreBuildUp method has been updated to create the BuildTreeRecovery class and use it in a recovery stack. The action passed to its constructor is a lambda expression that repairs the assignment of the current node in the build tree to be the parent of the failed node.
 
-{% highlight csharp %}
+```csharp
 public override void PreBuildUp(IBuilderContext context)
 {
     base.PreBuildUp(context);
@@ -121,7 +121,7 @@ public override void PreBuildUp(IBuilderContext context)
     
     context.RecoveryStack.Add(recovery);
 }
-{% endhighlight %}
+```
 
 Completing the example proposed above, the resultant build tree when ChildA fails to build would be:
 

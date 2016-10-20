@@ -15,7 +15,7 @@ My version of the enum editor will auto-detect if the flags enum has been define
 
 Hope you find this helpful.
 
-{% highlight vb.net %}
+```vbnet
  Public  Class EnumEditor
 # Region " Declarations "
  Inherits System.Drawing.Design.UITypeEditor
@@ -196,6 +196,6 @@ Hope you find this helpful.
 # End  Region
 
  End  Class
-{% endhighlight %}
+```
 
 

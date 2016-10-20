@@ -16,7 +16,7 @@ This does highlight an issue though. How can you implement read-only automatic p
 
 So the code will look something like this:
 
-{% highlight csharp %}
+```csharp
 public class SomeClass
 {
     public SomeClass()
@@ -30,7 +30,7 @@ public class SomeClass
         private set;
     }
 }
-{% endhighlight %}
+```
 
 That is very neat.
 

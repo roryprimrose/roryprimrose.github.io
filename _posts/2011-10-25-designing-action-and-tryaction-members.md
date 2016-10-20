@@ -8,7 +8,7 @@ I have a pet peeve with how Action and TryAction style members are often impleme
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,13 +43,13 @@ public class SomeClass
         }
     }
 }
-{% endhighlight %}
+```
 
 This is undesirable because there is an exception being throw in the standard Action method which the TryAction method only uses to determine the return value. It is an expensive way to identify that the TryAction method has failed to successfully do its work. The most likely reason code being written this way is because the Action method was written first with the TryAction retrofitted later.
 
 With a trivial amount of work, this can be written as follows.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +84,7 @@ public class SomeClass
         return true;
     }
 }
-{% endhighlight %}
+```
 
 This alternative means that the code is never catching an exception in order to determine the result of the TryAction method. Instead, the standard Action method calls down to TryAction and checks the Boolean result to determine whether an exception should be thrown. This code is avoids unnecessary exceptions and has exactly the same behaviour from the callers perspective.
 

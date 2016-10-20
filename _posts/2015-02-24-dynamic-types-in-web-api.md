@@ -13,7 +13,7 @@ The first POC is to determine whether Web API will render dynamic types of diffe
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -42,11 +42,11 @@ namespace DynamicService.Controllers
         }
     }
 }
-{% endhighlight %}
+```
 
 Web API renders the following data for this action.
 
-{% highlight text %}
+```text
 [
   {
     "firstName": "Sam",
@@ -57,6 +57,6 @@ Web API renders the following data for this action.
     "populate": 1233323
   }
 ]
-{% endhighlight %}
+```
 
 So yes, Web API will return dynamic types. This isn't a surprise given that it needs to support any model type that we would normally throw at it.

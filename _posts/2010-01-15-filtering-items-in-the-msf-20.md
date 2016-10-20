@@ -13,7 +13,7 @@ The latest design allows clients to simply work with services and not have to ha
 
 I created a POC project to prove that I could actually achieve these features with MSF before I invested any more time in the latest design. The POC aims to sync a data item that looks like the following.    
 
-{% highlight csharp %}
+```csharp
 using System;
     
 namespace CachedSyncPOC
@@ -39,17 +39,17 @@ namespace CachedSyncPOC
         }
     }
 }
-{% endhighlight %}
+```
 
 The code aims to store both the Id and the Data of each item in the metadata store of each replica.
 
-**Preview mode**
+## Preview mode
 
 This was actually easy to implement and is done in two parts.
 
 The first part is that the provider notifies any interested parties of changes found using a custom event raised in GetChangeBatch.    
 
-{% highlight csharp %}
+```csharp
 public override ChangeBatch GetChangeBatch(
     UInt32 batchSize, SyncKnowledge destinationKnowledge, out Object changeDataRetriever)
 {
@@ -74,11 +74,11 @@ public override ChangeBatch GetChangeBatch(
     
     return batch;
 }
-{% endhighlight %}
+```
 
 The second part is that the ProcessChangeBatch simply ignores any changes when in preview mode.    
 
-{% highlight csharp %}
+```csharp
 public override void ProcessChangeBatch(
     ConflictResolutionPolicy resolutionPolicy, 
     ChangeBatch sourceChanges, 
@@ -109,11 +109,11 @@ public override void ProcessChangeBatch(
         SessionContext, 
         syncCallbacks);
 }
-{% endhighlight %}
+```
 
 This example is a little simplistic in that the event does not indicate what action is going to be taken for each item but that should be easily implemented down the track.
 
-**Filtering**
+## Filtering
 
 The MSF team has [provided many examples][0] on how to use the framework. My initial reaction to the [custom filtering sample][1] was one of complete dread. My filtering requirements are simple and the sample code provided is very complex. I [posted a question][2] on the MSF forum to seek some advice. While the advice was good, it unfortunately pushed me back into the provided filter sample code.
 
@@ -121,7 +121,7 @@ As I started to look through the code, I realised that there were a couple of di
 
 You need to update the provider implementation and provide a filter type in order to filter an item in a sync session. The filter type in my example works with the Id property of the filter item and provides logic for comparing filters between providers.    
 
-{% highlight csharp %}
+```csharp
 using System;
 using Microsoft.Synchronization;
     
@@ -160,11 +160,11 @@ namespace CachedSyncPOC
         }
     }
 }
-{% endhighlight %}
+```
 
 The provider needs to support a couple of filter interfaces. I need to implement both interfaces as I intend on using the same provider as both source and destination provider.    
 
-{% highlight csharp %}
+```csharp
 internal class CustomProvider : KnowledgeSyncProvider, ISupportFilteredSync, IRequestFilteredSync, IDisposable
 {
     public void SpecifyFilter(FilterRequestCallback filterRequest)
@@ -193,11 +193,11 @@ internal class CustomProvider : KnowledgeSyncProvider, ISupportFilteredSync, IRe
     // Rest of class removed for brevity
     
 }
-{% endhighlight %}
+```
 
 The next change is the GetChangeBatch method needs to deal with the filter. The ChangeBatch returned to the other provider should only contain changes related to the filter. This was the bit I was dreading in the filter process, but the MSF makes this really easy for item filtering. The GetFilteredChangeBatch method takes a delegate that determines whether items should be in the filtered change batch or not.    
 
-{% highlight csharp %}
+```csharp
 public override ChangeBatch GetChangeBatch(
     UInt32 batchSize, SyncKnowledge destinationKnowledge, out Object changeDataRetriever)
 {
@@ -246,7 +246,7 @@ private Boolean ItemFilterCallback(ItemMetadata itemmetadata)
     
     return itemmetadata.GlobalId == metadata.GlobalId;
 }
-{% endhighlight %}
+```
 
 That's all there is to it. Not too hard after all.
 

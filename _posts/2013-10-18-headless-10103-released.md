@@ -21,11 +21,11 @@ Some of the features of Headless are:
 * Location and status code validation
 * Extensible
 
-**Examples**
+## Examples
 
 Headless can use a page model class that describes the model, location and behaviour of a page.
 
-{% highlight csharp %}
+```csharp
 using (var browser = new Browser())
 {
     var homePage = browser.GoTo<HomePage>();
@@ -38,11 +38,11 @@ using (var browser = new Browser())
     
     var thankYouPage = contactPage.Submit.Click<ThankYouPage>();
 }
-{% endhighlight %}
+```
 
 It also supports the dynamic keyword if you don’t want to use a model. You can also jump between these two models if that suits.
 
-{% highlight csharp %}
+```csharp
 using (var browser = new Browser())
 {
     var homePage = browser.GoTo(new Uri("http://mysite"));
@@ -55,7 +55,7 @@ using (var browser = new Browser())
     
     var thankYouPage = contactPage.Submit.Click();
 }
-{% endhighlight %}
+```
 
 Headless is open source on GitHub at [https://github.com/roryprimrose/Headless][0] and you can get it from NuGet at [http://www.nuget.org/packages/Headless][1]. 
 

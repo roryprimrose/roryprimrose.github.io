@@ -11,7 +11,7 @@ Consider the following example.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using Microsoft.Practices.Unity;
 using Neovolve.Toolkit.Unity;
@@ -78,7 +78,7 @@ namespace Neovolve.LazyInjectionTesting
         }
     }
 }
-{% endhighlight %}
+```
 
 This example resolves an instance of Root that has a dependency of type ITester. The build tree tracked by the disposal extension for this example is:
 
@@ -89,7 +89,7 @@ Tester exposes a property that indicates whether the instance has been disposed.
 
 Lazy loading dependencies is achieved by changing the injection type from T to Func&lt;T&gt;. This can be done in the above example by changing the Root constructor from public Root(ITester tester) to public Root(Func&lt;ITester&gt; tester). The example above now looks like the following. This delegate then needs to be invoked to get Unity to resolve the dependency instance.
 
-{% highlight csharp %}
+```csharp
 using System;
 using Microsoft.Practices.Unity;
 using Neovolve.Toolkit.Unity;
@@ -157,7 +157,7 @@ namespace Neovolve.LazyInjectionTesting
         }
     }
 }
-{% endhighlight %}
+```
 
 Unity will create a delegate for Func&lt;ITester&gt; in order to call the constructor on Root. The delegate is a function that will resolve ITester from the container when the delegate is invoked. This means that the resolution of Root occurs at a different time to the resolution of ITester. The DisposableStrategyExtension is now tracking two build trees rather than one. The build tree that contains Root does not contain ITester and therefore the disposal strategy can’t dispose the dependency when container.TearDown(root) is invoked. The console application now returns False because the DisposalStrategyExtension does not understand that the two build trees are related.
 
@@ -165,7 +165,7 @@ I have updated the DisposableStrategyExtension to correctly track build trees of
 
 The PostBuildUp method is the second half of the logic that creates a build tree for each Unity build operation in this extension. The update to track lazy loaded build trees is to detect that the dependency created (context.Existing) is a delegate. If this is the case then&#160; a wrapper delegate is created and returned instead.
 
-{% highlight csharp %}
+```csharp
 public override void PostBuildUp(IBuilderContext context)
 {
     if (context != null)
@@ -196,11 +196,11 @@ public override void PostBuildUp(IBuilderContext context)
     
     base.PostBuildUp(context);
 }
-{% endhighlight %}
+```
 
 The wrapper delegate will now be injected as the dependency rather than the Unity delegate. The wrapper delegate is created using the CreateTrackedDeferredResolution method. This method has some defensive coding to ensure that we are actually dealing with a Func&lt;T&gt; delegate. The wrapper delegate it creates is a function call out to a Resolve method on a custom DeferredResolutionTracker&lt;T&gt; class.
 
-{% highlight csharp %}
+```csharp
 public Delegate CreateTrackedDeferredResolution(Delegate originalDeferredFunction)
 {
     Type delegateType = originalDeferredFunction.GetType();
@@ -243,11 +243,11 @@ public Delegate CreateTrackedDeferredResolution(Delegate originalDeferredFunctio
     
     return Delegate.CreateDelegate(delegateType, resolvedTracker, resolveMethod);
 }
-{% endhighlight %}
+```
 
 The DeferredResolutionTracker class takes in the original delegate, the parent node in the original build tree (the instance that the delegate is injected into) and a reference to the collection of build trees. Its Resolve method then invokes the original delegate to lazy load the dependency instance from Unity. It then searches the collection of build trees to find the build tree of that resolution action. That build tree is then removed from the collection and added as a child of the original parent node from the original build tree. 
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -329,7 +329,7 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The extension will now have a build tree for the root instance from the example above that has a reference to the lazy loaded dependency. This means that the extension will now correctly tear down the root instance when container.TearDown(root) is invoked. The above example with this fix now writes True to the console for the lazy loaded example.
 

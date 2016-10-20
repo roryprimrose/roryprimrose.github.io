@@ -15,7 +15,7 @@ Here is the configuration I used:
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8" ?> 
 <configuration> 
   <system.diagnostics> 
@@ -41,11 +41,11 @@ Here is the configuration I used:
     </sources> 
   </system.diagnostics> 
 </configuration> 
-{% endhighlight %}
+```
 
 And here are the unit tests: 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Diagnostics; 
 using Microsoft.VisualStudio.TestTools.UnitTesting; 
@@ -91,10 +91,9 @@ namespace TestProject3
         } 
     } 
 } 
+```
 
-{% endhighlight %}
-
-**With Callstack** 
+## With Callstack 
 
 The load test that included writing the callstack to the trace record had the following output: 
 
@@ -102,7 +101,7 @@ The load test that included writing the callstack to the trace record had the fo
 
 With a total of 92,608 tests executed, the average execution time was 200 milliseconds per test. 
 
-**Without Callstack** 
+## Without Callstack 
 
 The load test that didn't write the callstack to the trace record had the following output: 
 

@@ -11,8 +11,7 @@ I have refactored the script to take out the TF integration, remove the logging 
 
 <!--more-->
 
-{% highlight csharp %}
-
+```csharp
 namespace Neovolve.NamespaceRenamer
 {
     using System;
@@ -213,7 +212,7 @@ namespace Neovolve.NamespaceRenamer
         }
     }
 }
-{% endhighlight %}
+```
 
 All you have to do is drop this into a new console project, change the three field values and off you go.
 

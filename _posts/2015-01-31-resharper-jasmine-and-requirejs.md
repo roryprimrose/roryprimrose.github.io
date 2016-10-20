@@ -12,7 +12,7 @@ The fix for this is to use the Jasmine beforeEach function with the done paramet
 
 The syntax looks something like this:
 
-{% highlight javascript %}
+```javascript
 /// <reference path='/../../MyWebsite/Scripts/require.js'/>
 /// <reference path='/../../MyWebsite/Scripts/Custom/ResponseParser.js'/>
 
@@ -43,6 +43,6 @@ describe('ResponseParser', function () {
     });
 
 });
-{% endhighlight %}
+```
 
 What happens here is before the first test is run, RequireJS is told to resolve the SUT. The done callback is only invoked once RequireJS has provided this value at which point it is stored at a scope available for the tests to run. All other tests in the describe block will call done straight away because the SUT has already been resolved.

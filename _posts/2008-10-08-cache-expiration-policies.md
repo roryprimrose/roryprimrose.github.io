@@ -5,7 +5,7 @@ date: 2008-10-08 11:57:24 +10:00
 
 This article aims to provide an overview about caching expiration policies and how they can be used. While the concepts are technology agnostic, the article references the [System.Web.Caching.Cache][0] exposed from [HttpRuntime][1] for code examples and also some references to the [Caching Application Block][2] in EntLib. 
 
-**What is a cache expiration policy?**
+## What is a cache expiration policy?
 
 A cache expiration policy is a combination of concepts which define when a cache entry expires. Once a cache entry has expired, it may be removed from a cache. The policy is typically assigned when data is added to the cache and is normally custom to a single cached entry based on characteristics of the entry. 
 
@@ -20,13 +20,13 @@ The specific implementation of a cache expiration policy depends on the caching 
 
 If more than one of these concepts are used for a cache entry, then the entry is likely to expire because of one part of the expiration policy has been processed before another part of the policy is required to expire the entry. As each part of the policy is evaluated, the first part that requires an expiration of the cache entry will cause the expiration to occur regardless of whether other parts of the policy are outstanding. 
 
-**Absolute expiration**
+## Absolute expiration
 
 Absolute expiration refers to a specific point in time when the cache entry will expire. Once that point in time has elapsed, the cache entry is expired and can be removed from the cache. 
 
 In the following example, an entry is added to the cache with a cache expiration policy that defines an absolute expiration of 25th December 2008 at 4:30pm. Once 4:30pm rolls around on that day, the entry will be expired. Assuming the item is added to the cache on 25th December 2008 at 4:00pm, this policy defines that the cache entry will only be alive for 15 minutes. 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Web; 
 using System.Web.Caching; 
@@ -47,15 +47,15 @@ namespace ConsoleApplication1
         } 
     } 
 } 
-{% endhighlight %}
+```
 
-**Sliding expiration**
+## Sliding expiration
 
  Sliding expiration refers to a span of time in which the cache entry must be retrieved from the cache in order to prevent expiration. 
 
  In the following example, an entry is added to the cache with a cache expiration policy that defines a sliding expiration of 5 minutes. The entry will stay in the cache as long as it is read within 5 minutes of the previous read. As soon as 5 minutes elapse without a read of that item from the cache, the entry will be expired. 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Web; 
 using System.Web.Caching; 
@@ -77,15 +77,15 @@ namespace ConsoleApplication1
         } 
     } 
 } 
-{% endhighlight %}
+```
 
-**Cache dependency**
+## Cache dependency
 
  Cache dependencies are references to other information about the cache entry. The dependency might be on a file or database record. When the dependency has changed, the cache entry is expired. The most common scenario of cache dependencies is a dependency on a file path for data loaded from that file. 
 
  In the following example, file data is read from disk and added to the cache with a cache expiration policy that defines a dependency on the file path. When the file is updated (usually out of process), the file change event detected by the cache dependency will cause the entry to be expired. 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.IO; 
 using System.Web; 
@@ -110,15 +110,15 @@ namespace ConsoleApplication1
         } 
     } 
 } 
-{% endhighlight %}
+```
 
-**Cache priority**
+## Cache priority
 
  Cache priority indicates the importance of the data relative to other cache entries. This is used to determine which items to expire in the cache first when system resources become scarce. 
 
  In the following example, a low cache priority is defined. This cache entry will be expired before other entries that have a higher priority. 
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.IO; 
 using System.Web; 
@@ -143,15 +143,15 @@ namespace ConsoleApplication1
         } 
     } 
 } 
-{% endhighlight %}
+```
 
-**When are items actually flushed from the cache?**
+## When are items actually flushed from the cache?
 
  Most caching frameworks will only remove expired items from the cache when system resources are scarce or when the cache is referenced. This means that a cache entry that has expired due to an absolute or sliding expiration may not be removed from the cache until some future time which may be well after the entry actually expired. 
 
  This is done for performance. The caching frameworks normally use a scavenging algorithm that looks for expired entries and removes them. This is typically invoked when the cache is referenced rather than when the items actually expire. This allows the cache framework to avoid having to constantly track time based events to know when to remove items from the cache. 
 
-**HttpRuntime.Cache vs Caching Application Block**
+## HttpRuntime.Cache vs Caching Application Block
 
  There are two main differences between these caching frameworks. Firstly, the Caching Application Block in EntLib allows you to define both an absolute expiration and a sliding expiration for an expiration policy while HttpRuntime.Cache only supports one or the other. Secondly, EntLib requires a decent amount of configuration whereas HttpRuntime.Cache works out of the box. 
 
@@ -164,7 +164,7 @@ namespace ConsoleApplication1
 * Is your code conducive to configuration requirements? 
   * For example, framework type components you write that use caching probably shouldn't bundle a requirement on consumers of the assembly to put specific configuration in their application config files. In these cases, prefer HttpRuntime.Cache.
 
-**Policy suggestions**
+## Policy suggestions
 
  What should you use for your policy? It typically depends on answers to the following questions: 
 

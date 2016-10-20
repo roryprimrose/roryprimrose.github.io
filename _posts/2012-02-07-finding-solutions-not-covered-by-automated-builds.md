@@ -10,7 +10,7 @@ It’s a fairly straight forward task that enumerates solution files and matches
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -132,7 +132,7 @@ namespace TFSVerifier
         }
     }
 }
-{% endhighlight %}
+```
 
 Enjoy
 

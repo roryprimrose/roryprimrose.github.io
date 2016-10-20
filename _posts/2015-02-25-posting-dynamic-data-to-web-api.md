@@ -13,7 +13,7 @@ The code here uses JObject from Newtonsoft.JSON as the mechanism of making the d
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -106,11 +106,11 @@ namespace DynamicService.Controllers
         }
     }
 }
-{% endhighlight %}
+```
 
 We can then send the following object to the Web API.
 
-{% highlight csharp %}
+```csharp
 request.AddObject(new
 {
     id = Guid.NewGuid(),
@@ -120,18 +120,18 @@ request.AddObject(new
     stuff = Guid.NewGuid(),
     created = DateTimeOffset.UtcNow
 });
-{% endhighlight %}
+```
 
 The action then returns the following echo response.
 
-{% highlight text %}
+```text
 {
   "name": "408e63cd-5b3f-46fc-9f15-77083922ace9",
   "id": "b9fccf1b-dc13-4432-8362-8009e659c489",
   "description": null,
   "metadata": "{\"Population\":12332111,\"Active\":true,\"Stuff\":\"322f63c4-1fa5-47b8-bde6-aecb305495f7\",\"Created\":\"2015-02-25T00:11:40+00:00\"}"
 }
-{% endhighlight %}
+```
 
 The key outcome here is that the metadata is correctly serialized for the int and bool properties and all information is stored in the correct place.
 

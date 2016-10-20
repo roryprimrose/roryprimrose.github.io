@@ -9,13 +9,13 @@ Visual Studio has a great feature for web.config files where XML transformations
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <system.diagnostics configSource="system.diagnostics.config" />
-{% endhighlight %}
+```
 
 One of the great things about MSBuild is that you can change it if you don’t like it. The solution to this issue is to open the proj file and add the following at the end of the file.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     
@@ -84,7 +84,7 @@ One of the great things about MSBuild is that you can change it if you don’t l
     <Message importance="high" Text="Transformed %(BaseNames.Identity).config using %(BaseNames.Identity).$(Configuration).config." Condition="'@(BaseNames)' != ''" />
     </Target>
 </Project>
-{% endhighlight %}
+```
 
 This script hooks into the process that runs the TransformXml task on web.config and runs it on all other *.Configuration.config files that it can find.
 

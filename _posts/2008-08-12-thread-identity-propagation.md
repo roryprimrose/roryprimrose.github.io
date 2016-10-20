@@ -17,7 +17,7 @@ So my assumption was correct. Identities on threads do get propagated to their c
 
 Here is an example:
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Security.Principal;
 using System.Threading;
@@ -117,11 +117,11 @@ namespace ConsoleApplication1
     }
 }
     
-{% endhighlight %}
+```
 
 The results in the following output (with the windows account removed):
 
-{% highlight text %}
+```text
 Default AppDomain - empty 
 
 AppDomain NoPrincipal - null
@@ -145,7 +145,7 @@ AppDomain NoPrincipal - null
 AppDomain UnauthenticatedPrincipal - empty
           
 AppDomain WindowsPrincipal - [WindowsAccountRemoved]
-{% endhighlight %}
+```
 
 [0]: http://msdn.microsoft.com/en-us/library/system.security.principal.principalpolicy.aspx
 [1]: http://msdn.microsoft.com/en-us/library/system.appdomain.setprincipalpolicy.aspx

@@ -7,7 +7,7 @@ date: 2010-02-17 12:27:32 +10:00
 
 I was reminded this morning of an email that I sent to the junior developers on my team when they joined us. It is an overview of some of the development practices, patterns and products that they would get exposed to on our project. I have included it here as a reference collection for others.
 
-**Principles and Patterns**
+## Principles and Patterns
 
 These are things that I often use and are still learning to use.
 
@@ -35,7 +35,7 @@ Jeremy Miller also writes a series called Patterns in Practice for MSDN Magazine
 * Cohesion and Coupling - [http://msdn.microsoft.com/en-au/magazine/cc947917.aspx][22]
 * Design for Testability - [http://msdn.microsoft.com/en-au/magazine/dd263069.aspx][23]
 
-**Tools**
+## Tools
 
 These are tools that are good to get experience using. Most of them relate to the patterns above. There are other tools used like ReSharper, dotTrace, StyleCop, WinMerge etc, but they don’t have the up skill requirement that the following tools do.
 

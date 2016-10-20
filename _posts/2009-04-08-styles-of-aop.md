@@ -9,80 +9,17 @@ date: 2009-04-08 23:55:00 +10:00
 
 <!--more-->
 
-**#**
+| # | Approach | Advantages | Disadvantages |
+| --- | --- | --- | --- |
+| 1 | Remoting Proxies | Easy to implement, because of the .Net framework support | Somewhat heavy weight. Can only be used on interfaces or MarshalByRefObjects |
+| 2 | Deriving from ContextBoundObject | Easiest to implement. Native support for call interception | Very costly in terms of performance |
+| 3 | Compile-time subclassing ( Rhino Proxy ) | Easiest to understand | Interfaces or virtual methods only |
+| 4 | Runtime subclassing ( Castle Dynamic Proxy ) | Easiest to understand. Very flexible | Complex implementation (but already exists) Interfaces or virtual methods only |
+| 5 | Compile time IL-weaving ( Post Sharp / Cecil ) | Very powerful. Good performance | Very hard to implement
+| 6 | Runtime IL-weaving ( Post Sharp / Cecil ) | Very powerful. Good performance | Very hard to implement |
+| 7 | Hooking into the profiler API ( Type Mock ) | Extremely powerful | |
 
-**Approach**
-
-**Advantages**
-
-**Disadvantages**
-
-1
-
-Remoting Proxies
-
-Easy to implement, because of the .Net framework support
-
-Somewhat heavy weight   
- Can only be used on interfaces or MarshalByRefObjects
-
-2
-
-Deriving from ContextBoundObject 
-
-Easiest to implement   
- Native support for call interception
-
-Very costly in terms of performance
-
-3
-
-Compile-time subclassing   
- ( Rhino Proxy )
-
-Easiest to understand 
-
-Interfaces or virtual methods only
-
-4
-
-Runtime subclassing   
- ( Castle Dynamic Proxy )
-
-Easiest to understand   
- Very flexible
-
-Complex implementation (but already exists)   
- Interfaces or virtual methods only
-
-5
-
-Compile time IL-weaving   
- ( Post Sharp / Cecil )
-
-Very powerful   
- Good performance
-
-Very hard to implement
-
-6
-
-Runtime IL-weaving   
- ( Post Sharp / Cecil )
-
-Very powerful   
- Good performance
-
-_Very_hard to implement
-
-7
-
-Hooking into the profiler API   
- ( Type Mock )
-
-Extremely powerful
-
-Performance?   
+## Performance
  Complex implementation (COM API, require separate runner, etc)
 
  What I want in an AOP framework is for it to not be limited to interfaces and virtual methods (1, 3, 4) and preferably to not require decorating types in order to support an AOP framework (1, 2). It also needs to perform well and preferably be free. 

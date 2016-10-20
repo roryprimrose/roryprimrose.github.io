@@ -13,7 +13,7 @@ date: 2008-11-18 11:45:00 +10:00
 
 <!--more-->
 
-**How to manage your StyleCop settings**
+## How to manage your StyleCop settings
 
  If a Settings.StyleCop file doesn't already exist, right-click on a project and select StyleCop Settings. Remove any of the rules that you don't want applied and click OK. 
 
@@ -39,7 +39,7 @@ date: 2008-11-18 11:45:00 +10:00
 
  From now on, you can simply open the Settings.StyleCop file like any other file and it will open up in the settings. 
 
-**Note:** Using this configuration, don't edit the settings for StyleCop against the project directly as these settings will not be available to the other projects in the solution. 
+**Note: Using this configuration, don't edit the settings for StyleCop against the project directly as these settings will not be available to the other projects in the solution.**
 
  This is my current settings file: [Settings.StyleCop (2.94 kb)][5]
 

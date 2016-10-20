@@ -13,8 +13,7 @@ I'm working through a support issue with Microsoft to do with Azure Service Bus.
 
 I have discovered that this seems to be the project default for VS2013 and VS2015 for exe based projects. This is enabled because the proj file does not contain the Prefer32Bit element in the build configuration. Disabling this checkbox will put this setting into the project config. The project will now compile an application that will run as x64 on an x64 machine.
 
-{% highlight xml %}
-
+```xml
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -36,8 +35,7 @@ I have discovered that this seems to be the project default for VS2013 and VS201
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-
-{% endhighlight %}
+```
 
 Make sure however that you do this to each build configuration (or make the change when the All Configurations build configuration is selected).
 

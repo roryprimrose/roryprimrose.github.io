@@ -13,7 +13,7 @@ The following method came about after a bit of research (mainly from [here][3]) 
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 private static T ReadFaultDetail<T>(Message reply) where T : class
 {
     const String DetailElementName = "Detail";
@@ -49,7 +49,7 @@ private static T ReadFaultDetail<T>(Message reply) where T : class
         return serializer.ReadObject(reader) as T;
     }
 }
-{% endhighlight %}
+```
 
 [0]: /2008/10/08/wcf-service-contract-design/
 [1]: /2008/04/07/implementing-ierrorhandler/

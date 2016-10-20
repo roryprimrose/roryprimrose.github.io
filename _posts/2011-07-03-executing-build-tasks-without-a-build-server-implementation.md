@@ -11,11 +11,11 @@ Neovolve.BuildTaskExecutor (or BTE) is the application that will execute specifi
 
 <!--more-->
 
-**Extensibility**
+## Extensibility
 
 The main interface for BTE extensibility is the ITask interface. It provides the ability for BTE to identify the command line names associated with the task, validate command line arguments, obtain help information about the task and to execute the task.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor.Extensibility
 {
     using System;
@@ -43,11 +43,11 @@ namespace Neovolve.BuildTaskExecutor.Extensibility
         }
     }
 }
-{% endhighlight %}
+```
 
 The IEventWriter interface supports writing event messages. BTE provides an implementation of this interface that writes messages to the console. Custom implementations can be provided to output event messages to other locations.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor.Extensibility
 {
     using System;
@@ -58,11 +58,11 @@ namespace Neovolve.BuildTaskExecutor.Extensibility
         void WriteMessage(TraceEventType eventType, String message, params Object[] arguments);
     }
 }
-{% endhighlight %}
+```
 
 The IVersionManager interface provides the ability to read and write version information from a file path. BTE provides three implementations of this class. They manage version information for C# AssemblyInfo.cs style files, Wix projects and binary files. These three implementations can be added to custom tasks by using name specified imports such as _[Import(VersionManagerExport.Wix)] IVersionManager versionAction_.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor.Extensibility
 {
     using System;
@@ -74,9 +74,9 @@ namespace Neovolve.BuildTaskExecutor.Extensibility
         void WriteVersion(String filePath, Version newVersion);
     }
 }
-{% endhighlight %}
+```
 
-**Services**
+## Services
 
 BTE provides several service classes that execute tasks and provide additional service support to tasks. 
 
@@ -84,7 +84,7 @@ The TaskExecutor and the TaskResolver classes are the core of the application. T
 
 These classes are listed below with their method bodies removed for brevity.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor.Services
 {
     using System;
@@ -122,9 +122,9 @@ namespace Neovolve.BuildTaskExecutor.Services
         }
     }
 }
-{% endhighlight %}
+```
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor.Services
 {
     using System;
@@ -163,11 +163,11 @@ namespace Neovolve.BuildTaskExecutor.Services
         }
     }
 }
-{% endhighlight %}
+```
 
 The EventWriter class is another service available in BTE. It wraps all the available IEventWriter implementations for an easy way to write event messages. It also manages the logic around the event writing level that can be configured on the command line.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor.Services
 {
     using System;
@@ -216,13 +216,13 @@ namespace Neovolve.BuildTaskExecutor.Services
         }
     }
 }
-{% endhighlight %}
+```
 
-**Task Execution**
+## Task Execution
 
 Finally there is the Program class that is the entry point for BTE. It resolves the TaskExector from an internal ServiceManager and starts processing the command line arguments that are also resolved via MEF.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.BuildTaskExecutor
 {
     using System;
@@ -297,7 +297,7 @@ namespace Neovolve.BuildTaskExecutor
         }
     }
 }
-{% endhighlight %}
+```
 
 This post has outlined the core implementation of BTE. The core of BTE and the tasks already in the application satisfy all the design requirements from the previous post. The next post will look at how the application looks when it is invoked on the command line.
 

@@ -19,7 +19,7 @@ The following is the regular expression that covers all these rules.
 
 <!--more-->
 
-{% highlight text %}
+```text
 ^
 # Major version must exist
 (?<VersionPart>\d+)
@@ -42,12 +42,12 @@ The following is the regular expression that covers all these rules.
     )
   )? # Build.Revision is optional
 )?$ # Minor.Build.Revision is optional
-{% endhighlight %}
+```
 
 The following is the same expression without the comments and whitespace.
 
-{% highlight text %}
+```text
 ^(?<VersionPart>\d+)(\.(?<VersionPart>\d+)(\.((?<VersionPart>\*)|((?<VersionPart>\d+)(\.(?<VersionPart>\*|\d+))?)))?)?$
-{% endhighlight %}
+```
 
 Enjoy.

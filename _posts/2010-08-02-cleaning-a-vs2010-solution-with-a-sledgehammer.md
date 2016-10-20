@@ -10,7 +10,7 @@ Enter the sledgehammer. I wrote a little utility that will recursively go throug
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.SolutionCleaner
 {
     using System;
@@ -107,13 +107,13 @@ namespace Neovolve.SolutionCleaner
         }
     }
 }
-{% endhighlight %}
+```
 
 The best way to hook this up is via the Visual Studio External Tools dialog by passing in the current solutions directory path.![image][0]
 
 This method also allows you to output the console results to the Output window for a more integrated experience.
 
-**NOTE:**It's a good idea to run a Visual Studio clean from the build menu before running this tool to get Visual Studio to release any locks it has on files in these directories. We haven't had any assembly version conflicts since running this tool.
+**Note:** It's a good idea to run a Visual Studio clean from the build menu before running this tool to get Visual Studio to release any locks it has on files in these directories. We haven't had any assembly version conflicts since running this tool.
 
 You can either compile the above yourself or grab the executable below.
 

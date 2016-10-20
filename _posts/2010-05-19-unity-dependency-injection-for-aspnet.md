@@ -13,7 +13,7 @@ My UnityHttpModule looks like the following.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Diagnostics.Contracts;
 using System.Web;
@@ -135,7 +135,7 @@ namespace Neovolve.Toolkit.Unity
         }
     }
 }
-{% endhighlight %}
+```
 
 The UnityHttpModule calls into a UnityContainerResolver helper class to resolve the unity container. The code for UnityContainerResolver can be found [here][2].
 
@@ -145,7 +145,7 @@ Once created, this module builds up pages with injection values and then tears t
 
 The following is an example ASP.Net page that uses property injection.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Configuration;
 using System.Security.Cryptography;
@@ -180,11 +180,11 @@ namespace Neovolve.Toolkit.Unity.WebIntegrationTests
         }
     }
 }
-{% endhighlight %}
+```
 
 The property injection for this page is configured via the web.config. The following example also includes the configuration for the module for both classic and integrated IIS pipeline modes.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" ?>
 <configuration>
     <configSections>
@@ -216,7 +216,7 @@ The property injection for this page is configured via the web.config. The follo
         </modules>
     </system.webServer>
 </configuration>
-{% endhighlight %}
+```
 
 The beauty of the way Unity is used here is that you do not need to configure each page that uses injection in the Unity configuration. Only the types being injected need to be defined. There are however a few things to note about this usage:
 

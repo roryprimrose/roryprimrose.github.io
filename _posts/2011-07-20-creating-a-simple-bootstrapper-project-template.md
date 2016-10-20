@@ -15,15 +15,15 @@ The biggest limitation with the proof of concept project was that the resource f
 
 The answer to this was to change the proj file in the template to provide some custom MSBuild logic to move the MSI package from the WiX target directory to a known location for the resource file. The resource xml file in the project template was updated to point to the obj directory as the static source.
 
-{% highlight xml %}
+```xml
 <data name="Package" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\obj\Package;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 </data>
-{% endhighlight %}
+```
 
 The project file in the template then had its BeforeBuild target changed to ensure that the package is copied to the resource xml static file location before the bootstrapper project is compiled.
 
-{% highlight xml %}
+```xml
 <Target Name="BeforeBuild">
     <PropertyGroup>
     <PackagePath>$packagePath$</PackagePath>
@@ -41,7 +41,7 @@ The project file in the template then had its BeforeBuild target changed to ensu
     <Error Condition="Exists(@(AbsoluteFiles)) == false" Text="The package at path '@(AbsoluteFiles)' was not found" />
     <Copy SourceFiles="@(AbsoluteFiles)" DestinationFiles="@(PackageDestinationFiles)" OverwriteReadOnlyFiles="true" Condition="Exists($(PackagePath))" />
 </Target>
-{% endhighlight %}
+```
 
 The $packagePath$ variable is populated by a wizard in the project template. The wizard will determine this path based on user input. The path may end up having $(OutputPath) substituted into it. This will then allow the bootstrapper project respond to changes of build configuration. In doing this, the project is able to take a dynamic output path of a WiX project and copy the file into the static location for the resource xml file to reference. The rest of the MSBuild script copies the MSI package if it is available or throws a build failure if it is not found. 
 

@@ -17,8 +17,7 @@ If you look at the targets file for OctoPack, it overrides and appends OctoPack 
 
 I updated the proj file to include a new BuildDependsOn property just before the OctoPack target is imported. The bottom of the proj file now contains this customisation, the OctoPack target and the GitVersionTask target.
 
-{% highlight xml %}
-
+```xml
 <!-- Hook into the AfterBuild activity -->
 <PropertyGroup>
 <BuildDependsOn>
@@ -48,7 +47,7 @@ Create Octopus Deploy package
 </PropertyGroup>
 <Error Condition="!Exists('..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.2.0.1\Build\GitVersionTask.targets'))" />
 </Target>
-{% endhighlight %}
+```
 
 BuildDependsOn is overriden to call SetOctoPackVersion. OctoPack then overrides this to call OctoPack. This means that the execution flow will be the original BuildDependsOn targets -> SetOctoPackVersion -> OctoPack.
 

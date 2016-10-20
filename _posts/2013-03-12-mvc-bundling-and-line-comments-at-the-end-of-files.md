@@ -9,7 +9,7 @@ Recently the bundling and minification support in ASP.Net MVC4 have been causing
 
 <!--more-->
 
-{% highlight javascript %}
+```javascript
 /* Minification failed. Returning unminified contents.
 (5,2-3): run-time warning JS1195: Expected expression: *
 (11,60-61): run-time warning JS1004: Expected ';': {
@@ -25,13 +25,13 @@ Recently the bundling and minification support in ASP.Net MVC4 have been causing
                'placeholder' in (Modernizr.textarea || document.createElement('textarea'))
              );
  */
-{% endhighlight %}
+```
 
 The issues have been found when bundling the jQuery set of files that end with a _//@ sourceMappingURL=_ inline comment. The [StackOverflow post here][0] explains why this is happening. The short story is that the contents of each file is directly appended onto the previous file. If the previous file ended in an inline comment, then the following file is also partially commented out.
 
 The post suggests that you can either remove the line comment from all of the js files or change the line comment to a block comment. I don’t like either of these solutions because many of the scripts are sourced from Nuget and these solutions would cause upgrade pain. We can solve this problem by using some custom bundling logic.
 
-{% highlight csharp %}
+```csharp
 namespace MyNamespace
 {
     using System.Web.Optimization;
@@ -47,11 +47,11 @@ namespace MyNamespace
         }
     }
 }
-{% endhighlight %}
+```
 
 This is the class that you should use instead of ScriptBundle. It simply uses a custom bundle builder.
 
-{% highlight csharp %}
+```csharp
 namespace MyNamespace
 {
     using System.Collections.Generic;
@@ -83,7 +83,7 @@ namespace MyNamespace
         }
     }
 }
-{% endhighlight %}
+```
 
 This custom bundle class reads the script files and separates them with a ; and a new line. This then allows the minification engine to correctly process the bundle because any line comment on the end of a file will no longer affect the script in the next file of the bundle.
 

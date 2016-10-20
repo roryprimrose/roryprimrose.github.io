@@ -14,7 +14,7 @@ The ScheduleAction method provides the ability for a child activity to be schedu
 
 The custom activity defined here has a concept of the number of arguments that it supports at runtime. This is defined at design time using a GenericArgumentCount enum definition. In part this enum is used to support the design-time experience. The activity also uses this value to ensure that only the intended number of generic arguments are provided to the child activity.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow
 { 
     public enum GenericArgumentCount
@@ -37,11 +37,11 @@ namespace Neovolve.Toolkit.Workflow
         Sixteen
     }
 }
-{% endhighlight %}
+```
 
 The custom activity for providing dependency resolution is a generic InstanceResolver class. It defines the 16 generic arguments for the type definitions of the 16 possible dependencies to resolve. It inherits from NativeActivity in order to get access to the NativeActivityContext for scheduling child activity execution and for hooking into activity lifecycle events.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -348,7 +348,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
         }
     }
 }
-{% endhighlight %}
+```
 
 The bulk of the code in this class is the definition of the resolution name properties. There is a resolution name property for each of the possible 16 instance resolutions. It defines the ArgumentCount property that determines how many instance resolutions are going to be processed by the activity. The class also defines a Body property holds a reference to the child activity that will be executed with the InstanceHandler references.
 
@@ -364,7 +364,7 @@ On a side note, there is a way around this for activity types that define one ge
 
 The workaround for this usability issue is to use some indirection. Another activity that implements IActivityTemplateFactory can be used to produce this result. This is where the non-generic InstanceResolver class comes into play.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Activities
 {
     using System;
@@ -413,7 +413,7 @@ namespace Neovolve.Toolkit.Workflow.Activities
         }
     }
 }
-{% endhighlight %}
+```
 
 This activity is used to create a generic InstanceResolver instance by defining the type of Object for all 16 of the generic arguments. The user will not be prompted to define these types when dropping this activity on the designer. The result as far as the designer is concerned is that the workflow will contain the generic InstanceResolver rather than the non-generic InstanceResolver. The toolbox contains both of these activities so the developer still has a choice about how to get this activity onto the designer.![image][3]
 

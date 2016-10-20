@@ -23,7 +23,7 @@ Each of the services use domain accounts that are unique to each service.
 
 The primary problem was that the 2 hourly job to reprocess the Tfs_Analysis SSAS cube from the Tfs_Warehouse database failed because SSAS could not connect to the SQL Server data engine. The following is most of the exception detail of the failure.  
 
-{% highlight text %}
+```text
 [Full Analysis Database Sync]: 
 AnalysisDatabaseProcessingType=Full, needCubeSchemaUpdate=True. 
 Microsoft.TeamFoundation.Server.WarehouseException: TF221122: An error occurred running job Full Analysis Database Sync for team project collection or Team Foundation server TEAM FOUNDATION. 
@@ -62,7 +62,7 @@ OLE DB error: OLE DB or ODBC error: A network-related or instance-specific error
 Errors in the high-level relational engine. A connection could not be made to the data source with the DataSourceID of 'Tfs_AnalysisDataSource', Name of 'Tfs_AnalysisDataSource'.
 Errors in the OLAP storage engine: An error occurred while the dimension, with the ID of 'Today', Name of 'Today' was being processed.
 Errors in the OLAP storage engine: An error occurred while the 'Date' attribute of the 'Today' dimension from the 'Tfs_Analysis' database was being processed.
-{% endhighlight %}
+```
 
 These two services are running on the same local VM and are each responding to other remote requests. TFS still works for WIT and source control, SSAS still responds to report requests. Weirdly, SQL Profiler was showing activity on SQL Server when attempting to process the cube. Perhaps only part of the processing could get a connection to SQL Server whereas a later part of the process could not.
 
@@ -70,7 +70,7 @@ Some search results were indicating that it might be a problem with a loopback a
 
 The configuration of the data source in SSAS uses impersonation to connect to SQL Server rather than the service account of SSAS. Just for kicks, we added the SSAS service account as a local admin on the VM. We then got a different error. Processing the cube then failed because of a login timeout rather than a connectivity problem.
 
-{% highlight text %}
+```text
 [Full Analysis Database Sync]: 
 ---> AnalysisDatabaseProcessingType=Full, needCubeSchemaUpdate=False. ---> Microsoft.TeamFoundation.Server.WarehouseException: TF221122: An error occurred running job Full Analysis Database Sync for team project collection or Team Foundation server TEAM FOUNDATION. 
 ---> Microsoft.TeamFoundation.Server.WarehouseException: Failed to Process Analysis Database 'Tfs_Analysis'. 
@@ -104,7 +104,7 @@ Errors in the high-level relational engine. A connection could not be made to th
 Errors in the OLAP storage engine: An error occurred while the dimension, with the ID of 'Dim WorkItem Link Type', Name of 'Work Item Link Type' was being processed. 
 Errors in the OLAP storage engine: An error occurred while the 'Rules' attribute of the 'Work Item Link Type' dimension from the 'Tfs_Analysis' database was being processed. 
 OLE DB error: OLE DB or ODBC error: Login timeout expired; HYT00; A network-related or instance-specific error has occurred while establishing a connection to SQL Server. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online.; 08001; SQL Server Network Interfaces: Error getting enabled protocols list from registry [xFFFFFFFF]. ; 0800
-{% endhighlight %}
+```
 
 We then removed impersonation and added the SSAS service account as a warehouse reader in Tfs_Warehouse. Processing the cube could now get an authenticated connection to SQL Server, but it then failed because of schema issues. The cube was trying to reference columns in a Tfs_Warehouse view that did not exist.
 

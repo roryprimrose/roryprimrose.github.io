@@ -7,7 +7,7 @@ date: 2010-09-30 16:17:57 +10:00
 
 The [posts in this series][0] have looked at providing a custom activity for dependency resolution in Windows Workflow. The series will now take a look at providing designer support for this activity. This post will cover the IRegisterMetadata interface and support for custom morphing.
 
-**Designer Support**
+## Designer Support
 
 The first action to take when creating WF4 activity designer support is to create a new Visual Studio project. The name of this project should be prefixed with the name of the assembly that contains the activities related to the designers. The project should have the suffix of “Design”. In the case of my [Toolkit][1] project, the assembly that contains the custom activities is called Neovolve.Toolkit.Workflow.dll and the designer assembly is called Neovolve.Toolkit.Workflow.Design.dll.
 
@@ -25,11 +25,11 @@ While this setup is restrictive in a sense, the segregation of these projects do
 
 It is important to note that the activity assembly should never reference the designer assembly. This is one of the reasons that IRegisterMetadata exists. 
 
-**IRegisterMetadata**
+## IRegisterMetadata
 
 An implementation of IRegisterMetadata provides the ability to describe metadata for an activity type in a way that is decoupled from the activity itself. This is the way that an activity designer is associated with an activity because the activity assembly does not have any reference to the designer assembly.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -78,13 +78,13 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 The RegisterMetadata class seen here is the IRegisterMetadata implementation for my custom workflows. This class does two things. Firstly it associates activity designers with their activities. Secondly it takes the opportunity to add a custom morph action into the MorphHelper class.
 
 Visual Studio searches for the designer assembly when it loads the assembly containing the custom activities. It will then look for a class that implements IRegisterMetadata and execute its Register method.
 
-**MorphHelper**
+## MorphHelper
 
 The [previous post][4] provided the implementation for supporting updatable generic activity types. Part of the implementation of this process is a reference to the MorphHelper class. 
 
@@ -96,12 +96,12 @@ Understandably MorphHelper will not know how to transform any possible data/type
 
 The DesignerMetadata class contains the following default morph actions.
 
-{% highlight csharp %}
+```csharp
 MorphHelper.AddPropertyValueMorphHelper(typeof(InArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(OutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(InOutArgument<>), new PropertyValueMorphHelper(MorphHelpers.ArgumentMorphHelper));
 MorphHelper.AddPropertyValueMorphHelper(typeof(ActivityAction<>), new PropertyValueMorphHelper(MorphHelpers.ActivityActionMorphHelper));
-{% endhighlight %}
+```
 
 There is support for morphing InArgument&lt;&gt;, OutArgument&lt;&gt;, InOutArgument&lt;&gt; and ActivityAction&lt;&gt; properties between ModelItem types.
 
@@ -109,7 +109,7 @@ The issue I had with creating the updatable type support for InstanceResolver wa
 
 The extensibility support for MorphHelper does however mean that a custom implementation can be provided for ActivityAction&lt;T1…T16&gt;.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -158,7 +158,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 This code is modelled from the Microsoft implementation of ActivityAction&lt;&gt; morphing. This implementation however has full support for multiple generic types. 
 

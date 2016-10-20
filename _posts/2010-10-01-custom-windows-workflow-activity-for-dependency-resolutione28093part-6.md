@@ -13,7 +13,7 @@ The XAML for the designer defines the activity icon, display for each argument a
 
 <!--more-->
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.InstanceResolverDesigner"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -502,13 +502,13 @@ The XAML for the designer defines the activity icon, display for each argument a
                             Content="{Binding}" />
     </Grid>
 </sap:ActivityDesigner>
-{% endhighlight %}
+```
 
 There is a lot of duplication in this XAML for each of the argument definitions and I am quite embarrassed by this poor implementation. It is a result of having next to zero WPF experience and needing to trade-off my desire for perfection with the demand for my time to work on other projects. I attempted a UserControl to reduce this duplication but hit many hurdles around binding the expression of the ResolutionName properties through to the ExpressionTextBox in the UserControl. Hopefully greater minds will be able to contribute a better solution for this part of the series.
 
 The code behind this designer detects a new ModelItem being assigned and then attaches properties to it that are bound to in the XAML.
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design.Presentation
 {
     using System;
@@ -531,11 +531,11 @@ namespace Neovolve.Toolkit.Workflow.Design.Presentation
         }
     }
 }
-{% endhighlight %}
+```
 
 The InstanceResolverDesignerExtension class creates attached properties to manage the InstanceResolver.ArgumentCount property and the set of properties that control the argument visibility state. 
 
-{% highlight csharp %}
+```csharp
 namespace Neovolve.Toolkit.Workflow.Design
 {
     using System;
@@ -698,7 +698,7 @@ namespace Neovolve.Toolkit.Workflow.Design
         }
     }
 }
-{% endhighlight %}
+```
 
 An attached property is used for the ArgumentCount property in order to track changes to the property. Updates to this property then cause an update to the ModelItem.There did not seem to be any other way to detect changes to this property from the designer code when binding directly to the property on the activity.
 

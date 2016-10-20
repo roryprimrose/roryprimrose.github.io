@@ -10,19 +10,19 @@ Doing a code review of C# that is based on my VB code has put me in a new situat
 
 <!--more-->
 
-{% highlight vbnet %}
+```vbnet
 If sSomeValue = String.Empty Then
 
 ' Do something here
 
 End If
-{% endhighlight %}
+```
 
 VB is very forgiving with its string comparisons and it attempts to cover all the possibilities. If a straight language conversion is done, the same result does not occur in C#. To test this, I came up with a program in VB and in C#.
 
 Here is the VB version of the program:
 
-{% highlight vbnet %}
+```vbnet
 Public Class Form1 
   
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click 
@@ -68,13 +68,13 @@ Public Class Form1
     End Sub 
   
 End Class 
-{% endhighlight %}
+```
 
 I have missed out a test using vbNullString because it gets compiled as Nothing which is tested.
 
 When this program is run, these are the results:
 
-{% highlight text %}
+```text
   Testing string value ""
 
   Success: "" is equal to "" 
@@ -102,13 +102,13 @@ When this program is run, these are the results:
   Failed: ThisValue is not equal to Nothing 
   Failed: ThisValue is not equal to String.Empty 
   Failed: IsNullOrEmpty returns false for ThisValue 
-{% endhighlight %}
+```
 
 VB has successfully evaluated whether a string has a value or not, regardless of whether the empty value is defined as a literal empty string, String.Empty or Nothing/vbNullString.
 
 Here is the C# version of the program:
 
-{% highlight csharp %}
+```csharp
 using System; 
 using System.Collections.Generic; 
 using System.ComponentModel; 
@@ -180,12 +180,11 @@ namespace WindowsApplication1
         } 
     } 
 } 
-{% endhighlight %}
+```
 
 When this program is run, these are the results:
 
-{% highlight text %}
-
+```text
   Testing string value "" 
 
   Success: "" is equal to "" 
@@ -213,13 +212,13 @@ When this program is run, these are the results:
   Failed: ThisValue is not equal to null 
   Failed: ThisValue is not equal to String.Empty 
   Failed: IsNullOrEmpty returns false for ThisValue 
-{% endhighlight %}
+```
 
 Definately a different result. The reason for the difference is how the VB and C# code has been compiled down to IL.
 
 Reflector shows the following for the VB program:
 
-{% highlight vbnet %}
+```vbnet
 Private Sub RunTests(ByVal sTestName As String, ByVal sTest As String)
 
     Debug.WriteLine(New String("_"c, 50))
@@ -252,11 +251,11 @@ Private Sub RunTests(ByVal sTestName As String, ByVal sTest As String)
     End If
 
 End Sub
-{% endhighlight %}
+```
 
 Reflector shows the following for the C# program:
 
-{% highlight csharp %}
+```csharp
 private void RunTests(string sTestName, string sTest)
 {
     Debug.WriteLine(new string('_', 50));
@@ -300,7 +299,7 @@ private void RunTests(string sTestName, string sTest)
         Debug.WriteLine("Failed: IsNullOrEmpty returns false for " + sTestName);
     }
 }
-{% endhighlight %}
+```
 
 The outcome of this is that for the "same" code to behave the same across both languages, using String.IsNullOrEmpty() is the safest way of determining whether a string as a value.
 

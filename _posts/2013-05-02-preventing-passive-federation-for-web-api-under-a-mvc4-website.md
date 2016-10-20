@@ -11,18 +11,18 @@ I have secured my api action using the following.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 [Authorize(Roles = Role.Administrator)]
 public class AdminReportController : ApiController
 {
 }
-{% endhighlight %}
+```
 
 This achieves the objective but the acceptance test that verifies the security of the controller fails. It fails because it gets a 302 response on the unauthenticated call rather than the expected 401. If the http client running the REST request follows the 302, it will ultimately end up with a 200 response from the ACS authentication form. The overall outcome is achieved because the request denied the anonymous user, but the status code returned to the client and the body content does not reflect this.
 
 The only way to get around this seems to be to hijack the WSFederationAuthenticationModule to tell it not to run passive redirection if the request is for the web api.
 
-{% highlight csharp %}
+```csharp
 public class WebApiSafeFederationAuthenticationModule : WSFederationAuthenticationModule
 {
     protected override void OnAuthorizationFailed(AuthorizationFailedEventArgs e)
@@ -47,7 +47,7 @@ public class WebApiSafeFederationAuthenticationModule : WSFederationAuthenticati
         }
     }
 }
-{% endhighlight %}
+```
 
 This now allows web api to return its default pipeline for unauthorised requests.
 

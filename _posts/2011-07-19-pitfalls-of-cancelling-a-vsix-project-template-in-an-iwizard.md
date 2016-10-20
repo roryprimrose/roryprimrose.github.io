@@ -11,7 +11,7 @@ I have noticed one weird quirk when it comes to cancelling the wizard. The proje
 
 <!--more-->
 
-**How to cancel the wizard**
+## How to cancel the wizard
 
 Basically any exception thrown from IWizard.RunStarted will cause the wizard process to be cancelled. To be a good citizen in VSIX however, you should throw either the [WizardCancelledException][0] or [WizardBackoutException][1]. The only difference between these exceptions seems to be that the WizardBackoutException takes the user back to the Add New Project dialog whereas the WizardCancelledException shows the IDE like it was before the Add New Project dialog was displayed.
 
@@ -21,7 +21,7 @@ Once the exception has been thrown however, the project template still exists on
 
 My project uses the following logic to achieve this.
 
-{% highlight csharp %}
+```csharp
 public void RunStarted(
     Object automationObject, Dictionary<String, String> replacementsDictionary, WizardRunKind runKind, Object[] customParams)
 {
@@ -59,7 +59,7 @@ public void RunStarted(
         throw;
     }
 }
-{% endhighlight %}
+```
 
 The replacementsDictionary parameter contains the path of the new project. The wizard process will then catch any exceptions and delete the directory to clean up the failed project template. This also covers the scenario where the user cancels or backs out of the wizard in the template.
 

@@ -6,7 +6,7 @@ date: 2008-11-12 20:13:00 +10:00
 
 I have been coming up against a scenario where I need to create new event log sources in an existing event log at runtime. 
 
-**Using System.Diagnostics.EventLog**
+## Using System.Diagnostics.EventLog
 
 Administrative rights are required to create event log sources using the _System.Diagnostics.EventLog_ class. Without administrative rights, CAS kicks in and a SecurityException is thrown.
 
@@ -16,7 +16,7 @@ Attempting to create a new source or checking to see if the source already exist
 
 <!--more-->
 
-**Avoiding System.Diagnostics.EventLog**
+## Avoiding System.Diagnostics.EventLog
 
 As administrative rights shouldn't be used to run applications and services, this is a bit of a problem. Almost every suggested solution on the net says to run the application with administrative rights. This is a really bad idea. If the application is a client application, the user's profile doesn't necessarily have administrative rights to begin with. If it is a service application, you don't want it to run with administrative rights as this would be a significant security risk (especially if it is an IIS based application).
 

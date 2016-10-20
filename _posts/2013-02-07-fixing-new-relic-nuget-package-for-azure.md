@@ -15,7 +15,7 @@ One of the good things about Nuget is that the install scripts are easily availa
 
 The install script was trying to add the following xml fragment to the start of the web role definition in ServiceDefinition.csdef file.
 
-{% highlight xml %}
+```xml
 <Startup>
     <Task commandLine="newrelic.cmd" executionContext="elevated" taskType="simple">
     <Environment>
@@ -25,7 +25,7 @@ The install script was trying to add the following xml fragment to the start of 
     </Environment>
     </Task> 
 </Startup>
-{% endhighlight %}
+```
 
 Adding this manually and we are good to go.
 

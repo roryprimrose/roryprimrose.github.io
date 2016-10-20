@@ -14,7 +14,7 @@ Writing batches is easy, even adhering to the above rules. The problem however i
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace MyProject.Server.DataAccess.Azure
 {
     using System;
@@ -202,6 +202,6 @@ namespace MyProject.Server.DataAccess.Azure
         }
     }
 }
-{% endhighlight %}
+```
 
 With this class you can add as many entities as you like and then wait on ExecuteAsync to finish off the work. The only issue that this class doesn’t cover is where you have a RowKey conflict that happens to fall across batches. Not much you can do about that though.

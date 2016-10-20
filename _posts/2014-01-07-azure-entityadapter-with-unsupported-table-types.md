@@ -12,7 +12,7 @@ I hit this issue because I started working with a model class that exposes an en
 
 The class now looks like the following:
 
-{% highlight csharp %}
+```csharp
 namespace MySystem.DataAccess.Azure
 {
     using System;
@@ -301,6 +301,6 @@ namespace MySystem.DataAccess.Azure
         }
     }
 }
-{% endhighlight %}
+```
 
 [0]: /2013/11/18/entity-adapter-for-azure-table-storage/

@@ -15,8 +15,7 @@ In order to streamline this process as much as possible, I want the script to al
 
 Drop this script into a ps1 and run it on the target server and all should be good.
 
-{% highlight powershell %}
-
+```powershell
 $serverThumbprint = "[YOUR-SERVER-THUMBPRINT]"
 $serverUri = "[YOUR-SERVER-URI]"
 $tentacleInstallApiKey = "[YOUR-TENTACLE-INSTALL-APIKEY]"
@@ -87,6 +86,6 @@ Write-Output "Installation Tentacle"
 
 Remove-Item "Tentacle.msi"
 Remove-Item $PSCommandPath
-{% endhighlight %}
+```
 
 [0]: http://docs.octopusdeploy.com/display/OD/Automating+Tentacle+installation

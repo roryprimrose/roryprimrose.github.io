@@ -13,7 +13,7 @@ This POC uses DynamicObject to be the bridge between the DataType, its metadata 
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 namespace DynamicService.Controllers
 {
     using System;
@@ -136,11 +136,11 @@ namespace DynamicService.Controllers
         }
     }
 }
-{% endhighlight %}
+```
 
 Web API renders the following data for this action.
 
-{% highlight text %}
+```text
 [
   {
     "stuff": "148504dc-c57c-4ef2-9497-d7585d2c4998",
@@ -158,7 +158,7 @@ Web API renders the following data for this action.
     "description": "8af95779-bd11-48b1-a337-62e03ba8e957"
   }
 ]
-{% endhighlight %}
+```
 
 This all worked perfectly. The schema was correctly interpreted by Web API by using a TypeConverter to convert the metadata values according to the schema. You can see that the boolean and the integer are correct formatted in the JSON response.
 

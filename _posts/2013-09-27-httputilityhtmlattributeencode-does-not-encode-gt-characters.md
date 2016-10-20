@@ -13,7 +13,7 @@ So my debugging efforts seem to have uncovered an issue in HttpUtility.HtmlAttri
 
 The problem can be simply expressed by the following code.
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Web;
 namespace ConsoleApplication1
@@ -27,24 +27,24 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 The call to HttpUtility.HtmlAttributeEncode produces the result &lt;p/&gt; instead of &lt;p/&gt;. This is a problem in terms of putting encoded XML in a HTML attribute. It is up to the HTML parser to determine how to fix up the corrupted HTML.
 
 For example, encode "&lt;p/&gt;" and put it into a hidden field and you then get HTML like the following:
 
-{% highlight xml %}
+```xml
 <form>
     <input type="hidden" name="DataSet" value="<p/>" />
     <input type="submit" name="Submit" />
 </form>
-{% endhighlight %}
+```
 
 The interpretation of this HTML could either implicitly consider the &gt; in the attribute as &gt; or add in an implicit " before the literal &gt; to close out the attribute. The first outcome would be correct HTML and the second would continue to produce incorrect HTML. The big problem here is an assumption that all interpreters of HTML are going to make the same decision.
 
 The workaround is to use a custom HttpEncoder that will run the current encoding logic, then fix up the encoding of the &gt; character.
 
-{% highlight csharp %}
+```csharp
 public class TagHttpEncoder : HttpEncoder
 {
     /// <inheritdoc />
@@ -61,16 +61,16 @@ public class TagHttpEncoder : HttpEncoder
         output.Write(fixedEncoding);
     }
 }
-{% endhighlight %}
+```
 
 This encoder can then be hooked up to ASP.Net in Global.asax.
 
-{% highlight csharp %}
+```csharp
 protected void Application_Start(object sender, EventArgs e)
 {
     HttpEncoder.Current = new TagHttpEncoder();
 }
-{% endhighlight %}
+```
 
 I’ve raised this bug on [Connect][0].
 

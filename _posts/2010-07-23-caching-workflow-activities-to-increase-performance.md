@@ -11,7 +11,7 @@ I’ve put together an ActivityStore class that handles this caching requirement
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 using System;
 using System.Activities;
 using System.Collections.Generic;
@@ -55,7 +55,7 @@ namespace Neovolve.ActivityTesting
         }
     }
 }
-{% endhighlight %}
+```
 
 This class will hold on to activity instances in a dictionary using the activity type as the key. To use this class you simply need to make a call out to ActivityStore.Resolve&lt;T&gt;() rather than new T() where T is your activity type.
 

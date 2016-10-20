@@ -15,7 +15,7 @@ The build script should look like this for executing psexec -&gt; msiexec.
 
 <!--more-->
 
-{% highlight csharp %}
+```csharp
 <BuildStep TeamFoundationServerUrl="$(TeamFoundationServerUrl)"
             BuildUri="$(BuildUri)"
             Id="$(DeployMsiBuildStepId)"
@@ -42,6 +42,6 @@ The build script should look like this for executing psexec -&gt; msiexec.
             BuildUri="$(BuildUri)"
             Id="$(DeployMsiBuildStepId)"
             Status="Succeeded" />    
-{% endhighlight %}
+```
 
 

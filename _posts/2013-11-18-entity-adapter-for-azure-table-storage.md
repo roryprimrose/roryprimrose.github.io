@@ -12,7 +12,7 @@ The problem here is that ITableEntity is still leaking outside of the Azure DAL 
 
 Using an entity adapter is a really clean way to get your cake and eat it. The original code of this concept was posted by the Windows Azure Storage Team (you can read it [here][0]). I’ve taken that code and tweaked it slightly to make it a little more reusable.
 
-{% highlight csharp %}
+```csharp
 namespace MyProject.DataAccess.Azure
 {
     using System;
@@ -137,7 +137,7 @@ namespace MyProject.DataAccess.Azure
         }
     }
 }
-{% endhighlight %}
+```
 
 This class has the flexibility to build a partition and row key for simple adapter usage and then be extended to override ReadValues and WriteValues to store additional metadata with your value for more complex scenarios. To write your value to table storage you simply wrap it in a new instance of your adapter which will pass the value down to the appropriate base constructor. Reading the entity from table storage will then select the Value property on the way back out.
 

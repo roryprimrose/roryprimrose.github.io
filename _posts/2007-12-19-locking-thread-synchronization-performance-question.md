@@ -23,7 +23,7 @@ In order to ensure thread safety of adding a new item to the dictionary, a lock 
 
 **#1 - This is what people would normally do**
 
-{% highlight csharp %}
+```csharp
 lock (MyDictionary)
 {
     // Check if a value needs to be stored
@@ -33,11 +33,11 @@ lock (MyDictionary)
         MyDictionary.Add(myKey, myValue);
     }
 }
-{% endhighlight %}
+```
 
 **#2 - I think this would perform better**
 
-{% highlight csharp %}
+```csharp
 // Check if a value needs to be stored
 if (MyDictionary.ContainsKey(myKey) == false)
 {
@@ -51,7 +51,7 @@ if (MyDictionary.ContainsKey(myKey) == false)
         }
     }
 }
-{% endhighlight %}
+```
 
 The reason I think the second solution will perform better is that the first if statement gets executed as part of the normal code flow of the method. This means lots of executions on multiple threads. It will first check that an item needs to be added before causing the lock. This results in the lock only happening in rare cases. Inside the lock, it ensures that another thread isn't about to do the same thing by making a defensive call to ContainsKey.
 

@@ -11,14 +11,14 @@ There are two places that provide this icon support. The first is in the Visual 
 
 <!--more-->
 
-**Visual Studio toolbox**
+## Visual Studio toolbox
 
 Adding an icon to the toolbox is done using the [ToolboxBitmapAttribute][2] on the activity class.
 
-{% highlight csharp %}
+```csharp
 [ToolboxBitmap(typeof(ExecuteBookmark), "book_open.png")]
 public sealed class ExecuteBookmark : NativeActivity
-{% endhighlight %}
+```
 
 This attribute needs to identify the image file and a type reference that the IDE uses to locate the image. In the above scenario, the book_open.png file is the image to use for the toolbox. The image file in the project needs to have its Build Action property set to Embedded Resource.![image][3]
 
@@ -26,7 +26,7 @@ The IDE uses the type reference to determine the namespace used as the prefix of
 
 The IDE can then extract this image and use it in the toolbox.![image][5]
 
-**Workflow designer**
+## Workflow designer
 
 The workflow designer support for custom icons has a similar layout as the toolbox icon. The image file for the designer should be co-located with the designer xaml file. While this file should be the same image as the toolbox image, the file must be a different file reference in the Visual Studio solution/project. Adding the image file as a link to the other file should work if you want to have only one physical file for the image. 
 
@@ -34,7 +34,7 @@ The reason for the separate file is that the Build Action for the designer image
 
 The XAML in the designer for the activity then references this image file.
 
-{% highlight xml %}
+```xml
 <sap:ActivityDesigner x:Class="Neovolve.Toolkit.Workflow.Design.Presentation.ExecuteBookmarkDesigner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -55,7 +55,7 @@ The XAML in the designer for the activity then references this image file.
     </DrawingBrush>
     </sap:ActivityDesigner.Icon>
 </sap:ActivityDesigner>
-{% endhighlight %}
+```
 
 The designer should then be associated with the activity. This is done using a class that implements IRegisterMetadata so that there can be a separation of the activity assembly and the design assembly. Again, see [this post][6] for the details.![image][8]
 

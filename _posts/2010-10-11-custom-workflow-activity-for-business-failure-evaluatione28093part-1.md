@@ -22,7 +22,7 @@ The high-level designer requirements for the custom WF support are:
 
 The remainder of this post will outline the reasons behind these requirements.
 
-**Failure identifies a code and a description**
+## Failure identifies a code and a description
 
 Descriptions are strings that often provide detailed information about a failure. Unfortunately descriptions are not sufficient as a reference point for taking action based on the failure. 
 
@@ -30,25 +30,25 @@ Consider a UI that invokes a component that in turn throws a failure exception. 
 
 Using a code value is a culture independent way of identifying the failure. A culture aware application can identify a UI field related to the culture agnostic code and display the culture aware failure description for the user.
 
-**Failure evaluation supports conditional expressions**
+## Failure evaluation supports conditional expressions
 
 The custom activity should support evaluating a conditional expression that determines whether the activity is going to result in a failure. This is important to prevent the developer having to always surround the custom activity with If statements that run the business rules for the failure.
 
-**Code value must be a generic type**
+## Code value must be a generic type
 
 The custom activity is a common reusable workflow activity. As such it cannot know what data type is going to be used to represent the code value. One application may use integer codes whereas another may use Guid or string values. Defining the failure with a generic code allows the developer to use a code value that is suitable to their requirements.
 
-**Failures are thrown in an exception**
+## Failures are thrown in an exception
 
 Business failures in this design are intended to be exceptional circumstances that are handled within the structured error handling design of .Net. The custom activity support should therefore throw failures up the call stack using an exception.
 
-**Exception must support multiple failures**
+## Exception must support multiple failures
 
 Business validation is very different to system validation. System validation tends to be single issue identification whereas business validation often identifies multiple issues. 
 
 Consider a registration request where the request contains FirstName, LastName and Email. The business validation rules for such a request may be that all fields must be provided. The system would provide a poor user experience if every submission of the registration request resulted in a new failure message. This process can be streamlined by providing one exception on the first attempt that identified all three validation failures.
 
-**Adequate design time support**
+## Adequate design time support
 
 Any custom workflow activity should provide an adequate design time experience. This custom activity support should allow the developer to manage all aspects of the failure evaluation process through the designer experience.
 

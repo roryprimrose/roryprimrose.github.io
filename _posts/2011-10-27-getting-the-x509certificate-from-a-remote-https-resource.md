@@ -17,7 +17,7 @@ The answer is that the certificate is provided by HttpWebRequest.ServicePoint.Ce
 
 The following code shows how this works.
 
-{% highlight csharp %}
+```csharp
 HttpWebRequest webRequest = HttpWebRequest.Create(address) as HttpWebRequest;
     
 try
@@ -67,6 +67,6 @@ catch (WebException ex)
         responseMessage = ex.Message;
     }
 }
-{% endhighlight %}
+```
 
 
