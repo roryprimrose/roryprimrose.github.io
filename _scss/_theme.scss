@@ -202,8 +202,12 @@ pre code {
     border: none;
 }
 
-ul, ol, dl {
+ul, ol, dl, table {
     margin-bottom: 20px;
+}
+
+ul > li > ul {
+    margin-bottom: 0px;
 }
 
 /* Pagination */
@@ -276,7 +280,7 @@ table {
 }
 
 th {
-    font-weight: 500;
+    font-weight: bold;
 }
 
 td {
@@ -418,7 +422,7 @@ ul {
 ol {
     list-style-position: inside;
     list-style: decimal;
-    padding-left: 3px;
+    padding-left: 20px;
 }
 
 dl dd {
