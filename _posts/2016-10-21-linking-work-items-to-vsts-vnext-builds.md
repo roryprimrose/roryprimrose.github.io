@@ -2,7 +2,7 @@
 title: Linking work items to VSTS vNext builds
 categories: .Net
 tags: 
-date: 2016-10-21 17:25:00 +10:00
+date: 2016-10-25 17:25:00 +10:00
 ---
 One of the benefits of work items in VSTS/TFS is the ability to put metadata into your project system. Associating work items with automated builds is a good example of this. The XAML build system in VSTS/TFS has a handy feature of linking the build number against associated work items as a part of the build process. Unfortunately, there is no out of the box implementation to achieve this in build vNext.
 
