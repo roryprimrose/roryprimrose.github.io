@@ -482,7 +482,7 @@ Set-BuildVersionInfo
 
 There are a couple of ways you can execute this script in a build. The script can be placed in a ps1 file and put under source control. You could then use the PowerShell build step to execute the ps1.
 
-Using multiple repositories makes this messy as the ps1 would be spread around several repositories. The alternative is to use the [Inline PowerShell][5] build step that is available on the VSTS marketplace. This is a little easier to manage. As for source control, this is provided by the build vNext configuration out of the box.
+Using multiple repositories makes this messy as the ps1 would be spread around several repositories. The alternative is to use the [Inline PowerShell][5] extension that is available on the VSTS marketplace. This is a little easier to manage. As for source control, this is provided by the build vNext configuration out of the box.
 
 This script relies on access to the OAuth token so that it can make Bearer calls out to the VSTS API. You will need to edit your build configuration to allow this token to be made available to the build process.
 
@@ -502,7 +502,7 @@ Once the script is in place and the OAuth token is available, work items will st
 
 [0]: https://github.com/GitTools/GitVersion/
 [1]: /files/2016/10/2016-10-24 11_38_25-Edit-Build.png
-[2]: /2015/04/05/bridging-gitversion-and-octopack/
+[2]: /2015/04/04/bridging-gitversion-and-octopack/
 [3]: /2016/10/19/generating-release-notes-in-vsts/
 [4]: https://octopus.com
 [5]: https://marketplace.visualstudio.com/items?itemName=petergroenewegen.PeterGroenewegen-Xpirit-Vsts-Build-InlinePowershell
