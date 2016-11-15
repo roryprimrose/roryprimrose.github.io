@@ -73,7 +73,7 @@ The following is an overview of how we are using branching and the kind of versi
 | develop | master | 1.2.3-unstable0001 |
 | feature-PBI987-AddUserEmail | develop | 1.2.3-pbi987-adduserem0001 |
 | release-1.2 | master | 1.2.3-beta0001 (no version tag)<br />1.2.3 (with v1.2.3 Git tag) |
-| hotfix-Bug321-PrivacyLink | release-* | 1.2.4-beta0002 |
+| hotfix-Bug321-PrivacyLink | release-* | 1.2.4-bug321-privacyli0001 |
 
 ## Branch priorities
 
@@ -97,10 +97,10 @@ There is a priority to apply to the branches to identify the flow of changes bet
 | --- | --- | --- |
 | master | ci* | 0 |
 | feature | [branchname]* | 0 |
+| hotfix | [branchname]* | 0 |
 | develop | unstable* | 1 |
-| hotfix | beta* | 1 |
-| release (without tag) | beta* | 1 |
-| release (with version tag) |  | 2 |
+| release (without tag) | beta* | 2 |
+| release (with version tag) |  | 3 |
 
 Per the above requirements, we want to update the work item build association each time a build occurs for the first time against a branch that results in a higher branch priority compared to what is stored against the work item.
 
@@ -110,7 +110,9 @@ Multiple builds against a feature branch would result in build numbers like `1.2
 
 Those changes go through a pull request process and end up as a squashed merge down on the develop branch. At this point the version for the build will be something like `1.2.3-unstable0001`. We want to update the associated work items with this new build number as the develop branch has a higher priority than the feature branch. We consider that the develop branch build number is more mature than the feature branch build number.
 
-The changes will end up going over to a release branch. When this code is stable and ready for release, we tag the commit in Git with the final version number. The build associated with that tag will have a build number of `1.2.3` which will then be applied to the work item. As this has the highest branch priority, it will never be updated again.
+The changes will end up going over to a release branch to form a potential release candidate/beta. This causes the version to get updated again to something like `1.2.3-beta0001` because a release branch build has a higher priority than the develop branch build.
+
+When this code is stable and ready for release, we tag the commit in Git with the final version number. The build associated with that tag will have a build number of `1.2.3` which will then be applied to the work item. As this has the highest branch priority, it will never be updated again.
 
 ## PowerShell
 
@@ -124,7 +126,7 @@ The following is the full PowerShell script to satisfy the above requirements. T
 [string] $BuildId = "$env:BUILD_BUILDID"
 [string] $BuildNumber = "$env:BUILD_BUILDNUMBER"
 [string] $AuthType = "Bearer"
-[string] $ReleaseVersionField = "Auspex.ReleaseVersion"
+[string] $ReleaseVersionField = "MyProject.ReleaseVersion"
 
 Add-Type -TypeDefinition @"
    public enum VersionType
@@ -132,6 +134,7 @@ Add-Type -TypeDefinition @"
       Unknown = 0,
       Alpha,
       Beta,
+      ReleaseCandidate,
       Release
    }
 "@
@@ -149,8 +152,15 @@ function Get-VersionType([string] $version)
     {
         return [VersionType]::Release
     }
+    
+    $releaseCandidateExpression = "^\d+(\.\d+){2}-beta.+$"
+     
+    if ($version -match $releaseCandidateExpression)
+    {
+        return [VersionType]::ReleaseCandidate
+    }
 
-    $betaExpression = "^\d+(\.\d+){2}-(unstable|beta).+$"
+    $betaExpression = "^\d+(\.\d+){2}-unstable.+$"
      
     if ($version -match $betaExpression)
     {
