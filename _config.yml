@@ -19,6 +19,8 @@ repository: roryprimrose/roryprimrose.github.io
 
 paginate: 10
 
+future: true
+
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble: 

@@ -2,7 +2,7 @@
 title: GitVersionTask performance workaround
 categories: .Net
 tags: 
-date: 2017-02-01
+date: 2017-02-01 13:45:00 +10:00
 ---
 
 I use [GitVersionTask][0] extensively in my projects so that I can get really good automation over my software versioning. I found a performance issue against one repository last year when using GitVersionTask 3.6.0 and greater. The biggest impact this had was on the build agent which provides both validation of the developer commits but also a build for the tester to promote to a test environment for validation. My team was hitting a large bottleneck because of the slow builds.
