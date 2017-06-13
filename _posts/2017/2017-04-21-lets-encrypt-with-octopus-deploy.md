@@ -36,10 +36,10 @@ The following web.config handles all this. The only thing you have to edit is to
                 </rule>
                 <rule name="Redirect HTTP Traffic" stopProcessing="true">
                     <match url="(.*)" />
-                    <action type="Redirect" url="https://[MY-OCTOPUS-FQDN]/" />
                     <conditions>
                         <add input="{HTTPS}" pattern="^OFF$" />
                     </conditions>
+                    <action type="Redirect" url="https://{HTTP_HOST}/{R:1}" redirectType="Permanent" />
                 </rule>
                 <rule name="ReverseProxyInboundRule1" stopProcessing="true">
                     <match url="(.*)" />
@@ -53,6 +53,14 @@ The following web.config handles all this. The only thing you have to edit is to
                 </rule>
             </rules>
             <outboundRules>
+                <rule name="Add Strict-Transport-Security when HTTPS" enabled="true">
+                    <match serverVariable="RESPONSE_Strict_Transport_Security"
+                        pattern=".*" />
+                    <conditions>
+                        <add input="{HTTPS}" pattern="on" ignoreCase="true" />
+                    </conditions>
+                    <action type="Rewrite" value="max-age=31536000" />
+                </rule>
                 <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1">
                     <match filterByTags="A, Form, Img" pattern="^http(s)?://localhost:9000/(.*)" />
                     <action type="Rewrite" value="http{R:1}://[MY-OCTOPUS-FQDN]/{R:2}" />
@@ -67,7 +75,6 @@ The following web.config handles all this. The only thing you have to edit is to
         <httpProtocol>
             <customHeaders>
                 <remove name="X-Powered-By" />
-                <add name="strict-transport-security" value="max-age=16070400" />
             </customHeaders>
         </httpProtocol>
     </system.webServer>
@@ -81,6 +88,8 @@ This configuration does the following:
 * Tell HTTPS response to only use HTTPS in the future via the HSTS header. 
 * Forward HTTPS requests onto the internal Octopus Deploy server at ```http://localhost:9000```
 * Rewrite any response from Octopus Deploy to change references of ```http://localhost:9000``` to ```https://[MY-OCTOPUS-FQDN]``` so that all resources are correctly referenced in the outside world.
+
+**Update:** Fixed HSTS header being sent over HTTP
 
 [0]: /2017/02/01/octopus-deploy-lets-encrypt-dns/
 [1]: https://certify.webprofusion.com/

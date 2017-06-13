@@ -39,11 +39,20 @@ The following web.config handles all this.
                     </serverVariables>
                 </rule>
             </rules>
+            <outboundRules>
+                <rule name="Add Strict-Transport-Security when HTTPS" enabled="true">
+                    <match serverVariable="RESPONSE_Strict_Transport_Security"
+                        pattern=".*" />
+                    <conditions>
+                        <add input="{HTTPS}" pattern="on" ignoreCase="true" />
+                    </conditions>
+                    <action type="Rewrite" value="max-age=31536000" />
+                </rule>
+            </outboundRules>
         </rewrite>
         <httpProtocol>
             <customHeaders>
                 <remove name="X-Powered-By" />
-                <add name="strict-transport-security" value="max-age=16070400" />
             </customHeaders>
         </httpProtocol>
     </system.webServer>
@@ -55,6 +64,8 @@ This configuration does the following:
 * Let through any Let's Encrypt requests to its own website
 * Tell HTTPS response to only use HTTPS in the future via the HSTS header. 
 * Forward HTTPS requests onto the internal SonarQube server at ```http://localhost:9000```
+
+**Update:** Fixed HSTS header being sent over HTTP
 
 [0]: /2017/04/21/lets-encrypt-with-octopus-deploy/
 [1]: https://certify.webprofusion.com/
