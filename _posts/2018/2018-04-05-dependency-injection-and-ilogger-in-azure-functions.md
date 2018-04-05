@@ -1,0 +1,228 @@
+---
+title: Dependency Injection and ILogger in Azure Functions
+categories: .Net
+tags: 
+date: 2018-04-05 23:05:00 +10:00
+---
+
+Azure Functions is a great platform for running small quick workloads. I have been migrating some code over to Azure Functions where the code was written with dependency injection and usages of ILogger<T> in the lower level dependencies. This post will go through how to support these two features in Azure Functions.
+
+<!--more-->
+
+## Dependency Injection
+
+There are already [several posts][0] around that provide a solution for dependency injection in Azure Functions v2. They leverage an extensibility point that support providing values for the parameters on the static entry point of the function.
+
+```csharp
+[Binding]
+[AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
+public class InjectAttribute : Attribute
+{
+    public InjectAttribute(Type type)
+    {
+        Type = type;
+    }
+
+    public Type Type { get; }
+}
+```
+
+It starts with the creation of a marker attribute.
+
+```csharp
+public class InjectConfiguration : IExtensionConfigProvider
+{
+    private static readonly object _syncLock = new object();
+    private static IContainer _container;
+
+    public void Initialize(ExtensionConfigContext context)
+    {
+        InitializeContainer(context);
+
+        context
+            .AddBindingRule<InjectAttribute>()
+            .BindToInput<dynamic>(i => _container.Resolve(i.Type));
+    }
+
+    private void InitializeContainer(ExtensionConfigContext context)
+    {
+        if (_container != null)
+        {
+            return;
+        }
+
+        lock (_syncLock)
+        {
+            if (_container != null)
+            {
+                return;
+            }
+
+            _container = ContainerConfig.BuildContainer(context.Config.LoggerFactory);
+        }
+    }
+}
+```
+
+The extension point uses ```IExtensionConfigProvider``` to register a binder for function parameters that are resolved using an IoC container. The bulk of this class is creating the Autofac container in a thread safe way to make sure that the container is only created once.
+
+```csharp
+public static class ContainerConfig
+{
+    public static IContainer BuildContainer(ILoggerFactory factory)
+    {
+        var builder = new ContainerBuilder();
+
+        var assemblyTypes = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Any()).ToArray();
+
+        builder.RegisterTypes(assemblyTypes).AsImplementedInterfaces();
+
+        builder.RegisterInstance(factory).As<ILoggerFactory>();
+        builder.RegisterModule<LoggerModule>();
+
+        return builder.Build();
+    }
+}
+```
+
+Creating the container is where there starts to be custom code based on the project. This is a fairly general configuration of a container. In this case the types of the current assembly are registered in the container using their interfaces. Then a logger module is registered (more on this later).
+
+The way this works is that Azure Functions will invoke the extension point in order to bind values to the parameters of the static entry point of the function. This simple setup provides great flexibility for developing Azure Functions with dependency injection. It is less than ideal that Azure Functions uses a static member as the entry point so this is as good as it gets for now. It is possible that this will [change in the future][1].
+
+## ILogger
+
+The default Azure Functions template in Visual Studio uses TraceWriter for logging. This works well when developing locally with Visual Studio and also writes log entries out to the Azure Portal log section for the function when deployed to Azure. I have already been using ILogger (and ILogger<T>) in my code so prefer it over TraceWriter.
+
+On the plus side, Azure Functions natively support a ILogger parameter on the static method of the function. There are currently some disadvantages though. It does not support ILogger<T>, [does not write entries to the local dev console][2] and does not write to the Azure Portal log section. It does however write the log entries to Application Insights in production and that is enough for me.
+
+I am porting across existing code to Azure Functions that use ILogger<T> in lower level dependencies and I still want support for this with no code changes. I have been using an Autofac module to dynamically create ILogger<T> instances for the target types being created with the logger dependency. 
+
+```csharp
+public class LoggerModule : Module
+{
+    private static readonly ConcurrentDictionary<Type, object> _logCache = new ConcurrentDictionary<Type, object>();
+
+    private interface ILoggerWrapper
+    {
+        object Create(ILoggerFactory factory);
+    }
+
+    protected override void AttachToComponentRegistration(
+        IComponentRegistry componentRegistry,
+        IComponentRegistration registration)
+    {
+        // Handle constructor parameters.
+        registration.Preparing += OnComponentPreparing;
+    }
+
+    private static object GetGenericTypeLogger(IComponentContext context, Type declaringType)
+    {
+        return _logCache.GetOrAdd(
+            declaringType,
+            x =>
+            {
+                var wrapper = typeof(LoggerWrapper<>);
+                var specificWrapper = wrapper.MakeGenericType(declaringType);
+                var instance = (ILoggerWrapper)Activator.CreateInstance(specificWrapper);
+
+                var factory = context.Resolve<ILoggerFactory>();
+
+                return instance.Create(factory);
+            });
+    }
+
+    private static object GetLogger(IComponentContext context, Type declaringType)
+    {
+        return _logCache.GetOrAdd(
+            declaringType,
+            x =>
+            {
+                var factory = context.Resolve<ILoggerFactory>();
+
+                return factory.CreateLogger(declaringType);
+            });
+    }
+
+    private static void OnComponentPreparing(object sender, PreparingEventArgs e)
+    {
+        var t = e.Component.Activator.LimitType;
+
+        if (t.FullName.IndexOf(nameof(FunctionApp1), StringComparison.OrdinalIgnoreCase) == -1)
+        {
+            return;
+        }
+
+        if (t.FullName.EndsWith("[]", StringComparison.OrdinalIgnoreCase))
+        {
+            // Ignore IEnumerable types
+            return;
+        }
+
+        e.Parameters = e.Parameters.Union(
+            new[]
+            {
+                new ResolvedParameter((p, i) => p.ParameterType == typeof(ILogger), (p, i) => GetLogger(i, t)),
+                new ResolvedParameter(
+                    (p, i) => p.ParameterType.GenericTypeArguments.Any() &&
+                                p.ParameterType.GetGenericTypeDefinition() == typeof(ILogger<>),
+                    (p, i) => GetGenericTypeLogger(i, t))
+            });
+    }
+
+    private class LoggerWrapper<T> : ILoggerWrapper
+    {
+        public object Create(ILoggerFactory factory)
+        {
+            return factory.CreateLogger<T>();
+        }
+    }
+}
+```
+
+The main issue with this module is that it needs access to a LogFactory to create them. Thankfully this is available in the extensibilty point above via ```context.Config.LoggerFactory``` and can be factored into building the IoC container.
+
+All this now works as expected because of Autofac tying everything together. This means for example that the following code works perfectly.
+
+```csharp
+public static class Function1
+{
+    [FunctionName("Function1")]
+    public static void Run(
+        [TimerTrigger("0 */1 * * * *")]TimerInfo myTimer,
+        [Inject(typeof(ISomething))]ISomething something,
+        ILogger log)
+    {
+        log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+
+        var value = something.GetSomething();
+
+        log.LogInformation("Found value " + value);
+    }
+}
+
+public interface ISomething
+{
+    string GetSomething();
+}
+
+public class Something : ISomething
+{
+    private readonly ILogger<Something> _logger;
+
+    public Something(ILogger<Something> logger)
+    {
+        _logger = logger;
+    }
+
+    public string GetSomething()
+    {
+        _logger.LogInformation("Hey, we are doing something");
+
+        return Guid.NewGuid().ToString();
+    }
+}
+```
+
+[0]: https://blog.wille-zone.de/post/azure-functions-dependency-injection/
+[1]: https://github.com/Azure/Azure-Functions/issues/299#issuecomment-378384724
+[2]: https://github.com/Azure/azure-functions-core-tools/issues/130
