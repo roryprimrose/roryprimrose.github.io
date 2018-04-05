@@ -5,13 +5,13 @@ tags:
 date: 2018-04-05 23:05:00 +10:00
 ---
 
-Azure Functions is a great platform for running small quick workloads. I have been migrating some code over to Azure Functions where the code was written with dependency injection and usages of ILogger<T> in the lower level dependencies. This post will go through how to support these two features in Azure Functions.
+Azure Functions is a great platform for running small quick workloads. I have been migrating some code over to Azure Functions where the code was written with dependency injection and usages of ILogger<T> in the lower level dependencies. This post will go through how to support these two requirements in Azure Functions.
 
 <!--more-->
 
 ## Dependency Injection
 
-There are already several posts around that provide a solution for dependency injection in Azure Functions v2. The code below is based on a post found [here][0]. These implementations leverage an extensibility point that for binding values to the parameters on the static entry point of the function.
+There are already several posts around that provide a solution for dependency injection in Azure Functions v2. They use an extensibility point in Azure Functions for binding values to the parameters on the static entry point of the function. The code below is based on [this post][0].
 
 It starts with the creation of a marker attribute.
 
@@ -87,13 +87,15 @@ public static class ContainerConfig
 }
 ```
 
-The way this works is that Azure Functions will invoke the extension point in order to bind values to the parameters of the static entry point of the function. This simple setup provides great flexibility for developing Azure Functions with dependency injection. It is less than ideal that Azure Functions uses a static member as the entry point so this is as good as it gets for now. It is possible that this will [change in the future][1].
+The way this works is that Azure Functions will invoke the extension point in order to bind values to the parameters of the static entry point of the function. The binder will then resolve the parameter value using the Autofac container.
+
+This simple setup provides great flexibility for developing Azure Functions with dependency injection. It is less than ideal that Azure Functions uses a static member as the entry point so this is as good as it gets for now. It is possible that this will [change in the future][1].
 
 ## ILogger
 
-The default Azure Functions template in Visual Studio uses TraceWriter for logging. This works well when developing locally with Visual Studio and also writes log entries out to the Azure Portal log section for the function when deployed to Azure. I have already been using ILogger (and ILogger<T>) in my code so prefer it over TraceWriter.
+The default Azure Functions template in Visual Studio uses TraceWriter for logging. This works well when developing locally with Visual Studio and also writes log entries out to the Azure Portal log section for the function when deployed to Azure. I have already been using ```ILogger``` and ```ILogger<T>``` in my code so prefer it over ```TraceWriter```.
 
-On the plus side, Azure Functions natively support a ILogger parameter on the static method of the function. There are currently some disadvantages though. It does not support ILogger<T>, [does not write entries to the local dev console][2] and does not write to the Azure Portal log section. It does however write the log entries to Application Insights in production and that is enough for me.
+On the plus side, Azure Functions natively support a ```ILogger``` parameter on the static method of the function. There are currently some disadvantages though. It does not support binding ```ILogger<T>``` or ```ILoggerFactory``` parameters, [does not write entries to the local dev console][2] and does not write to the Azure Portal log section. It does however write the log entries to Application Insights in production and that is enough for me.
 
 I am porting across existing code to Azure Functions that use ILogger<T> in lower level dependencies and I still want support for this with no code changes. I have been using an Autofac module to dynamically create ILogger<T> instances for the target types being created with the logger dependency. 
 
