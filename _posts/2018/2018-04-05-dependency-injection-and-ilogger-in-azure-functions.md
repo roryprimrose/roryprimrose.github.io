@@ -181,9 +181,9 @@ public class LoggerModule : Module
 }
 ```
 
-The line of code to note above is the filter against the namespace of the target type requested of the Autofac container. This module will only create log instances for target types that exist under the specified base namespace which exists within the solution. This is hard-coded against a namespace using the ```nameof``` call and will need to be updated if you use this in your own projects. This could be refactored to use the base namespace of the assembly containing the module but this will not always catch all scenarios. 
+The line of code to note above is the filter against the namespace of the target type requested of the Autofac container. This module will only create log instances for target types that exist under the specified base namespace. This is hard-coded against a namespace using the ```nameof(FunctionApp1)``` call and will need to be updated if you use this in your own projects. This could be refactored to use the base namespace of the assembly containing the module but this will not always catch all scenarios. 
 
-The main issue with this module is that it needs access to a LogFactory to create logger instances. Thankfully this is available in the extensibilty point ```InjectConfiguration.InitializeContainer``` above via ```context.Config.LoggerFactory``` that is passed to the ```ContainerConfig``` class. This is then registered in the container making it available to the ```LoggerModule```.
+This module requires an ```ILoggerFactory``` to be already registered in the container. The module must resolve this dependency to create logger instances. Thankfully this is available in the ```InjectConfiguration.InitializeContainer``` extensibilty point via ```context.Config.LoggerFactory``` which is then passed to the ```ContainerConfig``` class. The factory is then registered in the container making it available to the ```LoggerModule```.
 
 All this now works as expected because of Autofac tying everything together. This means for example that the following code works perfectly.
 
