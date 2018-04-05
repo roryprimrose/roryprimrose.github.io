@@ -93,11 +93,11 @@ This simple setup provides great flexibility for developing Azure Functions with
 
 ## ILogger
 
-The default Azure Functions template in Visual Studio uses TraceWriter for logging. This works well when developing locally with Visual Studio and also writes log entries out to the Azure Portal log section for the function when deployed to Azure. I have already been using ```ILogger``` and ```ILogger<T>``` in my code so prefer it over ```TraceWriter```.
+The default Azure Functions template in Visual Studio uses ```TraceWriter``` for logging. This works well when developing locally with Visual Studio and also writes log entries out to the Azure Portal log section for the function when deployed to Azure. I have already been using ```ILogger``` and ```ILogger<T>``` in my code so prefer it over ```TraceWriter```.
 
-On the plus side, Azure Functions natively support a ```ILogger``` parameter on the static method of the function. There are currently some disadvantages though. It does not support binding ```ILogger<T>``` or ```ILoggerFactory``` parameters, [does not write entries to the local dev console][2] and does not write to the Azure Portal log section. It does however write the log entries to Application Insights in production and that is enough for me.
+Azure Functions natively support binding to a ```ILogger``` parameter on the static method of the function however there are currently some disadvantages. It does not support binding ```ILogger<T>``` or ```ILoggerFactory``` parameters, [does not write entries to the local dev console][2] and does not write to the Azure Portal log section. It does however write the log entries to Application Insights in production and that is enough for me.
 
-I am porting across existing code to Azure Functions that use ILogger<T> in lower level dependencies and I still want support for this with no code changes. I have been using an Autofac module to dynamically create ILogger<T> instances for the target types being created with the logger dependency. 
+I have been using an Autofac module to dynamically create logger instances for the target types being created with the logger dependency. Originally this module would create log4net log instances and now creates ```ILogger``` and ```ILogger<T>``` instances.
 
 ```csharp
 public class LoggerModule : Module
@@ -181,7 +181,9 @@ public class LoggerModule : Module
 }
 ```
 
-The main issue with this module is that it needs access to a LogFactory to create them. Thankfully this is available in the extensibilty point above via ```context.Config.LoggerFactory``` and can be factored into building the IoC container.
+The line of code to note above is the filter against the namespace of the target type requested of the Autofac container. This module will only create log instances for target types that exist under the specified base namespace which exists within the solution. This is hard-coded against a namespace using the ```nameof``` call and will need to be updated if you use this in your own projects. This could be refactored to use the base namespace of the assembly containing the module but this will not always catch all scenarios. 
+
+The main issue with this module is that it needs access to a LogFactory to create logger instances. Thankfully this is available in the extensibilty point ```InjectConfiguration.InitializeContainer``` above via ```context.Config.LoggerFactory``` that is passed to the ```ContainerConfig``` class. This is then registered in the container making it available to the ```LoggerModule```.
 
 All this now works as expected because of Autofac tying everything together. This means for example that the following code works perfectly.
 
