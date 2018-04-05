@@ -11,7 +11,9 @@ Azure Functions is a great platform for running small quick workloads. I have be
 
 ## Dependency Injection
 
-There are already [several posts][0] around that provide a solution for dependency injection in Azure Functions v2. They leverage an extensibility point that support providing values for the parameters on the static entry point of the function.
+There are already several posts around that provide a solution for dependency injection in Azure Functions v2. The code below is based on a post found [here][0]. These implementations leverage an extensibility point that for binding values to the parameters on the static entry point of the function.
+
+It starts with the creation of a marker attribute.
 
 ```csharp
 [Binding]
@@ -27,7 +29,7 @@ public class InjectAttribute : Attribute
 }
 ```
 
-It starts with the creation of a marker attribute.
+The extension point uses ```IExtensionConfigProvider``` to register a binder for function parameters that are resolved using an IoC container. The bulk of this class is creating the Autofac container in a thread safe way to make sure that the container is only created once.
 
 ```csharp
 public class InjectConfiguration : IExtensionConfigProvider
@@ -64,7 +66,7 @@ public class InjectConfiguration : IExtensionConfigProvider
 }
 ```
 
-The extension point uses ```IExtensionConfigProvider``` to register a binder for function parameters that are resolved using an IoC container. The bulk of this class is creating the Autofac container in a thread safe way to make sure that the container is only created once.
+Creating the container is where there starts to be custom code based on the project. This is a fairly general configuration of a container. In this case the types of the current assembly are registered in the container using their interfaces. Then a logger module is registered (more on this later).
 
 ```csharp
 public static class ContainerConfig
@@ -84,8 +86,6 @@ public static class ContainerConfig
     }
 }
 ```
-
-Creating the container is where there starts to be custom code based on the project. This is a fairly general configuration of a container. In this case the types of the current assembly are registered in the container using their interfaces. Then a logger module is registered (more on this later).
 
 The way this works is that Azure Functions will invoke the extension point in order to bind values to the parameters of the static entry point of the function. This simple setup provides great flexibility for developing Azure Functions with dependency injection. It is less than ideal that Azure Functions uses a static member as the entry point so this is as good as it gets for now. It is possible that this will [change in the future][1].
 
