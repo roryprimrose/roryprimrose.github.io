@@ -5,7 +5,7 @@ tags:
 date: 2018-04-05 23:05:00 +10:00
 ---
 
-Azure Functions is a great platform for running small quick workloads. I have been migrating some code over to Azure Functions where the code was written with dependency injection and usages of ILogger<T> in the lower level dependencies. This post will go through how to support these two requirements in Azure Functions.
+Azure Functions is a great platform for running small quick workloads. I have been migrating some code over to Azure Functions where the code was written with dependency injection and usages of ```ILogger<T>``` in the lower level dependencies. This post will go through how to support these two requirements in Azure Functions.
 
 <!--more-->
 
