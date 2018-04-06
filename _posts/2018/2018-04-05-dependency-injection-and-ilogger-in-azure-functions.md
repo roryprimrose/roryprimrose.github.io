@@ -87,7 +87,7 @@ public static class ContainerConfig
 }
 ```
 
-The way this works is that Azure Functions will invoke the extension point in order to bind values to the parameters of the static entry point of the function. The binder will then resolve the parameter value using the Autofac container.
+The way this works is that Azure Functions will invoke the extension point in order to bind values to the marked parameters of the static entry point of the function. The binder will return the parameter value by resolving the target type from the Autofac container.
 
 This simple setup provides great flexibility for developing Azure Functions with dependency injection. It is less than ideal that Azure Functions uses a static member as the entry point so this is as good as it gets for now. It is possible that this will [change in the future][1].
 
