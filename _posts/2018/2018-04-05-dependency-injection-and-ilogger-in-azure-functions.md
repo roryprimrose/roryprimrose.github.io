@@ -66,7 +66,7 @@ public class InjectConfiguration : IExtensionConfigProvider
 }
 ```
 
-Creating the container is where there starts to be custom code based on the project. This is a fairly general configuration of a container. In this case the types of the current assembly are registered in the container using their interfaces. Then a logger module is registered (more on this later).
+Creating the container is where there starts to be custom code based on the project. This is a fairly general configuration of a container. In this case the types of the current assembly are registered in the container using their interfaces. Then a logger factory and module are registered (more on this later).
 
 ```csharp
 public static class ContainerConfig
