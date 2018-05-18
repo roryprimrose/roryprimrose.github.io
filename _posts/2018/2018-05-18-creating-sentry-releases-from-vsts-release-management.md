@@ -1,5 +1,5 @@
 ---
-title: Creating Sentry release from VSTS Release Management
+title: Creating Sentry releases from VSTS Release Management
 categories: .Net
 tags: 
 date: 2018-05-18 13:54:00 +10:00
