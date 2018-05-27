@@ -113,24 +113,10 @@ public class LoggerModule : Module
         IComponentRegistry componentRegistry,
         IComponentRegistration registration)
     {
+        Ensure.Any.IsNotNull(registration, nameof(registration));
+
         // Handle constructor parameters.
         registration.Preparing += OnComponentPreparing;
-    }
-
-    private static object GetGenericTypeLogger(IComponentContext context, Type declaringType)
-    {
-        return _logCache.GetOrAdd(
-            declaringType,
-            x =>
-            {
-                var wrapper = typeof(LoggerWrapper<>);
-                var specificWrapper = wrapper.MakeGenericType(declaringType);
-                var instance = (ILoggerWrapper)Activator.CreateInstance(specificWrapper);
-
-                var factory = context.Resolve<ILoggerFactory>();
-
-                return instance.Create(factory);
-            });
     }
 
     private static object GetLogger(IComponentContext context, Type declaringType)
@@ -140,8 +126,9 @@ public class LoggerModule : Module
             x =>
             {
                 var factory = context.Resolve<ILoggerFactory>();
+                var loggerName = "Function." + declaringType.FullName + ".User";
 
-                return factory.CreateLogger(declaringType);
+                return factory.CreateLogger(loggerName);
             });
     }
 
@@ -163,20 +150,8 @@ public class LoggerModule : Module
         e.Parameters = e.Parameters.Union(
             new[]
             {
-                new ResolvedParameter((p, i) => p.ParameterType == typeof(ILogger), (p, i) => GetLogger(i, t)),
-                new ResolvedParameter(
-                    (p, i) => p.ParameterType.GenericTypeArguments.Any() &&
-                                p.ParameterType.GetGenericTypeDefinition() == typeof(ILogger<>),
-                    (p, i) => GetGenericTypeLogger(i, t))
+                new ResolvedParameter((p, i) => p.ParameterType == typeof(ILogger), (p, i) => GetLogger(i, t))
             });
-    }
-
-    private class LoggerWrapper<T> : ILoggerWrapper
-    {
-        public object Create(ILoggerFactory factory)
-        {
-            return factory.CreateLogger<T>();
-        }
     }
 }
 ```
@@ -227,6 +202,15 @@ public class Something : ISomething
 }
 ```
 
+**Updated: 27/May/2018**
+
+Azure Functions (v2 beta) applies a filter out of the box for ILogger. The filter looks at whether the logger name is either ```Function.Something``` or ```Function.Something.User```. Any logger that does not have its name matching this format will have its log messages filtered out.
+
+The way ```ILogger<T>``` is created by ```LogFactory``` uses the name derived from ```typeof(T).FullName```. This does not conform to either of the values that Azure Functions likes so the log messages are filtered out. What this means is that currently (since the code from [19th December 2017][3] was released) Azure Functions will not work when using ```ILogger<T>```. Additionally, the ```LoggerModule``` originally posted above also didn't work for ```ILogger``` because it used ```factory.CreateLogger(declaringType)``` which creates the logger name from ```declaringType.FullName```. This also does not match the expected filter and log messages are also filtered out. 
+
+I've updated the module above so that it no longer supports dependency injection of ```ILogger<T>``` and ```ILogger``` instances are still created with the declaring type but also in a format that would allow Azure Functions to write the log entries. This is done by creating loggers with the name derived from ```"Function." + declaringType.FullName + ".User"```.
+
 [0]: https://blog.wille-zone.de/post/azure-functions-dependency-injection/
 [1]: https://github.com/Azure/Azure-Functions/issues/299#issuecomment-378384724
 [2]: https://github.com/Azure/azure-functions-core-tools/issues/130
+[3]: https://github.com/Azure/azure-webjobs-sdk/blob/5140983cb163b20bf6af60afccebb705bc80ad80/src/Microsoft.Azure.WebJobs.Host/Loggers/Logger/Constants/LogCategories.cs#L13-L14
