@@ -124,7 +124,7 @@ Capturing the custom properties on the exception for the Sentry report now allow
 
 ## Logging context data
 
-A common issue with dealing with error reports is having enough information so that staff can repond to the issues. Logging just the exception information may not provide enough information.
+A common issue when dealing with error reports is not having enough information in order to repond to the error. Logging just the exception information may not provide enough information.
 
 Consider the following scenario.
 
@@ -137,9 +137,21 @@ public class PaymentGatewayException: Exception
 }
 ```
 
-In this scenario, the message of the exception may be written for the purposes of sending the text to a user interface. That does not help in resolving the issue when the error is reported to Sentry. Perhaps we want to know what was being processed at the time. 
+Sending this exception to Sentry would produce an error report with something like the following.
 
-This can be achieved in a similar way to reporting custom exception properties as above.
+```json
+{
+   "message":"Failed to process complete transaction at the payment gateway.",
+   "metadata":{
+      "type":"PaymentGatewayException",
+      "value":"Failed to process complete transaction at the payment gateway."
+   },
+   "type":"error",
+   "version":"7"
+}
+``` 
+
+In this scenario, the message of the exception may be written for the purposes of sending the text to a user interface. That does not help in resolving the issue when the error is reported to Sentry. Perhaps we want to know what was being processed at the time. This can be achieved in a similar way to reporting custom exception properties as above by using ```LogErrorWithContext``` and ```LogCriticalWithContext``` extension methods.
 
 ```csharp
 public async Task ProcessPayment(string invoiceId, int amountInCents, Person customer, CancellationToken cancellationToken)
@@ -150,7 +162,7 @@ public async Task ProcessPayment(string invoiceId, int amountInCents, Person cus
 	}
 	catch (PaymentGatewayException ex)
 	{
-		dynamic paymentDetails = new {
+		var paymentDetails = new {
 			invoiceId,
 			amountInCents
 		};
@@ -164,9 +176,19 @@ This additional context data is then sent to Sentry.
 
 ```json
 {
+   "message":"Failed to process complete transaction at the payment gateway.",
+   "extra":{
+      "ContextData": "{\"invoiceId\":\"239349asfd-234234\",\"amountInCents\":3995}",
+   },
+   "metadata":{
+      "type":"PaymentGatewayException",
+      "value":"Failed to process complete transaction at the payment gateway."
+   },
+   "type":"error",
+   "version":"7"
 }
-```
-
+``` 
+The Sentry issue now contains the contextual information that can assist with troubleshooting the error.
 
 ## Preventing duplicate reports
 
