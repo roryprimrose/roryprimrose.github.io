@@ -194,7 +194,7 @@ public class MyClassTests
     {
         var factory = LogFactory.Create(output);
 
-        // call factory.UseConsole or other provider extension method
+        // call factory.AddConsole or other provider extension method
 
         _logger = factory.CreateLogger(nameof(MyClassTests));
     }
