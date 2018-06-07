@@ -11,9 +11,9 @@ Aligning with the idea of "don't build something that someone else can do better
 
 <!--more-->
 
-Using ```ILogger``` as the integration point works well because logging is almost always a cross-cutting concern. Well defined systems are likely to already have logging integrated throughout the code so reporting exceptions to Sentry via ```ILogger``` can be achieved with very little effort. Coupling application code to ```ILogger``` is preferable to coupling code to ```IRavenClient```. With enough integration smarts, most of the application code should not have to understand how to talk to Sentry in order to send exceptions their way.
+Using ```ILogger``` as the integration point works well because logging is almost always a cross-cutting concern. Well defined systems are likely to already have logging integrated throughout the code so reporting exceptions to Sentry via ```ILogger``` can be achieved with very little effort. Coupling application code to ```ILogger``` is preferable to coupling code to Sentry's ```IRavenClient```. With enough integration smarts, most of the application code should not have to understand how to talk to Sentry in order to send exceptions their way.
 
-I've published [Divergic.Logging.Sentry NuGet packages](https://www.nuget.org/packages?q=Divergic.Logging.Sentry) to add support this integration ([open-source on GitHub](https://github.com/Divergic/Divergic.Logging.Sentry)). The design of the packages has several goals to achieve.
+I've published [Divergic.Logging NuGet packages](https://www.nuget.org/packages?q=Divergic.Logging) to add support this integration ([open-source on GitHub](https://github.com/Divergic/Divergic.Logging.Sentry)). The design of the packages achieve several goals.
 
 - Easy installation
 - Sole dependency in "application" code is ```ILogger```
@@ -31,8 +31,9 @@ There are several NuGet packages to give flexibility around how applications can
 
 - ```Install-Package Divergic.Logging.Sentry``` [on NuGet.org](https://www.nuget.org/packages/Divergic.Logging.Sentry) contains the ```ILogger``` provider for sending exceptions to Sentry
 - ```Install-Package Divergic.Logging.Sentry.Autofac``` [on NuGet.org](https://www.nuget.org/packages/Divergic.Logging.Sentry.Autofac) extends the base package to provide an Autofac module to register ```RavenClient``` in Autofac
-- ```Install-Package Divergic.Logging.Sentry.NodaTime``` [on NuGet.org](https://www.nuget.org/packages/Divergic.Logging.Sentry.NodaTime) extends the base package to support serialization of NodaTime data types
-- ```Install-Package Divergic.Logging.Sentry.All``` [on NuGet.org](https://www.nuget.org/packages/Divergic.Logging.Sentry.All) is a meta package that contains all the above packages
+- ```Install-Package Divergic.Logging.NodaTime``` [on NuGet.org](https://www.nuget.org/packages/Divergic.Logging.NodaTime) extends the inherited Divergic.Logging base package to support serialization of NodaTime data types
+
+All the above packages depend on the Divergic.Logging package that provides ```ILogger``` extension methods for adding context information to an exception.
 
 ## Bootstrapping
 
