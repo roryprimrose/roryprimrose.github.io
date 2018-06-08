@@ -2,7 +2,7 @@
 title: ILogger for Sentry.io
 categories: .Net
 tags: 
-date: 2018-06-04 22:07:00 +10:00
+date: 2018-06-08 08:07:00 +10:00
 ---
 
 Exception reporting and alerting has always been important for software delivery. I've seen companies use many solutions for this over the years, from using email as an error logging system (that story does not end well....twice) to the Windows Event Log that people usually do not monitor. On the other end of the spectrum are more mature systems like [Raygun.com](https://raygun.com/) and [Sentry.io](https://sentry.io/). 
@@ -11,9 +11,9 @@ Aligning with the idea of "don't build something that someone else can do better
 
 <!--more-->
 
-Using ```ILogger``` as the integration point works well because logging is almost always a cross-cutting concern. Well defined systems are likely to already have logging integrated throughout the code so reporting exceptions to Sentry via ```ILogger``` can be achieved with very little effort. Coupling application code to ```ILogger``` is preferable to coupling code to Sentry's ```IRavenClient```. With enough integration smarts, most of the application code should not have to understand how to talk to Sentry in order to send exceptions their way.
+Using ```ILogger``` as the integration point works well because logging is almost always a cross-cutting concern. Well defined systems are likely to already have logging integrated throughout the code so reporting exceptions to Sentry via ```ILogger``` can be achieved with very little effort. Coupling application code to ```ILogger``` is also preferable to coupling code to Sentry's ```IRavenClient```. With enough integration smarts, most of the application code should not have to understand how to talk to Sentry in order to send exceptions their way.
 
-I've published [Divergic.Logging NuGet packages](https://www.nuget.org/packages?q=Divergic.Logging) to add support this integration ([open-source on GitHub](https://github.com/Divergic/Divergic.Logging.Sentry)). The design of the packages achieve several goals.
+I've published a suite of [Divergic.Logging NuGet packages](https://www.nuget.org/packages?q=Divergic.Logging) to add support for this integration ([open-source on GitHub](https://github.com/Divergic/Divergic.Logging.Sentry)). The design of the packages achieve several goals.
 
 - Easy installation
 - Sole dependency in "application" code is ```ILogger```
@@ -37,7 +37,7 @@ All the above packages depend on the Divergic.Logging package that provides ```I
 
 ## Bootstrapping
 
-Applications often have some kind of bootstrapping code when they start up which is where logging is typically configured. The Divergic.Logging.Sentry package requires access to an ```ILoggerFactory``` instance to configure logging to Sentry. An ASP.Net core application for example will provide this in the Configure method. Adding the Divergic.Logging.Sentry package will give access to the ```AddSentry``` method on ```ILoggerFactory```.
+Applications often have some kind of bootstrapping code when they start up which is where logging is typically configured. The Divergic.Logging.Sentry package requires access to an ```ILoggerFactory``` instance on which it provides the ```AddSentry``` extension method. An ASP.Net core application for example will provide ```ILoggerFactory``` in the Configure method.
 
 ```csharp
 public void Configure(
@@ -57,9 +57,13 @@ Any ILogger instance created with the factory will now send exceptions to Sentry
 
 ## Custom properties
 
-Exceptions in .Net often contain additional information that is not included in the ```Exception.Message``` property. Some good examples of this are ```SqlException```, ```ReflectionTypeLoadException ``` and the Azure ```StorageException```. This information is additional metadata about the error which is critical to identifying the error. Unfortunately most logging systems will only log the exception stacktrace and message. The result is an error report that is unactionable.
+Exceptions in .Net often contain additional information that is not included in the ```Exception.Message``` property. Some good examples of this are ```SqlException```, ```ReflectionTypeLoadException ``` and the Azure ```StorageException```. The ReflectionTypeLoadException message for example will log the following message.
 
-One of the advantages of ```RavenClient``` is that the ```System.Exception.Data``` property is serialized and sent in the error report to Sentry. What is missing is the ability to record any other custom exception properties. The Divergic.Logging.Sentry package caters for this by adding each custom exception property to the Data property so that it will be sent to Sentry.
+> ReflectionTypeLoadException: Unable to load one or more of the requested types. Retrieve the LoaderExceptions property for more information.
+
+These properties contain additional metadata about the exception that is critical to identifying the error. Unfortunately most logging systems will only log the exception stacktrace and message. The result is an error report that is unactionable.
+
+One of the advantages of ```RavenClient``` is that the ```System.Exception.Data``` property is sent in the error report to Sentry. What is missing is the ability to record any other custom exception properties. The Divergic.Logging.Sentry package caters for this by adding each custom exception property to the Data property so that it will be sent to Sentry.
 
 Consider the following exception.
 
@@ -109,7 +113,7 @@ Capturing the custom properties on the exception for the Sentry report now allow
    "message":"Exception of type 'Divergic.Logging.Sentry.IntegrationTests.CustomPropertyException' was thrown.",
    "extra":{
       "CustomPropertyException.Value":2309842,
-      "CustomPropertyException.Company":"{\"Address\":\"839 Anniversary Drive\",\"Name\":\"87756871-2987-414b-a545-81ed564e327b\",\"Owner\":{\"Email\":\"glori.mcileen@ravenjs.com\",\"FirstName\":\"Glori\",\"LastName\":\"McIleen\"}}"
+      "CustomPropertyException.Company":"{\"Address\":\"839 Anniversary Drive\",\"Name\":\"McIleen Inc\",\"Owner\":{\"Email\":\"glori.mcileen@ravenjs.com\",\"FirstName\":\"Glori\",\"LastName\":\"McIleen\"}}"
    },
    "metadata":{
       "type":"CustomPropertyException",
@@ -120,7 +124,7 @@ Capturing the custom properties on the exception for the Sentry report now allow
 
 ## Logging context data
 
-A common issue when dealing with error reports is not having enough information to repond to the error. Logging just the exception information may not provide enough information.
+A common issue when dealing with error reports is not having enough information to repond to the error. Logging just the exception data may not be sufficient.
 
 Consider the following exception.
 
@@ -145,7 +149,7 @@ Sending this exception to Sentry would produce an error report with something li
 }
 ``` 
 
-In this scenario, the message of the exception may be written for the purposes of sending the text to a user interface. That does not help in resolving the issue when the error is reported to Sentry. Perhaps we want to know what was being processed at the time. This can be achieved in a similar way to reporting custom exception properties as above by using ```LogErrorWithContext``` and ```LogCriticalWithContext``` extension methods on ```ILogger```.
+In this scenario, the message of the exception may be written for the purposes of sending the text to a user interface. That does not help in resolving the issue when the exception is reported to Sentry. We may need to know what was being processed at the time. The inherited Divergic.Logging package uses the same technique as reporting custom exception properties above by providing ```LogErrorWithContext``` and ```LogCriticalWithContext``` extension methods on ```ILogger```.
 
 ```csharp
 public async Task ProcessPayment(string invoiceId, int amountInCents, Person customer, CancellationToken cancellationToken)
@@ -186,7 +190,7 @@ Exceptions can be caught, logged and then thrown again. A catch block higher up 
 
 ## Supporting Autofac
 
-The Divergic.Logging.Sentry.Autofac package contains ```SentryModule``` to assist with setting up Sentry in an Autofac container. The requirement is that the application bootstrapping has already been able to create a ```SentryConfig``` class and registered it in Autofac. ```SentryModule``` registers a new RavenClient instance using that configuration.
+The Divergic.Logging.Sentry.Autofac package contains ```SentryModule``` to assist with setting up Sentry in an Autofac container. The requirement is that the application bootstrapping has already been able to create an ```ISentryConfig``` instance and registered it in Autofac. ```SentryModule``` registers a new RavenClient instance using that configuration.
 
 Here is an example for ASP.Net core.
 
@@ -225,7 +229,7 @@ public IServiceProvider ConfigureServices(IServiceCollection services)
 
 ## Support NodaTime serialization
 
-Sending custom exception properties and exception context data to Sentry is only useful if the data can be understood. ```NodaTime.Instant``` is a good example of this as the native JSON serialization of an Instant value does not represent a date/time value.
+Sending custom exception properties and exception context data to Sentry is only useful if the data can be understood. ```NodaTime.Instant``` is a good example of this. The native JSON serialization of an Instant value will be ```{}``` rather than a readable date/time value.
 
 Consider the following exception.
 
@@ -236,7 +240,7 @@ public class CustomPropertyException : Exception
 }
 ```
 
-Logging this exception to Sentry without NodaTime serialization would send something like the following to Sentry.
+Logging this exception to Sentry without NodaTime JSON serialization support would send the following to Sentry.
 
 ```json
 {
@@ -251,7 +255,20 @@ Logging this exception to Sentry without NodaTime serialization would send somet
 }
 ```
 
-Registering the provider with ```ILoggerFactory``` using ```AddSentryWithNodaTime``` will configure correct JSON serialization of NodaTime types when sending errors to Sentry. Sentry would then receive something like the following instead.
+The Divergic.Logging.NodaTime package provides  a ```UsingNodaTimeTypes``` extension method on ```ILoggerFactory```. This will configure the correct JSON serialization of NodaTime types when sending errors to Sentry. 
+
+```csharp
+public void Configure(
+    IApplicationBuilder app,
+    IHostingEnvironment env,
+    ILoggerFactory loggerFactory,
+    IApplicationLifetime appLifetime)
+{
+    loggerFactory.UsingNodaTimeTypes();
+}
+```
+
+Sentry would then receive something like the following for the above example.
 
 ```json
 {
@@ -268,4 +285,8 @@ Registering the provider with ```ILoggerFactory``` using ```AddSentryWithNodaTim
 
 ## Clean stacktrace reporting
 
-A long standing complaint with .Net has been how stacktraces are difficult to read when async/await is involved. While this should be improved in .Net core 2.1, all prior .Net versions suffer from this issue. As part of sending exceptions to Sentry, the Divergic.Logging.Sentry package will also include a ```CleanedException``` value in the error report. This value will contain the ```Exception.ToString``` of the exception after it has been through ```Demystify``` via the ```Ben.Demystifier``` NuGet package. Read more about it [here](https://github.com/benaadams/Ben.Demystifier).
+A long standing complaint with .Net has been how stacktraces are difficult to read when async/await is involved. While this should be [improved in .Net core 2.1](https://www.ageofascent.com/2018/01/26/stack-trace-for-exceptions-in-dotnet-core-2.1/), all prior .Net versions suffer from this issue. As part of sending exceptions to Sentry, the Divergic.Logging.Sentry package will also include a ```CleanedException``` value in the error report. This value will contain the ```Exception.ToString``` of the exception after it has been through ```Demystify``` via the ```Ben.Demystifier``` NuGet package. Read more about it [here](https://github.com/benaadams/Ben.Demystifier).
+
+## Conclusion
+
+These packages aim to provide a simple and elegant method of sending exceptions to Sentry with the minimum amount of effort. Now you can go forth and fail in style and clarity.
