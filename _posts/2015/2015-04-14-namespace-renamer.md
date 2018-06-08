@@ -60,7 +60,8 @@ namespace Neovolve.NamespaceRenamer
         {
             ".dll", 
             ".exe", 
-            ".pdb"
+            ".pdb",
+            ".suo"
         };
 
         private static readonly string LogPath = Assembly.GetExecutingAssembly().Location + "."
