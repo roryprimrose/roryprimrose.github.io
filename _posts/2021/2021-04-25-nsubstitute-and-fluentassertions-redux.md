@@ -5,7 +5,7 @@ tags: Unit Testing
 date: 2021-04-25 10:00:00 +10:00
 ---
 
-Way back in 2014 I posted about [Bridging between NSubstitute and FluentAssertions][0]. The code sample provide a way of using [FluentAssertions][2] checks in [NSubstitute][1] arguments. There have been some slight changes in these packages over the last seven years. Here is an updated version of how to get this to work with the current versions of those packages.
+Way back in 2014 I posted about [Bridging between NSubstitute and FluentAssertions][0]. The code sample provides a way of using [FluentAssertions][2] checks in [NSubstitute][1] arguments. There have been some slight changes in these packages over the last seven years. Here is an updated version of how to get this to work with the current versions of those packages.
 
 <!--more-->
 
